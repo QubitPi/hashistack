@@ -23,6 +23,7 @@ The following sections talk about what kind of scripts are available and how to 
 
 - [Remove all local containers](./docker/docker-clean-containers.sh)
 - [Remove all local containers and images](./docker/docker-clean.sh)
+- [Install Docker Daemon on Ubuntu](./docker/install-on-ubuntu.sh)
 
 ### Druid
 
@@ -68,7 +69,7 @@ Users shall be able to manually put each shell scripts anywhere and execute them
 License
 -------
 
-The use and distribution terms for [Aergia](https://qubitpi.github.io/aergia/) are covered by the
+The use and distribution terms for [Aergia](https://github.com/QubitPi/aergia) are covered by the
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
 <div align="center">
