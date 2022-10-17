@@ -42,7 +42,7 @@ END
 sudo apt update
 
 # install a few prerequisite packages which let apt use packages over HTTPS
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
 
 # add the GPG key for the official Docker repository to your system
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -54,7 +54,7 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 apt-cache policy docker-ce
 
 # install Docker
-sudo apt install docker-ce
+sudo apt install docker-ce -y
 
 # check docker daemon is running:
 sudo systemctl status docker
