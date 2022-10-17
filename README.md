@@ -19,6 +19,10 @@ The following sections talk about what kind of scripts are available and how to 
 - [White-padding image to make it square](./imagemagick/add-white-padding.sh)
 - [Convert an image to a favicon](./imagemagick/convert-to-favicon.sh)
 
+### CI/CD
+
+- [Install Jenkins with SSL Support](./install-all-scripts.sh)
+
 ### Docker
 
 - [Remove all local containers](./docker/docker-clean-containers.sh)
