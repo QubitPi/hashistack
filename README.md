@@ -21,7 +21,7 @@ The following sections talk about what kind of scripts are available and how to 
 
 ### CI/CD
 
-- [Install Jenkins with SSL Support](./install-all-scripts.sh)
+- [Install Jenkins with SSL Support](./cicd/install-jenkins.sh)
 
 ### Docker
 
