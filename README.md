@@ -15,6 +15,7 @@ find them useful as well.
 The following sections talk about what kind of scripts are available and how to install them
 
 - [Installing Certbot on Ubuntu](./install-certbot.sh)
+- [Install Node.js with NPM](./install-nodejs.sh)
 
 ### ImageMagick
 
