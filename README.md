@@ -14,6 +14,8 @@ find them useful as well.
 
 The following sections talk about what kind of scripts are available and how to install them
 
+- [Installing Certbot on Ubuntu](./install-certbot.sh)
+
 ### ImageMagick
 
 - [White-padding image to make it square](./imagemagick/add-white-padding.sh)
