@@ -32,6 +32,11 @@ The following sections talk about what kind of scripts are available and how to 
 - [Remove all local containers and images](./docker/docker-clean.sh)
 - [Install Docker Daemon on Ubuntu](./docker/install-on-ubuntu.sh)
 
+### Python
+
+- Install Python
+  * [3.10 (Ubuntu)](./python/install-python-310-ubuntu.sh)
+
 ### Druid
 
 - [Druid Cluster Management](./druid)
