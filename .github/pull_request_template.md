@@ -3,10 +3,21 @@
 Changelog
 ---------
 
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
 
 Checklist
 ---------
 
-* [ ] Self-review
-* [ ] Test
-* [ ] Documentation
+- [ ] Test
+- [ ] Self-review
+- [ ] Documentation
