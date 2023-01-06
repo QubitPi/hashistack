@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[8145],{5179:a=>{a.exports=JSON.parse('{"label":"Virtualization","permalink":"/aergia/blog/tags/virtualization","allTagsPath":"/aergia/blog/tags","count":1}')}}]);
