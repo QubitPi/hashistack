@@ -24,6 +24,7 @@ jobs:
         os:
           - ubuntu-1804
           - ubuntu-2004
+          - ubuntu-2204
         suite:
           - docker
       fail-fast: false

@@ -4,7 +4,7 @@ Aergia
 ![Last Commit] [![License Badge]](https://www.apache.org/licenses/LICENSE-2.0)
 
 [Aergia] is a tool that implements [Infrastructure-as-Code] through [CHEF cookbook]. It helps developers and
-organizations to rapidly prepare application **running environment** (on both bare-metal servers and virtual machines) 
+organizations to rapidly prepare application **running environment** (on both bare-metal servers and virtual machines)
 through various [CHEF recipes].
 
 As a strong supporter of [Infrastructure-as-Code], I choose [CHEF](https://qubitpi.github.io/chef-web-docs/) to
@@ -71,7 +71,7 @@ Usage
    git clone https://github.com/QubitPi/aergia.git
    sudo chef-client -z -o 'recipe[aergia::docker]'
    ```
-   
+
    The last command above runs [Docker recipe](https://qubitpi.github.io/aergia/docs/recipes/docker), which installs
    Docker Daemon on the invoking host.
    [There are much more recipes to try out](https://qubitpi.github.io/aergia/docs/category/recipes). Simply replace
