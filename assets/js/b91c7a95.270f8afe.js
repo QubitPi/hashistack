@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[6171],{3912:a=>{a.exports=JSON.parse('{"label":"Ruby","permalink":"/aergia/blog/tags/ruby","allTagsPath":"/aergia/blog/tags","count":1}')}}]);

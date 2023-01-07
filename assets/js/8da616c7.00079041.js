@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[7570],{3469:a=>{a.exports=JSON.parse('{"label":"Infrastructure as Code","permalink":"/aergia/blog/tags/infrastructure-as-code","allTagsPath":"/aergia/blog/tags","count":1}')}}]);
