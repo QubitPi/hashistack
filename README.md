@@ -34,6 +34,8 @@ container onto that server using Dockerfile.
 Documentation
 -------------
 
+[![Documentation Deployment Workflow Status]](https://github.com/QubitPi/aergia/actions/workflows/doc-deploy.yml)
+
 More information about Aergia can be found at our [documentation](https://qubitpi.github.io/aergia/).
 
 Community [![Discord]](https://discord.com/widget?id=1060753787125514332)
@@ -62,7 +64,7 @@ Usage
 
    Other [supported platforms] include MacOS, Windows, Red Hat Enterprise Linux / CentOS, Debian, and Amazon Linux.
 
-2. Run Aergia recipes in chef local mode
+2. **Run Aergia recipes in chef local mode**
 
    > We are running Chef client in [local mode](https://docs.chef.io/ctl_chef_client/#run-in-local-mode)
    >
@@ -90,6 +92,14 @@ Usage
    Docker Daemon on the invoking host.
    [There are much more recipes to try out](https://qubitpi.github.io/aergia/docs/category/recipes). Simply replace
    `docker` in the last command with other recipe names.
+
+   > **Why not publishing Aergia to [Supermarket](https://supermarket.chef.io/)?**
+   >
+   > - My experience with [Supermarket](https://supermarket.chef.io/) gives me no confidence on expecting anything good
+   >   from it. It's hard to use, has no good documentation, and it's buggy while not free
+   > - [Supermarket](https://supermarket.chef.io/) promises way more than [Aergia] needs. It's like when you only need
+   >   a medium coffee but realize you can only get it through a combo including a double-sized burger, fries, and 12
+   >   chicken nuggets.
 
 Quick Start Using Docker
 ------------------------
@@ -245,6 +255,7 @@ The use and distribution terms for [Aergia](https://qubitpi.github.io/aergia/) a
 [License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
 [Docker]: https://img.shields.io/badge/Docker%20Image-309DEE?style=for-the-badge&logo=docker&logoColor=white
 [Docker Release Workflow Status]: https://img.shields.io/github/actions/workflow/status/QubitPi/aergia/dockerhub-release.yml?branch=master&ogo=github&style=for-the-badge
+[Documentation Deployment Workflow Status]: https://img.shields.io/github/actions/workflow/status/QubitPi/aergia/doc-deploy.yml?branch=master&ogo=github&style=for-the-badge
 [Why can't chef resolve my cookbooks?]: https://stackoverflow.com/a/26395418/14312712
 [Developing recipes with local mode]: https://subscription.packtpub.com/book/networking-and-servers/9781785287947/1/ch01lvl1sec21/developing-recipes-with-local-mode
 [Discord]: https://img.shields.io/discord/1060753787125514332?color=5865F2&logo=discord&logoColor=ffffff&style=for-the-badge

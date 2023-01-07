@@ -1,3 +1,12 @@
+---
+slug: screwdriver
+title: Open Sourcing Screwdriver - Yahoo's Continuous Delivery Build System for Dynamic Infrastructure
+authors: [jiaqi]
+tags: [CI/CD]
+---
+
+<!--truncate-->
+
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -11,15 +20,6 @@
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
-
----
-slug: screwdriver
-title: Open Sourcing Screwdriver - Yahoo's Continuous Delivery Build System for Dynamic Infrastructure
-authors: [jiaqi]
-tags: [CI/CD]
----
-
-<!--truncate-->
 
 Continuous Delivery enables software development teams to move faster and adapt to users' needs quicker by reducing the
 inherent friction associated with releasing software changes. Yahoo's engineering has modernized as it has embraced

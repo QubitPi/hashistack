@@ -1,3 +1,15 @@
+---
+slug: continuous-delivery
+title: Continuous Delivery
+authors: [jiaqi]
+tags: [CI]
+---
+
+Continuous Delivery is the ability to get changes of all types - including new features, configuration changes, bug
+fixes and experiments - into production, or into the hands of users, _safely_ and _quickly_ in a _sustainable_ way.
+
+<!--truncate-->
+
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -11,18 +23,6 @@
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
-
----
-slug: continuous-delivery
-title: Continuous Delivery
-authors: [jiaqi]
-tags: [CI]
----
-
-Continuous Delivery is the ability to get changes of all types - including new features, configuration changes, bug
-fixes and experiments - into production, or into the hands of users, _safely_ and _quickly_ in a _sustainable_ way.
-
-<!--truncate-->
 
 The goal of continuous delivery is to make deployments - whether of a large-scale distributed system, a complex
 production environment, an embedded system, or an app - predictable, routine affairs that can be performed on demand.

@@ -1,3 +1,15 @@
+---
+slug: chef-intro
+title: Chef Intro
+authors: [jiaqi]
+tags: [Chef]
+---
+
+Chef was founded in 2008. Its first product was called _Chef_ (now called _Chef Infra_) which is a set of tools that
+automate the configuration of our cloud-based or on-prem server infrastructure.
+
+<!--truncate-->
+
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -11,18 +23,6 @@
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
-
----
-slug: chef-intro
-title: Chef Intro
-authors: [jiaqi]
-tags: [Chef]
----
-
-Chef was founded in 2008. Its first product was called _Chef_ (now called _Chef Infra_) which is a set of tools that
-automate the configuration of our cloud-based or on-prem server infrastructure.
-
-<!--truncate-->
 
 :::info
 
