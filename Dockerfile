@@ -28,7 +28,7 @@ RUN apt upgrade -y
 RUN apt-get install wget -y
 RUN apt-get install emacs -y
 
-# Install ChefDK Hadoop
+# Install ChefDK
 RUN wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu/20.04/chef-workstation_21.10.640-1_amd64.deb
 RUN dpkg -i chef-workstation_21.10.640-1_amd64.deb
 
