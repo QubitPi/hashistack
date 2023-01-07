@@ -29,12 +29,9 @@ jobs:
       fail-fast: false
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - name: Install Chef
-        uses: actionshub/chef-install@main
-      - name: Dokken
-        uses: actionshub/test-kitchen@main
+      - uses: actions/checkout@v2
+      - uses: actionshub/chef-install@main
+      - uses: actionshub/test-kitchen@main
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
