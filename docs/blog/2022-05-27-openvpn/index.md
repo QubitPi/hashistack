@@ -12,26 +12,21 @@
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-<img align="right" width="30%" src="https://github.com/QubitPi/QubitPi/raw/master/img/aergia/甘雨.png">
+---
+slug: openvpn
+title: OpenVPN
+authors: [jiaqi]
+tags: [Security]
+---
 
-Changelog
----------
+<!--truncate-->
 
-### Added
+[Download](https://openvpn.net/community-downloads/)
 
-### Changed
+```bash
+./configure
+make
+sudo make install
+```
 
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
-
-Checklist
----------
-
-- [ ] Test
-- [ ] Self-review
-- [ ] Documentation
+alias openvpn="/usr/local/sbin/openvpn"

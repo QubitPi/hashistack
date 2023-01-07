@@ -12,26 +12,34 @@
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-<img align="right" width="30%" src="https://github.com/QubitPi/QubitPi/raw/master/img/aergia/甘雨.png">
+---
+sidebar_position: 8
+---
 
-Changelog
----------
+aergia::nexus
+=============
 
-### Added
+Deploys Nexus 3 Repository Manager OSS Using Docker
 
-### Changed
+Recipe Details
+--------------
 
-### Deprecated
+### Create Docker Volume
 
-### Removed
+Since docker volumes are persistent, a volume can be created specifically for persisting data. This is the recommended
+because it can be used for backup later as well.
 
-### Fixed
+```bash
+docker volume create --name nexus-data
+```
 
-### Security
+### Start Nexus 3 Container
 
-Checklist
----------
+Withe volume created, `aergia::nexus` pulls the Nexus 3 image and run the container using:
 
-- [ ] Test
-- [ ] Self-review
-- [ ] Documentation
+```bash
+docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
+```
+
+Recipe Verification
+-------------------

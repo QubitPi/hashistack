@@ -12,26 +12,33 @@
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-<img align="right" width="30%" src="https://github.com/QubitPi/QubitPi/raw/master/img/aergia/甘雨.png">
+---
+sidebar_position: 9
+---
 
-Changelog
----------
+aergia::keycloak
+================
 
-### Added
+Deploys Keycloak on Docker
 
-### Changed
+Recipe Details
+--------------
 
-### Deprecated
+### Create Docker Volume
 
-### Removed
+```bash
+docker volume create --name keycloak-data
+```
 
-### Fixed
+### Start Keycloak Container
 
-### Security
+Withe volume created, `aergia::keycloak` pulls the Keycloak image and run the container using:
 
-Checklist
----------
+```bash
+docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:20.0.1 start-dev
 
-- [ ] Test
-- [ ] Self-review
-- [ ] Documentation
+docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
+```
+
+Recipe Verification
+-------------------

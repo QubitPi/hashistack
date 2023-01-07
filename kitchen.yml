@@ -1,31 +1,36 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 ---
 driver:
   name: vagrant
 
-## The forwarded_port port feature lets you connect to ports on the VM guest
-## via localhost on the host.
-## see also: https://www.vagrantup.com/docs/networking/forwarded_ports
-
-#  network:
-#    - ["forwarded_port", {guest: 80, host: 8080}]
-
 provisioner:
   name: chef_zero
-
-  ## product_name and product_version specifies a specific Chef product and version to install.
-  ## see the Chef documentation for more details: https://docs.chef.io/workstation/config_yml_kitchen/
-  #  product_name: chef
-  #  product_version: 17
 
 verifier:
   name: inspec
 
 platforms:
+  - name: ubuntu-18.04
   - name: ubuntu-20.04
-  - name: centos-8
+  - name: ubuntu-22.04
 
 suites:
-  - name: default
+  - name: docker
+    run_list:
+      - recipe[aergia::docker]
     verifier:
       inspec_tests:
-        - test/integration/default
+        - test/integration/docker

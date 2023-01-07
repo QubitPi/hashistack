@@ -12,13 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name 'aergia'
-maintainer 'Jiaqi Liu'
-maintainer_email 'jack20191124@proton.me'
-license 'Apache-2.0'
-license 'all rights reserved'
-description 'IaC recipes'
-version '0.1.0'
-chef_version '>= 16.0'
-issues_url 'https://github.com/QubitPi/aergia/issues'
-source_url 'https://github.com/QubitPi/aergia'
+# Dependencies
+/node_modules
+
+# Production
+/build
+
+# Generated files
+.docusaurus
+.cache-loader
+
+# Misc
+.idea/
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -12,13 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name 'aergia'
-maintainer 'Jiaqi Liu'
-maintainer_email 'jack20191124@proton.me'
-license 'Apache-2.0'
-license 'all rights reserved'
-description 'IaC recipes'
-version '0.1.0'
-chef_version '>= 16.0'
-issues_url 'https://github.com/QubitPi/aergia/issues'
-source_url 'https://github.com/QubitPi/aergia'
+apt_update 'update'
+
+# install a few prerequisite packages which let apt use packages over HTTPS
+package 'apt-transport-https'
+package 'ca-certificates'
+package 'curl'
+package 'software-properties-common'
+
+# Adds the Docker repository to APT sources
+apt_repository 'docker' do
+  key 'https://download.docker.com/linux/ubuntu/gpg'
+  uri 'https://download.docker.com/linux/ubuntu'
+  arch 'amd64'
+  distribution node['os_release']['version_codename']
+  components ['stable']
+  deb_src true
+  action :add
+end
+
+# Install Docker
+package 'docker-ce'

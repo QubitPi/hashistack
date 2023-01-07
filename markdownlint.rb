@@ -12,13 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name 'aergia'
-maintainer 'Jiaqi Liu'
-maintainer_email 'jack20191124@proton.me'
-license 'Apache-2.0'
-license 'all rights reserved'
-description 'IaC recipes'
-version '0.1.0'
-chef_version '>= 16.0'
-issues_url 'https://github.com/QubitPi/aergia/issues'
-source_url 'https://github.com/QubitPi/aergia'
+all
+# https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md
+rule 'MD003', style: :setext_with_atx
+rule 'MD004', style: :sublist
+rule 'MD013', line_length: 120
+rule 'MD029', style: :ordered
