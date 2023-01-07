@@ -1,3 +1,13 @@
+---
+sidebar_position: 5
+---
+
+aergia::jenkins
+===============
+
+Deploys a fully functional [Jenkins server](https://jenkins.io/) **container**
+[available on Docker Hub](https://hub.docker.com/r/jenkins/jenkins).
+
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -11,16 +21,6 @@
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
-
----
-sidebar_position: 5
----
-
-aergia::jenkins
-===============
-
-Deploys a fully functional [Jenkins server](https://jenkins.io/) **container**
-[available on Docker Hub](https://hub.docker.com/r/jenkins/jenkins).
 
 Recipe Details
 --------------

@@ -64,7 +64,7 @@ Usage
 
    Other [supported platforms] include MacOS, Windows, Red Hat Enterprise Linux / CentOS, Debian, and Amazon Linux.
 
-2. Run Aergia recipes in chef local mode
+2. **Run Aergia recipes in chef local mode**
 
    > We are running Chef client in [local mode](https://docs.chef.io/ctl_chef_client/#run-in-local-mode)
    >

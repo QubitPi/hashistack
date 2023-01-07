@@ -1,3 +1,12 @@
+---
+sidebar_position: 6
+---
+
+aergia::jenkins_agent
+=====================
+
+Creates a Jenkins agent running directly on a Chef node.
+
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -11,15 +20,6 @@
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
-
----
-sidebar_position: 6
----
-
-aergia::jenkins_agent
-=====================
-
-Creates a Jenkins agent running directly on a Chef node.
 
 The Jenkins architecture is designed for distributed build environments. It allows us to use different environments for
 each build project balancing the workload among multiple agents running jobs in parallel.

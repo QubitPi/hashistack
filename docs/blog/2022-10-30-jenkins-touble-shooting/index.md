@@ -1,3 +1,12 @@
+---
+slug: jenkins-troubleshooting
+title: Jenkins Troubleshooting
+authors: [jiaqi]
+tags: [Jenkins]
+---
+
+<!--truncate-->
+
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -11,15 +20,6 @@
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
-
----
-slug: jenkins-troubleshooting
-title: Jenkins Troubleshooting
-authors: [jiaqi]
-tags: [Jenkins]
----
-
-<!--truncate-->
 
 ### Docker Permission Error When Trigger by Jenkins
 

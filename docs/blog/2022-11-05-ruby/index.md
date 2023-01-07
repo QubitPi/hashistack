@@ -1,3 +1,16 @@
+---
+slug: ruby
+title: Ruby Essentials
+authors: [jiaqi]
+tags: [Chef, Ruby]
+---
+
+Ruby is a simple programming language. Chef uses Ruby as its reference language to define the patterns that are found in
+resources, recipes, and cookbooks. Chef also uses these patterns to configure, deploy, and manage nodes across the
+network.
+
+<!--truncate-->
+
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -11,19 +24,6 @@
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
-
----
-slug: ruby
-title: Ruby Essentials
-authors: [jiaqi]
-tags: [Chef, Ruby]
----
-
-Ruby is a simple programming language. Chef uses Ruby as its reference language to define the patterns that are found in
-resources, recipes, and cookbooks. Chef also uses these patterns to configure, deploy, and manage nodes across the
-network.
-
-<!--truncate-->
 
 Instally Ruby
 -------------

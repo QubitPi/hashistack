@@ -1,3 +1,12 @@
+---
+slug: jenkins-on-aws
+title: Deploying Jenkins to AWS
+authors: [jiaqi]
+tags: [Jenkins]
+---
+
+<!--truncate-->
+
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -11,15 +20,6 @@
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
-
----
-slug: jenkins-on-aws
-title: Deploying Jenkins to AWS
-authors: [jiaqi]
-tags: [Jenkins]
----
-
-<!--truncate-->
 
 Jenkins is an open-source automation server that integrates with a number of AWS Services, including: AWS CodeCommit,
 AWS CodeDeploy, Amazon EC2 Spot, and Amazon EC2 Fleet. We can use Amazon Elastic Compute Cloud (Amazon EC2) to deploy a
