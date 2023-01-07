@@ -2,6 +2,7 @@
 name: CI
 
 "on":
+  workflow_call:
   pull_request:
   push:
     branches: [master]
@@ -54,3 +55,22 @@ jobs:
         with:
           context: .
           push: false
+
+  test-documentation-deploy:
+    needs: lint-unit
+    name: Test deployment
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs/
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+          cache-dependency-path: './docs/yarn.lock'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Test build website
+        run: yarn build
