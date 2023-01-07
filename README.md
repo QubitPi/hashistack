@@ -93,6 +93,14 @@ Usage
    [There are much more recipes to try out](https://qubitpi.github.io/aergia/docs/category/recipes). Simply replace
    `docker` in the last command with other recipe names.
 
+   > **Why not publishing Aergia to [Supermarket](https://supermarket.chef.io/)?**
+   >
+   > - My experience with [Supermarket](https://supermarket.chef.io/) gives me no confidence on expecting anything good 
+   >   from it. It's hard to use, has no good documentation, and it's buggy while not free
+   > - [Supermarket](https://supermarket.chef.io/) promises way more than [Aergia] needs. It's like when you only need
+   >   a medium coffee but realized you can only get it through a combo including a double-sized burger, fries, and 12 
+   >   chicken nuggets.
+
 Quick Start Using Docker
 ------------------------
 
