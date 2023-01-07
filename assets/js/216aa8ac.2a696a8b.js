@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[8919],{3083:a=>{a.exports=JSON.parse('{"label":"IaC","permalink":"/aergia/blog/tags/ia-c","allTagsPath":"/aergia/blog/tags","count":1}')}}]);
