@@ -2,7 +2,6 @@
 name: CI
 
 "on":
-  workflow_call:
   pull_request:
   push:
     branches: [master]
@@ -16,8 +15,16 @@ jobs:
       pull-requests: write
       statuses: write
 
-  integration:
-    needs: lint-unit
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: "yes"
+
+  integration-test:
+    needs: [lint-unit, markdown-link-check]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,7 +35,6 @@ jobs:
         suite:
           - docker
       fail-fast: false
-
     steps:
       - uses: actions/checkout@v2
       - uses: actionshub/chef-install@main
@@ -46,8 +52,8 @@ jobs:
           sudo journalctl -l --since today
           KITCHEN_LOCAL_YAML=kitchen.dokken.yml /usr/bin/kitchen exec ${{ matrix.suite }}-${{ matrix.os }} -c "journalctl -l"
 
-  build-docker-image:
-    needs: lint-unit
+  test-docker-image-build:
+    needs: [lint-unit, markdown-link-check]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -57,7 +63,7 @@ jobs:
           push: false
 
   test-documentation-deploy:
-    needs: lint-unit
+    needs: [lint-unit, markdown-link-check]
     name: Test deployment
     runs-on: ubuntu-latest
     defaults:
