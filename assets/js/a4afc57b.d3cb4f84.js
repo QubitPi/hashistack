@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[91],{2998:e=>{e.exports=JSON.parse('{"title":"Recipes","description":"Aergia, a Chef Cookbook, Recipes","slug":"/category/recipes","permalink":"/aergia/docs/category/recipes","navigation":{"next":{"title":"certbot","permalink":"/aergia/docs/recipes/certbot"}}}')}}]);
