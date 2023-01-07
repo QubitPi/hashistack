@@ -16,8 +16,6 @@ FROM ubuntu:latest
 LABEL maintainer="Jiaqi (Jack) Liu"
 LABEL maintainer-email="jack20191124@proton.me"
 
-ENV CHEF_REPO_PATH ~/cookbooks
-
 # Ubuntu updates
 RUN apt-get update
 RUN apt-get upgrade -y
@@ -33,5 +31,5 @@ RUN wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu
 RUN dpkg -i chef-workstation_21.10.640-1_amd64.deb
 
 # Load aergia cookbook into image
-RUN mkdir -p ~/cookbooks/aergia/recipes
+RUN mkdir -p /cookbooks/aergia/recipes
 COPY recipes ./cookbooks/aergia/recipes

@@ -12,31 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-driver:
-  name: vagrant
-
-provisioner:
-  name: chef_zero
-
-verifier:
-  name: inspec
-
-platforms:
-  - name: ubuntu-18.04
-  - name: ubuntu-20.04
-  - name: ubuntu-22.04
-
-suites:
-  - name: docker
-    run_list:
-      - recipe[aergia::docker]
-    verifier:
-      inspec_tests:
-        - test/integration/docker
-  - name: docker_compose
-    run_list:
-      - recipe[aergia::docker_compose]
-    verifier:
-      inspec_tests:
-        - test/integration/docker_compose
+describe package('docker-compose-plugin') do
+  it { should be_installed }
+end

@@ -47,6 +47,7 @@ jobs:
           - ubuntu-2204
         suite:
           - docker
+          - docker-compose
       fail-fast: false
     steps:
       - uses: actions/checkout@v2

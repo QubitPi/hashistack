@@ -12,31 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
----
-driver:
-  name: vagrant
+apt_update 'update'
 
-provisioner:
-  name: chef_zero
+package 'ca-certificates'
+package 'curl'
+package 'gnupg'
+package 'lsb-release'
 
-verifier:
-  name: inspec
+apt_repository 'docker' do
+  key 'https://download.docker.com/linux/ubuntu/gpg'
+  uri 'https://download.docker.com/linux/ubuntu'
+  arch 'amd64'
+  distribution node['os_release']['version_codename']
+  components ['stable']
+  deb_src true
+  action :add
+end
 
-platforms:
-  - name: ubuntu-18.04
-  - name: ubuntu-20.04
-  - name: ubuntu-22.04
-
-suites:
-  - name: docker
-    run_list:
-      - recipe[aergia::docker]
-    verifier:
-      inspec_tests:
-        - test/integration/docker
-  - name: docker_compose
-    run_list:
-      - recipe[aergia::docker_compose]
-    verifier:
-      inspec_tests:
-        - test/integration/docker_compose
+apt_update 'update'
+package 'docker-compose-plugin'
