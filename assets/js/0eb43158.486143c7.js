@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[4139],{7944:a=>{a.exports=JSON.parse('{"permalink":"/aergia/blog/tags/ia-c","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

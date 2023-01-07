@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[2046],{3917:a=>{a.exports=JSON.parse('{"label":"Docker","permalink":"/aergia/blog/tags/docker","allTagsPath":"/aergia/blog/tags","count":1}')}}]);
