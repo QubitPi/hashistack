@@ -74,7 +74,7 @@ Usage
    > be used against the local chef-repo.
    >
    > Basically local mode needs to know where to find all cookbooks, roles, environments, data bags, etc, and it will
-   > look for them under a directory `~/cookbooks`. That explains the `mkdir cookbooks` below
+   > look for them under a directory `/cookbooks`. That explains the `mkdir cookbooks` below
    >
    > References:
    >
@@ -82,8 +82,8 @@ Usage
    > - [Developing recipes with local mode]
 
    ```bash
-   mkdir cookbooks
-   cd cookbooks
+   sudo mkdir /cookbooks
+   cd /cookbooks
    git clone https://github.com/QubitPi/aergia.git
    sudo chef-client -z -o 'recipe[aergia::docker]'
    ```
@@ -163,7 +163,7 @@ aergia
 Run a recipe using
 
 ```bash
-cd ~
+cd /cookbooks
 chef-client -z -o 'recipe[aergia::docker]'
 ```
 
