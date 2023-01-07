@@ -3,9 +3,9 @@ Aergia
 
 ![Last Commit] [![License Badge]](https://www.apache.org/licenses/LICENSE-2.0)
 
-[Aergia] is tool that implements [Infrastructure-as-Code] through [CHEF cookbook]. It helps developers and organizations
-to rapidly prepare application **running environment** (on both bare-metal servers and virtual machines) through various
-[CHEF recipes].
+[Aergia] is a tool that implements [Infrastructure-as-Code] through [CHEF cookbook]. It helps developers and
+organizations to rapidly prepare application **running environment** (on both bare-metal servers and virtual machines) 
+through various [CHEF recipes].
 
 As a strong supporter of [Infrastructure-as-Code], I choose [CHEF](https://qubitpi.github.io/chef-web-docs/) to
 implement this concept, because my early career at Yahoo gave me great opportunities to see how CHEF was used as
@@ -58,7 +58,7 @@ Usage
    > be used against the local chef-repo.
    >
    > Basically local mode needs to know where to find all cookbooks, roles, environments, data bags, etc, and it will
-   > look for them under a directory `~/cookbooks`. That explains the `mkdir cookbooks` above
+   > look for them under a directory `~/cookbooks`. That explains the `mkdir cookbooks` below
    >
    > References:
    >
@@ -71,9 +71,14 @@ Usage
    git clone https://github.com/QubitPi/aergia.git
    sudo chef-client -z -o 'recipe[aergia::docker]'
    ```
+   
+   The last command above runs [Docker recipe](https://qubitpi.github.io/aergia/docs/recipes/docker), which installs
+   Docker Daemon on the invoking host.
+   [There are much more recipes to try out](https://qubitpi.github.io/aergia/docs/category/recipes). Simply replace
+   `docker` in the last command with other recipe names.
 
-Getting a Quick Feel through Docker
------------------------------------
+Quick Start Using Docker
+------------------------
 
 [![Docker]](https://hub.docker.com/r/jack20191124/aergia)
 [![Docker Release Workflow Status]](https://github.com/QubitPi/aergia/actions/workflows/dockerhub-release.yml)
@@ -81,7 +86,7 @@ Getting a Quick Feel through Docker
 Want to try [Aergia] but not having a playground server yet? Not worry, we offer this Docker image which allows you to
 quickly play with [Aergia] in just few copy-and-paste commands:
 
-### Step 1 - Get Image
+### Step 1 - Getting Image
 
 #### Docker Hub
 
@@ -93,7 +98,7 @@ docker pull jack20191124/aergia
 
 #### GitHub
 
-You could also build the image from [my source repository](https://github.com/QubitPi/aergia):
+You could also build the image from [source](https://github.com/QubitPi/aergia):
 
 ```bash
 git clone https://github.com/QubitPi/aergia.git
@@ -112,8 +117,7 @@ example of the command:
 docker run --name aergia -it jack20191124/aergia
 ```
 
-Executing the command above will spin up the container and takes us directly into the container shell, which we
-[conduct some recipe tests inside](#use-container-to-manually-test-any-chef-recipes).
+Executing the command above will spin up the container and takes us directly into the container shell
 
 ### Step 3 - Run a Recipe
 
@@ -132,7 +136,7 @@ root@df3r670rf23r:~/cookbooks# ls
 aergia
 ```
 
-Test the recipe using
+Run a recipe using
 
 ```bash
 cd ~
