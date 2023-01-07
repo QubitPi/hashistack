@@ -20,12 +20,7 @@ name: Deploy to GitHub Pages
       - master
 
 jobs:
-  ci:
-    uses: ./.github/workflows/ci.yml
-    secrets: inherit
-
   deploy:
-    needs: ci
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     defaults:
