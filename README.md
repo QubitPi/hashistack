@@ -34,8 +34,9 @@ container onto that server using Dockerfile.
 Documentation
 -------------
 
-More information about Aergia can be found at our [documentation](https://qubitpi.github.io/aergia/).
 [![Documentation Deployment Workflow Status]](https://github.com/QubitPi/aergia/actions/workflows/doc-deploy.yml)
+
+More information about Aergia can be found at our [documentation](https://qubitpi.github.io/aergia/).
 
 Community [![Discord]](https://discord.com/widget?id=1060753787125514332)
 -------------------------------------------------------------------------
