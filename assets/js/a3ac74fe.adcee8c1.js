@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[2289],{2134:a=>{a.exports=JSON.parse('{"label":"Nexus","permalink":"/aergia/blog/tags/nexus","allTagsPath":"/aergia/blog/tags","count":1}')}}]);

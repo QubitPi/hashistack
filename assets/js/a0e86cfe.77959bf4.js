@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[3304],{3261:e=>{e.exports=JSON.parse('{"permalink":"/aergia/blog/tags/ci-cd","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
