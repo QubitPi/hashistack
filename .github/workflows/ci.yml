@@ -2,13 +2,14 @@
 name: CI
 
 "on":
+  workflow_call:
   pull_request:
   push:
     branches: [master]
 
 jobs:
   lint-unit:
-    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@0.1.0
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@0.1.0 # fallback: .github/lint-unit.yml
     permissions:
       actions: write
       checks: write

@@ -1,5 +1,5 @@
 ---
-name: "DockerHub Release"
+name: DockerHub Release
 
 "on":
   push:
@@ -7,7 +7,12 @@ name: "DockerHub Release"
       - "master"
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
   release:
+    needs: ci
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
