@@ -34,6 +34,8 @@ container onto that server using Dockerfile.
 Documentation
 -------------
 
+[![Documentation Deployment Workflow Status]](https://github.com/QubitPi/aergia/actions/workflows/doc-deploy.yml)
+
 More information about Aergia can be found at our [documentation](https://qubitpi.github.io/aergia/).
 
 Community [![Discord]](https://discord.com/widget?id=1060753787125514332)
@@ -245,6 +247,7 @@ The use and distribution terms for [Aergia](https://qubitpi.github.io/aergia/) a
 [License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
 [Docker]: https://img.shields.io/badge/Docker%20Image-309DEE?style=for-the-badge&logo=docker&logoColor=white
 [Docker Release Workflow Status]: https://img.shields.io/github/actions/workflow/status/QubitPi/aergia/dockerhub-release.yml?branch=master&ogo=github&style=for-the-badge
+[Documentation Deployment Workflow Status]: https://img.shields.io/github/actions/workflow/status/QubitPi/aergia/doc-deploy.yml?branch=master&ogo=github&style=for-the-badge
 [Why can't chef resolve my cookbooks?]: https://stackoverflow.com/a/26395418/14312712
 [Developing recipes with local mode]: https://subscription.packtpub.com/book/networking-and-servers/9781785287947/1/ch01lvl1sec21/developing-recipes-with-local-mode
 [Discord]: https://img.shields.io/discord/1060753787125514332?color=5865F2&logo=discord&logoColor=ffffff&style=for-the-badge
