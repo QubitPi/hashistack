@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package 'snapd'
-
-execute 'sudo snap install --classic certbot'
+snap_package 'core'
+snap_package 'certbot' do
+  options           ['classic']
+end
 
 link '/usr/bin/certbot' do
   to '/snap/bin/certbot'
