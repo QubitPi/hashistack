@@ -14,10 +14,8 @@
 
 package 'snapd'
 
-snap_package 'core'
-snap_package 'certbot' do
-  options ['classic']
-end
+execute "snap install core"
+execute "sudo snap install --classic certbot"
 
 link '/usr/bin/certbot' do
   to '/snap/bin/certbot'
