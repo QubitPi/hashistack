@@ -21,10 +21,10 @@ Aergia
 organizations to rapidly prepare application **running environment** (on both bare-metal servers and virtual machines)
 through various [CHEF recipes].
 
-As a strong supporter of [Infrastructure-as-Code], I choose [CHEF](https://qubitpi.github.io/chef-web-docs/) to
-implement this concept, because my early career at Yahoo gave me great opportunities to see how CHEF was used as
-a critical CI/CD component at Yahoo's tech infrastructure. I learned that CHEF was a great tool and I would like to
-continue that journey with CHEF in my own projects.
+As a strong advocate of [Infrastructure-as-Code], I choose [CHEF](https://qubitpi.github.io/chef-web-docs/) to implement 
+this concept, because my early career at Yahoo gave me great opportunities to see how CHEF was used as a critical CI/CD 
+component at Yahoo's tech infrastructure. I learned that CHEF was a great tool and I would like to continue that journey 
+with CHEF in my own projects.
 
 Note that although CHEF supports much more, [Aergia] automates **application environment setup ONLY** and does NOT
 automate any application deployment. For example, [Aergia] offers the ability to
