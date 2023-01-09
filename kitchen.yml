@@ -40,3 +40,9 @@ suites:
     verifier:
       inspec_tests:
         - test/integration/docker_compose
+  - name: certbot
+    run_list:
+      - recipe[aergia::certbot]
+    verifier:
+      inspec_tests:
+        - test/integration/certbot
