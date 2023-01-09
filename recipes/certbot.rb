@@ -14,7 +14,7 @@
 
 snap_package 'core'
 snap_package 'certbot' do
-  options           ['classic']
+  options ['classic']
 end
 
 link '/usr/bin/certbot' do
