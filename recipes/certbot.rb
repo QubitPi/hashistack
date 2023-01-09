@@ -12,8 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-snap_package 'core'
-snap_package 'certbot'
+snap_package 'core' do
+  action :upgrade
+end
+snap_package 'certbot' do
+  action :upgrade
+end
 
 link '/usr/bin/certbot' do
   to '/snap/bin/certbot'
