@@ -291,7 +291,6 @@ below in order to broaden his/her understanding of this powerful security layer.
 
 - [CACert, a FREE X.509 Certificate Authority](http://www.cacert.org/)
 - [OpenSSL Website](http://www.openssl.org/)
-- [Public Key Infrastructure (X.509) (pkix)](http://www.ietf.org/html.charters/pkix-charter.html)
 
 ### About OpenSSL
 
