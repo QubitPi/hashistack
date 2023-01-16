@@ -56,8 +56,8 @@ Usage
 1. **Install ChefDK**. The installation steps below works for Ubuntu OS.
 
    ```bash
-   apt-get update
-   apt-get install wget
+   sudo apt-get update
+   sudo apt-get install wget
    wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/ubuntu/20.04/chef-workstation_21.10.640-1_amd64.deb
    sudo dpkg -i chef-workstation_21.10.640-1_amd64.deb
    ```
