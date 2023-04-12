@@ -45,8 +45,8 @@ docker run -d --name=jenkins -p 8080:8080 -p 50000:50000 --restart=on-failure -v
 
 - Since all Jenkins data lives in there, including plugins and configuration, in `/var/jenkins_home`, we will also want
   to make that an explicit volume so we can manage it and attach to another container for upgrades. So we create a
-- "jenkins_home" [docker volume](https://qubitpi.github.io/docker-docs/storage/volumes/) on the host machine. Docker
-  volumes retain their content even when the container is stopped, started, or deleted.
+- "jenkins_home" docker volume on the host machine. Docker volumes retain their content even when the container is
+  stopped, started, or deleted.
 
 Recipe Verification
 -------------------

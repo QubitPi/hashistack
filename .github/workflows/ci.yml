@@ -15,9 +15,9 @@
 name: CI
 
 "on":
+  workflow_call:
   pull_request:
-  push:
-    branches: [master]
+    types: [opened, synchronize, reopened]
 
 jobs:
   lint-unit:
@@ -76,7 +76,7 @@ jobs:
           context: .
           push: false
 
-  test-documentation-deploy:
+  test-documentation-build:
     needs: [lint-unit, markdown-link-check]
     name: Test deployment
     runs-on: ubuntu-latest

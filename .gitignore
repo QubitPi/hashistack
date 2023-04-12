@@ -36,4 +36,4 @@ Berksfile.lock
 Policyfile.lock.json
 
 .idea/
-
+.DS_Store
