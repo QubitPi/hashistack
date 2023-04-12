@@ -383,7 +383,7 @@ A hosted Maven repository can be used to deploy our own as well as third-party c
 Nexus Repository Manager includes two hosted Maven repositories. The **maven-releases** repository uses a release
 version policy and the **maven-snapshots** repository uses a snapshot version policy.
 
-#### Deploying to Hosted Maven repository Manually
+#### Deploying to Hosted Maven repository
 
 Deployment to a repository is configured in 2 steps
 
@@ -392,12 +392,12 @@ Deployment to a repository is configured in 2 steps
 
 ##### Configuring Repository in Maven Project
 
-the `pom.xml` for the respective project in the "distributionManagement"
-section. Using the default repositories of the repository manager:
+Deployment to a repository is configured in the  `pom.xml` for the respective project in the "distributionManagement"
+section:
 
 ```xml
 <project>
-...
+   ...
 
     <distributionManagement>
         <repository>
@@ -412,12 +412,13 @@ section. Using the default repositories of the repository manager:
         </snapshotRepository>
     </distributionManagement>
 
-...
+   ...
 ```
 
 :::tip
 
-- Replace the "nexus-host" with the NDS address pointing to the actual Nexus instance. For example,
+- Replace the `nexus-host` with the NDS address pointing to the actual Nexus instance and
+  `maven-releases`/`maven-snapshots` to the actual repository name. For example,
 
   ```xml
   <distributionManagement>
@@ -429,7 +430,7 @@ section. Using the default repositories of the repository manager:
   </distributionManagement>
   ```
 
-- The "Snapshot" repository can be omitted in the most CI/CD-enabled project team
+- The "Snapshot" repository (tagged `snapshotRepository` above) can be omitted in the most CI/CD-enabled project team
 
 :::
 
@@ -470,7 +471,7 @@ repository manager, can now be invoked with `mvn clean deploy`.
 Note that we deployed in the last minute our artifact to repository through a manual `mvn clean deploy` command. To
 enable automatic deployment to the repository, we will simply go through
 [the exact same procedure](#deploying-to-hosted-maven-repository-manually) except that instead of running
-`mvn clean deploy` locally and manually, let CI/CD execute that for us.
+`mvn clean deploy` locally and manually, we let CI/CD execute that for us.
 
 ###### Up-version Automatically
 
