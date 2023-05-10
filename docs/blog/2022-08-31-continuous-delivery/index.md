@@ -1,7 +1,7 @@
 ---
 slug: continuous-delivery
 title: Continuous Delivery
-authors: [continuousdelivery.com, jiaqi]
+authors: [continuousdelivery.com, jiaqi, sten-pittet]
 tags: [Continuous Delivery]
 ---
 
@@ -338,7 +338,13 @@ strategy have several drawbacks:
 - When systems are evolving over time, as is the case in modern software products and services, we have to spend
   considerable effort updating test documentation to keep it up-to-date.
 
-In order to build quality in to software, we need to adopt a different approach.
+In order to build quality in to software, we need to adopt a
+[different approach](#different-types-of-software-testing).
+
+The more features and improvements go into our code, the more we'll need to test to make sure that all our system works
+properly. And then for each bug we fix, it would be wise to check that they don't get back in newer releases.
+Automation is key to make this possible and writing tests sooner rather than later will become part of our development
+workflow.
 
 Once we have continuous integration and test automation in place, we create a
 [deployment pipeline](#the-deployment-pipeline). In the deployment pipeline pattern, every change runs a build that
@@ -359,6 +365,62 @@ Our goal should be to find problems as soon as possible, and make the lead time 
 possible. Thus we want to parallelize the activities in the deployment pipeline, not have many stages executing in
 series. If we discover a defect in the acceptance tests, we should be looking to improve our unit tests (most of our
 defects should be discovered through unit testing).
+
+#### Different Types of Software Testing
+
+##### Unit Tests
+
+Unit tests are very low level and close to the source of an application. They consist in testing individual methods and
+functions of the classes, components, or modules used by our software. Unit tests are generally quite cheap to automate
+and can run very quickly by a continuous integration server.
+
+##### Integration Tests
+
+Integration tests verify that different modules or services used by our application work well together. For example, it
+can be testing the interaction with the database or making sure that microservices work together as expected. These
+types of tests are more expensive to run as they require multiple parts of the application to be up and running.
+
+##### Functional Tests
+
+Functional tests focus on the business requirements of an application. They only verify the output of an action and do
+not check the intermediate states of the system when performing that action.
+
+There is sometimes a confusion between integration tests and functional tests as they both require multiple components
+to interact with each other. The difference is that an integration test may simply verify that we can query the
+database while a functional test would expect to get a specific value from the database as defined by the product
+requirements.
+
+##### End-to-End Tests
+
+End-to-end testing replicates a user behavior with the software in a complete application environment. It verifies that
+various user flows work as expected and can be as simple as loading a web page or logging in or much more complex
+scenarios verifying email notifications, online payments, etc...
+
+End-to-end tests are very useful, but they're expensive to perform and can be hard to maintain when they're automated.
+It is recommended to have a few key end-to-end tests and rely more on lower level types of testing (unit and
+integration tests) to be able to quickly identify breaking changes.
+
+##### Acceptance Tests
+
+Acceptance tests are formal tests that verify if a system satisfies business requirements. They require the entire
+application to be running while testing and focus on replicating user behaviors. But they can also go further and
+measure the performance of the system and reject changes if certain goals are not met.
+
+##### Performance Tests
+
+Performance tests evaluate how a system performs under a particular workload. These tests help to measure the
+reliability, speed, scalability, and responsiveness of an application. For instance, a performance test can observe
+response times when executing a high number of requests, or determine how a system behaves with a significant amount of
+data. It can determine if an application meets performance requirements, locate bottlenecks, measure stability during
+peak traffic, and more.
+
+##### Smoke Tests
+
+Smoke tests are basic tests that check the basic functionality of an application. They are meant to be quick to
+execute, and their goal is to give us the assurance that the major features of our system are working as expected.
+
+Smoke tests can be useful right after a new build is made to decide whether or not we can run more expensive tests, or
+right after a deployment to make sure that they application is running properly in the newly deployed environment.
 
 Implementing Continuous Delivery
 --------------------------------

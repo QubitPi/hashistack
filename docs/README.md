@@ -55,8 +55,9 @@ Aergia is using GitHub pages for hosting, this command builds the website and pu
 
 #### Docusaurus Blogs Relative Linking is Treated False-Negative by CI Markdown Link check
 
-[CI check for Markdown link](../.github/workflows/ci.yml) (`markdown-link-check`) is turned on and it's not smart enough
-to detect relative linking by Docusaurus. The workaround is to disable the link check at the relevant line. For example:
+[CI check for Markdown link](../.github/workflows/ci-cd.yml) (`markdown-link-check`) is turned on and it's not smart
+enough to detect relative linking by Docusaurus. The workaround is to disable the link check at the relevant line. For
+example:
 
 ```markdown
 <!-- markdown-link-check-disable -->

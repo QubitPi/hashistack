@@ -12,12 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: CI
+name: Aergia CI/CD Definition
 
 "on":
   workflow_call:
   pull_request:
     types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - master
 
 jobs:
   lint-unit:
@@ -29,6 +32,7 @@ jobs:
       statuses: write
 
   markdown-link-check:
+    name: Markdown Link Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -36,7 +40,8 @@ jobs:
         with:
           use-verbose-mode: "yes"
 
-  integration-test:
+  recipes-integration-tests:
+    name: Recipes Integration Tests
     needs: [lint-unit, markdown-link-check]
     runs-on: ubuntu-latest
     strategy:
@@ -66,19 +71,37 @@ jobs:
           sudo journalctl -l --since today
           KITCHEN_LOCAL_YAML=kitchen.dokken.yml /usr/bin/kitchen exec ${{ matrix.suite }}-${{ matrix.os }} -c "journalctl -l"
 
-  test-docker-image-build:
-    needs: [lint-unit, markdown-link-check]
+  docker-image-ci-cd:
+    name: Test & Release Docker Image
+    needs: [lint-unit, markdown-link-check, recipes-integration-tests]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: docker/build-push-action@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Test image Build
+        run: docker build -t jack20191124/aergia .
+      - name: Login to DockerHub
+        if: github.ref == 'refs/heads/master'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        if: github.ref == 'refs/heads/master'
+        uses: docker/build-push-action@v3
         with:
           context: .
-          push: false
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/aergia:latest
 
-  test-documentation-build:
-    needs: [lint-unit, markdown-link-check]
-    name: Test deployment
+
+  documentation-ci-cd:
+    name: Test Documentation Build & Deploy Documentation to GitHub Pages
+    needs: [lint-unit, markdown-link-check, recipes-integration-tests]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -92,5 +115,13 @@ jobs:
           cache-dependency-path: './docs/yarn.lock'
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Test build website
+      - name: Build website
         run: yarn build
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build
+          user_name: QubitPi
+          user_email: jack20220723@gmail.com
