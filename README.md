@@ -15,28 +15,28 @@
 Aergia
 ======
 
-![Last Commit] [![License Badge]](https://www.apache.org/licenses/LICENSE-2.0)
+[![GitHub Workflow Status][GitHub Workflow Status]](https://github.com/QubitPi/aergia/actions/workflows/ci-cd.yml)
+![Last Commit]
+[![License Badge][License Badge]](https://www.apache.org/licenses/LICENSE-2.0)
 
-[Aergia] is a tool that implements [Infrastructure-as-Code] through [CHEF cookbook]. It helps developers and
-organizations to rapidly prepare application **running environment** (on both bare-metal servers and virtual machines)
-through various [CHEF recipes].
+[Aergia][Aergia Documentation] is a tool that implements [Infrastructure-as-Code] through [CHEF cookbook]. It helps
+developers and organizations to rapidly prepare application **running environment** (on both bare-metal servers and 
+virtual machines) through various [CHEF recipes].
 
-As a strong supporter of [Infrastructure-as-Code], I choose [CHEF](https://qubitpi.github.io/chef-web-docs/) to
-implement this concept, because my early career at Yahoo gave me great opportunities to see how CHEF was used as
-a critical CI/CD component at Yahoo's tech infrastructure. I learned that CHEF was a great tool and I would like to
-continue that journey with CHEF in my own projects.
+As a strong supporter of [Infrastructure-as-Code], I choose [CHEF] to implement this concept, because my early career
+at Yahoo gave me great opportunities to see how CHEF was used as a critical CI/CD component at Yahoo's tech
+infrastructure. I learned that CHEF was a great tool and I would like to continue that journey with CHEF in my own
+projects.
 
-Note that although CHEF supports much more, [Aergia] automates **application environment setup ONLY** and does NOT
-automate any application deployment. For example, [Aergia] offers the ability to
+Note that although CHEF supports much more, Aergia automates **application environment setup ONLY** and does NOT
+automate any application deployment. For example, Aergia offers the ability to
 [install Docker Daemon](./recipes/docker.rb); but it does NOT support anything related to deploying a React app Docker
 container onto that server using Dockerfile.
 
 Documentation
 -------------
 
-[![Documentation Deployment Workflow Status]](https://github.com/QubitPi/aergia/actions/workflows/doc-deploy.yml)
-
-More information about Aergia can be found at our [documentation](https://qubitpi.github.io/aergia/).
+More information about Aergia can be found at our [documentation][Aergia Documentation].
 
 Community [![Discord]](https://discord.com/widget?id=1060753787125514332)
 -------------------------------------------------------------------------
@@ -85,7 +85,7 @@ Usage
    sudo mkdir /cookbooks
    cd /cookbooks
    git clone https://github.com/QubitPi/aergia.git
-   sudo chef-client -z -o 'recipe[aergia::docker]'
+   sudo chef-client -z -o 'recipe[aergia::docker]' --chef-license accept  > /dev/null
    ```
 
    The last command above runs [Docker recipe](https://qubitpi.github.io/aergia/docs/recipes/docker), which installs
@@ -105,7 +105,6 @@ Quick Start Using Docker
 ------------------------
 
 [![Docker]](https://hub.docker.com/r/jack20191124/aergia)
-[![Docker Release Workflow Status]](https://github.com/QubitPi/aergia/actions/workflows/dockerhub-release.yml)
 
 Want to try [Aergia] but not having a playground server yet? Not worry, we offer this Docker image which allows you to
 quickly play with [Aergia] in just few copy-and-paste commands:
@@ -164,13 +163,13 @@ Run a recipe using
 
 ```bash
 cd /cookbooks
-chef-client -z -o 'recipe[aergia::docker]'
+chef-client -z -o 'recipe[aergia::docker]' --chef-license accept  > /dev/null
 ```
 
 The last command above [installs Docker Engine](https://qubitpi.github.io/aergia/docs/recipes/docker)
 
 ```bash
-root@3tg4df12f33dsf3:/# chef-client -z -o 'recipe[aergia::docker]'
+root@3tg4df12f33dsf3:/# chef-client -z -o 'recipe[aergia::docker]' --chef-license accept  > /dev/null
 WARN: No config file found or specified on command line. Using command line options instead.
 +---------------------------------------------+
             Chef License Acceptance
@@ -241,12 +240,22 @@ Test Summary: 1 successful, 0 failures, 0 skipped
 License
 -------
 
-The use and distribution terms for [Aergia](https://qubitpi.github.io/aergia/) are covered by the
-[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
+The use and distribution terms for [Aergia][Aergia] are covered by the
+[Apache License, Version 2.0][Apache License, Version 2.0].
 
-![](https://github.com/QubitPi/QubitPi/blob/master/img/apache-2.png?raw=true)
+<div align="center">
+    <a href="https://opensource.org/licenses">
+        <img align="center" width="50%" alt="License Illustration" src="https://github.com/QubitPi/QubitPi/blob/master/img/apache-2.png?raw=true">
+    </a>
+</div>
 
-[Aergia]: https://github.com/QubitPi/aergia
+[Aergia Documentation]: https://qubitpi.github.io/aergia/
+[Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
+
+[CHEF]: https://qubitpi.github.io/chef-web-docs/
+
+[GitHub Workflow Status]: https://img.shields.io/github/actions/workflow/status/QubitPi/aergia/ci-cd.yml?branch=master&logo=github&style=for-the-badge
+
 [CHEF recipes]: https://qubitpi.github.io/chef-web-docs/recipes/
 [Chef cookbook]: https://qubitpi.github.io/chef-web-docs/cookbooks/
 [Infrastructure-as-Code]: https://qubitpi.github.io/aergia/blog/iac-intro
