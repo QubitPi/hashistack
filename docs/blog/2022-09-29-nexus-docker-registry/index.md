@@ -1,5 +1,5 @@
 ---
-slug: nexus
+slug: nexus-docker-registry
 title: Nexus 3 - Setting Up Docker Registry
 authors: [jiaqi]
 tags: [Nexus, Docker]
