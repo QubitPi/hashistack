@@ -12,8 +12,6 @@
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-<img align="right" width="30%" src="https://github.com/QubitPi/QubitPi/raw/master/img/aergia/甘雨.png">
-
 Changelog
 ---------
 
