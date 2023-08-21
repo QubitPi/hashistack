@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[8288],{711:e=>{e.exports=JSON.parse('{"permalink":"/aergia/blog","page":1,"postsPerPage":10,"totalPages":2,"totalCount":13,"nextPage":"/aergia/blog/page/2","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
