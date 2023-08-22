@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-[![GitHub Market Place Badge][GitHub Market Place Badge]](https://github.com/marketplace/actions/hashicorp-aws)
+[//]: # ([![GitHub Market Place Badge][GitHub Market Place Badge]]&#40;https://github.com/marketplace/actions/hashicorp-aws&#41;)
 
 HashiCorp AWS - Immutable Infrastructure as Code via GitHub Action
 ------------------------------------------------------------------
@@ -415,7 +415,7 @@ resource "aws_route53_record" "my-app-my-domain-com" {
 [GitHub Market Place Badge]: https://img.shields.io/badge/Github%20Marketplace-1E883D.svg?style=for-the-badge&logo=Github&logoColor=white
 [Google Domain]: https://domains.google/
 
-[HashiCorp AWS]: https://github.com/marketplace/actions/hashicorp-aws
+[//]: # ([HashiCorp AWS]: https://github.com/marketplace/actions/hashicorp-aws)
 [HashiCorp Tutorial]: https://developer.hashicorp.com/terraform/tutorials/provision/packer
 [HashiCorp Packer Build Block]: https://qubitpi.github.io/hashicorp-packer/packer/docs/templates/hcl_templates/blocks/build
 [HashiCorp Packer Shell Provisioner]: https://qubitpi.github.io/hashicorp-packer/packer/docs/provisioners/shell
