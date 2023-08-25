@@ -1,17 +1,14 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-Aergia Documentation Home
-=========================
+Deploying to AWS EC2 through HashiCorp
+======================================
 
-Maturing Our Cloud with HashiCorp
----------------------------------
+[![GitHub Market Place Badge][GitHub Market Place Badge]](https://github.com/marketplace/actions/deploying-to-aws-ec2-through-hashicorp)
 
-
-
-
-
+HashiCorp AWS - Immutable Infrastructure as Code via GitHub Action
+------------------------------------------------------------------
 
 [HashiCorp AWS][HashiCorp AWS] is an opinionated CI/CD [GitHub Action][What is GitHub Action] that
 

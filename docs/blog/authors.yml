@@ -38,3 +38,7 @@ sten-pittet:
   name: Sten Pittet
   url: https://www.atlassian.com/continuous-delivery/software-testing/types-of-software-testing
   image_url: https://wac-cdn.atlassian.com/dam/jcr:57a8bbb8-4f5c-46fc-9ceb-224cf79af3d8/Screen%20Shot%202017-04-14%20at%2010.43.26%20AM.png?cdnVersion=998
+morgan-peat:
+  name: Morgan Peat
+  url: https://www.hashicorp.com/blog/maturing-your-terraform-workflow
+  image_url: https://www.hashicorp.com/_next/static/media/color.d7bf990e.svg
