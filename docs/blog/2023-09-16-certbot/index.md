@@ -63,3 +63,82 @@ certificates without modifying system files:
 ```bash
 sudo certbot --nginx
 ```
+
+Configure Reverse Proxy on Nginx
+--------------------------------
+
+After certificates have been deployed and Nginx has been configured properly for SSL by Certbot, it's time to configure
+routing to direct HTTPS to local HTTP by modifying **/etc/nginx/sites-enabled/default** file.
+
+Locate the section of
+
+```text
+server {
+    ...
+
+    listen [::]:443 ssl ipv6only=on;
+    listen 443 ssl;
+    ssl_certificate /etc/ssl/certs/server.crt;
+    ssl_certificate_key /etc/ssl/private/server.key;
+}
+```
+
+Add the proxy routing rule in the `server` block above
+
+```text
+    location / {
+        proxy_pass http://localhost:8080;
+    }
+```
+
+In this example, we have a webservice running at port 8080. Essentially this will redirect all HTTPS request to this
+local port, effectively enabling HTTPS on the webservice
+
+:::info
+
+The complete Nginx config file, in the end, will look something like:
+
+```text
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+server {
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+    server_name ws-domain.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+    }
+
+    listen [::]:443 ssl ipv6only=on;
+    listen 443 ssl;
+    ssl_certificate /etc/ssl/certs/server.crt;
+    ssl_certificate_key /etc/ssl/private/server.key;
+}
+server {
+    if ($host = ws-domain.com) {
+        return 301 https://$host$request_uri;
+    }
+
+    listen 80 ;
+    listen [::]:80 ;
+    server_name ws-domain.com;
+    return 404;
+}
+```
+
+:::
