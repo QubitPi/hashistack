@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[4440],{9849:a=>{a.exports=JSON.parse('{"label":"Chef","permalink":"/aergia/blog/tags/chef","allTagsPath":"/aergia/blog/tags","count":1}')}}]);
