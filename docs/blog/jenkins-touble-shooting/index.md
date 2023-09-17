@@ -3,6 +3,7 @@ slug: jenkins-troubleshooting
 title: Jenkins Troubleshooting
 authors: [jiaqi]
 tags: [Jenkins]
+date: 2022-10-30
 ---
 
 <!--truncate-->

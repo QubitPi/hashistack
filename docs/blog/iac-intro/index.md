@@ -3,6 +3,7 @@ slug: iac-intro
 title: Introduction to Infrastructure as Code (IaC)
 authors: [jiaqi]
 tags: [Infrastructure as Code, IaC]
+date: 2022-11-07
 ---
 
 :::tip [Wikipedia](https://en.wikipedia.org/wiki/Infrastructure_as_code):

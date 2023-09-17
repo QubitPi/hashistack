@@ -3,6 +3,7 @@ slug: deploying-vs-releasing
 title: Deploying v.s. Releasing
 authors: [joseph-mathenge, jiaqi]
 tags: [Continuous Delivery]
+date: 2022-08-29
 ---
 
 The key distinction between deployment and release is the business rationale. Deployment doesn't necessarily mean users

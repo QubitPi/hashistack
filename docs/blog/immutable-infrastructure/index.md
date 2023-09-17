@@ -3,6 +3,7 @@ slug: immutable-infrastructure
 title: What Is Immutable Infrastructure
 authors: [hazel, jiaqi]
 tags: [Continuous Delivery]
+date: 2022-08-30
 ---
 
 In a traditional mutable server infrastructure, servers are continually updated and modified in place. Engineers and

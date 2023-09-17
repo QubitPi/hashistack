@@ -3,6 +3,7 @@ slug: nexus
 title: Nexus 3 Repository Manager OSS
 authors: [jiaqi]
 tags: [Nexus]
+date: 2022-09-30
 ---
 
 The proliferation of different repository formats and tools accessing them as well as the emergence of more publicly
