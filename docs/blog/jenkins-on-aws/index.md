@@ -3,6 +3,7 @@ slug: jenkins-on-aws
 title: Deploying Jenkins to AWS
 authors: [jiaqi]
 tags: [Jenkins]
+date: 2022-10-31
 ---
 
 <!--truncate-->
@@ -289,7 +290,6 @@ below in order to broaden his/her understanding of this powerful security layer.
 
 #### WWW Resources
 
-- [CACert, a FREE X.509 Certificate Authority](http://www.cacert.org/)
 - [OpenSSL Website](http://www.openssl.org/)
 - [Public Key Infrastructure (X.509) (pkix)](http://www.ietf.org/html.charters/pkix-charter.html)
 

@@ -3,6 +3,7 @@ slug: docker-c-advisor
 title: Docker cAdvisor
 authors: [jiaqi]
 tags: [Docker, Virtualization]
+date: 2022-07-31
 ---
 
 <!--truncate-->

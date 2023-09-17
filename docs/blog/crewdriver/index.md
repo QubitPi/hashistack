@@ -3,6 +3,7 @@ slug: screwdriver
 title: Open Sourcing Screwdriver - Yahoo's Continuous Delivery Build System for Dynamic Infrastructure
 authors: [jiaqi]
 tags: [CI/CD]
+date: 2022-06-30
 ---
 
 <!--truncate-->

@@ -3,6 +3,7 @@ slug: ssh-ascii-banner
 title: Add Custom ASCII Banner Logo to SSH Login Screen
 authors: [jiaqi, mike-andreasen]
 tags: [DevOps]
+date: 2022-04-30
 ---
 
 <!--truncate-->

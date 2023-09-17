@@ -3,6 +3,7 @@ slug: nexus
 title: Nexus 3 - Setting Up Docker Registry
 authors: [jiaqi]
 tags: [Nexus, Docker]
+date: 2022-09-29
 ---
 
 Docker containers and their usage have revolutionized the way applications and the underlying operating system are
