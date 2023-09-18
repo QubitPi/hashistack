@@ -26,9 +26,8 @@ sudo apt-get update
 # Install Elasticsearch
 sudo apt-get install elasticsearch
 
-sudo sed -i 's/#network.host: 192.168.0.1/network.host: 127.0.0.1/g'
-sudo sed -i 's/http.host: 0.0.0.0/http.host: 127.0.0.1/g'
-sudo sed -i 's/#transport.host: 0.0.0.0/transport.host: 127.0.0.1/g'
+sudo sed -i 's/#network.host: 192.168.0.1/network.host: 0.0.0.0/g'
+sudo sed -i 's/#transport.host: 0.0.0.0/transport.host: 0.0.0.0/g'
 
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
