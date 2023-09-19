@@ -45,9 +45,9 @@ HashiCorp AWS action follows [HashiCrop's best practice][HashiCorp Tutorial] by 
 - The **aws-my-app.pkr.hcl** is the standard [HashiCorp Packer Template][HashiCorp Packer Template] file. For example
 - The **variables.pkr.hcl**  is the standard [Packer Variable][HashiCorp Packer Variables] definitions
 
-    - Place make sure to place the following variable declaration block in _variables.pkr.hcl_ this is an
-      [inversion of control][inversion of control] variable required by [HashiCorp AWS][HashiCorp AWS]. The value of this
-      variable will be set to the _AWS_REGION_ which will be talked about later
+    - Place make sure to place the following variable declaration block in _variables.pkr.hcl_. this is an
+      [inversion of control][inversion of control] variable required by [HashiCorp AWS][HashiCorp AWS]. The value of 
+      this variable will be set to the _AWS_REGION_ which will be talked about later
 
       ```hcl
       variable "aws_image_region" {
