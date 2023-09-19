@@ -32,7 +32,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/category/recipes">
+            to="/docs/category/documentations">
             Infrastructure as Code
           </Link>
         </div>
