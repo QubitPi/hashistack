@@ -22,7 +22,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Aergia',
-  tagline: 'Better Software Infrastructure Using Chef Cookbook Recipes',
+  tagline: 'Infrastructure as Code via HashiCorp',
   url: 'https://qubitpi.github.io/',
   baseUrl: '/aergia',
   onBrokenLinks: 'warn',
@@ -84,7 +84,7 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Recipes',
+            label: 'Documentations',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -101,8 +101,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Recipes',
-                to: '/docs/category/recipes',
+                label: 'Documentations',
+                to: '/docs/category/documentations',
               },
             ],
           },
