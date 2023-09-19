@@ -5,8 +5,17 @@ sidebar_position: 2
 Elastic Stack (ELK)
 ===================
 
+Assuming ELK is a _non-frequently deployed_ tech asset, [Aergia] makes it a semi-automated deployment.
+
 Setup
 -----
+
+### Get Aergia ELK Deployer
+
+```bash
+git clone git@github.com:QubitPi/aergia.git
+cd hashicorp/elk
+```
 
 ### Authenticating to AWS
 
@@ -20,41 +29,33 @@ export AWS_ACCESS_KEY_ID="<YOUR_AWS_ACCESS_KEY_ID>"
 export AWS_SECRET_ACCESS_KEY="<YOUR_AWS_SECRET_ACCESS_KEY>"
 ```
 
-Alternatively, we can put the two lines above in a shell script like:
+In addition, we need to have an _IAM user_ who has the following [AWS permissions policies]:
 
-```shell
-#!/bin/bash
+- **AmazonEC2FullAccess**
+- **AmazonRoute53FullAccess**
+- **IAMFullAccess**
 
-export AWS_ACCESS_KEY_ID="<YOUR_AWS_ACCESS_KEY_ID>"
-export AWS_SECRET_ACCESS_KEY="<YOUR_AWS_SECRET_ACCESS_KEY>"
-```
+### Preparing for Building AMI Image
 
-and [source it](https://serverfault.com/a/336282)
-
-### Preparing for Building Image
-
-Create a file named **aws-elk.auto.pkrvars.hcl** under _packer/elk/images_ directory. Example:
+Create a file named **aws-elk.auto.pkrvars.hcl** at any our preferred location with the following contents:
 
 ```hcl
 aws_image_region           = "us-east-2"
-elastic_user_passwd        = "2324fJGY2sdHDde2ubu"
 ssl_cert_file_path         = "/absolute/path/to/server.crt"
 ssl_cert_key_file_path     = "/absolute/path/to/server.key"
 ssl_nginx_config_file_path = "/absolute/path/to/nginx-ssl.conf"
 ```
 
-#### SSL certificate
+- **aws_image_region** is the region where ELK AMI will be published to. The published image will be _private_
+- **ssl_cert_file_path** and **ssl_cert_key_file_path** above are the local absolute paths to SSL certificate file and
+  SSL certificate key, respectively. They can be [obtained via Certbot](https://qubitpi.github.io/aergia/blog/certbot)
+- **ssl_nginx_config_file_path** is the local absolute path to the Nginx config file (see **an example** below) that
+  consumes the SSL certificate above and enables HTTPS.
 
-The **ssl_cert_file_path** and **ssl_cert_key_file_path** above are paths to SSL certificate file and SSL certificate
-key, respectively. They can be [obtained via Certbot](https://qubitpi.github.io/aergia/blog/certbot)
+:::tip
 
-##### Nginx Config
-
-:::note
-
-Replace `my-domain.com` with the domain backed by the [SSL](#ssl-certificate)
-
-:::
+Here is an example of the aforementioned Nginx config file. Replace `my-domain.com` with the domain backed by the
+[SSL](#ssl-certificate) accordingly:
 
 ```text
 server {
@@ -100,16 +101,18 @@ server {
 }
 ```
 
-#### Building Image
+:::
+
+### Building AMI Image
 
 ```bash
 packer init .
 packer fmt .
 packer validate .
-packer build .
+packer build --var-file=/absolute/path/to/aforementioned/aws-elk.auto.pkrvars.hcl aws-elk.pkr.hcl
 ```
 
-Record the password at command line prompt. For example
+Record the **Elasticsearch password (for _elastic_ user)** at command line prompt. For example
 
 ```shell
 ==> install-elk.amazon-ebs.elk: + sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
@@ -124,6 +127,7 @@ Record the password at command line prompt. For example
 
 In this case, the password is `dsrg34IKHU787iud=dio` which is shown in the last line of the output above.
 
+If we see the following output in the end, if means AMI image has been built successfully:
 
 ```shell
 ==> Wait completed after 5 minutes 40 seconds
@@ -133,10 +137,40 @@ In this case, the password is `dsrg34IKHU787iud=dio` which is shown in the last 
 <sensitive>: ami-34gfg45herr356hre43g
 ```
 
-#### Terraform EC2
+### Preparing for Deploying EC2 Instance
+
+Create a file named **aws-elk.auto.tfvars** at any our preferred location with the following contents:
+
+```hcl
+aws_deploy_region = "us-east-2"
+zone_id = "<AWS Route 53 Zone ID>"
+elk_doman = "myelk.mycompany.com"
+key_pair_name = "<AWS keypair name for SSH>"
+instance_name = "<AWS EC2 displayed instance name>"
+security_group = "<AWS Security Group for the EC2 instance>"
+```
+
+### Deploying EC2 Instance
+
+Copy the aforementioned `aws-elk.auto.tfvars` file into the `aergia/hashicorp/elk/instance` directory and run
 
 ```bash
+cd aergia/hashicorp/elk/instance
 terraform init
-terraform validate
-
+terraform apply -auto-approve
 ```
+
+### Post Setup in EC2 Instance
+
+As we've mentioned in the beginning, this is a semi-deployment and we still need to SSH into the box to manually
+generate Kibana token & verification code. This will make the automated deploymentl logic simple and easy to maintain
+
+```bash
+sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana --url "https://localhost:9200"
+sudo /usr/share/kibana/bin/kibana-verification-code
+```
+
+Now we can visit `https://myelk.mycompany.com` to enter the token and verification code to access our ELK instance.
+
+[Aergia]: https://qubitpi.github.io/aergia/
+[AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html

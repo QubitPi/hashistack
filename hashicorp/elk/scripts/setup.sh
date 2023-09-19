@@ -26,8 +26,9 @@ sudo apt-get update
 # Install Elasticsearch
 sudo apt-get install elasticsearch
 
-sudo sed -i 's/#network.host: 192.168.0.1/network.host: 0.0.0.0/g'
-sudo sed -i 's/#transport.host: 0.0.0.0/transport.host: 0.0.0.0/g'
+sudo sed -i 's/#network.host: 192.168.0.1/network.host: 0.0.0.0/g' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i 's/http.host: 0.0.0.0/http.host: 127.0.0.1/g' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i 's/#transport.host: 0.0.0.0/transport.host: 0.0.0.0/g' /etc/elasticsearch/elasticsearch.yml
 
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
@@ -38,7 +39,7 @@ yes | sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
 # Install Kibana
 sudo apt-get install kibana
 
-sudo sed -i 's/#server.host: "localhost"/server.host: "0.0.0.0"/g'
+sudo sed -i 's/#server.host: "localhost"/server.host: "0.0.0.0"/g' /etc/kibana/kibana.yml
 
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable kibana.service

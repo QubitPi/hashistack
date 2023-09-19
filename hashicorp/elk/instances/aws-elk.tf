@@ -89,6 +89,12 @@ resource "aws_instance" "elk" {
   }
   key_name = var.key_pair_name
   security_groups = [var.security_group]
+
+#  user_data = <<-EOF
+#    #!/bin/bash
+#    sudo systemctl start elasticsearch.service
+#    sudo systemctl start kibana.service
+#  EOF
 }
 
 resource "aws_route53_record" "elk" {
