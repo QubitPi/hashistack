@@ -280,7 +280,6 @@ application is sending traffic to an address that is reachable via the OpenVPN t
 ### Additional OpenVPN Resources
 
 * [Free Profile](https://www.vpnbook.com/) - OpenVPN tab (need VPN access first)
-* [Bypass OpenVPN for particular IP](https://serverfault.com/a/487471)
 
 #### Config File
 

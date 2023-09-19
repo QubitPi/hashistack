@@ -59,29 +59,29 @@ Here is an example of the aforementioned Nginx config file. Replace `my-domain.c
 
 ```text
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
-	root /var/www/html;
+    root /var/www/html;
 
-	index index.html index.htm index.nginx-debian.html;
+    index index.html index.htm index.nginx-debian.html;
 
-	server_name _;
+    server_name _;
 
-	location / {
-		try_files $uri $uri/ =404;
-	}
+    location / {
+        try_files $uri $uri/ =404;
+    }
 }
 
 server {
-	root /var/www/html;
+    root /var/www/html;
 
-	index index.html index.htm index.nginx-debian.html;
+    index index.html index.htm index.nginx-debian.html;
     server_name my-domain.com;
 
-	location / {
-		proxy_pass http://localhost:5601;
-	}
+    location / {
+        proxy_pass http://localhost:5601;
+    }
 
     listen [::]:443 ssl ipv6only=on;
     listen 443 ssl;
@@ -94,8 +94,8 @@ server {
         return 301 https://$host$request_uri;
     }
 
-	listen 80 ;
-	listen [::]:80 ;
+    listen 80 ;
+    listen [::]:80 ;
     server_name my-domain.com;
     return 404;
 }
