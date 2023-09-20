@@ -7,6 +7,15 @@ Elastic Stack (ELK)
 
 Assuming ELK is a _non-frequently deployed_ tech asset, [Aergia] makes it a semi-automated deployment.
 
+:::caution
+
+[Aergia] deploys ELK as a [t2.large](https://aws.amazon.com/ec2/instance-types/t2/) instance. This is because all
+Elasticsearch, Kibana, and Logstash are contained in it, which can cause
+[performance issue](https://stackoverflow.com/a/50022217) in small instance. t2.large, by experiment, is the smallest
+size that supports smooth runtime. For that, **please be aware AWS credit charges shall incur afterward**
+
+:::
+
 Setup
 -----
 
@@ -212,10 +221,16 @@ output {
 }
 ```
 
-Start Logstash with
+Start Logstash with:
 
 ```bash
 sudo /usr/share/logstash/bin/logstash -f logstash-filebeat.conf --config.reload.automatic
+```
+
+or with nohup at background:
+
+```bash
+nohup sudo /usr/share/logstash/bin/logstash -f logstash-filebeat.conf --config.reload.automatic &
 ```
 
 [Aergia]: https://qubitpi.github.io/aergia/
