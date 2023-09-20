@@ -172,5 +172,51 @@ sudo /usr/share/kibana/bin/kibana-verification-code
 
 Now we can visit `https://myelk.mycompany.com` to enter the token and verification code to access our ELK instance.
 
+#### Logstash
+
+Logstash, at this moment, supports redirecting log lines from Filebeat to Elasticsearch and, similar to the
+token and verification above, needs to be setup manually.
+
+Create a file named **logstash-filebeat.conf** in the default location chosen by Logstash:
+
+```bash
+sudo nano /usr/share/logstash/logstash-filebeat.conf
+```
+
+Copy and paste the following contents into the file
+
+:::info
+
+Replace the `<password for user 'elastic'>` accordingly. If the user is _elastic_, which is the case here, the password
+has been generated during the [AMI image building phase](#building-ami-image)
+
+:::
+
+```text
+input {
+    beats {
+        port => "5044"
+    }
+}
+
+output {
+    elasticsearch {
+        hosts => [ "https://localhost:9200" ]
+
+        ssl_certificate_verification => false
+
+        user => "elastic"
+
+        password => "<password for user 'elastic'>"
+    }
+}
+```
+
+Start Logstash with
+
+```bash
+sudo /usr/share/logstash/bin/logstash -f logstash-filebeat.conf --config.reload.automatic
+```
+
 [Aergia]: https://qubitpi.github.io/aergia/
 [AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html

@@ -78,7 +78,7 @@ data "aws_ami" "latest-elk" {
 
 resource "aws_instance" "elk" {
   ami = "${data.aws_ami.latest-elk.id}"
-  instance_type = "t2.medium"
+  instance_type = "t2.large"
 
   root_block_device {
     volume_size = 60

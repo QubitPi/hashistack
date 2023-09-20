@@ -46,7 +46,7 @@ source "amazon-ebs" "elk" {
   force_deregister      = "true"
   force_delete_snapshot = "true"
 
-  instance_type = "t2.medium"
+  instance_type = "t2.large"
   region        = "${var.aws_image_region}"
   source_ami_filter {
     filters = {
