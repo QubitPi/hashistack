@@ -22,16 +22,6 @@ date: 2022-05-27
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-[Download](https://openvpn.net/community-downloads/)
-
-```bash
-./configure
-make
-sudo make install
-```
-
-alias openvpn="/usr/local/sbin/openvpn"
-
 OpenVPN
 -------
 
