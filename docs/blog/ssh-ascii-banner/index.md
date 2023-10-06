@@ -1,6 +1,6 @@
 ---
 slug: ssh-ascii-banner
-title: Add Custom ASCII Banner Logo to SSH Login Screen
+title: SSH ASCII Banner
 authors: [jiaqi, mike-andreasen]
 tags: [DevOps]
 date: 2022-04-30
@@ -21,6 +21,9 @@ date: 2022-04-30
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
+
+Add Custom ASCII Banner Logo to SSH Login Screen
+------------------------------------------------
 
 In the early 90's ASCII art became a thing. It was a way to make logos using regular ASCII characters to decorate readme
 files and add some branding. Nowadays we can generate these banners using free tools like [Text to ASCII Art Generator].

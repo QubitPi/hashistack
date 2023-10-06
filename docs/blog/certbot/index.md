@@ -1,26 +1,19 @@
 ---
 slug: certbot
-title: Certbot
+title: SSL through Certbot
 authors: [jiaqi]
 date: 2023-09-16
 tags: [SSL, HTTPS, Security]
 ---
 
 Installing Free SSL Certificates with Certbot running on Nginx
-==============================================================
+--------------------------------------------------------------
 
-:::caution
+[Let's Encrypt](https://qubitpi.github.io/letsencrypt-website/) provides free SSL certificates for our websites to use 
+secure connections. [Certbot](https://certbot.eff.org/) is free open source software that allows us to easily create 
+Let's Encrypt SSLs on our Linux server, such as Ubuntu VM.
 
-HTTP:80 must be open before running this recipe.
-
-:::
-
-[Let's Encrypt](https://letsencrypt.org/) provides free SSL certificates for our websites to use secure connections.
-[Certbot](https://certbot.eff.org/) is free open source software that allows us to easily create Let's Encrypt SSLs on
-our Linux server, such as Ubuntu VM.
-
-Installing Certbot on Ubuntu
-----------------------------
+### Installing Certbot on Ubuntu
 
 We will install Certbot on Ubuntu with _snapd_ using the following steps:
 
@@ -54,8 +47,13 @@ We will install Certbot on Ubuntu with _snapd_ using the following steps:
    sudo apt install python3-certbot-nginx -y
    ```
 
-Create an SSL Certificate with Certbot
---------------------------------------
+### Creating SSL Certificate with Certbot
+
+:::caution
+
+HTTP:80 must be open on the server
+
+:::
 
 After [Certbot has been installed](#install-certbot), `aergia::certbot` runs Certbot to create SSL certificates and
 modify Nginx configuration file to automatically redirect HTTP requests to HTTPS. Or, add "certonly" to create the SSL
@@ -65,8 +63,7 @@ certificates without modifying system files:
 sudo certbot --nginx
 ```
 
-Configure Reverse Proxy on Nginx
---------------------------------
+### Configuring Reverse Proxy on Nginx
 
 After certificates have been deployed and Nginx has been configured properly for SSL by Certbot, it's time to configure
 routing to direct HTTPS to local HTTP by modifying **/etc/nginx/sites-enabled/default** file.
