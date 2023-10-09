@@ -5,12 +5,10 @@ sidebar_position: 1
 Aergia Documentation Home
 =========================
 
-[![GitHub Market Place Badge][GitHub Market Place Badge]](https://github.com/marketplace/actions/deploying-to-aws-ec2-through-hashicorp)
-
 HashiCorp AWS - Immutable Infrastructure as Code via GitHub Action
 ------------------------------------------------------------------
 
-[HashiCorp AWS][HashiCorp AWS] is an opinionated CI/CD [GitHub Action][What is GitHub Action] that
+HashiCorp AWS is an opinionated CI/CD [GitHub Action][What is GitHub Action] that
 
 1. packages an application into an [AMI image][AWS AMI] and registers it onto AWS, then
 2. deploys an [EC2 instance][AWS EC2] of that AMI
@@ -46,7 +44,7 @@ HashiCorp AWS action follows [HashiCrop's best practice][HashiCorp Tutorial] by 
 - The **variables.pkr.hcl**  is the standard [Packer Variable][HashiCorp Packer Variables] definitions
 
     - Place make sure to place the following variable declaration block in _variables.pkr.hcl_. this is an
-      [inversion of control][inversion of control] variable required by [HashiCorp AWS][HashiCorp AWS]. The value of 
+      [inversion of control][inversion of control] variable required by HashiCorp AWS. The value of 
       this variable will be set to the _AWS_REGION_ which will be talked about later
 
       ```hcl
@@ -222,17 +220,17 @@ The variables are reference in the _script.sh_ by
 - `$AUTH_USERNAME`
 - `$AUTH_TOKEN`
 
-#### How to Enable SSL Automatically Through [HashiCorp AWS][HashiCorp AWS]
+#### How to Enable SSL Automatically Through HashiCorp AWS
 
 Let's image the following scenario:
 
 1. I purchased a domain from [Google Domain][Google Domain] called **my-domain.com**
 2. I developed a web app that will be exposed at **my-app.my-domain.com**
-3. I will deploy my app to [AWS EC2][AWS EC2] using [HashiCorp AWS][HashiCorp AWS]
+3. I will deploy my app to [AWS EC2][AWS EC2] using HashiCorp AWS
 4. Right after EC2 is up, I need to automatically enable secure SSL communication so that my app can be visited at
    `https://my-app.my-domain.com`
 
-Assuming that **[HashiCorp AWS][HashiCorp AWS], or Immutable Infrastructure in general, is not responsible for SSL
+Assuming that **HashiCorp AWS, or Immutable Infrastructure in general, is not responsible for SSL
 certificates lifecycle management**, we can read the certificate from [GitHub Action][What is GitHub Action] and
 load it into EC2 instance in the following way:
 
@@ -247,7 +245,7 @@ following [GitHub Action Secrets][How to set up GitHub Action Secrets] set up fi
 
 ##### Step 2 - Load Certificate into HashiCorp Context through [GitHub Action][What is GitHub Action]
 
-Right before the [HashiCorp AWS][HashiCorp AWS] step, we will put the following "Load SSL Certificates" step:
+Right before the HashiCorp AWS step, we will put the following "Load SSL Certificates" step:
 
 ```yaml
   ...
@@ -418,7 +416,6 @@ resource "aws_route53_record" "my-app-my-domain-com" {
 [GitHub Market Place Badge]: https://img.shields.io/badge/Github%20Marketplace-1E883D.svg?style=for-the-badge&logo=Github&logoColor=white
 [Google Domain]: https://domains.google/
 
-[HashiCorp AWS]: https://github.com/marketplace/actions/deploying-to-aws-ec2-through-hashicorp
 [HashiCorp Tutorial]: https://developer.hashicorp.com/terraform/tutorials/provision/packer
 [HashiCorp Packer Build Block]: https://qubitpi.github.io/hashicorp-packer/packer/docs/templates/hcl_templates/blocks/build
 [HashiCorp Packer Shell Provisioner]: https://qubitpi.github.io/hashicorp-packer/packer/docs/provisioners/shell

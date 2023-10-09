@@ -39,7 +39,7 @@ By the time I joined Yahoo at 2016, the company had already made a
 [big move by removing all of its QA teams COMPLETELY][Yahoo removed QA]. Software developers were required to write
 automated tests by themselves using open source test frameworks, such as Groovy Spock, Jest, and Cypress. The software
 testing was then fully automated through [Yahoo's own CI platform][Screwdriver], which is developed on top of
-[Jenkins] originally.
+Jenkins originally.
 
 This brought a big software quality improvements but in terms of communication
 quality, at least from my experience, was still not optimal. I've had such experience when I finshed implementing a
@@ -103,8 +103,6 @@ The use and distribution terms for [Aergia] are covered by the [Apache License, 
 
 [HashiCrop Packer]: https://qubitpi.github.io/hashicorp-packer/packer/docs
 [HashiCrop Terraform]: https://qubitpi.github.io/hashicorp-terraform/terraform/docs
-
-[Jenkins]: https://qubitpi.github.io/jenkins.io
 
 [Last Commit]: https://img.shields.io/github/last-commit/QubitPi/aergia/master?logo=github&style=for-the-badge
 [License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
