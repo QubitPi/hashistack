@@ -46,7 +46,7 @@ runs:
       working-directory: hashicorp/images
     - name: Validate Packer template
       shell: bash
-      run: packer validate .
+      run: packer validate -var "skip_create_ami=true" .
       working-directory: hashicorp/images
     - name: Test Build AMI image
       if: github.ref != 'refs/heads/master'
