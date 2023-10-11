@@ -20,6 +20,7 @@ We will install Certbot on Ubuntu with _snapd_ using the following steps:
 1. Install _snapd_:
 
    ```bash
+   sudo apt-get update
    sudo apt install snapd
    ```
 
