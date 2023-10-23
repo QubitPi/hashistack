@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: "HashiCorp AWS"
+name: "Application Deployment on AWS through HashiCorp"
 description: "Registers application AMI and deploy an instance to EC2 through HashiCorp Packer & Terraform"
 branding:
   icon: "box"
