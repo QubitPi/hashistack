@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: Aergia CI/CD Definition
+name: hashicorp-aws CI/CD
 
 "on":
   workflow_call:
@@ -63,7 +63,7 @@ jobs:
       - name: Build website
         run: yarn build
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/master'
+        # if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

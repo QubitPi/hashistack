@@ -1,70 +1,69 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
+title: Elastic Stack (ELK)
 ---
 
-Elastic Stack (ELK)
-===================
-
-Assuming ELK is a _non-frequently deployed_ tech asset, [Aergia] makes it a semi-automated deployment.
+Assuming ELK is a _non-frequently deployed_ tech asset, [hashicorp-aws] makes it a semi-automated deployment.
 
 :::caution
 
-[Aergia] deploys ELK as a [t2.large](https://aws.amazon.com/ec2/instance-types/t2/) instance. This is because all
+[hashicorp-aws] deploys ELK as a [t2.large](https://aws.amazon.com/ec2/instance-types/t2/) instance. This is because all
 Elasticsearch, Kibana, and Logstash are contained in it, which can cause
 [performance issue](https://stackoverflow.com/a/50022217) in small instance. t2.large, by experiment, is the smallest
 size that supports smooth runtime. For that, **please be aware AWS credit charges shall incur afterward**
 
 :::
 
-Setup
------
-
-### Get Aergia ELK Deployer
+Getting ELK Deployer
+--------------------
 
 ```bash
-git clone git@github.com:QubitPi/aergia.git
+git clone https://github.com/QubitPi/hashicorp-aws.git
 cd hashicorp/elk
 ```
 
+Configuring Deployment
+----------------------
+
 ### Authenticating to AWS
 
-Before we can build the AMI, we need to provide our AWS credentials to Packer. These credentials have permissions to
-create, modify and delete EC2 instances.
+Before we can build the AMI, we need to provide our AWS credentials to Packer and Terraform. These credentials have 
+permissions to create, modify, and delete AMI images and EC2 instances.
 
-To allow Packer to access our IAM user credentials, set our AWS access key ID and secret key as environment variables:
+To allow HashiCorp to access our IAM user credentials, set our AWS access key ID and secret key as environment 
+variables:
 
 ```bash
-export AWS_ACCESS_KEY_ID="<YOUR_AWS_ACCESS_KEY_ID>"
-export AWS_SECRET_ACCESS_KEY="<YOUR_AWS_SECRET_ACCESS_KEY>"
+ELK_AWS_ACCESS_KEY_ID="<YOUR_AWS_ACCESS_KEY_ID>"
+ELK_AWS_SECRET_ACCESS_KEY="<YOUR_AWS_SECRET_ACCESS_KEY>"
 ```
 
-In addition, we need to have an _IAM user_ who has the following [AWS permissions policies]:
+:::info
 
-- **AmazonEC2FullAccess**
-- **AmazonRoute53FullAccess**
-- **IAMFullAccess**
+The _IAM user_ associated with the credentials above must have the following [AWS permissions policies]:
 
-### Preparing for Building AMI Image
+- AmazonEC2FullAccess
+- AmazonRoute53FullAccess
+- IAMFullAccess
 
-Create a file named **aws-elk.auto.pkrvars.hcl** at any our preferred location with the following contents:
+:::
 
-```hcl
-aws_image_region           = "us-east-2"
-ssl_cert_file_path         = "/absolute/path/to/server.crt"
-ssl_cert_key_file_path     = "/absolute/path/to/server.key"
-ssl_nginx_config_file_path = "/absolute/path/to/nginx-ssl.conf"
-```
+### Defining Config Directory
 
-- **aws_image_region** is the region where ELK AMI will be published to. The published image will be _private_
-- **ssl_cert_file_path** and **ssl_cert_key_file_path** above are the local absolute paths to SSL certificate file and
-  SSL certificate key, respectively. They can be [obtained via Certbot](https://qubitpi.github.io/aergia/blog/certbot)
-- **ssl_nginx_config_file_path** is the local absolute path to the Nginx config file (see **an example** below) that
-  consumes the SSL certificate above and enables HTTPS.
+#### Preparing for SSL
+
+Please [obtain SSL certificate and key][Certbot SSL] and put them in 2 files. Let's call them **server.crt** 
+(certificate) and **server.key** (certificate key)
+
+##### Nginx
+
+We will have a Nginx reverse proxy to serve HTTPS and have a config file called **nginx-ssl.conf**:
 
 :::tip
 
-Here is an example of the aforementioned Nginx config file. Replace `my-domain.com` with the domain backed by the
-[SSL](#ssl-certificate) accordingly:
+Replace `my-domain.com` with the domain backed by the [SSL](#preparing-for-ssl) accordingly below
+
+:::
 
 ```text
 server {
@@ -110,18 +109,62 @@ server {
 }
 ```
 
-:::
+#### Defining Packer Variables
 
-### Building AMI Image
+Create a file named **aws-elk.pkrvars.hcl** with the following contents:
 
-```bash
-packer init .
-packer fmt .
-packer validate .
-packer build --var-file=/absolute/path/to/aforementioned/aws-elk.auto.pkrvars.hcl aws-elk.pkr.hcl
+```hcl
+aws_image_region           = "us-east-2"
+ssl_cert_file_path         = "/absolute/path/to/server.crt"
+ssl_cert_key_file_path     = "/absolute/path/to/server.key"
+ssl_nginx_config_file_path = "/absolute/path/to/nginx-ssl.conf"
 ```
 
-Record the **Elasticsearch password (for _elastic_ user)** at command line prompt. For example
+- **aws_image_region** is the region where ELK AMI will be published to. The published image will be _private_
+- **ssl_cert_file_path** and **ssl_cert_key_file_path** above are the local absolute paths to SSL certificate file and
+  SSL certificate key, respectively. They can be [obtained via Certbot](https://qubitpi.github.io/hashicorp-aws/blog/certbot)
+- **ssl_nginx_config_file_path** is the local absolute path to the Nginx config file (see **an example** below) that
+  consumes the SSL certificate above and enables HTTPS.
+
+#### Defining Terraform Variables
+
+Create a file named **aws-elk.tfvars** with the following contents:
+
+```hcl
+aws_deploy_region = "us-east-2"
+zone_id = "<AWS Route 53 Zone ID>"
+elk_doman = "myelk.mycompany.com"
+key_pair_name = "<AWS keypair name for SSH>"
+instance_name = "<AWS EC2 displayed instance name>"
+security_group = "<AWS Security Group for the EC2 instance>"
+```
+
+#### Defining Config Directory Path
+
+Put the _aws-elk.pkrvars.hcl_ and _aws-elk.tfvars_ in a directory. We will call it **ELK_HC_CONFIG_DIR** (along with 
+our source code dir **ELK_HC_CONFIG_DIR**):
+
+```bash
+ELK_HC_DIR=...
+ELK_HC_CONFIG_DIR=/absolute/path/to/hashicorp/elk
+```
+
+:::caution
+
+Make sure `*_DIR` path does not end with "/", for example, instead of `ELK_HC_DIR=/home/ubuntu/config/`, we should use
+`ELK_HC_DIR=/home/ubuntu/config`
+
+:::
+
+### Running Script
+
+After running
+
+```bash
+./deploy.sh
+```
+
+record the **Elasticsearch password (for _elastic_ user)** at command line prompt. For example
 
 ```shell
 ==> install-elk.amazon-ebs.elk: + sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
@@ -134,40 +177,7 @@ Record the **Elasticsearch password (for _elastic_ user)** at command line promp
     install-elk.amazon-ebs.elk: New value: dsrg34IKHU787iud=dio
 ```
 
-In this case, the password is `dsrg34IKHU787iud=dio` which is shown in the last line of the output above.
-
-If we see the following output in the end, if means AMI image has been built successfully:
-
-```shell
-==> Wait completed after 5 minutes 40 seconds
-
-==> Builds finished. The artifacts of successful builds are:
---> install-elk.amazon-ebs.elk: AMIs were created:
-<sensitive>: ami-34gfg45herr356hre43g
-```
-
-### Preparing for Deploying EC2 Instance
-
-Create a file named **aws-elk.auto.tfvars** at any our preferred location with the following contents:
-
-```hcl
-aws_deploy_region = "us-east-2"
-zone_id = "<AWS Route 53 Zone ID>"
-elk_doman = "myelk.mycompany.com"
-key_pair_name = "<AWS keypair name for SSH>"
-instance_name = "<AWS EC2 displayed instance name>"
-security_group = "<AWS Security Group for the EC2 instance>"
-```
-
-### Deploying EC2 Instance
-
-Copy the aforementioned `aws-elk.auto.tfvars` file into the `aergia/hashicorp/elk/instance` directory and run
-
-```bash
-cd aergia/hashicorp/elk/instance
-terraform init
-terraform apply -auto-approve
-```
+In this case, the password is **dsrg34IKHU787iud=dio** which is shown in the last line of the output above.
 
 ### Post Setup in EC2 Instance
 
@@ -233,5 +243,8 @@ or with nohup at background:
 nohup sudo /usr/share/logstash/bin/logstash -f logstash-filebeat.conf --config.reload.automatic &
 ```
 
-[Aergia]: https://qubitpi.github.io/aergia/
 [AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html
+
+[Certbot SSL]: https://qubitpi.github.io/hashicorp-aws/blog/certbot
+
+[hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/

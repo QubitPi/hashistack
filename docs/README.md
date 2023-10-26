@@ -12,8 +12,8 @@
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Aergia Documentation
---------------------
+hashicorp-aws Documentation
+---------------------------
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
@@ -49,7 +49,7 @@ Using SSH:
 USE_SSH=true yarn deploy
 ```
 
-Aergia is using GitHub pages for hosting, this command builds the website and push to the `gh-pages` branch.
+hashicorp-aws is using GitHub pages for hosting, this command builds the website and push to the `gh-pages` branch.
 
 ### Troubleshooting
 

@@ -32,6 +32,11 @@ variable "aws_image_region" {
   sensitive = true
 }
 
+variable "skip_create_ami" {
+  type =  bool
+  sensitive = true
+}
+
 packer {
   required_plugins {
     amazon = {
@@ -83,6 +88,6 @@ build {
   }
 
   provisioner "shell" {
-    script = "../scripts/setup.sh"
+    script = "../scripts/aws-elk-pkr-setup.sh"
   }
 }
