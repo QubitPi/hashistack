@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkaergia=self.webpackChunkaergia||[]).push([[8193],{8273:a=>{a.exports=JSON.parse('{"label":"DevOps","permalink":"/aergia/blog/tags/dev-ops","allTagsPath":"/aergia/blog/tags","count":1}')}}]);
