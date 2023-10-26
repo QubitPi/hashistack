@@ -115,6 +115,7 @@ The use and distribution terms for [hashicorp-aws] are covered by the [Apache Li
 
 [GitHub Action]: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions
 [GitHub Action - How to set up]: https://docs.github.com/en/actions/security-guides/encrypted-secrets
+[GitHub Workflow Status]: https://img.shields.io/github/actions/workflow/status/QubitPi/hashicorp-aws/ci-cd.yml?branch=master&logo=github&style=for-the-badge
 
 [hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
 [HashiCorp Packer Badge]: https://img.shields.io/badge/Packer-02A8EF?style=for-the-badge&logo=Packer&logoColor=white
