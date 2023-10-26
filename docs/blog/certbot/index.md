@@ -42,7 +42,7 @@ We will install Certbot on Ubuntu with _snapd_ using the following steps:
    sudo ln -s /snap/bin/certbot /usr/bin/certbot
    ```
 
-5. [Install Nginx](https://stackoverflow.com/a/64571090/14312712), since `aergia::certbot` uses Nginx-based Certbot:
+5. [Install Nginx](https://stackoverflow.com/a/64571090/14312712), assuming we use Nginx-based Certbot
 
    ```bash
    sudo apt install python3-certbot-nginx -y
@@ -56,9 +56,9 @@ HTTP:80 must be open on the server
 
 :::
 
-After [Certbot has been installed](#install-certbot), `aergia::certbot` runs Certbot to create SSL certificates and
-modify Nginx configuration file to automatically redirect HTTP requests to HTTPS. Or, add "certonly" to create the SSL
-certificates without modifying system files:
+After [Certbot has been installed](#install-certbot), run Certbot to create SSL certificates and  modify Nginx
+configuration file to automatically redirect HTTP requests to HTTPS. Or, add "certonly" to create the SSL certificates
+without modifying system files:
 
 ```bash
 sudo certbot --nginx

@@ -21,10 +21,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Aergia',
+  title: 'hashicorp-aws',
   tagline: 'Infrastructure as Code via HashiCorp',
   url: 'https://qubitpi.github.io/',
-  baseUrl: '/aergia',
+  baseUrl: '/hashicorp-aws',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
@@ -32,7 +32,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'QubitPi', // Usually your GitHub org/user name.
-  projectName: 'aergia', // Usually your repo name.
+  projectName: 'hashicorp-aws', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -52,7 +52,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/QubitPi/aergia/tree/gh-pages',
+            'https://github.com/QubitPi/hashicorp-aws/tree/gh-pages',
         },
         blog: {
           showReadingTime: true,
@@ -61,7 +61,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/QubitPi/aergia/tree/gh-pages',
+            'https://github.com/QubitPi/hashicorp-aws/tree/gh-pages',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -74,7 +74,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Aergia',
+        title: 'hashicorp-aws',
         logo: {
           alt: 'Site Logo',
           src: 'img/logo.png',
@@ -88,7 +88,7 @@ const config = {
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/QubitPi/aergia',
+            href: 'https://github.com/QubitPi/hashicorp-aws',
             label: 'GitHub',
             position: 'right',
           },
@@ -111,7 +111,7 @@ const config = {
             items: [
               {
                 label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/aergia',
+                href: 'https://stackoverflow.com/questions/tagged/hashicorp-aws',
               },
 //              {
 //                label: 'Discord',
@@ -128,7 +128,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/QubitPi/aergia',
+                href: 'https://github.com/QubitPi/hashicorp-aws',
               },
             ],
           },

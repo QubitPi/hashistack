@@ -1,5 +1,5 @@
 {
-  "name": "aergia",
+  "name": "hashicorp-aws",
   "version": "0.0.0",
   "private": true,
   "scripts": {
