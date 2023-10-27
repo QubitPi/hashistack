@@ -19,6 +19,9 @@ branding:
   color: "blue"
 
 inputs:
+  hashicorp-dir:
+    description: "path to directory that contains the standard HashiCorp 'images'/'instances'/'scripts' folders; must NOT end with '/'"
+    required: true
   aws-access-key-id:
     description: "AWS Access Key ID"
     required: true
@@ -28,6 +31,7 @@ inputs:
   aws-region:
     description: "The region in which the access key ID and Secret access key are valid"
     required: true
+
 runs:
   using: "composite"
   steps:
@@ -45,21 +49,21 @@ runs:
     - name: Initialize Packer configuration
       shell: bash
       run: packer init .
-      working-directory: hashicorp/images
+      working-directory: ${{ inputs.hashicorp-dir }}/images
     - name: Validate Packer template
       shell: bash
       run: packer validate -var "skip_create_ami=true" .
-      working-directory: hashicorp/images
+      working-directory: ${{ inputs.hashicorp-dir }}/images
     - name: Test Build AMI image
       if: github.ref != 'refs/heads/master'
       shell: bash
       run: packer build -var "skip_create_ami=true" .
-      working-directory: hashicorp/images
+      working-directory: ${{ inputs.hashicorp-dir }}/images
     - name: Build and publish AMI image
       if: github.ref == 'refs/heads/master'
       shell: bash
       run: packer build -var "skip_create_ami=false" .
-      working-directory: hashicorp/images
+      working-directory: ${{ inputs.hashicorp-dir }}/images
 
     - name: Setup HashiCorp Terraform
       uses: hashicorp/setup-terraform@v2
@@ -68,13 +72,13 @@ runs:
     - name: Initialize Terraform configuration
       shell: bash
       run: terraform init
-      working-directory: hashicorp/instances
+      working-directory: ${{ inputs.hashicorp-dir }}/instances
     - name: Validate Terraform template
       shell: bash
       run: terraform validate
-      working-directory: hashicorp/instances
+      working-directory: ${{ inputs.hashicorp-dir }}/instances
     - name: Create EC2 instance
       if: github.ref == 'refs/heads/master'
       shell: bash
       run: terraform apply -auto-approve
-      working-directory: hashicorp/instances
+      working-directory: ${{ inputs.hashicorp-dir }}/instances
