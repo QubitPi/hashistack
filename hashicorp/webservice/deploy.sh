@@ -30,7 +30,8 @@ source ~/.bashrc
 cp $HC_CONFIG_DIR/*.properties $WS_DIR/src/main/resources/
 cd $WS_DIR
 mvn clean package
-mv target/astraios-1.0-SNAPSHOT.war ../../
+mkdir ../../WAR/
+mv target/*.war ../../WAR
 
 cd $HC_DIR/images
 cp $HC_CONFIG_DIR/aws-ws.pkrvars.hcl aws-ws.auto.pkrvars.hcl
@@ -47,7 +48,7 @@ terraform apply -auto-approve
 # cleanup
 rm $HC_DIR/images/aws-ws.auto.pkrvars.hcl
 rm $HC_DIR/instances/aws-ws.auto.tfvars
-rm $WS_DIR/../../astraios-1.0-SNAPSHOT.war
+rm -r $WS_DIR/../../WAR
 rm $WS_DIR/src/main/resources/*.properties
 rm -rf $HC_DIR/instances/.terraform
 rm -rf $HC_DIR/instances/.terraform.lock.hcl
