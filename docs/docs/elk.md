@@ -3,13 +3,25 @@ sidebar_position: 3
 title: Elastic Stack (ELK)
 ---
 
-Assuming ELK is a _non-frequently deployed_ tech asset, [hashicorp-aws] makes it a semi-automated deployment.
+Operations and SRE teams can use [hashicorp-aws] to safely manage ELK deployment using infrastructure as code 
+methodology, which allows us to peer-reviewed infrastructure changes in an automated and controlled fashion.
+
+:::info What is the ELK Stack?
+
+The ELK stack is an acronym used to describe a stack that comprises three popular projects: [Elasticsearch],
+[Logstash], and [Kibana]. Often referred to as Elasticsearch, the ELK stack gives us the ability to aggregate logs from 
+all our systems and applications, analyze these logs, and create visualizations for application and infrastructure 
+monitoring, faster troubleshooting, security analytics, and more.
+
+:::
+
+**Assuming ELK is a _non-frequently deployed_ tech asset, [hashicorp-aws] makes it a semi-automated deployment**.
 
 :::caution
 
 [hashicorp-aws] deploys ELK as a [t2.large](https://aws.amazon.com/ec2/instance-types/t2/) instance. This is because all
 Elasticsearch, Kibana, and Logstash are contained in it, which can cause
-[performance issue](https://stackoverflow.com/a/50022217) in small instance. t2.large, by experiment, is the smallest
+[performance issue](https://stackoverflow.com/a/50022217) in small instance. _t2.large_, by experiment, is the smallest
 size that supports smooth runtime. For that, **please be aware AWS credit charges shall incur afterward**
 
 :::
@@ -25,6 +37,12 @@ cd hashicorp/elk
 Configuring Deployment
 ----------------------
 
+:::tip
+
+People may jump directly to the end of [this section](#configuring-deployment) to see what the final config looks like
+
+:::
+
 ### Authenticating to AWS
 
 Before we can build the AMI, we need to provide our AWS credentials to Packer and Terraform. These credentials have 
@@ -34,17 +52,17 @@ To allow HashiCorp to access our IAM user credentials, set our AWS access key ID
 variables:
 
 ```bash
-ELK_AWS_ACCESS_KEY_ID="<YOUR_AWS_ACCESS_KEY_ID>"
-ELK_AWS_SECRET_ACCESS_KEY="<YOUR_AWS_SECRET_ACCESS_KEY>"
+AWS_ACCESS_KEY_ID="<YOUR_AWS_ACCESS_KEY_ID>"
+AWS_SECRET_ACCESS_KEY="<YOUR_AWS_SECRET_ACCESS_KEY>"
 ```
 
 :::info
 
 The _IAM user_ associated with the credentials above must have the following [AWS permissions policies]:
 
+- IAMFullAccess
 - AmazonEC2FullAccess
 - AmazonRoute53FullAccess
-- IAMFullAccess
 
 :::
 
@@ -156,7 +174,17 @@ Make sure `*_DIR` path does not end with "/", for example, instead of `ELK_HC_DI
 
 :::
 
-### Running Script
+At the end of the day, the following environment variable (with example values) needs to be defined:
+
+```bash
+export HC_DIR=/home/ubuntu/hashicorp-aws/hashicorp/elk
+export HC_CONFIG_DIR=/home/ubuntu/hashicorp-aws/hashicorp/elk/config-files/
+export AWS_ACCESS_KEY_ID="LOA8TQ2ZOSKFRLFSHDWC"
+export AWS_SECRET_ACCESS_KEY="F9Wt082IXjW426QGRdvrsowFhHARt85YlJ2WURri"
+```
+
+Running Script
+--------------
 
 After running
 
@@ -248,3 +276,7 @@ nohup sudo /usr/share/logstash/bin/logstash -f logstash-filebeat.conf --config.r
 [Certbot SSL]: https://qubitpi.github.io/hashicorp-aws/blog/certbot
 
 [hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+
+[Elasticsearch]: https://qubitpi.github.io/elasticsearch/
+[Kibana]: https://qubitpi.github.io/kibana/
+[Logstash]: https://qubitpi.github.io/logstash/
