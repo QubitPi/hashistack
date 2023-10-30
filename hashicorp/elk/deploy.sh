@@ -42,8 +42,3 @@ terraform apply -auto-approve -auto-approve --var-file="$HC_CONFIG_DIR"/aws-elk.
 rm -rf "$HC_DIR"/instances/.terraform
 rm -rf "$HC_DIR"/instances/.terraform.lock.hcl
 rm -rf "$HC_DIR"/instances/terraform.tfstate
-
-unset HC_DIR
-unset HC_CONFIG_DIR
-unset AWS_ACCESS_KEY_ID
-unset AWS_SECRET_ACCESS_KEY

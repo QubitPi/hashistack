@@ -18,38 +18,34 @@ set -e
 
 # This file serves as the 'local' version of action.yml config & execution
 # The following script variables need to be defined:
-# - export WS_DIR
+# - export REACT_DIR
 # - export HC_DIR
 # - export HC_CONFIG_DIR
 # - export AWS_ACCESS_KEY_ID
 # - export AWS_SECRET_ACCESS_KEY
 
-source ~/.bashrc
-
-# Build WAR
-cp $HC_CONFIG_DIR/*.properties $WS_DIR/src/main/resources/
-cd $WS_DIR
-mvn clean package
-mkdir ../../WAR/
-mv target/*.war ../../WAR
+# Build dist
+cd $REACT_DIR
+yarn && yarn build
+rm -rf ../../dist
+mv dist ../../
 
 cd $HC_DIR/images
-cp $HC_CONFIG_DIR/aws-ws.pkrvars.hcl aws-ws.auto.pkrvars.hcl
+cp $HC_CONFIG_DIR/aws-react.pkrvars.hcl aws-react.auto.pkrvars.hcl
 packer init .
 packer validate -var "skip_create_ami=true" .
 packer build -var "skip_create_ami=false" .
 
 cd $HC_DIR/instances
-cp $HC_CONFIG_DIR/aws-ws.tfvars aws-ws.auto.tfvars
+cp $HC_CONFIG_DIR/aws-react.tfvars aws-react.auto.tfvars
 terraform init
 terraform validate
 terraform apply -auto-approve
 
 # cleanup
-rm $HC_DIR/images/aws-ws.auto.pkrvars.hcl
-rm $HC_DIR/instances/aws-ws.auto.tfvars
-rm -r $WS_DIR/../../WAR
-rm $WS_DIR/src/main/resources/*.properties
+rm $HC_DIR/images/aws-react.auto.pkrvars.hcl
+rm $HC_DIR/instances/aws-react.auto.tfvars
+rm -r $REACT_DIR/../../dist
 rm -rf $HC_DIR/instances/.terraform
 rm -rf $HC_DIR/instances/.terraform.lock.hcl
 rm -rf $HC_DIR/instances/terraform.tfstate
