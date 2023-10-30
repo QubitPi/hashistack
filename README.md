@@ -80,16 +80,6 @@ Note that the following [GitHub Action Secrets][GitHub Action - How to set up] n
 - [**AWS_SECRET_ACCESS_KEY**](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
 - [**AWS_REGION**](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
 
-What's Next
------------
-
-- [How to Enable SSL](https://qubitpi.github.io/hashicorp-aws/docs/ssl)
-
-- Common Type Deployments
-
-  - [Deploying ELK](https://qubitpi.github.io/hashicorp-aws/docs/elk)
-  - Jersey Webservice Deployment (Coming soon)
-
 Documentation
 -------------
 

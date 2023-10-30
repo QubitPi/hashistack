@@ -16,16 +16,6 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This file serves as the 'local' version of action.yml config & execution
-# The following script variables need to be defined:
-# - export WS_DIR
-# - export HC_DIR
-# - export HC_CONFIG_DIR
-# - export AWS_ACCESS_KEY_ID
-# - export AWS_SECRET_ACCESS_KEY
-
-source ~/.bashrc
-
 # Build WAR
 cp $HC_CONFIG_DIR/*.properties $WS_DIR/src/main/resources/
 cd $WS_DIR

@@ -1,6 +1,26 @@
 ---
 sidebar_position: 2
-title: How to Enable SSL Automatically Through HashiCorp AWS
+title: Setup
+---
+
+Configuration Sources for Both Manual & GitHub CI/CD
+----------------------------------------------------
+
+[hashicorp-aws] can be used for both **manual deployment** and **automatic GitHub Action based deployment**. To achieve
+both, the following file structure is required[^1]:
+
+```bash
+.
+├── hashicorp-aws/
+│   └── hashicorp/
+│       └── webservice/
+│           └── deploy.sh
+└── hashicorp-aws-config-dir
+```
+
+We will cover _hashicorp-aws-config-dir_ later.
+
+SSL
 ---
 
 Let's image the following scenario:
@@ -140,7 +160,7 @@ Step 4 - Moving Certificates and Nginx Config Files to the Proper Locations in A
 
 - We will post-configure AMI image using [Shell Provisioner][HashiCorp Packer Shell Provisioner]. This is achieved by
   placing a **script.sh** file under the `scripts` directory
-In **scripts/aws-my-app.pkr-setup.sh** file, we add the following server configuration script:
+  In **scripts/aws-my-app.pkr-setup.sh** file, we add the following server configuration script:
 
 ```bash
 # Install Nginx and load SSL config
@@ -153,8 +173,8 @@ sudo mv /home/ubuntu/server.key /etc/ssl/private/server.key
 Step 5 - Registering DNS Record for the EC2 Instance
 ----------------------------------------------------
 
-We will expose our EC2 under that domain using [aws_route53_record][HashiCorp Terraform aws_route53_record], which 
-allows us to dynamically bind EC2 IP to its hosted domain so that each time when a new EC2 instance is instantiated, 
+We will expose our EC2 under that domain using [aws_route53_record][HashiCorp Terraform aws_route53_record], which
+allows us to dynamically bind EC2 IP to its hosted domain so that each time when a new EC2 instance is instantiated,
 that instance will register its IP to `my-domain.com` on Route 53.
 
 In our **instances/aws-my-app.tf** file, we will add the following
@@ -178,8 +198,8 @@ Please change the `zone_id` value accordinly
 
 :::caution
 
-Make sure this resource is declared after the [aws_instance][HashiCorp Terraform aws_instance], because IP is available 
-only after the EC2 instance has been provisioned; The IAM user associated with the **AWS_ACCESS_KEY_ID** & 
+Make sure this resource is declared after the [aws_instance][HashiCorp Terraform aws_instance], because IP is available
+only after the EC2 instance has been provisioned; The IAM user associated with the **AWS_ACCESS_KEY_ID** &
 **AWS_SECRET_ACCESS_KEY** should also have sufficient permission to interact with Route 53
 
 In addition, the option
@@ -221,3 +241,5 @@ In this case, we can simply connect Google Domain to AWS Route 53 in the followi
 [HashiCorp Packer Shell Provisioner]: https://qubitpi.github.io/hashicorp-packer/packer/docs/provisioners/shell
 [HashiCorp Terraform aws_instance]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
 [HashiCorp Terraform aws_route53_record]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record.html
+
+[^1]: https://tree.nathanfriend.io/?s=(%27options!(%27fancy3~fullPath!false~trailingSlash3~rootDot3)~4(%274%2752*02**webservice2***deploy.sh25-runbooks%27)~version!%271%27)*%20%200hashicorp2%5Cn3!true4source!50-aws%0154320*

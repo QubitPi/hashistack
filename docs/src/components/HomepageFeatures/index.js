@@ -19,32 +19,29 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Build AMI Image',
+    Svg: require('@site/static/img/hashicorp-packer.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Create identical images for multiple platforms from a single source configuration.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Cloud Native Automation',
+    Svg: require('@site/static/img/aws.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        hashicorp-aws has first-class support for AWS as a cloud provider and frees up dev teams to allow them to focus on adding business value by writing code.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Deploy to EC2',
+    Svg: require('@site/static/img/hashicorp-terraform.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Use infrastructure as code to provision and manage any infrastructure across your organization.
       </>
     ),
   },
