@@ -16,13 +16,6 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This file serves as the 'local' version of action.yml config & execution
-# The following script variables need to be defined:
-# - export HC_DIR
-# - export HC_CONFIG_DIR
-# - export AWS_ACCESS_KEY_ID
-# - export AWS_SECRET_ACCESS_KEY
-
 cd $HC_DIR/images
 cp $HC_CONFIG_DIR/aws-mlflow-docker.pkrvars.hcl aws-mlflow-docker.auto.pkrvars.hcl
 packer init .
