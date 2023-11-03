@@ -50,12 +50,13 @@ source "amazon-ebs" "elk" {
   ami_name              = "elk"
   force_deregister      = "true"
   force_delete_snapshot = "true"
+  skip_create_ami = "${var.skip_create_ami}"
 
   instance_type = "t2.large"
   region        = "${var.aws_image_region}"
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-*-20.04-amd64-server-*"
+      name                = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }

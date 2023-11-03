@@ -22,6 +22,16 @@ variable "ami_name" {
   description = "AMI image name to deploy"
 }
 
+variable "instance_type" {
+  type    = string
+  description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
+
+  validation {
+    condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
+    error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
+  }
+}
+
 variable "ec2_instance_name" {
   type = string
   description = "EC2 instance name"
@@ -81,7 +91,7 @@ data "aws_ami" "latest-aws-react" {
 
 resource "aws_instance" "aws-react" {
   ami = "${data.aws_ami.latest-aws-react.id}"
-  instance_type = "t2.small"
+  instance_type = "${var.instance_type}"
   tags = {
     Name = "${var.ec2_instance_name}"
   }

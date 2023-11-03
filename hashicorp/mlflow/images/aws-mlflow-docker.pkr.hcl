@@ -52,7 +52,7 @@ source "amazon-ebs" "mlflow-docker" {
     device_name = "/dev/sda1"
     volume_size = 60
     volume_type = "gp2"
-    delete_on_termination = false
+    delete_on_termination = true
   }
 
   region = "${var.aws_image_region}"
