@@ -20,6 +20,7 @@ set -e
 cp $HC_CONFIG_DIR/*.properties $WS_DIR/src/main/resources/
 cd $WS_DIR
 mvn clean package
+rm -rf ../../WAR/
 mkdir ../../WAR/
 mv target/*.war ../../WAR
 

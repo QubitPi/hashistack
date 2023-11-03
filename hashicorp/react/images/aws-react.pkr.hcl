@@ -22,11 +22,20 @@ variable "ami_name" {
   sensitive = true
 }
 
+variable "instance_type" {
+  type    = string
+  description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
+
+  validation {
+    condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
+    error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
+  }
+}
+
 variable "react_dist_path" {
   type =  string
   sensitive = true
 }
-
 
 variable "aws_react_ssl_cert_file_path" {
   type =  string
@@ -66,12 +75,19 @@ source "amazon-ebs" "react" {
   ami_name = "${var.ami_name}"
   force_deregister = "true"
   force_delete_snapshot = "true"
+  skip_create_ami = "${var.skip_create_ami}"
 
-  instance_type = "t2.small"
+  instance_type = "${var.instance_type}"
+  launch_block_device_mappings {
+    device_name = "/dev/sda1"
+    volume_size = 8
+    volume_type = "gp2"
+    delete_on_termination = true
+  }
   region = "${var.aws_image_region}"
   source_ami_filter {
     filters = {
-      name = "ubuntu/images/*ubuntu-*-20.04-amd64-server-*"
+      name = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"
       root-device-type = "ebs"
       virtualization-type = "hvm"
     }

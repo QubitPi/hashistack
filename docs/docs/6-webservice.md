@@ -5,7 +5,8 @@ title: Jersey-Jetty Based Webservice
 
 :::tip
 
-Yes, we DO NOT support Spring, never ever
+- Yes, we DO NOT support Spring, never ever
+- EBS volumes during build time will [automatically be removed][HashiCorp Packer delete_on_termination]
 
 :::
 
@@ -117,6 +118,7 @@ jobs:
 [AWS_SECRET_ACCESS_KEY]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 
 [hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+[HashiCorp Packer delete_on_termination]: https://qubitpi.github.io/hashicorp-packer/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#:~:text=Optional%3A-,delete_on_termination,-(bool)%20%2D%20Indicates%20whether
 [HashiCorp Packer variable file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform variable file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
 
