@@ -22,6 +22,16 @@ variable "ami_name" {
   sensitive = true
 }
 
+variable "instance_type" {
+  type        = string
+  description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
+
+  validation {
+    condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
+    error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
+  }
+}
+
 variable "ml_models_path" {
   type =  string
   sensitive = true
@@ -47,10 +57,10 @@ source "amazon-ebs" "mlflow-docker" {
   force_delete_snapshot = "true"
   skip_create_ami = "${var.skip_create_ami}"
 
-  instance_type = "t2.large"
+  instance_type = "${var.instance_type}"
   launch_block_device_mappings {
     device_name = "/dev/sda1"
-    volume_size = 60
+    volume_size = 30
     volume_type = "gp2"
     delete_on_termination = true
   }
