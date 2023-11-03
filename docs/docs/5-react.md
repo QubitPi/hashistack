@@ -3,6 +3,12 @@ sidebar_position: 5
 title: React App
 ---
 
+:::tip
+
+- EBS volumes during build time will [automatically be removed][HashiCorp Packer delete_on_termination]
+
+:::
+
 Manual Deployment
 -----------------
 
