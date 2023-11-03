@@ -42,6 +42,7 @@ The following script variables need to be defined:
     ```hcl
     aws_image_region                 = "my-aws-region"
     ami_name                         = "my-webservice"
+    instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
     ws_war_path                      = "../../../../WAR/my-webservice-1.0-SNAPSHOT.war"
     aws_ws_ssl_cert_file_path        = "../../../../hashicorp-aws-config-dir/server.crt"
     aws_ws_ssl_cert_key_file_path    = "../../../../hashicorp-aws-config-dir/server.key"
@@ -55,6 +56,7 @@ The following script variables need to be defined:
     ```hcl
     aws_deploy_region   = "my-aws-region"
     ami_name            = "my-webservice"
+    instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
     ec2_instance_name   = "My Webservice"
     ec2_security_groups = ["My Webservice"]
     route_53_zone_id    = "9DQXLTNSN7ZX9P8V2KZII"

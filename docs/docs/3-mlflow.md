@@ -29,6 +29,7 @@ The following script variables need to be defined:
       ```hcl
       aws_image_region = "my-aws-region"
       ami_name         = "my-mlflow-models"
+      instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
       ml_models_path   = "/abs/path/to/mlflow_models/"
       ```
 
@@ -38,6 +39,7 @@ The following script variables need to be defined:
       ```hcl
       aws_deploy_region   = "my-aws-region"
       ami_name            = "my-mlflow-models"
+      instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
       ec2_instance_name   = "My MLflow models"
       key_name            = "myKeyPairName"
       ec2_security_groups = ["myKeyPairName"]
