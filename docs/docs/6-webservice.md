@@ -64,6 +64,14 @@ The following script variables need to be defined:
     sentry_dsn          = "can be empty if sentry.io is not needed"
     ```
 
+    :::info
+
+    Although the `ws_domain` is a public identity, [hashicorp-aws] will bind a **private IP** address to this domain,
+    because webservice tend to be deployed in a virtual private network and AWS also requires
+    [EC2 instances of different Security Groups to communicate through private IP](https://serverfault.com/a/967483)
+
+    :::
+
 Then we can execute the **[deploy.sh]** to manually deploy any Jersey-Jetty based webservice.
 
 GitHub Action Automatic Deployment
