@@ -115,6 +115,6 @@ resource "aws_route53_record" "aws-ws" {
   name            = var.ws_domain
   type            = "A"
   ttl             = 300
-  records         = [aws_instance.aws-ws.public_ip]
+  records         = [aws_instance.aws-ws.private_ip]
   allow_overwrite = true
 }
