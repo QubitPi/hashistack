@@ -26,7 +26,15 @@ The following script variables need to be defined:
 
   :::
 
-- **REACT_DIR**: The local absolute path to the react project repo
+- **REACT_DIR**: The local absolute path to the React project repo
+
+  :::caution
+  
+  Should the React App be built with [.env file], this file MUST exist at `$REACT_DIR/.env` at this moment. This .env
+  file is essentially the same one mentioned in the `HC_CONFIG_DIR` part below
+
+  :::
+
 - **HC_DIR**: The local absolute path to the [hashicorp-aws] directory
 - **HC_CONFIG_DIR**: The local absolute path to a directory containing the following deployment files:
 
@@ -108,8 +116,10 @@ jobs:
 [AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html
 [AWS_SECRET_ACCESS_KEY]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 
+[deploy.sh]: https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/react/deploy.sh
+
 [hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
 [HashiCorp Packer variable file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform variable file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
 
-[deploy.sh]: https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/react/deploy.sh
+[.env file]: https://create-react-app.dev/docs/adding-custom-environment-variables/#adding-development-environment-variables-in-env
