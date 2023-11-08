@@ -123,6 +123,29 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 ```
 
+Troubleshooting
+---------------
+
+### The Webservice was Running Properly Right After Deployment, but NOT After a While with "503 Service Unavailable"
+
+This could be the resource starvation on EC2 instance. Please try using a bigger EC2 sizes. For example, bumping
+_t2.micro_ to _t2.medium_. [hashicorp-aws] currently supports **t2.x** sizes, i.e. one of the following sizes can be
+selected:
+
+- t2.micro
+- t2.small
+- t2.medium
+- t2.large
+- t2.xlarge
+- t2.2xlarge
+
+To change the size modify, set the value of `instance_type` in both _aws-ws.pkrvars.hcl_ and _aws-ws.tfvars_. For
+example:
+
+```hcl
+instance_type       = "t2.medium"
+```
+
 [AWS_ACCESS_KEY_ID]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 [AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html
 [AWS_SECRET_ACCESS_KEY]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
