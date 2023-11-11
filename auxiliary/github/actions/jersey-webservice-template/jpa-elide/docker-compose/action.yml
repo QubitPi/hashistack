@@ -1,0 +1,42 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: 'Start JPA-Elide webservice in Docker Compose'
+description: 'Packaging JPA-Elide webservice and start a Docker Compose with its resulting WAR'
+
+inputs:
+  webservice-repo-clone-url:
+    description: 'The git clone URL used to checkout the JPA-Elide webservice, e.g. "https://github.com/QubitPi/jersey-webservice-template.git"'
+    required: true
+  model-package:
+    description: 'The Java package name containing all JPA-Elide webservice data models, e.g. "com.myorg.webservice.astraios.models"'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: git clone ${{ inputs.webservice-repo-clone-url }} jpa-elide-webservice
+      shell: bash
+    - name: Generate webservice WAR file
+      run: |
+        cd jpa-elide-webservice
+        mvn -B clean package
+        cd ../
+      shell: bash
+    - name: Start Docker Compose
+      run: |
+        cd jpa-elide-webservice
+        MODEL_PACKAGE_NAME=${{ inputs.model-package }} docker compose up --build --force-recreate &
+        cd ../
+      shell: bash
