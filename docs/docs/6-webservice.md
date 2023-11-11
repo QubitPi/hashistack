@@ -139,7 +139,7 @@ selected:
 - t2.xlarge
 - t2.2xlarge
 
-To change the size modify, set the value of `instance_type` in both _aws-ws.pkrvars.hcl_ and _aws-ws.tfvars_. For
+To modify the size, set the value of `instance_type` in both _aws-ws.pkrvars.hcl_ and _aws-ws.tfvars_. For
 example:
 
 ```hcl
