@@ -112,14 +112,166 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 ```
 
+### Auxiliary Actions
+
+:::caution
+
+The following auxiliary actions assumes a yarn-based project
+
+:::
+
+#### Code Style Checks
+
+This action assume [Prettier] and [ESLint] have been installed 
+
+```bash
+yarn add --dev --exact prettier
+yarn add --dev eslint
+```
+
+```yaml
+---
+name: My CI/CD
+
+env:
+  NODE_VERSION: 16
+
+jobs:
+  code-style:
+    name: Code Style Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: QubitPi/hashicorp-aws/auxiliary/github/actions/ui-code-style@master
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+```
+
+#### Unit Tests
+
+Our **package.json** should have an entry that defines the command `yarn test`, for example, when our unit tests is
+written with [Jest]:
+
+```json
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+```
+
+```yaml
+---
+name: My CI/CD
+
+env:
+  NODE_VERSION: 16
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    needs: [yml-md-style, code-style]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: QubitPi/hashicorp-aws/auxiliary/github/actions/ui-unit-test@master
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+```
+
+#### Cypress E2E Tests
+
+**Cypress E2E Tests** offers developers Actions that provide an easy way to automate, customize, and execute 
+**parallel** end-to-end tests within a GitHub project.  The action provides
+
+- dependency installation via **yarn**,
+- scanning of test specs,
+- _running each spec in parallel_, and
+- upload test screenshots and video on test failure.
+
+The example below is a very simple setup:
+
+1. Put all **.spec.cy.ts** test files under "cypress/e2e" directory
+2. Have a file at the root of project with the name **.env.test**, which will contain all the environment variables used
+   during the test. The action will rename the ".env.test" name to the regular _.env_ file
+3. Place a **test-setup.sh** file under _.github/test-setup.sh_ directory for any pre-test setup. For example, to start
+   a [lowdb](https://github.com/typicode/lowdb) server and
+   [run e2e only after the server starts](https://www.npmjs.com/package/wait-on):
+
+   ```bash
+   #!/bin/bash
+
+   cd packages/lowdb
+   yarn install
+   yarn start ../../.github/db.json &
+   yarn wait-on-server
+   ```
+
+   Don't forget to make the script executable by running
+
+   ```bash
+   chmod u+x .github/test-setup.sh
+   ```
+
+   If no pre-test setup is needed, please leave this file with only 1 line: `#!/bin/bash`, i.e. no-ops
+
+4. Use Cypress E2E Tests workflow:
+
+   ```yaml
+   ---
+   name: My GitHub Workflow
+   
+   "on":
+      pull_request:
+      push:
+         branches:
+            - master
+   
+   jobs:
+     list-e2e-specs:
+       runs-on: ubuntu-latest
+       outputs:
+         paths: ${{ steps.list-e2e-specs.outputs.paths }}
+       steps:
+         - name: List Files
+           id: list-e2e-specs
+           uses: mirko-felice/list-files-action@v3.0.5
+           with:
+             repo: ${{ github.repository }}
+             ref: ${{ github.ref }}
+             path: "cypress/e2e"
+             ext: ".ts"
+     
+     e2e-tests:
+       name: E2E Tests
+       needs: list-e2e-specs
+       runs-on: ubuntu-latest
+       strategy:
+         fail-fast: false
+         matrix:
+           node_version: [16]
+           start_strategy: ["yarn-start", "serve"]
+           test_spec: ${{ fromJson(needs.list-e2e-specs.outputs.paths) }}
+       steps:
+         - uses: QubitPi/hashicorp-aws/auxiliary/github/actions/cypress-e2e@master
+           with:
+             node-version: ${{ env.NODE_VERSION }}
+             start-strategy: ${{ matrix.start_strategy }}
+             spec-relative-path: ${{ matrix.test_spec }}
+   ```
+
 [AWS_ACCESS_KEY_ID]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 [AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html
 [AWS_SECRET_ACCESS_KEY]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 
 [deploy.sh]: https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/react/deploy.sh
 
+[ESLint]: https://eslint.org/
+
 [hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
 [HashiCorp Packer variable file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform variable file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+
+[Jest]: https://qubitpi.github.io/jest/
+
+[Prettier]: https://qubitpi.github.io/prettier/docs/en/install.html
 
 [.env file]: https://create-react-app.dev/docs/adding-custom-environment-variables/#adding-development-environment-variables-in-env
