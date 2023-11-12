@@ -597,8 +597,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Set up JDK 11 for Build
         uses: actions/setup-java@v1
         with:

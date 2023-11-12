@@ -20,10 +20,10 @@ inputs:
     description: 'Maven group ID of JAR containing data models, e.g. "com.myorg"'
     required: true
   model-package-jar-artifact-id:
-    description: 'Maven artifact ID of JAR containing data models, e.g. "data-models"'
+    description: 'Maven artifact ID of JAR containing data models, e.g. "my-data-models"'
     required: true
   model-package-jar-version:
-    description: 'The version of JAR containing data models, e.g. "1.0.7"'
+    description: 'The version of JAR containing data models, e.g. "3.1.7"'
     required: true
   models-repo-token:
     description: 'The GitHub Fine-grained token with at least "Read access to code and metadata" repository permissions to the data models repo'
@@ -32,7 +32,7 @@ inputs:
     description: 'The data models repo owner, e.g. paion-data'
     required: true
   models-repo-name:
-    description: 'The data models repo name, e.g. my-jpa-data-model'
+    description: 'The data models repo name, e.g. my-data-models'
     required: true
 
 runs:
