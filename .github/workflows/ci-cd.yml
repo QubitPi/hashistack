@@ -23,30 +23,12 @@ name: hashicorp-aws CI/CD
       - master
 
 jobs:
-  yaml-lint:
-    name: YAML Lint Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actionshub/yamllint@main
-  markdown-lint:
-    name: Markdown Lint Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actionshub/markdownlint@main
-  markdown-link-check:
-    name: Markdown Link Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-verbose-mode: "yes"
+  code-styles:
+    uses: ./.github/workflows/yml-and-md-style-checks.yml
 
   documentation-ci-cd:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
-    needs: [yaml-lint, markdown-lint, markdown-link-check]
+    needs: code-styles
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -63,7 +45,7 @@ jobs:
       - name: Build website
         run: yarn build
       - name: Deploy to GitHub Pages
-        # if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
