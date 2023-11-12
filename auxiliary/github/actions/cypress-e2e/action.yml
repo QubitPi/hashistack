@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: "JDK environment setup"
-description: "Installing JDK 17"
+name: "Frontend E2E Tests"
+description: "Cypress E2E tests supporting parallel testing with spec granularity"
 
 inputs:
   node-version:
