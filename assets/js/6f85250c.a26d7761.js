@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[5259],{5838:s=>{s.exports=JSON.parse('{"permalink":"/hashicorp-aws/blog/tags/aws","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
