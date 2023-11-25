@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[2934],{6186:s=>{s.exports=JSON.parse('{"permalink":"/hashicorp-aws/blog/page/2","page":2,"postsPerPage":10,"totalPages":2,"totalCount":13,"previousPage":"/hashicorp-aws/blog","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
