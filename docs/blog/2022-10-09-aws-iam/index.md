@@ -1,6 +1,6 @@
 ---
-slug: enterprise-security
-title: Building Enterprise Security
+slug: aws-iam
+title: AWS Identity and Access Management (IAM)
 authors: [jiaqi]
 tags: [Security]
 ---
@@ -19,11 +19,11 @@ tags: [Security]
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-AWS Identity and Access Management (IAM)
-----------------------------------------
+IAM provides the infrastructure necessary to control authentication and authorization for a user's account.
 
-IAM provides the infrastructure necessary to control authentication and authorization for a user's account. The IAM
-infrastructure includes the following elements:
+<!--truncate-->
+ 
+The IAM infrastructure includes the following elements:
 
 ![Error loading intro-diagram-policies-800.png](intro-diagram-policies-800.png)
 

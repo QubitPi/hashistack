@@ -5,11 +5,6 @@ authors: [continuousdelivery.com, jiaqi, sten-pittet]
 tags: [Continuous Delivery]
 ---
 
-Continuous delivery is an approach where teams release quality products frequently and predictably from source code
-repository to production in an automated fashion.
-
-<!--truncate-->
-
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -23,6 +18,11 @@ repository to production in an automated fashion.
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
+
+Continuous delivery is an approach where teams release quality products frequently and predictably from source code
+repository to production in an automated fashion.
+
+<!--truncate-->
 
 What is Continuous Delivery
 ---------------------------

@@ -2,7 +2,6 @@
 slug: nvm
 title: Switching Node.js Versions with NVM
 authors: [jiaqi]
-date: 2023-11-20
 tags: [Node.js, nvm]
 ---
 
@@ -20,15 +19,14 @@ tags: [Node.js, nvm]
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-What is Node Version Manager (NVM)
-----------------------------------
-
 [Node Version Manager](https://github.com/nvm-sh/nvm) is a tool that helps us manage Node versions and is a convenient
 way to install Node. Think of it as npm or Yarn that helps manage Node packages, but instead of packages, NVM manages
 Node versions.
 
 This also means you can install multiple Node versions onto your machine at the same time and switch among them if
 needed.
+
+<!--truncate-->
 
 Displaying a List of Node.js Versions
 -------------------------------------

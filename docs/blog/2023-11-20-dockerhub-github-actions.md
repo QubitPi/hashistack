@@ -2,13 +2,28 @@
 slug: dockerhub-github-actions
 title: Build and Push Docker Images through GitHub Action
 authors: [jiaqi]
-date: 2023-11-20
 tags: [Docker]
 ---
+
+[//]: # (Copyright Jiaqi Liu)
+
+[//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
+[//]: # (you may not use this file except in compliance with the License.)
+[//]: # (You may obtain a copy of the License at)
+
+[//]: # (    http://www.apache.org/licenses/LICENSE-2.0)
+
+[//]: # (Unless required by applicable law or agreed to in writing, software)
+[//]: # (distributed under the License is distributed on an "AS IS" BASIS,)
+[//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
+[//]: # (See the License for the specific language governing permissions and)
+[//]: # (limitations under the License.)
 
 On every push to GitHub, [GitHub Action](https://github.com/marketplace/actions/build-and-push-docker-images) can
 auto-trigger the docker image build and push to [Docker Hub](https://hub.docker.com). We will be able to see that each
 push results in a usable image, which enhances the quality of a docker image a lot.
+
+<!--truncate-->
 
 Generate Docker Hub Access Token
 --------------------------------

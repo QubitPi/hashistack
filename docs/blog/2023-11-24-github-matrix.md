@@ -2,13 +2,28 @@
 slug: github-matrix
 title: Using a GitHub Action Matrix to Define Variations for Each Job
 authors: [jiaqi]
-date: 2023-11-24
 tags: [CI/CD, GitHub]
 ---
+
+[//]: # (Copyright Jiaqi Liu)
+
+[//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
+[//]: # (you may not use this file except in compliance with the License.)
+[//]: # (You may obtain a copy of the License at)
+
+[//]: # (    http://www.apache.org/licenses/LICENSE-2.0)
+
+[//]: # (Unless required by applicable law or agreed to in writing, software)
+[//]: # (distributed under the License is distributed on an "AS IS" BASIS,)
+[//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
+[//]: # (See the License for the specific language governing permissions and)
+[//]: # (limitations under the License.)
 
 A matrix strategy lets you use variables in a single job definition to automatically create multiple job runs that are 
 based on the combinations of the variables. For example, you can use a matrix strategy to test your code in multiple 
 versions of a language or on multiple operating systems.
+
+<!--truncate-->
 
 Using a Matrix Strategy
 -----------------------

@@ -21,7 +21,9 @@ tags: [Nexus]
 
 The proliferation of different repository formats and tools accessing them as well as the emergence of more publicly
 available repositories has triggered the need to manage access and usage of these repositories and the components they
-contain
+contain.
+
+<!--truncate-->
 
 Hosting our private repositories for internal components has proven to be a very efficient methodology to exchange
 components during all phases of the software development lifecycle. It is considered a best practice at this stage.

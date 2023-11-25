@@ -1,11 +1,9 @@
 ---
 slug: ssh-ascii-banner
-title: SSH ASCII Banner
+title: Add Custom ASCII Banner Logo to SSH Login Screen
 authors: [jiaqi, mike-andreasen]
 tags: [DevOps]
 ---
-
-<!--truncate-->
 
 [//]: # (Copyright Jiaqi Liu)
 
@@ -21,16 +19,15 @@ tags: [DevOps]
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Add Custom ASCII Banner Logo to SSH Login Screen
-------------------------------------------------
-
 In the early 90's ASCII art became a thing. It was a way to make logos using regular ASCII characters to decorate readme
-files and add some branding. Nowadays we can generate these banners using free tools like [Text to ASCII Art Generator].
+files and add some branding. Nowadays we can generate these banners using free tools like Text to ASCII Art Generator. 
 It can be used to create a server login banner that is displayed each time people log in via SSH.
+
+<!--truncate-->
 
 ![./example.png](./example.png)
 
-Firs generate a ASCII logo with the [Text to ASCII Art Generator]. Then open up message of the day file
+First generate a ASCII logo with the [Text to ASCII Art Generator]. Then open up message of the day file
 
 ```bash
 sudo nano /etc/motd
