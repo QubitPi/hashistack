@@ -3,7 +3,6 @@ slug: ssh-ascii-banner
 title: SSH ASCII Banner
 authors: [jiaqi, mike-andreasen]
 tags: [DevOps]
-date: 2022-04-30
 ---
 
 <!--truncate-->

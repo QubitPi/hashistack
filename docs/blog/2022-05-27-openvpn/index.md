@@ -3,7 +3,6 @@ slug: openvpn
 title: OpenVPN
 authors: [jiaqi]
 tags: [Security]
-date: 2022-05-27
 ---
 
 <!--truncate-->

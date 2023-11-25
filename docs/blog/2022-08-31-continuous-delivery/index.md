@@ -3,7 +3,6 @@ slug: continuous-delivery
 title: Continuous Delivery
 authors: [continuousdelivery.com, jiaqi, sten-pittet]
 tags: [Continuous Delivery]
-date: 2022-08-31
 ---
 
 Continuous delivery is an approach where teams release quality products frequently and predictably from source code

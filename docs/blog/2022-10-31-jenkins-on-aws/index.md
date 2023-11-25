@@ -3,7 +3,6 @@ slug: jenkins-on-aws
 title: Deploying Jenkins to AWS
 authors: [jiaqi]
 tags: [Jenkins]
-date: 2022-10-31
 ---
 
 <!--truncate-->
