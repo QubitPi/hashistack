@@ -24,7 +24,7 @@ AWS CodeDeploy, Amazon EC2 Spot, and Amazon EC2 Fleet. We can use Amazon Elastic
 Jenkins application on AWS.
 
 This post documents the process of deploying a Jenkins application. We will launch an EC2 instance, install Jenkins on
-that instance, and configure Jenkins to automatically spin up Jenkins agents if build abilities need to be augmented 
+that instance, and configure Jenkins to automatically spin up Jenkins agents if build abilities need to be augmented
 on the instance.
 
 <!--truncate-->

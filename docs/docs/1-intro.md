@@ -17,16 +17,16 @@ title: Introduction
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Platform teams are now widespread, standardizing organizational approaches to the cloud. But as platforms expand, we 
-often struggle to reach the desired levels of scale. Adoption slows as subject matter experts (SMEs) get burdened with 
+Platform teams are now widespread, standardizing organizational approaches to the cloud. But as platforms expand, we
+often struggle to reach the desired levels of scale. Adoption slows as subject matter experts (SMEs) get burdened with
 support requests. Governance teams become a bottleneck on the path to production, slowing the release cycle.
 
-Highly cloud mature organizations don't suffer like this. They recognize that different concerns are at play when 
-operating at scale and adapt their processes to deliver at a faster pace. The role that HashiCorp plays in this should 
+Highly cloud mature organizations don't suffer like this. They recognize that different concerns are at play when
+operating at scale and adapt their processes to deliver at a faster pace. The role that HashiCorp plays in this should
 not be underestimated. By codifying and standardizing an organization's infrastructure and compliance rules, developers
 can be free to do what they want to: add business value by writing code.
 
-[hashicorp-aws] helps an organization mature quickly, become a high performer, and scale its platform. This 
+[hashicorp-aws] helps an organization mature quickly, become a high performer, and scale its platform. This
 introduction discusses how [hashicorp-aws] enables enterprises to make the best use of HashiCorp
 [Packer][HashiCrop Packer] and [Terraform][HashiCrop Terraform].
 
@@ -129,7 +129,7 @@ curve or specialist knowledge.
 
 ### Cohesive Modules
 
-Cohesion means that related parts of a code base are kept in a single place. When thinking about infrastructure as a 
+Cohesion means that related parts of a code base are kept in a single place. When thinking about infrastructure as a
 product, this means that all concerns making a 'unit' of infrastructure should live in the same Terraform module.
 
 ### Compliant Modules

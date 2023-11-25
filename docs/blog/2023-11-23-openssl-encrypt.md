@@ -92,18 +92,18 @@ echo "LinuxCareer.com" | openssl enc -aes-256-cbc > openssl.dat
 $ echo "LinuxCareer.com" | openssl enc -aes-256-cbc > openssl.dat
 enter aes-256-cbc encryption password:
 Verifying - enter aes-256-cbc encryption password:
-$ file openssl.dat 
+$ file openssl.dat
 openssl.dat: openssl enc'd data with salted password
 ```
 
 To decrypt the "openssl.dat" file back to its original message use:
 
 ```bash
-openssl enc -aes-256-cbc -d -in openssl.dat 
+openssl enc -aes-256-cbc -d -in openssl.dat
 ```
 
 ```bash
-$ openssl enc -aes-256-cbc -d -in openssl.dat 
+$ openssl enc -aes-256-cbc -d -in openssl.dat
 enter aes-256-cbc decryption password:
 LinuxCareer.com
 ```
@@ -178,23 +178,23 @@ Next, we create some sample file called "encrypt.txt" with any arbitrary text:
 
 ```bash
 $ echo "Welcome to LinuxCareer.com" > encrypt.txt
-$ cat encrypt.txt 
+$ cat encrypt.txt
 Welcome to LinuxCareer.com
 ```
 
 Now we are ready to encrypt this file with public key:
 
 ```bash
-openssl rsautl -encrypt -inkey public_key.pem -pubin -in encrypt.txt -out encrypt.dat 
+openssl rsautl -encrypt -inkey public_key.pem -pubin -in encrypt.txt -out encrypt.dat
 ```
 
 i.e.
 
 ```bash
-$ openssl rsautl -encrypt -inkey public_key.pem -pubin -in encrypt.txt -out encrypt.dat 
+$ openssl rsautl -encrypt -inkey public_key.pem -pubin -in encrypt.txt -out encrypt.dat
 $ ls
 encrypt.dat  encrypt.txt  private_key.pem  public_key.pem
-$ file encrypt.dat 
+$ file encrypt.dat
 encrypt.dat: openssl enc'd data with salted password
 ```
 

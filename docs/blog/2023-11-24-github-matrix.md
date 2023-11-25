@@ -19,8 +19,8 @@ tags: [CI/CD, GitHub]
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-A matrix strategy lets you use variables in a single job definition to automatically create multiple job runs that are 
-based on the combinations of the variables. For example, you can use a matrix strategy to test your code in multiple 
+A matrix strategy lets you use variables in a single job definition to automatically create multiple job runs that are
+based on the combinations of the variables. For example, you can use a matrix strategy to test your code in multiple
 versions of a language or on multiple operating systems.
 
 <!--truncate-->
@@ -29,7 +29,7 @@ Using a Matrix Strategy
 -----------------------
 
 Use `jobs.<job_id>.strategy.matrix` to define a matrix of different job configurations. Within your matrix, define one
-or more variables followed by an array of values. For example, the following matrix has a variable called `version` with 
+or more variables followed by an array of values. For example, the following matrix has a variable called `version` with
 the value `[10, 12, 14]` and a variable called os with the value `[ubuntu-latest, windows-latest]`:
 
 ```yaml
@@ -41,11 +41,11 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 ```
 
-A job will run for each possible combination of the variables. In this example, the workflow will run six jobs, one for 
+A job will run for each possible combination of the variables. In this example, the workflow will run six jobs, one for
 each combination of the `os` and `version` variables.
 
-By default, GitHub will maximize the number of jobs run in parallel depending on runner availability. The **order of the 
-variables in the matrix determines the order in which the jobs are created**. The first variable you define will be the 
+By default, GitHub will maximize the number of jobs run in parallel depending on runner availability. The **order of the
+variables in the matrix determines the order in which the jobs are created**. The first variable you define will be the
 first job that is created in your workflow run. For example, the above matrix will create the jobs in the following
 order:
 
@@ -68,14 +68,14 @@ Example: Using a Single-Dimension Matrix
 
 You can specify a single variable to create a single-dimension matrix.
 
-For example, the following workflow defines the variable version with the values `[10, 12, 14]`. The workflow will run 
+For example, the following workflow defines the variable version with the values `[10, 12, 14]`. The workflow will run
 three jobs, one for each value in the variable. Each job will access the version value through the `matrix.version`
 context and pass the value as `node-version` to the actions/setup-node action.
 
 Example: Using a Multi-dimension Matrix
 ---------------------------------------
 
-You can specify multiple variables to create a multi-dimensional matrix. A job will run for each possible combination of 
+You can specify multiple variables to create a multi-dimensional matrix. A job will run for each possible combination of
 the variables.
 
 For example, the following workflow specifies two variables:
@@ -105,8 +105,8 @@ Example: Using Contexts to Create Matrices
 
 You can use contexts to create matrices. For more information about contexts, see "[Contexts][Contexts]."
 
-For example, the following workflow triggers on the `repository_dispatch` event and uses information from the event 
-payload to build the matrix. When a repository dispatch event is created with a payload like the one below, the matrix 
+For example, the following workflow triggers on the `repository_dispatch` event and uses information from the event
+payload to build the matrix. When a repository dispatch event is created with a payload like the one below, the matrix
 `version` variable will have a value of `[12, 14, 16]`. For more information about the `repository_dispatch` trigger,
 see "[Events that trigger workflows][Events that trigger workflows]."
 
@@ -124,7 +124,7 @@ on:
   repository_dispatch:
     types:
       - test
- 
+
 jobs:
   example_matrix:
     runs-on: ubuntu-latest
@@ -140,7 +140,7 @@ jobs:
 Expanding or adding matrix configurations
 -----------------------------------------
 
-Use `jobs.<job_id>.strategy.matrix.include` to expand existing matrix configurations or to add new configurations. The 
+Use `jobs.<job_id>.strategy.matrix.include` to expand existing matrix configurations or to add new configurations. The
 value of include is a list of objects.
 
 For each object in the `include` list, the key:value pairs in the object will be added to each of the matrix
@@ -177,22 +177,22 @@ will result in six jobs with the following matrix combinations:
 
 following this logic:
 
-- `{color: green}` is added to all of the original matrix combinations because it can be added without overwriting any 
+- `{color: green}` is added to all of the original matrix combinations because it can be added without overwriting any
   part of the original combinations.
 - `{color: pink, animal: cat}` adds `color:pink` only to the original matrix combinations that include `animal: cat`.
   This overwrites the color: green that was added by the previous include entry.
 - `{fruit: apple, shape: circle}` adds shape: circle only to the original matrix combinations that include
   `fruit: apple`.
-- `{fruit: banana}` cannot be added to any original matrix combination without overwriting a value, so it is added as an 
+- `{fruit: banana}` cannot be added to any original matrix combination without overwriting a value, so it is added as an
   additional matrix combination.
 - `{fruit: banana, animal: cat}` cannot be added to any original matrix combination without overwriting a value, so it
-  is added as an additional matrix combination. It does not add to the `{fruit: banana}` matrix combination because that 
+  is added as an additional matrix combination. It does not add to the `{fruit: banana}` matrix combination because that
   combination was not one of the original matrix combinations.
 
 This looks like kinda "what're we doing here???". But let us just look at the following examples which make it more
 clear.
 
-The following workflow will run six jobs, one for each combination of `os` and node. When the job for the os value of 
+The following workflow will run six jobs, one for each combination of `os` and node. When the job for the os value of
 `windows-latest` and node value of `16` runs, an additional variable called `npm` with the value of `6` will be included
 in the job.
 
@@ -232,8 +232,8 @@ jobs:
             version: 17
 ```
 
-If you don't specify any matrix variables, all configurations under `include` will run. For example, the following 
-workflow would run two jobs, one for each `include` entry. This lets you take advantage of the matrix strategy without 
+If you don't specify any matrix variables, all configurations under `include` will run. For example, the following
+workflow would run two jobs, one for each `include` entry. This lets you take advantage of the matrix strategy without
 having a fully populated matrix.
 
 ```yaml
@@ -252,8 +252,8 @@ jobs:
 Excluding Matrix Configurations
 -------------------------------
 
-To remove specific configurations defined in the matrix, use `jobs.<job_id>.strategy.matrix.exclude`. An excluded 
-configuration only has to be a partial match for it to be excluded. For example, the following workflow will run nine 
+To remove specific configurations defined in the matrix, use `jobs.<job_id>.strategy.matrix.exclude`. An excluded
+configuration only has to be a partial match for it to be excluded. For example, the following workflow will run nine
 jobs: one job for each of the 12 configurations, minus the one excluded job that matches
 `{os: macos-latest, version: 12, environment: production}`, and the two excluded jobs that match
 `{os: windows-latest, version: 16}`.
@@ -282,16 +282,16 @@ Handling Failures
 You can control how job failures are handled with `jobs.<job_id>.strategy.fail-fast` and
 `jobs.<job_id>.continue-on-error`.
 
-`jobs.<job_id>.strategy.fail-fast` applies to the entire matrix. If `jobs.<job_id>.strategy.fail-fast` is set to `true`, 
+`jobs.<job_id>.strategy.fail-fast` applies to the entire matrix. If `jobs.<job_id>.strategy.fail-fast` is set to `true`,
 GitHub will cancel all in-progress and queued jobs in the matrix if any job in the matrix fails. This property defaults
 to `true`.
 
-`jobs.<job_id>.continue-on-error` applies to a single job. If `jobs.<job_id>.continue-on-error` is `true`, other jobs in 
+`jobs.<job_id>.continue-on-error` applies to a single job. If `jobs.<job_id>.continue-on-error` is `true`, other jobs in
 the matrix will continue running even if the job with `jobs.<job_id>.continue-on-error: true` fails.
 
 You can use `jobs.<job_id>.strategy.fail-fast` and `jobs.<job_id>.continue-on-error` together. For example, the
 following workflow will start four jobs. For each job, continue-on-error is determined by the value of
-`matrix.experimental`. If any of the jobs with `continue-on-error: false` fail, all jobs that are in progress or queued 
+`matrix.experimental`. If any of the jobs with `continue-on-error: false` fail, all jobs that are in progress or queued
 will be cancelled. If the job with `continue-on-error: true` fails, the other jobs will not be affected.
 
 ```yaml
@@ -316,7 +316,7 @@ By default, GitHub will maximize the number of jobs run in parallel depending on
 number of jobs that can run simultaneously when using a `matrix` job strategy, use
 `jobs.<job_id>.strategy.max-parallel`.
 
-For example, the following workflow will run a maximum of two jobs at a time, even if there are runners available to run 
+For example, the following workflow will run a maximum of two jobs at a time, even if there are runners available to run
 all six jobs at once.
 
 ```yaml

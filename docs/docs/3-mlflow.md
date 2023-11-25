@@ -37,7 +37,7 @@ The following script variables need to be defined:
 - **HC_DIR**: The local absolute path to the [hashicorp-aws] directory
 - **HC_CONFIG_DIR**: The local absolute path to a directory containing the following deployment files:
 
-    - A [HashiCorp Packer variable file][HashiCorp Packer variable file] named **aws-mlflow-docker.pkrvars.hcl** with the 
+    - A [HashiCorp Packer variable file][HashiCorp Packer variable file] named **aws-mlflow-docker.pkrvars.hcl** with the
       following variable values (`/abs/path/to/hashicorp-aws-config-dir/aws-mlflow-docker.pkrvars.hcl`):
 
       ```hcl
@@ -66,7 +66,7 @@ Then we can execute the **[deploy.sh]** to manually deploy any MLflow models
 - The packer simply builds a non-model specific AMI
 - If the container runs multiple models at different ports, make sure to add a **PORT** file containg a port number only
   in each sub-dir of `/abs/path/to/mlflow_models/`
-- If we need custom module imports in model, add module.py and a `__init__.py` file to the sub-dir of 
+- If we need custom module imports in model, add module.py and a `__init__.py` file to the sub-dir of
   `/abs/path/to/mlflow_models/my-model`
 
 :::

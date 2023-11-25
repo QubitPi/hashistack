@@ -43,7 +43,7 @@ The following script variables need to be defined:
 - **REACT_DIR**: The local absolute path to the React project repo
 
   :::caution
-  
+
   Should the React App be built with [.env file], this file MUST exist at `$REACT_DIR/.env` at this moment. This .env
   file is essentially the same one mentioned in the `HC_CONFIG_DIR` part below
 
@@ -70,7 +70,7 @@ The following script variables need to be defined:
       aws_react_dot_env_file_path      = "../../../../hashicorp-aws-config-dir/filebeat.yml"
       ```
 
-    - A [HashiCorp Terraform variable file][HashiCorp Terraform variable file] named **aws-react.tfvars** with the 
+    - A [HashiCorp Terraform variable file][HashiCorp Terraform variable file] named **aws-react.tfvars** with the
       following variable values (`/abs/path/to/hashicorp-aws-config-dir/aws-react.tfvars`):
 
       ```hcl
@@ -93,7 +93,7 @@ GitHub Action Automatic Deployment
 ```yaml
 env:
   NODE_VERSION: 16
-  
+
 jobs:
   hashicorp:
     name: Generated React dist in GitHub Action, publish its AMI and deploy the AMI to EC2 through HashiCorp
@@ -112,7 +112,7 @@ jobs:
       - name: Load Packer variable file
         run: cp ../hashicorp-aws-config-dir/aws-react.pkrvars.hcl ../hashicorp-aws/hashicorp/react/images/aws-react.auto.pkrvars.hcl
       - name: Load Terraform variable file
-        run: cp ../hashicorp-aws-config-dir/aws-react.tfvars ../hashicorp-aws/hashicorp/react/instances/aws-react.auto.tfvars       
+        run: cp ../hashicorp-aws-config-dir/aws-react.tfvars ../hashicorp-aws/hashicorp/react/instances/aws-react.auto.tfvars
       - name: Generate dist
         run: cp ../hashicorp-aws-config-dir/.env . && yarn && yarn build
       - name: Move dist to a location for HashiCorp deployment to pickup
@@ -136,7 +136,7 @@ The following auxiliary actions assumes a yarn-based project
 
 #### Code Style Checks
 
-This action assume [Prettier] and [ESLint] have been installed 
+This action assume [Prettier] and [ESLint] have been installed
 
 ```bash
 yarn add --dev --exact prettier
@@ -193,7 +193,7 @@ jobs:
 
 #### Cypress E2E Tests
 
-**Cypress E2E Tests** offers developers Actions that provide an easy way to automate, customize, and execute 
+**Cypress E2E Tests** offers developers Actions that provide an easy way to automate, customize, and execute
 **parallel** end-to-end tests within a GitHub project.  The action provides
 
 - dependency installation via **yarn**,
@@ -232,13 +232,13 @@ The example below is a very simple setup:
    ```yaml
    ---
    name: My GitHub Workflow
-   
+
    "on":
       pull_request:
       push:
          branches:
             - master
-   
+
    jobs:
      list-e2e-specs:
        runs-on: ubuntu-latest
@@ -253,7 +253,7 @@ The example below is a very simple setup:
              ref: ${{ github.ref }}
              path: "cypress/e2e"
              ext: ".ts"
-     
+
      e2e-tests:
        name: E2E Tests
        needs: list-e2e-specs
