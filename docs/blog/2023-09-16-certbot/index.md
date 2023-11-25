@@ -2,7 +2,6 @@
 slug: certbot
 title: SSL through Certbot
 authors: [jiaqi]
-date: 2023-09-16
 tags: [SSL, HTTPS, Security]
 ---
 

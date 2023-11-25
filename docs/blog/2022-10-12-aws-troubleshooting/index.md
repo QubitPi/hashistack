@@ -2,7 +2,6 @@
 slug: aws-troubleshooting
 title: AWS Troubleshooting
 authors: [jiaqi]
-date: 2023-11-18
 tags: [AWS]
 ---
 
