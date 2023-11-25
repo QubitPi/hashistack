@@ -1,6 +1,6 @@
 ---
 slug: certbot
-title: SSL through Certbot
+title: Installing Free SSL Certificates with Certbot running on Nginx
 authors: [jiaqi]
 tags: [SSL, HTTPS, Security]
 ---
@@ -19,14 +19,14 @@ tags: [SSL, HTTPS, Security]
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Installing Free SSL Certificates with Certbot running on Nginx
---------------------------------------------------------------
-
-[Let's Encrypt](https://qubitpi.github.io/letsencrypt-website/) provides free SSL certificates for our websites to use 
-secure connections. [Certbot](https://certbot.eff.org/) is free open source software that allows us to easily create 
+[Let's Encrypt](https://qubitpi.github.io/letsencrypt-website/) provides free SSL certificates for our websites to use
+secure connections. [Certbot](https://certbot.eff.org/) is free open source software that allows us to easily create
 Let's Encrypt SSLs on our Linux server, such as Ubuntu VM.
 
-### Installing Certbot on Ubuntu
+<!--truncate-->
+
+Installing Certbot on Ubuntu
+----------------------------
 
 We will install Certbot on Ubuntu with _snapd_ using the following steps:
 
@@ -61,7 +61,8 @@ We will install Certbot on Ubuntu with _snapd_ using the following steps:
    sudo apt install python3-certbot-nginx -y
    ```
 
-### Creating SSL Certificate with Certbot
+Creating SSL Certificate with Certbot
+-------------------------------------
 
 :::caution
 
@@ -77,7 +78,8 @@ without modifying system files:
 sudo certbot --nginx
 ```
 
-### Configuring Reverse Proxy on Nginx
+Configuring Reverse Proxy on Nginx
+----------------------------------
 
 After certificates have been deployed and Nginx has been configured properly for SSL by Certbot, it's time to configure
 routing to direct HTTPS to local HTTP by modifying **/etc/nginx/sites-enabled/default** file.

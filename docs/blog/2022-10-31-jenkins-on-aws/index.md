@@ -5,8 +5,6 @@ authors: [jiaqi]
 tags: [Jenkins]
 ---
 
-<!--truncate-->
-
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -25,9 +23,11 @@ Jenkins is an open-source automation server that integrates with a number of AWS
 AWS CodeDeploy, Amazon EC2 Spot, and Amazon EC2 Fleet. We can use Amazon Elastic Compute Cloud (Amazon EC2) to deploy a
 Jenkins application on AWS.
 
-This section documents the process of deploying a Jenkins application. We will launch an EC2 instance, install Jenkins
-on that instance, and configure Jenkins to automatically spin up Jenkins agents if build abilities need to be augmented
+This post documents the process of deploying a Jenkins application. We will launch an EC2 instance, install Jenkins on
+that instance, and configure Jenkins to automatically spin up Jenkins agents if build abilities need to be augmented 
 on the instance.
+
+<!--truncate-->
 
 :::note Prerequisites
 

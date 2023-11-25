@@ -5,14 +5,6 @@ authors: [joseph-mathenge, jiaqi]
 tags: [Continuous Delivery]
 ---
 
-The key distinction between deployment and release is the business rationale. Deployment doesn't necessarily mean users
-have access to features. Some companies will release at the same time as deployment to production is taking place.
-
-Others will choose to wait, thereby having the new features in production but not availed to users until the business
-decides.
-
-<!--truncate-->
-
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -26,6 +18,14 @@ decides.
 [//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
+
+The key distinction between deployment and release is the business rationale. Deployment doesn't necessarily mean users
+have access to features. Some companies will release at the same time as deployment to production is taking place.
+
+Others will choose to wait, thereby having the new features in production but not availed to users until the business
+decides.
+
+<!--truncate-->
 
 What is Deployment
 ------------------

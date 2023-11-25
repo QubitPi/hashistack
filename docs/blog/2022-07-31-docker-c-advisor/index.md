@@ -5,8 +5,6 @@ authors: [jiaqi]
 tags: [Docker, Virtualization]
 ---
 
-<!--truncate-->
-
 [//]: # (Copyright Jiaqi Liu)
 
 [//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
@@ -21,16 +19,15 @@ tags: [Docker, Virtualization]
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Docker cAdvisor
----------------
-
-[cAdvisor](https://github.com/google/cadvisor) (Container Advisor) provides Docker container users an understanding of
-the resource usage and performance characteristics of their running containers. It is a running daemon that collects,
-aggregates, processes, and exports information about running containers. Specifically, for each container it keeps
-resource isolation parameters, historical resource usage, histograms of complete historical resource usage and network
+[cAdvisor] (Container Advisor) provides Docker container users an understanding of 
+the resource usage and performance characteristics of their running containers. It is a running daemon that collects, 
+aggregates, processes, and exports information about running containers. Specifically, for each container it keeps 
+resource isolation parameters, historical resource usage, histograms of complete historical resource usage and network 
 statistics. This data is exported by container and machine-wide.
 
-Although [cAdvisor](https://github.com/google/cadvisor) has some prelimilary (useful though) UI. It also offers
+<!--truncate-->
+
+Although [cAdvisor] has some prelimilary (useful though) UI. It also offers
 
 1. [RESTful API to query container stats](https://github.com/google/cadvisor/blob/master/docs/api.md)
 2. [Export capability to common data storage, such as Elasticsearch](https://github.com/google/cadvisor/blob/master/docs/storage/README.md)
@@ -61,3 +58,5 @@ sudo docker run \
 quick-and-lightweight option would be [docker-container-stats](https://github.com/virtualzone/docker-container-stats)
 
 ![docker-container-stats Screenshot](./docker-container-stats.png)
+
+[cAdvisor]: https://github.com/google/cadvisor
