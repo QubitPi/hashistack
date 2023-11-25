@@ -17,14 +17,14 @@ title: Elastic Stack (ELK)
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Operations and SRE teams can use [hashicorp-aws] to safely manage ELK deployment using infrastructure as code 
+Operations and SRE teams can use [hashicorp-aws] to safely manage ELK deployment using infrastructure as code
 methodology, which allows us to peer-reviewed infrastructure changes in an automated and controlled fashion.
 
 :::info What is the ELK Stack?
 
 The ELK stack is an acronym used to describe a stack that comprises three popular projects: [Elasticsearch],
-[Logstash], and [Kibana]. Often referred to as Elasticsearch, the ELK stack gives us the ability to aggregate logs from 
-all our systems and applications, analyze these logs, and create visualizations for application and infrastructure 
+[Logstash], and [Kibana]. Often referred to as Elasticsearch, the ELK stack gives us the ability to aggregate logs from
+all our systems and applications, analyze these logs, and create visualizations for application and infrastructure
 monitoring, faster troubleshooting, security analytics, and more.
 
 :::
@@ -59,10 +59,10 @@ People may jump directly to the end of [this section](#configuring-deployment) t
 
 ### Authenticating to AWS
 
-Before we can build the AMI, we need to provide our AWS credentials to Packer and Terraform. These credentials have 
+Before we can build the AMI, we need to provide our AWS credentials to Packer and Terraform. These credentials have
 permissions to create, modify, and delete AMI images and EC2 instances.
 
-To allow HashiCorp to access our IAM user credentials, set our AWS access key ID and secret key as environment 
+To allow HashiCorp to access our IAM user credentials, set our AWS access key ID and secret key as environment
 variables:
 
 ```bash
@@ -84,7 +84,7 @@ The _IAM user_ associated with the credentials above must have the following [AW
 
 #### Preparing for SSL
 
-Please [obtain SSL certificate and key][Certbot SSL] and put them in 2 files. Let's call them **server.crt** 
+Please [obtain SSL certificate and key][Certbot SSL] and put them in 2 files. Let's call them **server.crt**
 (certificate) and **server.key** (certificate key)
 
 ##### Nginx
@@ -173,7 +173,7 @@ security_group = "<AWS Security Group for the EC2 instance>"
 
 #### Defining Config Directory Path
 
-Put the _aws-elk.pkrvars.hcl_ and _aws-elk.tfvars_ in a directory. We will call it **ELK_HC_CONFIG_DIR** (along with 
+Put the _aws-elk.pkrvars.hcl_ and _aws-elk.tfvars_ in a directory. We will call it **ELK_HC_CONFIG_DIR** (along with
 our source code dir **ELK_HC_CONFIG_DIR**):
 
 ```bash

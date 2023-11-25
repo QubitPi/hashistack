@@ -121,7 +121,7 @@ jobs:
       - name: Load Packer variable file
         run: cp ../hashicorp-aws-config-dir/aws-ws.pkrvars.hcl ../hashicorp-aws/hashicorp/webservice/images/aws-ws.auto.pkrvars.hcl
       - name: Load Terraform variable file
-        run: cp ../hashicorp-aws-config-dir/aws-ws.tfvars ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars       
+        run: cp ../hashicorp-aws-config-dir/aws-ws.tfvars ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars
       - name: Generate webservice WAR file
         run: mvn -B clean package
       - name: Move WAR file to a location for HashiCorp deployment to pickup
@@ -165,7 +165,7 @@ jobs:
 - **model-repo-org** is the data models repo owner, e.g. paion-data. This can be eigher a GitHub user account name or
   a GitHub organization name
 - **models-repo-name** is the data models repo name, e.g. my-data-models
-- **models-repo-token** is the GitHub Fine-grained token with at least "Read access to code and metadata" repository 
+- **models-repo-token** is the GitHub Fine-grained token with at least "Read access to code and metadata" repository
   permissions to the data models repo
 
 :::

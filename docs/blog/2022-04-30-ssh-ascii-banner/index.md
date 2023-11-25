@@ -20,7 +20,7 @@ tags: [DevOps]
 [//]: # (limitations under the License.)
 
 In the early 90's ASCII art became a thing. It was a way to make logos using regular ASCII characters to decorate readme
-files and add some branding. Nowadays we can generate these banners using free tools like Text to ASCII Art Generator. 
+files and add some branding. Nowadays we can generate these banners using free tools like Text to ASCII Art Generator.
 It can be used to create a server login banner that is displayed each time people log in via SSH.
 
 <!--truncate-->

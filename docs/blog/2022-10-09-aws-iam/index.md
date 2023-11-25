@@ -22,7 +22,7 @@ tags: [Security]
 IAM provides the infrastructure necessary to control authentication and authorization for a user's account.
 
 <!--truncate-->
- 
+
 The IAM infrastructure includes the following elements:
 
 ![Error loading intro-diagram-policies-800.png](intro-diagram-policies-800.png)
