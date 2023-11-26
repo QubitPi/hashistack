@@ -2684,5 +2684,126 @@ It can be used to create a server login banner that is displayed each time peopl
 <p>Save the file and open a new SSH session and log in, we should be greeted with our beautiful banner</p>]]></content:encoded>
             <category>DevOps</category>
         </item>
+        <item>
+            <title><![CDATA[Trunk-Based Development]]></title>
+            <link>https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment</link>
+            <guid>https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment</guid>
+            <pubDate>Wed, 13 Apr 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></description>
+            <content:encoded><![CDATA[<p>Trunk-based development is a version control management practice where developers merge small, frequent updates to a
+core "trunk" or main branch. Since it streamlines merging and integration phases, it helps achieve CI/CD and increases
+software delivery and organizational performance.</p>
+<p>In the early days of software development, programmers didn't have the luxury of modern version control systems. Rather,
+they developed two versions of their software concurrently as a means of tracking changes and reversing them if
+necessary. Over time, this process proved to be labor-intensive, costly, and inefficient.</p>
+<p>As version control systems matured, various development styles emerged, enabling programmers to find bugs more easily,
+code in parallel with their colleagues, and accelerate release cadence. Today, most programmers leverage one of two
+development models to deliver quality software</p>
+<ol>
+<li>Gitflow</li>
+<li>trunk-based development</li>
+</ol>
+<p>Gitflow, which was popularized first, is a stricter development model where only certain individuals can approve changes
+to the main code. This maintains code quality and minimizes the number of bugs. Trunk-based development is a more open
+model since all developers have access to the main code. This enables teams to iterate quickly and implement
+<a href="https://www.atlassian.com/continuous-delivery" target="_blank" rel="noopener noreferrer">CI/CD</a>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-is-trunk-based-development">What is Trunk-Based Development<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#what-is-trunk-based-development" class="hash-link" aria-label="Direct link to What is Trunk-Based Development" title="Direct link to What is Trunk-Based Development">​</a></h2>
+<p>Trunk-based development is a
+<a href="https://www.atlassian.com/git/tutorials/what-is-version-control" target="_blank" rel="noopener noreferrer">version control management</a> practice where developers
+merge small, frequent updates to a  core "trunk" or main branch. It's a common practice among
+<a href="https://www.atlassian.com/devops/what-is-devops" target="_blank" rel="noopener noreferrer">DevOps</a> teams and part of the
+<a href="https://www.atlassian.com/devops/what-is-devops/devops-best-practices" target="_blank" rel="noopener noreferrer">DevOps lifecycle</a> since it streamlines merging
+and integration phases. In fact, trunk-based development is a required practice of CI/CD. Developers can create
+short-lived branches with a few small commits compared to other long-lived feature branching strategies. As codebase
+complexity and team size grow, trunk-based development helps keep production releases flowing.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="gitflow-vs-trunk-based-development">Gitflow vs. Trunk-Based Development<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#gitflow-vs-trunk-based-development" class="hash-link" aria-label="Direct link to Gitflow vs. Trunk-Based Development" title="Direct link to Gitflow vs. Trunk-Based Development">​</a></h2>
+<p><a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow" target="_blank" rel="noopener noreferrer">Gitflow</a> is an alternative Git branching
+model that uses long-lived feature branches and multiple primary branches. Gitflow has more, longer-lived branches and
+larger commits than trunk-based development. Under this model, developers create a feature branch and delay merging it
+to the main trunk branch until the feature is complete. These long-lived feature branches require more collaboration to
+merge as they have a higher risk of deviating from the trunk branch and introducing conflicting updates.</p>
+<p>Gitflow also has separate primary branch lines for development, hotfixes, features, and releases. There are different
+strategies for merging commits between these branches. Since there are more branches to juggle and manage, there is
+often more complexity that requires additional planning sessions and review from the team.</p>
+<p>Trunk-based development is far more simplified since it focuses on the main branch as the source of fixes and releases.
+In trunk-based development the main branch is assumed to always be stable, without issues, and ready to deploy.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="benefits-of-trunk-based-development">Benefits of Trunk-Based Development<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#benefits-of-trunk-based-development" class="hash-link" aria-label="Direct link to Benefits of Trunk-Based Development" title="Direct link to Benefits of Trunk-Based Development">​</a></h2>
+<p>Trunk-based development is a required practice for
+<a href="https://www.atlassian.com/continuous-delivery/continuous-integration" target="_blank" rel="noopener noreferrer">continuous integration</a>. If build and test
+processes are automated but developers work on isolated, lengthy feature branches that are infrequently integrated into
+a shared branch, continuous integration is not living up to its potential.</p>
+<p>Trunk-based development eases the friction of code integration. When developers finish new work, they must merge the new
+code into the main branch. Yet they should not merge changes to the truck until they have verified that they can build
+successfully. During this phase, conflicts may arise if modifications have been made since the new work began. In
+particular, these conflicts are increasingly complex as development teams grow and the code base scales. This happens
+when developers create separate branches that deviate from the source branch and other developers are simultaneously
+merging overlapping code. Luckily, the trunk-based development model reduces these conflicts.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="allows-continuous-code-integration">Allows Continuous Code Integration<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#allows-continuous-code-integration" class="hash-link" aria-label="Direct link to Allows Continuous Code Integration" title="Direct link to Allows Continuous Code Integration">​</a></h3>
+<p>In the trunk-based development model, there is a repository with a steady stream of commits flowing into the main
+branch. Adding an automated test suite and code coverage monitoring for this stream of commits enables continuous
+integration. When new code is merged into the trunk, automated integration and code coverage tests run to validate the
+code quality.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="ensures-continuous-code-review">Ensures Continuous Code Review<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#ensures-continuous-code-review" class="hash-link" aria-label="Direct link to Ensures Continuous Code Review" title="Direct link to Ensures Continuous Code Review">​</a></h3>
+<p>The rapid, small commits of trunk-based development make code review a more efficient process. With small branches,
+developers can quickly see and review small changes. This is far easier compared to a long-lived feature branch where a
+reviewer reads pages of code or manually inspects a large surface area of code changes.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="enables-consecutive-production-code-releases">Enables Consecutive Production Code Releases<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#enables-consecutive-production-code-releases" class="hash-link" aria-label="Direct link to Enables Consecutive Production Code Releases" title="Direct link to Enables Consecutive Production Code Releases">​</a></h3>
+<p>Teams should make frequent, daily merges to the main branch. Trunk-based development strives to keep the trunk branch
+"green", meaning it's ready to deploy at any commit. Automated tests, code converge, and code reviews provides a
+trunk-based development project with the assurances it's ready to deploy to production at any time. This gives team
+agility to frequently deploy to production and set further goals of daily production releases.</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>As CI/CD grew in popularity, branching models were refined and optimized, leading to the rise of trunk-based
+development. Now, trunk-based development is a requirement of continuous integration. With continuous integration,
+developers perform trunk-based development in conjunction with automated tests that run after each committee to a
+trunk. This ensures the project works at all times.</p></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="trunk-based-development-best-practices">Trunk-Based Development Best Practices<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#trunk-based-development-best-practices" class="hash-link" aria-label="Direct link to Trunk-Based Development Best Practices" title="Direct link to Trunk-Based Development Best Practices">​</a></h2>
+<p>Trunk-based development ensures teams release code quickly and consistently. The following is a list of exercises and
+practices that will help refine your team's cadence and develop an optimized release schedule.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="develop-in-small-batches">Develop in Small Batches<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#develop-in-small-batches" class="hash-link" aria-label="Direct link to Develop in Small Batches" title="Direct link to Develop in Small Batches">​</a></h3>
+<p>Trunk-based development follows a quick rhythm to deliver code to production. If trunk-based development was like music
+it would be a rapid staccato -- short, succinct notes in rapid succession, with the repository commits being the notes.
+<strong>Keeping commits and branches small</strong> allows for a more rapid tempo of merges and deployments.</p>
+<p>Small changes of a couple of commits or modification of a few lines of code minimize cognitive overhead. It's much
+easier for teams to have meaningful conversations and make quick decisions when reviewing a limited area of code versus
+a sprawling set of changes.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="feature-flags">Feature Flags<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#feature-flags" class="hash-link" aria-label="Direct link to Feature Flags" title="Direct link to Feature Flags">​</a></h3>
+<p>Feature flags nicely compliment trunk-based development by enabling developers to wrap new changes in an inactive code
+path and activate it at a later time. This allows developers to forgo creating a separate repository feature branch and
+instead commit new feature code directly to the main branch within a feature flag path.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="implement-comprehensive-automated-testing">Implement Comprehensive Automated Testing<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#implement-comprehensive-automated-testing" class="hash-link" aria-label="Direct link to Implement Comprehensive Automated Testing" title="Direct link to Implement Comprehensive Automated Testing">​</a></h3>
+<p><strong>Automated testing is necessary for any modern software project intending to achieve CI/CD</strong>. There are multiple types
+of automated tests that run at different stages of the release pipeline. Short running unit and integration tests are
+executed during development and upon code merge. Longer running, full stack, end-to-end tests are run in later pipeline
+phases against a full staging or production environment.</p>
+<p>Automated tests help trunk-based development by maintaining a small batch rhythm as developers merge new commits. The
+automated test suite reviews the code for any issues and automatically approves or denies it. This helps developers
+rapidly create commits and run them through automated tests to see if they introduce any new issues.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="perform-asynchronous-code-reviews">Perform Asynchronous Code Reviews<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#perform-asynchronous-code-reviews" class="hash-link" aria-label="Direct link to Perform Asynchronous Code Reviews" title="Direct link to Perform Asynchronous Code Reviews">​</a></h3>
+<p>In trunk-based development, code review should be performed immediately and not put into an asynchronous system for
+later review. Automated tests provide a layer of preemptive code review. When developers are ready to review a team
+member's pull request, they can first check that the automated tests passed and the code coverage has increased. This
+gives the reviewer immediate reassurance that the new code meets certain specifications. The reviewer can then focus on
+optimizations.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="have-three-or-fewer-active-branches-in-the-applications-code-repository">Have Three or Fewer Active Branches in the Application's Code Repository<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#have-three-or-fewer-active-branches-in-the-applications-code-repository" class="hash-link" aria-label="Direct link to Have Three or Fewer Active Branches in the Application's Code Repository" title="Direct link to Have Three or Fewer Active Branches in the Application's Code Repository">​</a></h3>
+<p>Once a branch merges, it is best practice to delete it. <strong>A repository with a large amount of active branches has some
+unfortunate side effects</strong>. While it can be beneficial for teams to see what work is in progress by examining active
+branches, this benefit is lost if there are stale and inactive branches still around. Some developers use Git user
+interfaces that may become unwieldy to work with when loading a large number of remote branches.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="merge-branches-to-the-trunk-at-least-once-a-day">Merge Branches to the Trunk at Least Once a Day<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#merge-branches-to-the-trunk-at-least-once-a-day" class="hash-link" aria-label="Direct link to Merge Branches to the Trunk at Least Once a Day" title="Direct link to Merge Branches to the Trunk at Least Once a Day">​</a></h3>
+<p>High-performing, trunk-based development teams should close out and merge any open and merge-ready branches at least on
+a daily basis. This exercise helps keep rhythm and sets a cadence for release tracking. The team can then tag the main
+trunk at the end of day as a release commit, which has the helpful side effect of generating a daily agile release
+increment.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="reduced-number-of-code-freezes-and-integration-phases">Reduced Number of Code Freezes and Integration Phases<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#reduced-number-of-code-freezes-and-integration-phases" class="hash-link" aria-label="Direct link to Reduced Number of Code Freezes and Integration Phases" title="Direct link to Reduced Number of Code Freezes and Integration Phases">​</a></h3>
+<p><strong>Agile CI/CD teams shouldn't need planned code freezes or pauses for integration phases</strong> -- although an organization
+may need them for other reasons. The "continuous" in CI/CD implies that updates are constantly flowing. Trunk-based
+development teams should try to avoid blocking code freezes and plan accordingly to ensure the release pipeline is not
+stalled.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="build-fast-and-execute-immediately">Build Fast and Execute Immediately<a href="https://qubitpi.github.io/hashicorp-aws/blog/trunk-based-deployment#build-fast-and-execute-immediately" class="hash-link" aria-label="Direct link to Build Fast and Execute Immediately" title="Direct link to Build Fast and Execute Immediately">​</a></h3>
+<p>In order to maintain a quick release cadence, build and test execution times should be optimized. CI/CD build tools
+should use caching layers where appropriate to avoid expensive computations for static. <strong>Tests should be optimized to
+use appropriate stubs for third-party services</strong>.</p>]]></content:encoded>
+            <category>CI/CD</category>
+        </item>
     </channel>
 </rss>
