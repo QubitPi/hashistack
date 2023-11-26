@@ -969,7 +969,7 @@ containing a collection of users and groups.
 
 The realms can be accessed via the **Realms** menu item located under **Security**, in the Administration main menu.
 
-![Error loading nexus3-realms.png](./nexus3-realms.png)
+![Error loading nexus3-realms.png](nexus3-realms.png)
 
 Effectively, the configuration shown above determines what authentication realm is used to grant a user access and the
 order the realms are used.
@@ -987,7 +987,7 @@ roles.
 To access Privileges go to **Security** in the Administration menu, where it's listed as a sub-section. An extensive
 list of privileges is already built in the repository manager and is partially shown in the figure below
 
-![Error loading nexus3-privileges-partial-list.png](./nexus3-privileges-partial-list.png)
+![Error loading nexus3-privileges-partial-list.png](nexus3-privileges-partial-list.png)
 
 This feature allows us to inspect existing privileges and create custom privileges as required. Users will need
 _nx-privilege_ or _nx-all_ privileges to access this page.
@@ -1099,13 +1099,13 @@ applied to a privilege type
 
 Click the **Create privilege** button to view a list of privilege types
 
-![Error loading nexnus3-privileges-types.png](./nexnus3-privileges-types.png)
+![Error loading nexnus3-privileges-types.png](nexnus3-privileges-types.png)
 
 After selecting a type, fill in the required fields and save the privilege. The privilege can be found listed among the
 default privileges on the main **Privileges** screen. We can use the **Filter** input box to find a specific
 privilege. In the following example, an _Application_ privilege type is created:
 
-![Error loading nexus3-privileges-application.png](./nexus3-privileges-application.png)
+![Error loading nexus3-privileges-application.png](nexus3-privileges-application.png)
 
 The form provides Name, Description, Domain, and Actions in figure above. The form is completed for a privilege that
 allows read access to the LDAP administration. If assigned this privilege, a user is able to view LDAP administration
@@ -1113,7 +1113,7 @@ configuration but not edit it, create a new LDAP configuration, nor delete any e
 
 In another example, a _Repository View_ privilege type is created:
 
-![Error loading nexus3-privileges-repository-view.png](./nexus3-privileges-repository-view.png)
+![Error loading nexus3-privileges-repository-view.png](nexus3-privileges-repository-view.png)
 
 The form provides Name, Description, Format, Repository, and Actions in figure above. The form is completed for a
 privilege granting sufficient access to publish images to a specific hosted repository. A user with this privilege can
@@ -1136,7 +1136,7 @@ maven2 content along a path that starts with `org.apache.commons`":
 Before we identify user permissions for our selector, create the query first. Click **Content Selectors** located in
 **Repository**, from the **Administration** menu. Click **Create Selector** to open a new form.
 
-![Error loading nexus3-content-selector-example.png](./nexus3-content-selector-example.png)
+![Error loading nexus3-content-selector-example.png](nexus3-content-selector-example.png)
 
 :::tip
 
@@ -1219,7 +1219,7 @@ menu. A simple example is shown in figure below. The list displays the _Name_ an
 the **Source**, which displays whether the role is internal (Nexus) or a mapping to an external source like LDAP. In
 order to access these functions, a user must have _nx-roles_ or _nx-all_ [privileges](#privileges).
 
-![Error loading nexus3-roles-list.png](./nexus3-roles-list.png)
+![Error loading nexus3-roles-list.png](nexus3-roles-list.png)
 
 To create a new role, click on the **Create Role** button, select **Nexus role** and fill out the Role creation feature
 view:
@@ -1231,7 +1231,7 @@ _nx-privilege-read_. This is because the roles page lists privileges on it.
 
 :::
 
-![Error loading nexus3-roles-create.png](./nexus3-roles-create.png)
+![Error loading nexus3-roles-create.png](nexus3-roles-create.png)
 
 When creating a new role, we will need to supply a **Role ID** and a **Role Name** and optionally a **Description**.
 Roles are comprised of other roles and individual privileges. To assign a role or privilege to a role, drag and drop the
@@ -1285,7 +1285,7 @@ the **Administration** menu. Users must have _nx-users_ or _nx-all_ [privileges]
 load, the security Source of "Local" is selected and represents the local NXRM realm. The filtered list shows the users'
 User ID, First Name, Last Name, Email and Status from the security Source selected in the dropdown.
 
-![Error loading nexus3-users-list.png](./nexus3-users-list.png)
+![Error loading nexus3-users-list.png](nexus3-users-list.png)
 
 Clicking on a user in the list or clicking on the **Create local user** button displays the details view to edit or
 create the account shown in figure below. For external users, such as LDAP or Crowd, once we have our external realm
@@ -1300,7 +1300,7 @@ _nx-roles-read_. This is because the users page lists roles on it.
 
 :::
 
-![Error loading nexus3-users-create.png](./nexus3-users-create.png)
+![Error loading nexus3-users-create.png](nexus3-users-create.png)
 
 The **ID** can be defined upon initial creation and remains fixed thereafter. In addition we can specify the users
 **First Name**, **Last Name** and **Email address**.  We also must enter and confirm a **Password**.
@@ -1320,7 +1320,7 @@ To enable appending a default role to all authenticated users, navigate to the *
 section of the **Administration** menu; then hit **Create capability** and choose capability type **Default Role** as
 pictured below; we will then be able to select the role that we want applied to users.
 
-![Error loading nexus3-default-role.png](./nexus3-default-role.png)
+![Error loading nexus3-default-role.png](nexus3-default-role.png)
 
 Once this is saved, the _Default Role Realm_ will be added to the active list of security realms and start applying the
 new role to all authenticated users.
@@ -1343,7 +1343,7 @@ default value for **client_max_body_size** of around 1MB in size when unset.
 
 To resolve this, we will need to add the following line to our server block (`/etc/nginx/nginx.conf`):
 
-![Error loading nexus-413-solution.png](./nexus-413-solution.png)
+![Error loading nexus-413-solution.png](nexus-413-solution.png)
 
 For more information, such as where "client_max_body_size" directive should be placed, please refer to
 [Nginx documentation](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size)
@@ -1357,7 +1357,7 @@ to delete the root folder of that component.
 
 When we perform some disk I/O related task on UI and we see the following on the top right corner of the page:
 
-![Error loading nexus3-strange-error.png](./nexus3-strange-error.png)
+![Error loading nexus3-strange-error.png](nexus3-strange-error.png)
 
 The error itself does not indicate any information about the nature of the error. We will then need to know more details
 about the error by going down to the Nexus server log.

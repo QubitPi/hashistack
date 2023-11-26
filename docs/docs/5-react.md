@@ -332,7 +332,7 @@ jobs:
 Please make sure to disable 2F authentication before running the CI/CD above so that release can be pushed to NPM from
 within GitHub Action without auth errors
 
-![Error loading disable-2fa.png](./img/disable-2fa.png)
+![Error loading disable-2fa.png](img/disable-2fa.png)
 
 :::
 

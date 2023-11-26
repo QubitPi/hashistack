@@ -66,7 +66,7 @@ The practices at the heart of continuous delivery help us achieve several import
 
   :::info blue-green deployment
 
-  ![Error loading blue-green-deployments.png ](./blue-green-deployments.png)
+  ![Error loading blue-green-deployments.png ](blue-green-deployments.png)
 
   One of the challenges with automating deployment is the cut-over itself, taking software from the final stage of
   testing to live production. We usually need to do this quickly in order to minimize downtime. The blue-green
@@ -493,7 +493,7 @@ principles of a service-oriented architecture, while accepting that the new arch
 it is replacing. Over time, more and more functionality will be performed in the new architecture, and the old system
 being replaced is "strangled".
 
-![](./strangler.png)
+![](strangler.png)
 
 ### Patterns
 

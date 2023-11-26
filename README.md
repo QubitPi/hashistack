@@ -1,12 +1,16 @@
 Application Deployment on AWS through HashiCorp
 ===============================================
 
+<div align="center">
+    <img src="docs/static/img/logo.svg" width="20%" />
+
 [![GitHub Workflow Status][GitHub Workflow Status]](https://github.com/QubitPi/hashicorp-aws/actions/workflows/ci-cd.yml)
 ![Last Commit]
 ![HashiCorp Packer Badge][HashiCorp Packer Badge]
 ![HashiCorp Terraform Badge][HashiCorp Terraform Badge]
 [![Discord]](https://discord.com/widget?id=1060753787125514332)
 [![License Badge][License Badge]](https://www.apache.org/licenses/LICENSE-2.0)
+</div>
 
 Immutable Infrastructure as Code via GitHub Action
 --------------------------------------------------

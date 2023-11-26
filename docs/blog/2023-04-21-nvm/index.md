@@ -39,7 +39,7 @@ nvm ls
 
 The list then appears:
 
-![Error loading node-versions.png](./node-versions.png)
+![Error loading node-versions.png](node-versions.png)
 
 The first three lines show the list of Node versions with the arrow pointing to the 14.18.1 version that is currently in
 use; when a version is used, it displays as green.

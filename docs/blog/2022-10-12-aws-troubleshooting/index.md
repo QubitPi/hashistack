@@ -27,11 +27,11 @@ New Volume in EC2 Instance Not Reflecting
 When we have increased the size of the volume attached a running EC2 instance. We are able to see the new volume using
 `lsblk`:
 
-![Error loading ec2-volume-1.png](./ec2-volume-1.png)
+![Error loading ec2-volume-1.png](ec2-volume-1.png)
 
 But when `df -h` command still displays the old volume size:
 
-![Error loading ec2-volume-2.png](./ec2-volume-2.png)
+![Error loading ec2-volume-2.png](ec2-volume-2.png)
 
 This is because new volumes should be formatted to be accessible. Resized existing volumes should also be modified
 (resized) from the inside of the operating system. The general information on how to do this safely (e.g. with snapshots)
