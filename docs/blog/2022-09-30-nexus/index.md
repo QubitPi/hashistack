@@ -102,7 +102,7 @@ The requirements assume there are no other significant memory hungry processes r
 **Application Directory** - The size of this directory varies slightly each release. It currently around 330 MB. It is
 normal to have multiple application directories installed on the same host over time as repository manager is upgraded.
 
-**Data Directory** - On first start, repository manager creates the base files needed to operate. The bulk of disk 
+**Data Directory** - On first start, repository manager creates the base files needed to operate. The bulk of disk
 space will be held by our deployed and proxied artifacts, as well as any search indexes. This is highly installation
 specific, and will be dependent on the repository formats used, the number of artifacts stored, the size of our teams
 and projects, etc.  It's best to plan for a lot though, formats like Docker and Maven can use very large amounts of
@@ -174,8 +174,8 @@ Repository Management
 ---------------------
 
 We've seen that repositories are the containers for the components provided to our users. Creating and managing
-repositories is an essential part of our Nexus Repository configuration, since it allows us to expose more components 
-to our users. It supports proxy repositories, hosted repositories and repository groups in a number of different 
+repositories is an essential part of our Nexus Repository configuration, since it allows us to expose more components
+to our users. It supports proxy repositories, hosted repositories and repository groups in a number of different
 repository formats.
 
 :::info
@@ -215,11 +215,11 @@ By default, the repository manager ships with the following configured hosted re
 - **maven-releases** This hosted repository uses the maven2 repository format with a release version policy. It is
   intended to be the repository where an organization publishes internal releases. We can also use this repository for
   third-party components that are not available in external repositories and can therefore not be retrieved via a
-  configured proxy repository. Examples of these components could be commercial, proprietary libraries such as an 
+  configured proxy repository. Examples of these components could be commercial, proprietary libraries such as an
   Oracle
   JDBC driver that may be referenced by the organization.
 - **maven-snapshots** This hosted repository uses the maven2 repository format with a snapshot version policy. It is
-  intended to be the repository where the organization publishes internal development versions, also known as 
+  intended to be the repository where the organization publishes internal development versions, also known as
   snapshots.
 - **nuget-hosted**  This hosted repository is where the organization can publish internal releases in repository using
   the nuget repository format. We can also use this repository for third-party components that are not available in
@@ -228,7 +228,7 @@ By default, the repository manager ships with the following configured hosted re
 #### Repository Group
 
 A repository with the type group, also known as **repository group**, represents a powerful feature of Nexus Repository
-Manager. They allow us to combine multiple repositories and other repository groups in a single repository. This in 
+Manager. They allow us to combine multiple repositories and other repository groups in a single repository. This in
 turn means that our users can rely on a single URL for their configuration needs, while the administrators can add more
 repositories and therefore components to the repository group.
 
@@ -243,7 +243,7 @@ individual member repositories will only work if the user is given explicit perm
 The repository manager ships with the following groups:
 
 - **maven-public** The maven-public group is a repository group of maven2 formatted repositories and combines the
-  important **external proxy repository for the Central Repository** with the hosted repositories **maven-releases** 
+  important **external proxy repository for the Central Repository** with the hosted repositories **maven-releases**
   and maven-snapshots. This allows us to _expose the components of the Central Repository as well as our internal
   components in one single, simple-to-use repository_ and therefore URL.
 - **nuget-group** This group combines the nuget formatted repositories nuget-hosted and nuget.org-proxy into a single
@@ -261,15 +261,15 @@ continues to include excellent support for users of Apache Maven.
 ### Maven Repository Format Overview
 
 > Looking at the Maven repository format and associated concepts and ideas allows us to grasp some of the details and
-> intricacies involved with different tools and repository formats, that will help us appreciate the need for 
+> intricacies involved with different tools and repository formats, that will help us appreciate the need for
   repository
 > management.
 
-Maven developers are familiar with the concept of a repository, since repositories are used by default. The primary 
-type of a binary component in a Maven format repository is a JAR file containing Java byte-code. This is due to the 
+Maven developers are familiar with the concept of a repository, since repositories are used by default. The primary
+type of a binary component in a Maven format repository is a JAR file containing Java byte-code. This is due to the
 Java background of Maven and the fact that the default component type is a JAR. Practically however, there is no limit
-to what type of component can be stored in a Maven repository. For example, we can easily deploy WAR or EAR files, 
-source archives, Flash libraries and applications, Android archives or applications or Ruby libraries to a Maven 
+to what type of component can be stored in a Maven repository. For example, we can easily deploy WAR or EAR files,
+source archives, Flash libraries and applications, Android archives or applications or Ruby libraries to a Maven
 repository.
 
 Every software component is described by an XML document called a Project Object Model (POM). This POM contains
@@ -289,17 +289,17 @@ serves millions of Maven users every single day. It is the default, built-in rep
 format and is _managed by Sonatype_. We can also view statistics about the size of the Central Repository
 [online](https://search.maven.org/stats).
 
-The Central Repository is the largest repository for Java-based components. It can be easily used from other build 
+The Central Repository is the largest repository for Java-based components. It can be easily used from other build
 tools as well. One can look at the Central Repository as an example of how Maven repositories operate and how they are
 assembled. Here are some of the properties of release repositories such as the Central Repository:
 
 - **Component Metadata** All software components added to the Central Repository require proper metadata, including a
   Project Object Model (POM) for each component that describes the component itself and any dependencies that software
   component might have.
-- **Release Stability** Once published to the Central Repository, a component and the metadata describing that 
-  component never change. This property of a release repository, like the Central Repository,  guarantees that 
-  projects that depend on releases will be repeatable and stable over time. While new software components are being 
-  published every day, once a component is assigned a release number on the Central Repository, there is a strict 
+- **Release Stability** Once published to the Central Repository, a component and the metadata describing that
+  component never change. This property of a release repository, like the Central Repository,  guarantees that
+  projects that depend on releases will be repeatable and stable over time. While new software components are being
+  published every day, once a component is assigned a release number on the Central Repository, there is a strict
   policy against modifying the contents of a software component after a release.
 - **Component Security** The Central Repository contains cryptographic hashes and PGP signatures that can be used to
   verify the authenticity and integrity of software components served and supports connections in a secure manner via
@@ -314,8 +314,8 @@ repositories with Nexus Repository Manager OSS is to proxy and cache the content
 #### Component Coordinates and the Repository Format
 
 Component coordinates create a unique identifier for a component. Maven coordinates use the following values: groupId,
-artifactId, version, and packaging. This set of coordinates is often referred to as a **GAV coordinate**, which is 
-short for Group, Artifact, Version coordinate. The GAV coordinate standard is the foundation for Maven's ability to 
+artifactId, version, and packaging. This set of coordinates is often referred to as a **GAV coordinate**, which is
+short for Group, Artifact, Version coordinate. The GAV coordinate standard is the foundation for Maven's ability to
 manage dependencies. Four elements of this coordinate system are described below:
 
 - **groupId** A group identifier groups a set of components into a logical group. Groups are often designed to reflect
@@ -329,12 +329,12 @@ manage dependencies. Four elements of this coordinate system are described below
   also have **alphanumeric qualifiers** which are often used to denote release status. An example of such a qualifier
   would be a version like "1.2.3-BETA" where BETA signals a stage of testing meaningful to consumers of a software
   component.
-- **packaging** Maven was initially created to handle JAR files, but a Maven repository is completely agnostic about 
+- **packaging** Maven was initially created to handle JAR files, but a Maven repository is completely agnostic about
   the type of component it is managing. Packaging can be anything that describes any binary software format including:
   zip, nar, war, ear, sar and aar.
 
-Tools designed to interact Maven repositories translate component coordinates into a URL which corresponds to a 
-location in a Maven repository. If a tool such as Maven is looking for version "1.2.0" of the "commons-lang" JAR in 
+Tools designed to interact Maven repositories translate component coordinates into a URL which corresponds to a
+location in a Maven repository. If a tool such as Maven is looking for version "1.2.0" of the "commons-lang" JAR in
 the group "org.apache.commons", this request is translated into:
 
 ```bash
@@ -931,7 +931,7 @@ To further explain, the Docker client is given a registry to contact by specifyi
 given a specific path to an image in that registry. So, for example, it would be given
 `example:443/some/custom/image` to specify an image. We are not able to specify a registry application path.
 
-Nexus Repository exposes its Docker registries with a repository path of `/repository/<repo_name>/` and, by default, 
+Nexus Repository exposes its Docker registries with a repository path of `/repository/<repo_name>/` and, by default,
 and application context path of `/`.
 
 So, a full Docker image in the repository "docker-hosted" might be accessible at full URL
@@ -999,8 +999,8 @@ _nx-privilege_ or _nx-all_ privileges to access this page.
 #### Privilege Names
 
 Names are unique identifiers. Privileges included by default are prefixed with **nx-** . Privileges that are migrated
-from Nexus Repository 2 will be named as they were in Repository 2. Privileges that we create ourselves can only 
-consist of letters, digits, underscores(`_`), hyphens(`-`), and dots(`.`). A privilege name cannot start with an 
+from Nexus Repository 2 will be named as they were in Repository 2. Privileges that we create ourselves can only
+consist of letters, digits, underscores(`_`), hyphens(`-`), and dots(`.`). A privilege name cannot start with an
 underscore or dot.
 
 For custom privileges, it is encouraged that we use a **simple convention** to namespace our privileges. For example
@@ -1049,9 +1049,9 @@ The internal segment matching algorithm uses
 - repository-view (`nexus:repository-view:{format}:{repository}:{actions}`)
 
   * Applicable Actions: browse,read,edit,add,delete
-  * Description: Repository View privileges control general access to all content contained within specific 
-    repositories or repository formats. For example, "nexus:repository-view:maven2:central:browse,read" means allow 
-    browsing and viewing content within the maven2 format repository named central. **These privileges do not allow 
+  * Description: Repository View privileges control general access to all content contained within specific
+    repositories or repository formats. For example, "nexus:repository-view:maven2:central:browse,read" means allow
+    browsing and viewing content within the maven2 format repository named central. **These privileges do not allow
     changing configuration of a repository.**
 
 - script (`nexus:script:{script name}:{actions}`)
@@ -1059,8 +1059,8 @@ The internal segment matching algorithm uses
   * Applicable Actions: browse,read,edit,add,delete,run
   * Description: Script privileges control access to using the Groovy Script related REST APIs as documented in
     [REST and Integration API](https://help.sonatype.com/repomanager3/integrations/rest-and-integration-api) . These
-    privileges do not control general REST API access. For example, "nexus:script:*:read" means allowing for read 
-    access to all scripts of any name. "nexus:script:my-uploaded-script:run" means allowing the calling user for 
+    privileges do not control general REST API access. For example, "nexus:script:*:read" means allowing for read
+    access to all scripts of any name. "nexus:script:my-uploaded-script:run" means allowing the calling user for
     running (executing) the script named my-uploaded-script
 
 - wildcard (`*`)
@@ -1078,7 +1078,7 @@ The Actions to choose from are
 
 - **add** allows privileges to add repositories or scripts.
 - **read** allows privileges to view various configuration lists and scripts. Without **read**, any associated action
-  will permit a privilege to see these lists but not its contents. The **read** action also allows privileges to 
+  will permit a privilege to see these lists but not its contents. The **read** action also allows privileges to
   utilize tools that can look at content from the command line.
 - **browse**  allows privileges to view the contents of associated repositories. Unlike **read**, privilege types with
   browse can only view and administrate repository _contents_ from _UI_.
@@ -1126,10 +1126,10 @@ view and read the contents of the repository as well as publish new images to it
 ### Content Selectors
 
 Content selectors provide a means for us to select specific content from all of our content. The content we select is
-evaluated against expressions written in **CSEL** (**Content Selector Expression Language**). CSEL is a light version 
+evaluated against expressions written in **CSEL** (**Content Selector Expression Language**). CSEL is a light version
 of **JEXL** used to script queries along specific paths and coordinates available to our repository manager formats.
 
-Content selectors allow us to define what content users are allowed to access. We can define, in a simplified example, 
+Content selectors allow us to define what content users are allowed to access. We can define, in a simplified example,
 a selector named "Apache Maven" with a search expression of `path =~ "^/org/apache/maven/"`. This would match all
 components that start with the designated component path. Another, yet more complete, example would be to "select all
 maven2 content along a path that starts with `org.apache.commons`":
@@ -1144,9 +1144,9 @@ Before we identify user permissions for our selector, create the query first. Cl
 
 :::tip
 
-We can preview our selector and what results it will return by clicking the **Preview** results button located 
-somewhere in the middle section of the page. Select a repository or grouping of repositories from the **Preview 
-Repository** dropdown and click the **Preview** button. Assets that match will be returned in the space below the 
+We can preview our selector and what results it will return by clicking the **Preview** results button located
+somewhere in the middle section of the page. Select a repository or grouping of repositories from the **Preview
+Repository** dropdown and click the **Preview** button. Assets that match will be returned in the space below the
 filter and can be filtered upon if we wish to check on a specific result.
 
 :::
@@ -1207,7 +1207,7 @@ To avoid encountering database errors, we should escape dashes in version range 
 
 :::caution
 
-When writing a content selector, remember that the asset's path will always begin with a leading slash when the 
+When writing a content selector, remember that the asset's path will always begin with a leading slash when the
 selector is evaluated. This is true even though the leading slash is not displayed when searching or browsing assets.
 
 :::
@@ -1238,7 +1238,7 @@ _nx-privilege-read_. This is because the roles page lists privileges on it.
 ![Error loading nexus3-roles-create.png](nexus3-roles-create.png)
 
 When creating a new role, we will need to supply a **Role ID** and a **Role Name** and optionally a **Description**.
-Roles are comprised of other roles and individual privileges. To assign a role or privilege to a role, drag and drop 
+Roles are comprised of other roles and individual privileges. To assign a role or privilege to a role, drag and drop
 the desired privileges from the _Available_ list to the _Given_ list under the _Privileges_ header. We can use the
 **Filter** input to narrow down the list of displayed privileges and the arrow buttons to add or remove privileges.
 
@@ -1253,9 +1253,9 @@ edited or deleted.
 
 #### Mapping External Groups to Nexus Roles
 
-In addition to creating an internal role, the **Create Role** button allows us to create an **External Role Mapping** 
-to an external authorization system configured in the repository manager such as LDAP. This is something we would do, 
-if we want to grant every member of an externally managed group (such as an LDAP group) a number of privileges and 
+In addition to creating an internal role, the **Create Role** button allows us to create an **External Role Mapping**
+to an external authorization system configured in the repository manager such as LDAP. This is something we would do,
+if we want to grant every member of an externally managed group (such as an LDAP group) a number of privileges and
 roles in the repository manager
 
 For example, assume that we have a group in LDAP named "scm" and we want to make sure that everyone in that group has
@@ -1280,13 +1280,13 @@ perform.
 
 ### Users
 
-The repository manager ships with two users by default: _admin_ and _anonymous_. The _admin_ user has all privileges 
+The repository manager ships with two users by default: _admin_ and _anonymous_. The _admin_ user has all privileges
 and the _anonymous_ user has read-only privileges. The initial password for the admin user can be found in an
 "admin.password" file found in the `$data-dir` directory after starting the server.
 
 The Users feature view displayed in figure below can be accessed via the **Users** item in the **Security** section of
 the **Administration** menu. Users must have _nx-users_ or _nx-all_ [privileges](#privileges) to see this page. On page
-load, the security Source of "Local" is selected and represents the local NXRM realm. The filtered list shows the 
+load, the security Source of "Local" is selected and represents the local NXRM realm. The filtered list shows the
 users' User ID, First Name, Last Name, Email and Status from the security Source selected in the dropdown.
 
 ![Error loading nexus3-users-list.png](nexus3-users-list.png)
@@ -1363,7 +1363,7 @@ When we perform some disk I/O related task on UI and we see the following on the
 
 ![Error loading nexus3-strange-error.png](nexus3-strange-error.png)
 
-The error itself does not indicate any information about the nature of the error. We will then need to know more 
+The error itself does not indicate any information about the nature of the error. We will then need to know more
 details about the error by going down to the Nexus server log.
 
 :::note
