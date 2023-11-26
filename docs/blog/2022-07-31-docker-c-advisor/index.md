@@ -49,14 +49,14 @@ sudo docker run \
     gcr.io/cadvisor/cadvisor:v0.36.0
 ```
 
-![cAdvisor Screenshot 1](./cadvisor-1.png)
-![cAdvisor Screenshot 2](./cadvisor-2.png)
+![cAdvisor Screenshot 1](cadvisor-1.png)
+![cAdvisor Screenshot 2](cadvisor-2.png)
 
 ### [docker-container-stats](https://github.com/virtualzone/docker-container-stats)
 
 [cAdvisor](https://github.com/google/cadvisor) is good for customizing container monitoring, but it's heavy. A
 quick-and-lightweight option would be [docker-container-stats](https://github.com/virtualzone/docker-container-stats)
 
-![docker-container-stats Screenshot](./docker-container-stats.png)
+![docker-container-stats Screenshot](docker-container-stats.png)
 
 [cAdvisor]: https://github.com/google/cadvisor

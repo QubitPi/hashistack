@@ -25,7 +25,7 @@ It can be used to create a server login banner that is displayed each time peopl
 
 <!--truncate-->
 
-![./example.png](./example.png)
+![./example.png](example.png)
 
 First generate a ASCII logo with the [Text to ASCII Art Generator]. Then open up message of the day file
 

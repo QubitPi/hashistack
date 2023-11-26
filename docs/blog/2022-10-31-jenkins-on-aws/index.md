@@ -89,11 +89,11 @@ To create and configure our security group:
 2. Sign in to the [AWS Management Console](https://console.aws.amazon.com/ec2/).
 3. Open the Amazon EC2 console by selecting **EC2** under **Compute**.
 
-   ![Error loading ec2-service.png](./ec2-service.png)
+   ![Error loading ec2-service.png](ec2-service.png)
 
 4. In the left-hand navigation bar, select **Security Groups**, and then select **Create Security Group**.
 
-   ![Error loading create-security-group.png](./create-security-group.png)
+   ![Error loading create-security-group.png](create-security-group.png)
 
 5. In **Security group name**, enter **WebServerSG** or any preferred name of our choice, and provide a description.
 6. Select our VPC from the list. We can use the default VPC.
@@ -118,11 +118,11 @@ To launch an EC2 instance:
 2. Open the Amazon EC2 console by selecting EC2 under **Compute**.
 3. From the Amazon EC2 dashboard, select **Launch Instance**.
 
-   ![Error loading ec2-launch-instance.png](./ec2-launch-instance.png)
+   ![Error loading ec2-launch-instance.png](ec2-launch-instance.png)
 
 4. We will run Ubuntu OS in our instance, so let's pick up "Ubuntu" and give it a name such as "Jenkins Server"
 
-   ![Error loading ec2-instance-setup.png](./ec2-instance-setup.png)
+   ![Error loading ec2-instance-setup.png](ec2-instance-setup.png)
 
 5. On the Choose an Instance Type page, the **t2.micro** instance is selected by default. Verify this instance type is
    selected to stay within the free tier.
@@ -132,7 +132,7 @@ To launch an EC2 instance:
 8. In the left-hand navigation bar, choose Instances to view the status of our instance. Initially, the status of our
    instance is pending. After the status changes to running, our instance is ready for use.
 
-   ![Error loading ec2-view-created-instance.png](./ec2-view-created-instance.png)
+   ![Error loading ec2-view-created-instance.png](ec2-view-created-instance.png)
 
 Installing Jenkins on EC2
 -------------------------
@@ -151,7 +151,7 @@ After we launch our instance, we can connect to it and use it the same way as ou
 
 Before we connect to our instance, get the public DNS name of the instance using the Amazon EC2 console.
 
-![Error loading ec2-public-dns.png](./ec2-public-dns.png)
+![Error loading ec2-public-dns.png](ec2-public-dns.png)
 
 Use the `ssh` command to connect to the instance. We will specify the private key (.pem) file and
 `ec2-user@public_dns_name`.
@@ -344,7 +344,7 @@ Instead, it is signed by the creator’s own personal or root CA certificate.
 Here is what we do to request paid SSL/TLS certificate from a **well-known Certificate Authority** like Verisign or
 comodo.
 
-![Error loading well-known-certificate-authority.png](./well-known-certificate-authority.png)
+![Error loading well-known-certificate-authority.png](well-known-certificate-authority.png)
 
 1. Create a **certificate signing request (CSR)** with a private key. A CSR contains details about location,
    organization, and FQDN (Fully Qualified Domain Name).
@@ -354,7 +354,7 @@ comodo.
 
 But for a **self-signed certificate**, here is what we do.
 
-![Error loading self-signed-cert.png](./self-signed-cert.png)
+![Error loading self-signed-cert.png](self-signed-cert.png)
 
 1. Create our own root CA certificate & CA private key (We act as a CA on our own)
 2. Create a server private key to generate CSR
@@ -366,7 +366,7 @@ Authorities. That's the reason the browsers won't show any security messages whe
 SSL from a trusted and well-known commercial Certificate authority. For example, the following image shows the root CA
 present in the Firefox browser by default.
 
-![Error loading trusted-ca.png](./trusted-ca.png)
+![Error loading trusted-ca.png](trusted-ca.png)
 
 At the same time, if we use a self-signed certificate, our browser will throw a security warning. The reason is browsers
 only trust SSL from a trusted Certificate authority. For example,
@@ -735,8 +735,8 @@ Next, we shall use the certificate for our Jenkins instance.
   login to, it is likely there is nothing to worry about when this warning appears. To proceed, simply choose the
   "**Advanced**" link, then choose "`Proceed to <link> (unsafe)`".
 
-  ![Error loading Chrome-Advanced.png](./Chrome-Advanced.png)
-  ![Error loading Chrome-proceed-unsafe.png](./Chrome-proceed-unsafe.png)
+  ![Error loading Chrome-Advanced.png](Chrome-Advanced.png)
+  ![Error loading Chrome-proceed-unsafe.png](Chrome-proceed-unsafe.png)
 
 - Option 2 - **Prevent Warning**: Click a blank section of the denial page and use our keyboard, type `thisisunsafe`.
   This will add the website to a safe list, where we should not be prompted again. _Strange steps, but it surely
@@ -746,7 +746,7 @@ Next, we shall use the certificate for our Jenkins instance.
 
 :::note Requirements
 
-![Error loading certbot-requirements.png](./certbot-requirements.png)
+![Error loading certbot-requirements.png](certbot-requirements.png)
 
 :::
 
@@ -1169,7 +1169,7 @@ Common uses for a reverse proxy server include:
 
 :::
 
-![Error loading nginx-directives.png](./nginx-directives.png)
+![Error loading nginx-directives.png](nginx-directives.png)
 
 ##### Understanding the Nginx Configuration File Structure and Configuration Contexts
 
@@ -1461,7 +1461,7 @@ the first administrator user through which we can continue accessing Jenkins.
 When we first access a new Jenkins instance, we are asked to unlock it using an automatically-generated password. Browse
 to `https://jenkins.my-domain.com:8443` and wait until the Unlock Jenkins page appears.
 
-![Error loading unlock-jenkins.png](./unlock-jenkins.png)
+![Error loading unlock-jenkins.png](unlock-jenkins.png)
 
 As prompted, enter the password found in **/var/lib/jenkins/secrets/initialAdminPassword** on our EC2 instance path. Use
 the following command to display this password:
@@ -1504,7 +1504,7 @@ installed. This process may take a few minutes.
 
 #### Creating the First Administrator User
 
-![Error loading create-admin-user.png](./create-admin-user.png)
+![Error loading create-admin-user.png](create-admin-user.png)
 
 Finally, after [customizing Jenkins with plugins](#customizing-jenkins-with-plugins), Jenkins asks us to create our
 first administrator user.
