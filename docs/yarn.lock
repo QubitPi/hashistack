@@ -5002,24 +5002,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "docs@workspace:."
-  dependencies:
-    "@docusaurus/core": 3.0.0
-    "@docusaurus/module-type-aliases": 3.0.0
-    "@docusaurus/preset-classic": 3.0.0
-    "@docusaurus/tsconfig": 3.0.0
-    "@docusaurus/types": 3.0.0
-    "@mdx-js/react": ^3.0.0
-    clsx: ^1.2.1
-    prism-react-renderer: ^2.1.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    typescript: ~5.2.2
-  languageName: unknown
-  linkType: soft
-
 "dom-converter@npm:^0.2.0":
   version: 0.2.0
   resolution: "dom-converter@npm:0.2.0"
@@ -6181,6 +6163,24 @@ __metadata:
   checksum: b9e14e78e0a37bc070550c862b201534287bc10e62a86ec9c1f455ffb082db42817ce9aed914bd73f1d589bbf268520e194629ff2f62ff6b98a482c4bd2dcbfb
   languageName: node
   linkType: hard
+
+"hashicorp-aws@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "hashicorp-aws@workspace:."
+  dependencies:
+    "@docusaurus/core": 3.0.0
+    "@docusaurus/module-type-aliases": 3.0.0
+    "@docusaurus/preset-classic": 3.0.0
+    "@docusaurus/tsconfig": 3.0.0
+    "@docusaurus/types": 3.0.0
+    "@mdx-js/react": ^3.0.0
+    clsx: ^1.2.1
+    prism-react-renderer: ^2.1.0
+    react: ^18.0.0
+    react-dom: ^18.0.0
+    typescript: ~5.2.2
+  languageName: unknown
+  linkType: soft
 
 "hasown@npm:^2.0.0":
   version: 2.0.0
