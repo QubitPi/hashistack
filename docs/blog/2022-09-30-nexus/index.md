@@ -262,8 +262,7 @@ continues to include excellent support for users of Apache Maven.
 
 > Looking at the Maven repository format and associated concepts and ideas allows us to grasp some of the details and
 > intricacies involved with different tools and repository formats, that will help us appreciate the need for
-  repository
-> management.
+> repository management.
 
 Maven developers are familiar with the concept of a repository, since repositories are used by default. The primary
 type of a binary component in a Maven format repository is a JAR file containing Java byte-code. This is due to the
