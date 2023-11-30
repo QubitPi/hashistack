@@ -30,7 +30,10 @@ inputs:
     required: true
   secrets-value:
     description: 'The secret value in its original human-readable form'
-    required: true
+    required: false
+  secrets-file:
+    description: 'The secret file that contains the secret value'
+    required: false
 
 runs:
   using: "composite"
@@ -47,10 +50,19 @@ runs:
       shell: bash
     - name: Encrypt and POST secrets
       run: |
-        python3 encrypt-and-send.py \
+        if [[ ${{ inputs.secrets-file }} ]]; then
+          python3 encrypt-and-send.py \
             -o ${{ inputs.repo-owner }} \
             -r ${{ inputs.repo-name }} \
             -t ${{ inputs.token }} \
             -s ${{ inputs.secrets-name }} \
-            -v ${{ inputs.secrets-value }}
+            -f ${{ inputs.secrets-file }}
+        else
+          python3 encrypt-and-send.py \
+              -o ${{ inputs.repo-owner }} \
+              -r ${{ inputs.repo-name }} \
+              -t ${{ inputs.token }} \
+              -s ${{ inputs.secrets-name }} \
+              -v ${{ inputs.secrets-value }}
+        fi
       shell: bash
