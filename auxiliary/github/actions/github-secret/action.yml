@@ -51,7 +51,7 @@ runs:
     - name: Encrypt and POST secrets from value
       if: ${{ inputs.secret-value != '' }}
       run: |
-        echo "Loading Secret from file for ${{ inputs.secret-name }}"
+        echo "Loading Secret from value for ${{ inputs.secret-name }}"
         python3 encrypt-and-send.py \
             -o ${{ inputs.repo-owner }} \
             -r ${{ inputs.repo-name }} \
@@ -62,7 +62,7 @@ runs:
     - name: Encrypt and POST secrets from file
       if: ${{ inputs.secret-file != '' }}
       run: |
-        echo "Loading Secret from value for ${{ inputs.secret-name }}"
+        echo "Loading Secret from file for ${{ inputs.secret-name }}"
         python3 encrypt-and-send.py \
         -o ${{ inputs.repo-owner }} \
         -r ${{ inputs.repo-name }} \

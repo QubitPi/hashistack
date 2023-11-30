@@ -20,9 +20,7 @@ set -e
 cp $HC_CONFIG_DIR/*.properties $WS_DIR/src/main/resources/
 cd $WS_DIR
 mvn clean package
-rm -rf ../../WAR/
-mkdir ../../WAR/
-mv target/*.war ../../WAR
+mv target/*.war $HC_DIR/images
 
 cd $HC_DIR/images
 cp $HC_CONFIG_DIR/aws-ws.pkrvars.hcl aws-ws.auto.pkrvars.hcl
@@ -37,10 +35,12 @@ terraform validate
 terraform apply -auto-approve
 
 # cleanup
-rm $HC_DIR/images/aws-ws.auto.pkrvars.hcl
+rm $HC_DIR/images/*.war
 rm $HC_DIR/instances/aws-ws.auto.tfvars
-rm -r $WS_DIR/../../WAR
+rm $HC_DIR/images/aws-ws.auto.pkrvars.hcl
+
 rm $WS_DIR/src/main/resources/*.properties
+
 rm -rf $HC_DIR/instances/.terraform
 rm -rf $HC_DIR/instances/.terraform.lock.hcl
 rm -rf $HC_DIR/instances/terraform.tfstate
