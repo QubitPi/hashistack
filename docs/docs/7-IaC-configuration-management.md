@@ -32,11 +32,11 @@ certificate or AWS SECRET ACCESS KEY directly in GitHub Secrets. This has the di
 their values after creation, making it very hard to manage.
 
 Then we moved to a centralized runbook, where everything can easily be seen and modified by authorized team members. In
-this approache, CI/CD server will pull down the entire runbook and simply pick up the config files. This, however, 
-exposed a great security risk because illegal usage could simply leak any credentials to public by `cat`ing that 
+this approache, CI/CD server will pull down the entire runbook and simply pick up the config files. This, however,
+exposed a great security risk because illegal usage could simply leak any credentials to public by `cat`ing that
 credential file out
 
-So the problem, or what [hashicorp-aws] is trying to solve here, is 
+So the problem, or what [hashicorp-aws] is trying to solve here, is
 
 - being able to keep credentials, whether it's string values or values stored in files, **secure**, and
 - allowing team member to easily **manage** those credentials
@@ -44,7 +44,7 @@ So the problem, or what [hashicorp-aws] is trying to solve here, is
 :::note
 
 We tried HashiCorp Vault but
-[it doesn't support storing file credential](https://discuss.hashicorp.com/t/how-to-store-a-file-content-in-hashicorp-kv-secret-engine-as-value-through-cmd-line-or-script/46895/2), 
+[it doesn't support storing file credential](https://discuss.hashicorp.com/t/how-to-store-a-file-content-in-hashicorp-kv-secret-engine-as-value-through-cmd-line-or-script/46895/2),
 [hashicorp-aws] addressed exactly how file can be managed in this case
 
 :::
