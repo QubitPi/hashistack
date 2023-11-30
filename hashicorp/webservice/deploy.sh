@@ -23,13 +23,13 @@ mvn clean package
 mv target/*.war $HC_DIR/images
 
 cd $HC_DIR/images
-cp $HC_CONFIG_DIR/aws-ws.pkrvars.hcl aws-ws.auto.pkrvars.hcl
+cp $HC_PACKER_VAR_FILE aws-ws.auto.pkrvars.hcl
 packer init .
 packer validate -var "skip_create_ami=true" .
 packer build -var "skip_create_ami=false" .
 
 cd $HC_DIR/instances
-cp $HC_CONFIG_DIR/aws-ws.tfvars aws-ws.auto.tfvars
+cp $HC_TF_VAR_FILE aws-ws.auto.tfvars
 terraform init
 terraform validate
 terraform apply -auto-approve

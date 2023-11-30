@@ -43,6 +43,8 @@ The following script variables need to be defined:
 
 - **WS_DIR**: The local absolute path to the webservice repo
 - **HC_DIR**: The local absolute path to the [hashicorp-aws] directory
+- **HC_PACKER_VAR_FILE**: The local absolute path to the [HashiCorp Packer variable file]
+- **HC_TF_VAR_FILE**: The local absolute path to the [HashiCorp Terraform variable file]
 - **HC_CONFIG_DIR**: The local absolute path to a directory containing the following deployment files:
 
   - SSL cert file located (`/abs/path/to/hashicorp-aws-config-dir/server.crt`)
@@ -50,22 +52,22 @@ The following script variables need to be defined:
   - Nginx config file (`/abs/path/to/hashicorp-aws-config-dir/nginx.conf`)
   - ELK Filebeat config file (`/abs/path/to/hashicorp-aws-config-dir/filebeat.yml`)
   - Any webservice **.properties** files (`/abs/path/to/hashicorp-aws-config-dir`)
-  - A [HashiCorp Packer variable file][HashiCorp Packer variable file] named **aws-ws.pkrvars.hcl** with the following
-    variable values (`/abs/path/to/hashicorp-aws-config-dir/aws-ws.pkrvars.hcl`):
+  - A [HashiCorp Packer variable file] named **aws-ws.pkrvars.hcl** with the following variable values
+    (`/abs/path/to/hashicorp-aws-config-dir/aws-ws.pkrvars.hcl`):
 
     ```hcl
     aws_image_region                 = "my-aws-region"
     ami_name                         = "my-webservice"
     instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-    ws_war_path                      = "../../../../WAR/my-webservice-1.0-SNAPSHOT.war"
-    aws_ws_ssl_cert_file_path        = "../../../../hashicorp-aws-config-dir/server.crt"
-    aws_ws_ssl_cert_key_file_path    = "../../../../hashicorp-aws-config-dir/server.key"
-    aws_ws_nginx_config_file_path    = "../../../../hashicorp-aws-config-dir/nginx.conf"
-    aws_ws_filebeat_config_file_path = "../../../../hashicorp-aws-config-dir/filebeat.yml"
+    ws_war_path                      = "path/to/my-webservice-1.0-SNAPSHOT.war"
+    aws_ws_ssl_cert_file_path        = "path/to/server.crt"
+    aws_ws_ssl_cert_key_file_path    = "path/to/server.key"
+    aws_ws_nginx_config_file_path    = "path/to/nginx.conf"
+    aws_ws_filebeat_config_file_path = "path/to/filebeat.yml"
     ```
 
-  - A [HashiCorp Terraform variable file][HashiCorp Terraform variable file] named **aws-ws.tfvars** with the following
-    variable values (`/abs/path/to/hashicorp-aws-config-dir/aws-ws.tfvars`):
+  - A [HashiCorp Terraform variable file] named **aws-ws.tfvars** with the following variable values
+    (`/abs/path/to/hashicorp-aws-config-dir/aws-ws.tfvars`):
 
     ```hcl
     aws_deploy_region   = "my-aws-region"
@@ -125,9 +127,7 @@ jobs:
       - name: Generate webservice WAR file
         run: mvn -B clean package
       - name: Move WAR file to a location for HashiCorp deployment to pickup
-        run: |
-          mkdir ../WAR
-          mv target/my-webservice-1.0-SNAPSHOT.war ../WAR
+        run: mv target/my-webservice-1.0-SNAPSHOT.war ../hashicorp-aws/hashicorp/webservice/images/
       - name: QubitPi/hashicorp-aws
         uses: QubitPi/hashicorp-aws@master
         with:
