@@ -43,7 +43,7 @@ runs:
       run: pip3 install pynacl requests
       shell: bash
     - name: Get Python scripts for encrypting and POSTing secrets
-      run: curl https://raw.githubusercontent.com/QubitPi/hashicorp-aws/iac-config-management/auxiliary/github/actions/github-secret/encrypt-and-send.py > encrypt-and-send.py
+      run: curl https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/github/actions/github-secret/encrypt-and-send.py > encrypt-and-send.py
       shell: bash
     - name: Encrypt and POST secrets
       run: |
