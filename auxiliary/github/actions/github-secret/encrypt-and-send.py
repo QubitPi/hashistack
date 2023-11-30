@@ -1,20 +1,14 @@
 import argparse
 import json
+import sys
+from base64 import b64encode
 
 import requests
-from base64 import b64encode
-from nacl import encoding, public
+from nacl import encoding
+from nacl import public
 
-def encrypt(public_key: str, secret_value: str) -> str:
-    """
-    More infro at https://docs.github.com/en/rest/guides/encrypting-secrets-for-the-rest-api?apiVersion=2022-11-28#example-encrypting-a-secret-using-python
-    """
-    public_key = public.PublicKey(public_key.encode("utf-8"), encoding.Base64Encoder())
-    sealed_box = public.SealedBox(public_key)
-    encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
-    return b64encode(encrypted).decode("utf-8")
 
-def get_repo_public_key(repo_owner: str, repo_name: str, token: str) -> (str, str):
+def __get_repo_public_key(repo_owner: str, repo_name: str, token: str) -> (str, str):
     """
     Gets a repository public key, which is needed to encrypt secrets.
 
@@ -45,7 +39,14 @@ def get_repo_public_key(repo_owner: str, repo_name: str, token: str) -> (str, st
     return (response_body['key_id'], response_body['key'])
 
 
-def create_or_update_repo_secret(repo_owner: str, repo_name: str, token: str, secret_name: str, encrypted_value: str, key_id: str) -> None:
+def __create_or_update_repo_secret(
+        repo_owner: str,
+        repo_name: str,
+        token: str,
+        secret_name: str,
+        encrypted_value: str,
+        key_id: str
+) -> None:
     """
     Creates or update a repository secret
 
@@ -92,6 +93,21 @@ def create_or_update_repo_secret(repo_owner: str, repo_name: str, token: str, se
         )
 
 
+def __encrypt(public_key: str, secret_value: str) -> str:
+    """
+    More infro at https://docs.github.com/en/rest/guides/encrypting-secrets-for-the-rest-api?apiVersion=2022-11-28#example-encrypting-a-secret-using-python
+    """
+    public_key = public.PublicKey(public_key.encode("utf-8"), encoding.Base64Encoder())
+    sealed_box = public.SealedBox(public_key)
+    encrypted = sealed_box.encrypt(secret_value.encode("utf-8"))
+    return b64encode(encrypted).decode("utf-8")
+
+
+def __load_secrete_from_file(file_path: str) -> str:
+    with open(file_path, 'r') as file:
+        return file.read()
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Create or update an GitHub repo secret')
     parser.add_argument(
@@ -122,16 +138,31 @@ if __name__ == "__main__":
         '-v',
         '--secrete_value',
         help='The secret value in its original human-readable form',
-        required=True
+        required=False
+    )
+    parser.add_argument(
+        '-f',
+        '--secrete_file',
+        help='The secret file that contains the secret value',
+        required=False
     )
     args = vars(parser.parse_args())
+
+    if args["secrete_value"] is None and args["secrete_file"] is None:
+        sys.exit(
+            'Error: either "secrets-value" (a string) or "secrets-file" (a file path) must be given; but neither was given')
+
+    if args["secrete_value"] and args["secrete_file"]:
+        sys.exit(
+            'Error: either "secrets-value" (a string) or "secrets-file" (a file path) needs to be given; but both were given'
+        )
 
     repo_owner = args["owner"]
     repo_name = args["repo"]
     token = args['token']
     secret_name = args['secrete_name']
-    secrete_value = args['secrete_value']
+    secrete_value = args["secrete_value"] if args["secrete_value"] else __load_secrete_from_file(args["secrete_file"]);
 
-    (key_id, public_key) = get_repo_public_key(repo_owner, repo_name, token)
-    encrypted_value = encrypt(public_key, secrete_value)
-    create_or_update_repo_secret(repo_owner, repo_name, token, secret_name, encrypted_value, key_id)
+    (key_id, public_key) = __get_repo_public_key(repo_owner, repo_name, token)
+    encrypted_value = __encrypt(public_key, secrete_value)
+    __create_or_update_repo_secret(repo_owner, repo_name, token, secret_name, encrypted_value, key_id)
