@@ -105,7 +105,7 @@ def __encrypt(public_key: str, secret_value: str) -> str:
 
 def __load_secrete_from_file(file_path: str) -> str:
     with open(file_path, 'r') as file:
-        return file.read()
+        return file.read().rstrip('\n') # https://stackoverflow.com/a/70233945
 
 
 if __name__ == "__main__":
