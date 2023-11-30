@@ -25,13 +25,13 @@ inputs:
   token:
     description: 'a fine-grained access token with repository permissions that at least has "Read and write" on "Secrets" section'
     required: true
-  secrets-name:
+  secret-name:
     description: 'The name of GitHub Secret as appeared on the Actions secrets list'
     required: true
-  secrets-value:
+  secret-value:
     description: 'The secret value in its original human-readable form'
     required: false
-  secrets-file:
+  secret-file:
     description: 'The secret file that contains the secret value'
     required: false
 
@@ -49,24 +49,24 @@ runs:
       run: curl https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/github/actions/github-secret/encrypt-and-send.py > encrypt-and-send.py
       shell: bash
     - name: Encrypt and POST secrets from value
-      if: ${{ inputs.secrets-value != '' }}
+      if: ${{ inputs.secret-value != '' }}
       run: |
-        echo "Loading Secret from file for ${{ inputs.secrets-name }}"
+        echo "Loading Secret from file for ${{ inputs.secret-name }}"
         python3 encrypt-and-send.py \
             -o ${{ inputs.repo-owner }} \
             -r ${{ inputs.repo-name }} \
             -t ${{ inputs.token }} \
-            -s ${{ inputs.secrets-name }} \
-            -v ${{ inputs.secrets-value }}
+            -s ${{ inputs.secret-name }} \
+            -v ${{ inputs.secret-value }}
       shell: bash
     - name: Encrypt and POST secrets from file
-      if: ${{ inputs.secrets-file != '' }}
+      if: ${{ inputs.secret-file != '' }}
       run: |
-        echo "Loading Secret from value for ${{ inputs.secrets-name }}"
+        echo "Loading Secret from value for ${{ inputs.secret-name }}"
         python3 encrypt-and-send.py \
         -o ${{ inputs.repo-owner }} \
         -r ${{ inputs.repo-name }} \
         -t ${{ inputs.token }} \
-        -s ${{ inputs.secrets-name }} \
-        -f ${{ inputs.secrets-file }}
+        -s ${{ inputs.secret-name }} \
+        -f ${{ inputs.secret-file }}
       shell: bash

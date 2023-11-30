@@ -150,11 +150,11 @@ if __name__ == "__main__":
 
     if args["secrete_value"] is None and args["secrete_file"] is None:
         sys.exit(
-            'Error: either "secrets-value" (a string) or "secrets-file" (a file path) must be given; but neither was given')
+            'Error: either "secret-value" (a string) or "secret-file" (a file path) must be given; but neither was given')
 
     if args["secrete_value"] and args["secrete_file"]:
         sys.exit(
-            'Error: either "secrets-value" (a string) or "secrets-file" (a file path) needs to be given; but both were given'
+            'Error: either "secret-value" (a string) or "secret-file" (a file path) needs to be given; but both were given'
         )
 
     repo_owner = args["owner"]

@@ -17,6 +17,9 @@ title: Configuration Management for Immutable Infrastructure
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
+Overview
+--------
+
 Being a strong proponent of Immutable Infrastructure, [hashicorp-aws] is constantly pushing the limits of its ability
 in various use cases, one of which is the _Configuration Management_
 
@@ -28,16 +31,42 @@ With the adoption of Immutable infrastructure, we initially stored and managed o
 certificate or AWS SECRET ACCESS KEY directly in GitHub Secrets. This has the disadvantage of not being able to see
 their values after creation, making it very hard to manage.
 
-Then we moved to a centralized runbook, where everything can easily be seen and modified by authorized team members.
-This exposed a great security risk
+Then we moved to a centralized runbook, where everything can easily be seen and modified by authorized team members. In
+this approache, CI/CD server will pull down the entire runbook and simply pick up the config files. This, however,
+exposed a great security risk because illegal usage could simply leak any credentials to public by `cat`ing that
+credential file out
 
-So this brought us to the ultimate way of thinking about configuration management in Immutable infrastructure
+So the problem, or what [hashicorp-aws] is trying to solve here, is
+
+- being able to keep credentials, whether it's string values or values stored in files, **secure**, and
+- allowing team member to easily **manage** those credentials
+
+:::note
+
+We tried HashiCorp Vault but
+[it doesn't support storing file credential](https://discuss.hashicorp.com/t/how-to-store-a-file-content-in-hashicorp-kv-secret-engine-as-value-through-cmd-line-or-script/46895/2),
+[hashicorp-aws] addressed exactly how file can be managed in this case
+
+:::
+
+So this brought us to the ultimate way of thinking about Configuration Management in Immutable Infrastructure, which is
+depicted below:
 
 ![](./img/github-secret.png)
 
-1. We still need GitHub Secrets because that's the most secure way
-2. We would separate config management in a separate repo
+We still need GitHub Secrets because our tech dev has a deep integratin with it and that's the most secure way to pass
+our organization credentials around.
 
-The thing that bridges the two above, is our github-secret action.
+In addition, we will also keep runbook for config management. The runbook will be hosted separately, not in GitHub
+Secrets.
+
+:::info
+
+Runbooks was used in Yahoo that keeps all DevOps credentials in a dedicated GitHub private repo. It's been proven to
+be an effective way to manage and share a software configurations within a team.
+
+:::
+
+[hashicorp-aws]'s github-secret now comes into play to bridge the gap between two componet.
 
 [hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
