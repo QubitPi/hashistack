@@ -17,12 +17,19 @@ title: Configuration Management for Immutable Infrastructure
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Traditional configuration management includes Chef or Puppet. They assume mutable infrastructure.
+Being a strong proponent of Immutable Infrastructure, [hashicorp-aws] is constantly pushing the limits of its ability
+in various use cases, one of which is the _Configuration Management_
 
-With the adoption of Immutable infrastructure, we initially store and manage our configuration directly in GitHub
-Secrets. This has the disadvantage of not being able to see after creation.
+Traditional configuration management includes Chef, Puppet, and Ansible. They all assume mutable infrastructure being
+present. For example, Chef has a major component responsible for jumping into a VM, checking if config has been mutated
+before apply any operations.
 
-Then we moved to a centralized runbook. This exposed a great security risk
+With the adoption of Immutable infrastructure, we initially stored and managed our configuration, such as SSL
+certificate or AWS SECRET ACCESS KEY directly in GitHub Secrets. This has the disadvantage of not being able to see
+their values after creation, making it very hard to manage.
+
+Then we moved to a centralized runbook, where everything can easily be seen and modified by authorized team members.
+This exposed a great security risk
 
 So this brought us to the ultimate way of thinking about configuration management in Immutable infrastructure
 
@@ -32,3 +39,5 @@ So this brought us to the ultimate way of thinking about configuration managemen
 2. We would separate config management in a separate repo
 
 The thing that bridges the two above, is our github-secret action.
+
+[hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/

@@ -46,23 +46,25 @@ runs:
       run: pip3 install pynacl requests
       shell: bash
     - name: Get Python scripts for encrypting and POSTing secrets
-      run: curl https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/github/actions/github-secret/encrypt-and-send.py > encrypt-and-send.py
+      run: curl https://raw.githubusercontent.com/QubitPi/hashicorp-aws/fix-optional-args-error/auxiliary/github/actions/github-secret/encrypt-and-send.py > encrypt-and-send.py
       shell: bash
-    - name: Encrypt and POST secrets
+    - name: Encrypt and POST secrets from value
+      if: "${{ github.event.inputs.secrets-value != '' }}"
       run: |
-        if [[ ${{ inputs.secrets-file }} ]]; then
-          python3 encrypt-and-send.py \
+        python3 encrypt-and-send.py \
             -o ${{ inputs.repo-owner }} \
             -r ${{ inputs.repo-name }} \
             -t ${{ inputs.token }} \
             -s ${{ inputs.secrets-name }} \
-            -f ${{ inputs.secrets-file }}
-        else
-          python3 encrypt-and-send.py \
-              -o ${{ inputs.repo-owner }} \
-              -r ${{ inputs.repo-name }} \
-              -t ${{ inputs.token }} \
-              -s ${{ inputs.secrets-name }} \
-              -v ${{ inputs.secrets-value }}
-        fi
+            -v ${{ inputs.secrets-value }}
+      shell: bash
+    - name: Encrypt and POST secrets from file
+      if: "${{ github.event.inputs.secrets-file != '' }}"
+      run: |
+        python3 encrypt-and-send.py \
+        -o ${{ inputs.repo-owner }} \
+        -r ${{ inputs.repo-name }} \
+        -t ${{ inputs.token }} \
+        -s ${{ inputs.secrets-name }} \
+        -f ${{ inputs.secrets-file }}
       shell: bash
