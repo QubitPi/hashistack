@@ -17,9 +17,9 @@ title: Configuration Management for Immutable Infrastructure
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Traditional configuration management includes Chef or Puppet. They assume mutable infrastructure. 
+Traditional configuration management includes Chef or Puppet. They assume mutable infrastructure.
 
-With the adoption of Immutable infrastructure, we initially store and manage our configuration directly in GitHub 
+With the adoption of Immutable infrastructure, we initially store and manage our configuration directly in GitHub
 Secrets. This has the disadvantage of not being able to see after creation.
 
 Then we moved to a centralized runbook. This exposed a great security risk
