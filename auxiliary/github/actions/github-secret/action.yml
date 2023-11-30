@@ -49,8 +49,9 @@ runs:
       run: curl https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/github/actions/github-secret/encrypt-and-send.py > encrypt-and-send.py
       shell: bash
     - name: Encrypt and POST secrets from value
-      if: "${{ github.event.inputs.secrets-value != '' }}"
+      if: ${{ inputs.secrets-value != '' }}
       run: |
+        echo "Loading Secret from file for ${{ inputs.secrets-name }}"
         python3 encrypt-and-send.py \
             -o ${{ inputs.repo-owner }} \
             -r ${{ inputs.repo-name }} \
@@ -59,8 +60,9 @@ runs:
             -v ${{ inputs.secrets-value }}
       shell: bash
     - name: Encrypt and POST secrets from file
-      if: "${{ github.event.inputs.secrets-file != '' }}"
+      if: ${{ inputs.secrets-file != '' }}
       run: |
+        echo "Loading Secret from value for ${{ inputs.secrets-name }}"
         python3 encrypt-and-send.py \
         -o ${{ inputs.repo-owner }} \
         -r ${{ inputs.repo-name }} \
