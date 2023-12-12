@@ -12,56 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "aws_image_region" {
-  type =  string
-  sensitive = true
-}
-
-variable "ami_name" {
-  type =  string
-  sensitive = true
-}
-
-variable "instance_type" {
-  type        = string
-  description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
-
-  validation {
-    condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
-    error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
-  }
-}
-
-variable "ws_war_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "aws_ws_ssl_cert_file_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "aws_ws_ssl_cert_key_file_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "aws_ws_nginx_config_file_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "aws_ws_filebeat_config_file_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "skip_create_ami" {
-  type =  bool
-  sensitive = true
-}
-
 packer {
   required_plugins {
     amazon = {
@@ -95,43 +45,4 @@ source "amazon-ebs" "ws" {
     owners = ["099720109477"]
   }
   ssh_username = "ubuntu"
-}
-
-build {
-  name = "install-ws"
-  sources = [
-    "source.amazon-ebs.ws"
-  ]
-
-  # Load SSL Certificates into AMI image
-  provisioner "file" {
-    source = "${var.aws_ws_ssl_cert_file_path}"
-    destination = "/home/ubuntu/server.crt"
-  }
-  provisioner "file" {
-    source = "${var.aws_ws_ssl_cert_key_file_path}"
-    destination = "/home/ubuntu/server.key"
-  }
-
-  # Load Nginx config file into AMI image
-  provisioner "file" {
-    source = "${var.aws_ws_nginx_config_file_path}"
-    destination = "/home/ubuntu/nginx-ssl.conf"
-  }
-
-  # Load Filebeat config into AMI image
-  provisioner "file" {
-    source = "${var.aws_ws_filebeat_config_file_path}"
-    destination = "/home/ubuntu/filebeat.yml"
-  }
-
-  # Load WS WAR file into AMI image
-  provisioner "file" {
-    source = "${var.ws_war_path}"
-    destination = "/home/ubuntu/ROOT.war"
-  }
-
-  provisioner "shell" {
-    script = "../scripts/aws-ws-pkr-setup.sh"
-  }
 }

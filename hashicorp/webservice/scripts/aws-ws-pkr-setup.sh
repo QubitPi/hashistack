@@ -29,21 +29,21 @@ JETTY_VERSION=11.0.15
 wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/$JETTY_VERSION/jetty-home-$JETTY_VERSION.tar.gz
 tar -xzvf jetty-home-$JETTY_VERSION.tar.gz
 rm jetty-home-$JETTY_VERSION.tar.gz
-export JETTY_HOME=/home/ubuntu/jetty-home-$JETTY_VERSION
+export JETTY_HOME=${HOME_DIR}/jetty-home-$JETTY_VERSION
 mkdir jetty-base
 cd jetty-base
 java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp
-mv /home/ubuntu/ROOT.war webapps/ROOT.war
+mv ${HOME_DIR}/ROOT.war webapps/ROOT.war
 cd ../
 
 # Install Nginx and load SSL config
 sudo apt install -y nginx
-sudo mv /home/ubuntu/nginx-ssl.conf /etc/nginx/sites-enabled/default
-sudo mv /home/ubuntu/server.crt /etc/ssl/certs/server.crt
-sudo mv /home/ubuntu/server.key /etc/ssl/private/server.key
+sudo mv ${HOME_DIR}/nginx-ssl.conf /etc/nginx/sites-enabled/default
+sudo mv ${HOME_DIR}/server.crt /etc/ssl/certs/server.crt
+sudo mv ${HOME_DIR}/server.key /etc/ssl/private/server.key
 
 # Filebeat
 curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.9.2-amd64.deb
 sudo dpkg -i filebeat-8.9.2-amd64.deb
-sudo mv /home/ubuntu/filebeat.yml /etc/filebeat/filebeat.yml
+sudo mv ${HOME_DIR}/filebeat.yml /etc/filebeat/filebeat.yml
 sudo chown root /etc/filebeat/filebeat.yml
