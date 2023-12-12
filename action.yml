@@ -54,13 +54,7 @@ runs:
       shell: bash
       run: packer validate -var "skip_create_ami=true" .
       working-directory: ${{ inputs.hashicorp-dir }}/images
-    - name: Test Build AMI image
-      if: github.ref != 'refs/heads/master'
-      shell: bash
-      run: packer build -var "skip_create_ami=true" .
-      working-directory: ${{ inputs.hashicorp-dir }}/images
     - name: Build and publish AMI image
-      if: github.ref == 'refs/heads/master'
       shell: bash
       run: packer build -var "skip_create_ami=false" .
       working-directory: ${{ inputs.hashicorp-dir }}/images
@@ -78,7 +72,6 @@ runs:
       run: terraform validate
       working-directory: ${{ inputs.hashicorp-dir }}/instances
     - name: Create EC2 instance
-      if: github.ref == 'refs/heads/master'
       shell: bash
       run: terraform apply -auto-approve
       working-directory: ${{ inputs.hashicorp-dir }}/instances

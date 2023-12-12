@@ -129,6 +129,7 @@ jobs:
       - name: Move WAR file to a location for HashiCorp deployment to pickup
         run: mv target/my-webservice-1.0-SNAPSHOT.war ../hashicorp-aws/hashicorp/webservice/images/
       - name: QubitPi/hashicorp-aws
+        if: github.ref == 'refs/heads/master'
         uses: QubitPi/hashicorp-aws@master
         with:
           hashicorp-dir: ../hashicorp-aws/hashicorp/webservice

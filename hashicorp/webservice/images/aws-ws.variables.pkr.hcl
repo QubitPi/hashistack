@@ -36,6 +36,7 @@ variable "skip_create_ami" {
 variable "image_home_dir" {
   type =  string
   sensitive = true
+  default = "/home/ubuntu"
 }
 
 variable "ws_war_path" {
