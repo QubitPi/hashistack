@@ -25,4 +25,3 @@ packer build -var "skip_create_ami=true" .
 # cleanup
 rm aws-ws.build.pkr.hcl
 rm aws-ws.variables.pkr.hcl
-
