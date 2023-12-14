@@ -1,6 +1,6 @@
 build_source                     = "docker.ubuntu"
-aws_image_region                 = "us-west-1"
-ami_name                         = "nexusgraph-astraios"
+aws_image_region                 = "us-east-1"
+ami_name                         = "my-ami"
 image_home_dir                   = "/"
 instance_type                    = "t2.small"
 ws_war_path                      = "test-webservice-1.0-SNAPSHOT.war"

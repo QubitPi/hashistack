@@ -136,12 +136,87 @@ The following auxiliary actions assumes a yarn-based project
 
 #### Code Style Checks
 
-This action assume [Prettier] and [ESLint] have been installed
+This action assume [ESLint], [typescript-eslint], and [Prettier] have been installed
 
 ```bash
+yarn add --dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript
 yarn add --dev --exact prettier
-yarn add --dev eslint
 ```
+
+:::info ESLint Configuration
+
+```bash
+yarn run eslint --init # https://dev.to/maithanhdanh/configuration-for-eslint-b47
+```
+
+Edit the auto-generated **.eslintrc.json** to make it look like the following:
+
+```json title=".eslintrc.json"
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "standard-with-typescript",
+    "plugin:react/recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
+}
+```
+
+```ignore
+docs/**
+dist/**
+config/**
+scripts/**
+```
+
+:::
+
+:::info Prettier Configuration
+
+Linters usually contain not only code quality rules, but also stylistic rules. Most stylistic rules are unnecessary
+when using Prettier, but worse - they might conflict with Prettier! Use Prettier for code formatting concerns, and
+linters for code-quality concerns, as outlined in
+[Prettier vs. Linters](https://qubitpi.github.io/prettier/docs/en/comparison).
+
+Luckily it's easy to turn off rules that conflict or are unnecessary with Prettier, by using these pre-made configs:
+
+- [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)
+
+```bash
+yarn add --dev eslint-config-prettier
+```
+
+```json title=".prettierrc.json"
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 120
+}
+```
+
+```ignore .prettierignore
+*.md
+build
+coverage
+node_modules
+docs
+```
+
+:::
 
 ```yaml
 ---
@@ -159,6 +234,16 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 ```
+
+:::tip
+
+We can fix it by formatting all files at the root of project with:
+
+```bash
+yarn prettier . --write
+```
+
+:::
 
 #### Unit Tests
 
@@ -352,5 +437,7 @@ within GitHub Action without auth errors
 [Jest]: https://qubitpi.github.io/jest/
 
 [Prettier]: https://qubitpi.github.io/prettier/docs/en/install.html
+
+[typescript-eslint]: https://typescript-eslint.io/
 
 [.env file]: https://create-react-app.dev/docs/adding-custom-environment-variables/#adding-development-environment-variables-in-env
