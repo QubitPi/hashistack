@@ -325,14 +325,14 @@ The example below is a very simple setup:
    ```json
    {
      ...
-  
+
      "scripts": {
        "cypress:open": "cypress open",
        "e2e": "cypress run --browser chrome",
        "wait-on-dev": "wait-on http-get://localhost:3000/",
        "wait-on-prod": "wait-on http-get://localhost:3000/"
      },
-    
+
      ...
    }
    ```
