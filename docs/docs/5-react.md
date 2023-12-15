@@ -291,9 +291,9 @@ The example below is a very simple setup:
 1. Install Cypress with `yarn add cypress --dev`
 2. Initialize Cypress with `yarn run cypress open`
 3. [Support TypeScript](https://qubitpi.github.io/cypress-documentation/guides/tooling/typescript-support/)
-3. Put all **.spec.cy.ts** test files under "cypress/e2e" directory 
+3. Put all **.spec.cy.ts** test files under "cypress/e2e" directory
 4. Have a file at the root of project with the name **.env.test**, which will contain all the environment variables used
-   during the test. The action will rename the ".env.test" name to the regular _.env_ file 
+   during the test. The action will rename the ".env.test" name to the regular _.env_ file
 5. Place a **test-setup.sh** file under _.githubtest-setup.sh_ directory for any pre-test setup. For example, to start
    a [lowdb](https://github.com/typicode/lowdb) server and
    [run e2e only after the server starts](https://www.npmjs.com/package/wait-on):
@@ -325,14 +325,14 @@ The example below is a very simple setup:
    ```json
    {
      ...
-   
+  
      "scripts": {
        "cypress:open": "cypress open",
        "e2e": "cypress run --browser chrome",
        "wait-on-dev": "wait-on http-get://localhost:3000/",
        "wait-on-prod": "wait-on http-get://localhost:3000/"
      },
-     
+    
      ...
    }
    ```
