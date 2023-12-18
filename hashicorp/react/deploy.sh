@@ -21,8 +21,10 @@ set -e
 ### This section logic goes to GitHub Action CI/CD
 
 # Build dist
-cd $REACT_DIR
-yarn && yarn build
+cp $REACT_DIR/.env $REACT_DIR/.env.bk
+cp $HC_CONFIG_DIR/.env $REACT_DIR/.env
+cd $REACT_DIR/ && yarn && yarn build
+mv $REACT_DIR/.env.bk $REACT_DIR/.env
 
 cd $HC_DIR/images
 cp $HC_PACKER_VAR_FILE aws-react.auto.pkrvars.hcl
