@@ -16,8 +16,6 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-
 ### This section logic goes to GitHub Action CI/CD
 
 # Build dist
@@ -41,7 +39,6 @@ terraform apply -auto-approve
 # cleanup
 rm $HC_DIR/images/aws-react.auto.pkrvars.hcl
 rm $HC_DIR/instances/aws-react.auto.tfvars
-rm -r $REACT_DIR/../../dist
 rm -rf $HC_DIR/instances/.terraform
 rm -rf $HC_DIR/instances/.terraform.lock.hcl
 rm -rf $HC_DIR/instances/terraform.tfstate
