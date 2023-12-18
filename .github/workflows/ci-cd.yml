@@ -30,7 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        docker: [{dockerfile-path: hashicorp/webservice/test, image-name: hashicorp-aws-webservice-test}]
+        docker: [
+          {dockerfile-path: hashicorp/webservice/test, image-name: hashicorp-aws-webservice-test},
+          {dockerfile-path: hashicorp/react/test, image-name: hashicorp-aws-react-test},
+        ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -48,7 +51,7 @@ jobs:
         with:
           context: ${{ matrix.docker.dockerfile-path }}
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/matrix.docker.image-name:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.docker.image-name }}:latest
 
   tests:
     name: Test HashiCorp image builds
@@ -56,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        test-directory: [hashicorp/webservice/test]
+        test-directory: [hashicorp/webservice/test, hashicorp/react/test]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Docker for Integration Tests
