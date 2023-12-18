@@ -29,7 +29,7 @@ inputs:
     description: 'The GitHub Fine-grained token with at least "Read access to code and metadata" repository permissions to the data models repo'
     required: true
   model-repo-org:
-    description: 'The data models repo owner, e.g. paion-data'
+    description: 'The data models repo owner, e.g. QubitPi'
     required: true
   models-repo-name:
     description: 'The data models repo name, e.g. my-data-models'

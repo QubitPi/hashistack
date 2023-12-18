@@ -20,6 +20,6 @@ sudo npm install -g serve
 
 # Install Nginx and load SSL config
 sudo apt install -y nginx
-sudo mv /home/ubuntu/aws-react-nginx.conf /etc/nginx/sites-enabled/default
-sudo mv /home/ubuntu/aws-react.crt /etc/ssl/certs/server.crt
-sudo mv /home/ubuntu/aws-react.key /etc/ssl/private/server.key
+sudo mv ${HOME_DIR}/aws-react-nginx.conf /etc/nginx/sites-enabled/default
+sudo mv ${HOME_DIR}/aws-react.crt /etc/ssl/certs/server.crt
+sudo mv ${HOME_DIR}/aws-react.key /etc/ssl/private/server.key
