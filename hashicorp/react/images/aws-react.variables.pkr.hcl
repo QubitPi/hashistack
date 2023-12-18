@@ -64,11 +64,6 @@ variable "aws_react_nginx_config_file_path" {
   sensitive = true
 }
 
-variable "aws_react_dot_env_file_path" {
-  type =  string
-  sensitive = true
-}
-
 variable "skip_create_ami" {
   type =  bool
   sensitive = true
