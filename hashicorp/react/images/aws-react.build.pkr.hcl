@@ -40,12 +40,6 @@ build {
     destination = "${var.image_home_dir}/dist"
   }
 
-  # Load React env file into AMI image
-  provisioner "file" {
-    source = "${var.aws_react_dot_env_file_path}"
-    destination = "${var.image_home_dir}/.env"
-  }
-
   provisioner "shell" {
     script = "../scripts/aws-react-pkr-setup.sh"
     environment_vars = [

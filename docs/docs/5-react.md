@@ -67,7 +67,6 @@ The following script variables need to be defined:
       aws_react_ssl_cert_file_path     = "../../../../hashicorp-aws-config-dir/server.crt"
       aws_react_ssl_cert_key_file_path = "../../../../hashicorp-aws-config-dir/server.key"
       aws_react_nginx_config_file_path = "../../../../hashicorp-aws-config-dir/nginx.conf"
-      aws_react_dot_env_file_path      = "../../../../hashicorp-aws-config-dir/filebeat.yml"
       ```
 
     - A [HashiCorp Terraform variable file][HashiCorp Terraform variable file] named **aws-react.tfvars** with the
