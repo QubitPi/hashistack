@@ -23,17 +23,15 @@ set -e
 # Build dist
 cd $REACT_DIR
 yarn && yarn build
-rm -rf ../../dist
-mv dist ../../
 
 cd $HC_DIR/images
-cp $HC_CONFIG_DIR/aws-react.pkrvars.hcl aws-react.auto.pkrvars.hcl
+cp $HC_PACKER_VAR_FILE aws-react.auto.pkrvars.hcl
 packer init .
 packer validate -var "skip_create_ami=true" .
 packer build -var "skip_create_ami=false" .
 
 cd $HC_DIR/instances
-cp $HC_CONFIG_DIR/aws-react.tfvars aws-react.auto.tfvars
+cp $HC_TF_VAR_FILE aws-react.auto.tfvars
 terraform init
 terraform validate
 terraform apply -auto-approve

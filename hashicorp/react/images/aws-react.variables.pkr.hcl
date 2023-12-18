@@ -15,7 +15,7 @@
 variable "build_source" {
   type =  string
   sensitive = false
-  default = "amazon-ebs.ws"
+  default = "amazon-ebs.react"
 }
 
 variable "aws_image_region" {
