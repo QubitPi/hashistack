@@ -29,20 +29,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v3
-    - name: Set node version to ${{ inputs.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ inputs.node-version }}
-    - name: Install dependencies
-      run: yarn install
-      shell: bash
-    - name: Load app environment variables
-      run: mv .env.test .env
-      shell: bash
-    - name: Run custom setup scripts
-      run: .github/test-setup.sh
-      shell: bash
     - name: Run E2E tests in ${{ inputs.start-strategy }} mode
       run: |
         if [[ ${{ inputs.start-strategy }} == 'yarn-start' ]]; then

@@ -290,43 +290,15 @@ The example below is a very simple setup:
 1. Install Cypress with `yarn add cypress --dev`
 2. Initialize Cypress with `yarn run cypress open`
 3. [Support TypeScript](https://qubitpi.github.io/cypress-documentation/guides/tooling/typescript-support/)
-3. Put all **.spec.cy.ts** test files under "cypress/e2e" directory
-4. Have a file at the root of project with the name **.env.test**, which will contain all the environment variables used
-   during the test. The action will rename the ".env.test" name to the regular _.env_ file
-5. Place a **test-setup.sh** file under _.githubtest-setup.sh_ directory for any pre-test setup. For example, to start
-   a [lowdb](https://github.com/typicode/lowdb) server and
-   [run e2e only after the server starts](https://www.npmjs.com/package/wait-on):
-
-   ```bash
-   #!/bin/bash
-
-   cd packages/lowdb
-   yarn install
-   yarn start ../../.github/db.json &
-   yarn wait-on-server
-   ```
-
-   Don't forget to make the script executable by running
-
-   ```bash
-   chmod u+x .github/test-setup.sh
-   ```
-
-   :::tip
-
-   If no pre-test setup is needed, please leave this file with only 1 line: `#!/bin/bash`, i.e. no-ops
-
-   :::
-
-6. Install [wait-on]: `yarn add -D wait-on`
-7. Add the following script command to `package.json`:
+4. Put all **.spec.cy.ts** test files under "cypress/e2e" directory
+5. Install [wait-on]: `yarn add -D wait-on`
+6. Add the following script command to `package.json`:
 
    ```json
    {
      ...
 
      "scripts": {
-       "cypress:open": "cypress open",
        "e2e": "cypress run --browser chrome",
        "wait-on-dev": "wait-on http-get://localhost:3000/",
        "wait-on-prod": "wait-on http-get://localhost:3000/"
@@ -374,6 +346,13 @@ The example below is a very simple setup:
            start_strategy: ["yarn-start", "serve"]
            test_spec: ${{ fromJson(needs.list-e2e-specs.outputs.paths) }}
        steps:
+         - uses: actions/checkout@v3
+         - name: Set node version to ${{ inputs.node-version }}
+           uses: actions/setup-node@v3
+           with:
+             node-version: ${{ inputs.node-version }}
+         - name: Install dependencies
+           run: yarn
          - uses: QubitPi/hashicorp-aws/auxiliary/github/actions/cypress-e2e@master
            with:
              node-version: ${{ env.NODE_VERSION }}
