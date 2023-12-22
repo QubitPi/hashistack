@@ -22,6 +22,9 @@ inputs:
   model-package:
     description: 'The Java package name containing all JPA-Elide webservice data models, e.g. "com.myorg.webservice.astraios.models"'
     required: true
+  oauth-enabled:
+    description: 'Whether or not to enable OAuthFilter container request filter. Default is "false"'
+    required: false
 
 runs:
   using: "composite"
@@ -37,6 +40,6 @@ runs:
     - name: Start Docker Compose
       run: |
         cd jpa-elide-webservice
-        MODEL_PACKAGE_NAME=${{ inputs.model-package }} docker compose up --build --force-recreate &
+        MODEL_PACKAGE_NAME=${{ inputs.model-package }} OAUTH_ENABLED=${{ inputs.oauth-enabled }} docker compose up --build --force-recreate &
         cd ../
       shell: bash
