@@ -25,14 +25,8 @@ inputs:
   model-package-jar-version:
     description: 'The version of JAR containing data models, e.g. "3.1.7"'
     required: true
-  models-repo-token:
-    description: 'The GitHub Fine-grained token with at least "Read access to code and metadata" repository permissions to the data models repo'
-    required: true
-  model-repo-org:
-    description: 'The data models repo owner, e.g. QubitPi'
-    required: true
-  models-repo-name:
-    description: 'The data models repo name, e.g. my-data-models'
+  models-path:
+    description: 'The relative path to the data models repo, usually prefixed by "../". e.g. "../jpa-models"'
     required: true
 
 runs:
@@ -60,6 +54,5 @@ runs:
     - name: Install the data models
       shell: bash
       run: |
-        git clone https://${{ inputs.models-repo-token }}@github.com/${{ inputs.model-repo-org }}/${{ inputs.models-repo-name }}.git ../jpa-models
-        cd ../jpa-models
+        cd ${{ inputs.models-path }}
         mvn clean install

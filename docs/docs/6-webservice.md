@@ -163,11 +163,7 @@ jobs:
 - **model-package-jar-group-id** is the Maven group ID of JAR containing data models, e.g. "com.myorg"
 - **model-package-jar-artifact-id** is the Maven artifact ID of JAR containing data models, e.g. "my-data-models"
 - **model-package-jar-version** is the version of JAR containing data models, e.g. "3.1.7"
-- **model-repo-org** is the data models repo owner, e.g. paion-data. This can be eigher a GitHub user account name or
-  a GitHub organization name
-- **models-repo-name** is the data models repo name, e.g. my-data-models
-- **models-repo-token** is the GitHub Fine-grained token with at least "Read access to code and metadata" repository
-  permissions to the data models repo
+- **models-path** is the relative path to the data models repo, usually prefixed by "../". e.g. "../jpa-models"
 
 :::
 
@@ -185,9 +181,7 @@ jobs:
           model-package-jar-group-id: com.myorg
           model-package-jar-artifact-id: my-data-models
           model-package-jar-version: 1.0.0
-          model-repo-org: myorg
-          models-repo-name: my-data-models
-          models-repo-token: ${{ secrets.ASTRAIOS_DATA_MODELS_REPO_TOKEN }}
+          models-path: ../my-data-models
 ```
 
 ##### Docker Compose
