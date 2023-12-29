@@ -19,6 +19,10 @@ inputs:
   webservice-repo-clone-url:
     description: 'The git clone URL used to checkout the JPA-Elide webservice, e.g. "https://github.com/QubitPi/jersey-webservice-template.git"'
     required: true
+  repo-branch:
+    description: 'The repo branch that contains the docker-compose.yml file. Default to "master" branch'
+    required: false
+    default: "master"
   model-package:
     description: 'The Java package name containing all JPA-Elide webservice data models, e.g. "com.myorg.webservice.astraios.models"'
     required: true
@@ -33,7 +37,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: git clone ${{ inputs.webservice-repo-clone-url }} jpa-elide-webservice
+    - run: git clone -b ${{ inputs.repo-branch }} ${{ inputs.webservice-repo-clone-url }} jpa-elide-webservice
       shell: bash
     - name: Generate webservice WAR file
       run: |
