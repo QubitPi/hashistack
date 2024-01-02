@@ -68,14 +68,29 @@ jobs:
           cd ${{ matrix.test-directory }}
           ./run-test.sh
 
+  list-auxiliary-scripts:
+    needs: code-styles
+    runs-on: ubuntu-latest
+    outputs:
+      paths: ${{ steps.list-auxiliary-scripts.outputs.paths }}
+    steps:
+      - name: List Files
+        id: list-auxiliary-scripts
+        uses: mirko-felice/list-files-action@v3.0.5
+        with:
+          repo: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          path: "auxiliary/scripts"
+          ext: ".sh"
+
   test-scripts:
     name: Test auxiliary/scripts
-    needs: code-styles
+    needs: list-auxiliary-scripts
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        script: [auxiliary/scripts/setup-jdk-ubuntu.sh, auxiliary/scripts/install-maven-ubuntu.sh]
+        script: ${{ fromJson(needs.list-auxiliary-scripts.outputs.paths) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
