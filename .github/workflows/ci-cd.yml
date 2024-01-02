@@ -68,9 +68,23 @@ jobs:
           cd ${{ matrix.test-directory }}
           ./run-test.sh
 
+  test-scripts:
+    name: Test auxiliary/scripts
+    needs: code-styles
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        script: [auxiliary/scripts/setup-jdk-ubuntu.sh, auxiliary/scripts/install-maven-ubuntu.sh]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: ${{ matrix.test-suite.desc }}
+        run: docker run --rm -v $(pwd)/${{ matrix.script }}:/test/script.sh ubuntu /test/script.sh
+
   documentation-ci-cd:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
-    needs: tests
+    needs: [tests, test-scripts]
     runs-on: ubuntu-latest
     defaults:
       run:
