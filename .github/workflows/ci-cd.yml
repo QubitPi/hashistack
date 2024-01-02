@@ -24,6 +24,16 @@ jobs:
   code-styles:
     uses: ./.github/workflows/yml-and-md-style-checks.yml
 
+  test-scripts:
+    name: Test auxiliary scripts
+    needs: code-styles
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Test JDK setup
+        run:
+
   docker-image:
     name: Publish docker images for tests
     needs: code-styles
