@@ -17,3 +17,19 @@ title: Screwdriver CD
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
+Auxiliary Steps
+---------------
+
+### Install JDK 17 & Maven
+
+```yaml
+jobs:
+  main:
+    requires: [~pr, ~commit]
+    image: buildpack-deps:22.04-scm
+    steps:
+      - setup-jdk: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/scripts/setup-jdk-ubuntu.sh)"
+      - install-maven: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/scripts/install-maven-ubuntu.sh)"
+      - test: mvn clean verify
+      - install: mvn clean install
+```
