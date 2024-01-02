@@ -16,8 +16,6 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-### This section logic goes to GitHub Action CI/CD
-
 # Build dist
 cp $REACT_DIR/.env $REACT_DIR/.env.bk
 cp $HC_CONFIG_DIR/.env $REACT_DIR/.env
