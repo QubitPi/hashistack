@@ -33,3 +33,16 @@ jobs:
       - test: mvn clean verify
       - install: mvn clean install
 ```
+
+### Install HashiCorp Packer & Terraform CLI
+
+```yaml
+jobs:
+  main:
+    requires: [~pr, ~commit]
+    image: buildpack-deps:22.04-scm
+    steps:
+      - install-packer: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/scripts/install-hashicorp-packer-ubuntu.sh)"
+      - install-terraform: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/scripts/install-hashicorp-terraform-ubuntu.sh)"
+```
+
