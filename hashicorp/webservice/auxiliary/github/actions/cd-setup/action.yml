@@ -34,9 +34,9 @@ inputs:
     required: true
 
   filebeat-config-file:
-      description: '(Optional) Filebeat config file'
-      required: false
-      default: ''
+    description: '(Optional) Filebeat config file'
+    required: false
+    default: ''
 
 runs:
   using: "composite"

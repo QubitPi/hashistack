@@ -31,7 +31,7 @@ The following credentials and config files need to be ready:
 
 ### HashiCorp
 
-- A [HashiCorp Packer variable file] with the following variable values (We will refer to the contents of this file as 
+- A [HashiCorp Packer variable file] with the following variable values (We will refer to the contents of this file as
   **AWS_WS_PKRVARS_HCL** from now on)
 
   ```hcl
@@ -44,7 +44,7 @@ The following credentials and config files need to be ready:
   aws_ws_nginx_config_file_path    = "nginx.conf"
   aws_ws_filebeat_config_file_path = "filebeat.yml"
   ```
-  
+
 - A [HashiCorp Terraform variable file] with the following variable values (We will refer to the contents of this file as
   **AWS_WS_TFVARS** from now on)
 

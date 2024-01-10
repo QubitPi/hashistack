@@ -93,7 +93,7 @@ If you have your preferred approach or already have the 3 files above ready, ple
 
 #### Installing Free SSL Certificates with Certbot running on Nginx
 
-[Let's Encrypt] provides free SSL certificates for our websites to use secure connections. [Certbot] is free open 
+[Let's Encrypt] provides free SSL certificates for our websites to use secure connections. [Certbot] is free open
 source software that allows us to easily create Let's Encrypt SSLs on our Linux server, such as Ubuntu VM.
 
 ##### Installing Certbot on Ubuntu
@@ -139,8 +139,8 @@ HTTP:80 must be open on the server
 
 :::
 
-After [Certbot has been installed](#installing-certbot-on-ubuntu), run Certbot to create SSL certificates and modify 
-Nginx configuration file to automatically redirect HTTP requests to HTTPS. Or, add "certonly" to create the SSL 
+After [Certbot has been installed](#installing-certbot-on-ubuntu), run Certbot to create SSL certificates and modify
+Nginx configuration file to automatically redirect HTTP requests to HTTPS. Or, add "certonly" to create the SSL
 certificates without modifying system files:
 
 ```bash
