@@ -250,7 +250,7 @@ Deployment via Screwdriver CD Running Locally
 3. You will be prompted to enter your desired SCM provider as well as the Client ID and Client Secret. Afterwards, type
    `y` to launch Screwdriver!
 
-- API: http://10.8.0.6:9001/v4/documentation#/
+- API: `http://10.8.0.6:9001/v4/documentation#/`
 - More documentations is [here](https://qubitpi.github.io/screwdriver-cd-guide/cluster-management/running-locally)
 
 [AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
