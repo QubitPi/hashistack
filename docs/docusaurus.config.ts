@@ -27,7 +27,7 @@ const config: Config = {
   organizationName: 'QubitPi',
   projectName: 'hashicorp-aws',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {

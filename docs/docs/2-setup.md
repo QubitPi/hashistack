@@ -17,9 +17,6 @@ title: Setup
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Configuration Sources for Both Manual & GitHub CI/CD
-----------------------------------------------------
-
 [hashicorp-aws] can be used for both and **automatic GitHub Action based** and **Screwdriver CD based** deployments.
 
 Setup
@@ -227,6 +224,12 @@ In the config above, Nginx assumes the certificate file and its key file are loc
 and **/etc/ssl/private/server.key**
 
 :::
+
+Deployment via Screwdriver
+--------------------------
+
+Deployment via Screwdriver CD Running Locally
+---------------------------------------------
 
 [AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
 [AWS EC2]: https://aws.amazon.com/ec2/
