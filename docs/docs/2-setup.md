@@ -231,6 +231,28 @@ Deployment via Screwdriver
 Deployment via Screwdriver CD Running Locally
 ---------------------------------------------
 
+### Requirements
+
+- Python 3.7+
+- [Docker]
+- [Docker Compose 1.8.1+][docker-compose]
+
+### Steps
+
+1. [Login to Docker](https://docs.docker.com/engine/reference/commandline/login) with your Docker username (not
+   email) or install [Docker Desktop]
+2. Run the command below in the terminal to bring up a Screwdriver cluster locally.
+
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/hashicorp/screwdriver/run-docker-compose-locally.sh)"
+   ```
+
+3. You will be prompted to enter your desired SCM provider as well as the Client ID and Client Secret. Afterwards, type
+   `y` to launch Screwdriver!
+
+- API: `http://10.8.0.6:9001/v4/documentation#/`
+- More documentations is [here](https://qubitpi.github.io/screwdriver-cd-guide/cluster-management/running-locally)
+
 [AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
 [AWS EC2]: https://aws.amazon.com/ec2/
 [AWS_ACCESS_KEY_ID]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
@@ -238,6 +260,10 @@ Deployment via Screwdriver CD Running Locally
 [AWS_SECRET_ACCESS_KEY]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 
 [Certbot]: https://certbot.eff.org/
+
+[Docker]: https://www.docker.com/products/docker
+[docker-compose]: https://www.docker.com/products/docker-compose
+[Docker Desktop]: https://www.docker.com/products/docker-desktop/
 
 [Google Domain]: https://domains.google/
 
