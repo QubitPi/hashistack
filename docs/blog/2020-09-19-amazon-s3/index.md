@@ -94,7 +94,7 @@ S3, which can take some time, and so you might observe the following behaviors:
 - A process writes a new object to Amazon S3 and immediately lists keys within its bucket. Until the change is fully
   propagated, the object might not appear in the list.
 - A process replaces an existing object and immediately tries to read it. Until the change is fully propagated, Amazon
-  S3 might return the previous data. 
+  S3 might return the previous data.
 - A process deletes an existing object and immediately tries to read it. Until the deletion is fully propagated, Amazon
   S3 might return the deleted data.
 - A process deletes an existing object and immediately lists keys within its bucket. Until the deletion is fully
@@ -127,7 +127,7 @@ In the next example, W2 does not complete before the start of R1. Therefore, R1 
 that has elapsed, an eventually consistent read might return no results.
 
 For a consistent read, R2 returns `color = garnet`. For an eventually consistent read, R2 might return
-`color = ruby` or color = garnet depending on the amount of time that has elapsed. 
+`color = ruby` or color = garnet depending on the amount of time that has elapsed.
 
 ![Consistency Example 2](./consistency2.png)
 
@@ -154,7 +154,7 @@ image `little-fish.png` is `zoo/west-side/fish/`, a string essentially.
 
 The prefix and delimiter parameters limit the kind of results returned by a list operation. The prefix limits the
 results to only those keys that begin with the specified prefix. The delimiter causes a list operation to roll up all
-the keys that share a common prefix into a single summary list result. 
+the keys that share a common prefix into a single summary list result.
 
 The purpose of the prefix and delimiter parameters is to help you organize and then browse your keys hierarchically. To
 do this, first pick a delimiter for your bucket, such as slash (/), that doesn't occur in any of your anticipated key
