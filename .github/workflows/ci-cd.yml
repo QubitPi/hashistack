@@ -32,6 +32,7 @@ jobs:
       matrix:
         docker: [
           {dockerfile-path: hashicorp/webservice/test, image-name: hashicorp-aws-webservice-test},
+          {dockerfile-path: hashicorp/kong/test, image-name: hashicorp-aws-kong-test},
           {dockerfile-path: hashicorp/react/test, image-name: hashicorp-aws-react-test},
         ]
     steps:
@@ -59,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        test-directory: [hashicorp/webservice/test, hashicorp/react/test]
+        test-directory: [hashicorp/webservice/test, hashicorp/kong/test, hashicorp/react/test]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Docker for Integration Tests
