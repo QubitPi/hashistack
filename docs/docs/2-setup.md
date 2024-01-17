@@ -26,8 +26,8 @@ The following credentials and config files need to be ready:
 
 ### AWS
 
-- [AWS_ACCESS_KEY_ID]
-- [AWS_SECRET_ACCESS_KEY]
+- [**AWS_ACCESS_KEY_ID**]
+- [**AWS_SECRET_ACCESS_KEY**]
 
 :::info
 
@@ -41,7 +41,17 @@ The _IAM user_ associated with the credentials above must have the following [AW
 
 ### SSL
 
-Let's image the following scenario:
+> - **SSL_CERTIFICATE** - the content of a SSL certificate file
+> - **SSL_CERTIFICATE_KEY** - the content of a SSL certificate key file
+> - **NGINX_CONFIG_FILE** - the content of Nginx config file serving as the reverse proxy for SSL/HTTPS
+
+:::tip
+
+All 3 credentials, including how to obtain their values, are discussed below
+
+:::
+
+_Why do we need the credentials listed above for SSL?_ Let's image the following common scenario:
 
 1. I purchased a domain from [Google Domain][Google Domain] called **my-domain.com**
 2. I developed a web app that will be exposed at **my-app.my-domain.com**
@@ -49,9 +59,10 @@ Let's image the following scenario:
 4. When my app is up and running, I need to automatically enable secure SSL communication so that my app can be visited
    at `https://my-app.my-domain.com`
 
-We will expose our EC2 under that domain using [aws_route53_record][HashiCorp Terraform aws_route53_record], which
-allows us to dynamically bind EC2 IP to its hosted domain so that each time when a new EC2 instance is instantiated,
-that instance will register its IP to `my-domain.com` on Route 53.
+By default, hashicorp-aws exposes all EC2 instances under a domain using
+[aws_route53_record][HashiCorp Terraform aws_route53_record], because it allows us to dynamically bind EC2 IP to its
+hosted domain so that each time when a new EC2 instance is instantiated, that instance will register its IP to
+`my-domain.com` on Route 53.
 
 :::tip What if my domain is on Google Domain, not on Route 53?
 
@@ -59,27 +70,39 @@ In this case, we can simply connect Google Domain to AWS Route 53 in the followi
 
 1. Create a Hosted Zone in AWS Route 53:
 
-    - Login into AWS Management Console and head towards Route 53
-    - In Route 53 -> Click **Hosted zones** -> Click **Create Hosted Zone**
-    - Fill in **Domain Name** and select **Type** as **Public Hosted Zone** and click create
+   - Login into AWS Management Console and head towards Route 53
+   - In Route 53 -> Click **Hosted zones** -> Click **Create Hosted Zone**
+   - Fill in **Domain Name** and select **Type** as **Public Hosted Zone** and click create
 
 2. Update Google Domain to use custom [name servers](https://www.domain.com/help/article/what-is-a-nameserver)
 
-    - Log into [Google Domain][Google Domain] account and click on **My domains**
-    - Click on **DNS**
-    - At the top of the page, select **Custom name servers**
-    - Copy and paste all four Name Server (NS) from the Route 53 Record Sets panel (Under "Hosted zone details") and
-      click **save**
+   - Log into [Google Domain][Google Domain] account and click on **My domains**
+   - Click on **DNS**
+   - At the top of the page, select **Custom name servers**
+   - Copy and paste all four Name Server (NS) from the Route 53 Record Sets panel (Under "Hosted zone details") and
+     click **save**
 
 :::
 
-- **SSL certificate file** We will refer to the contents of this file as **SSL_CERTIFICATE** from now on
-- **SSL certificate key file** We will refer to the contents of this file as **SSL_CERTIFICATE_KEY** from now on
-- **Nginx Reverse Proxy Config file** We will refer to the contents of this file as **NGINX_CONFIG_FILE** from now on
+_The Route 53, in order to promote the best security practices, requires all EC2 instances behind its domain to be
+accessible at HTTPS_. This requires us or hashicorp-aws to install SSL certificates on each deployed EC2 instance, which
+is why `SSL_CERTIFICATE` and `SSL_CERTIFICATE_KEY` come into play.
 
-If you are not very familiar with HTTPS/SSL, do worry, the
+In order to simply, or better saying promoting best single-responsibility of any cloud application, deployment,
+_hashicorp-aws assumes application should handle business logics only and not SSL themselves_. It therefore let
+application run under regular and simple HTTP protocol and uses
+[Nginx reverse proxy](https://www.nginx.com/resources/glossary/reverse-proxy-server/) to re-route all HTTPS to HTTP on
+that application. This is the reason `NGINX_CONFIG_FILE` above will be needed.
+
+To summarize, we have 3 credentials we need to setup:
+
+1. **SSL certificate file** We will refer to the contents of this file as **SSL_CERTIFICATE** from now on
+2. **SSL certificate key file** We will refer to the contents of this file as **SSL_CERTIFICATE_KEY** from now on
+3. **Nginx Reverse Proxy Config file** We will refer to the contents of this file as **NGINX_CONFIG_FILE** from now on
+
+If you are not very familiar with HTTPS/SSL, don't worry, the
 [next section](#installing-free-ssl-certificates-with-certbot-running-on-nginx) offers a step-by-step guide to help you
-get the 3 files above ready in a minute!
+get the 3 credentials above ready in a minute!
 
 :::tip
 
@@ -243,37 +266,17 @@ nginx: configuration file ... test is successful
 
 :::
 
-Deployment via Screwdriver
---------------------------
+Deployment via Screwdriver CD
+-----------------------------
+
+TBA
 
 Deployment via Screwdriver CD Running Locally
 ---------------------------------------------
 
-### Requirements
-
-- Python 3.7+
-- [Docker]
-- [Docker Compose 1.8.1+][docker-compose]
-
-### Steps
-
-1. [Login to Docker](https://docs.docker.com/engine/reference/commandline/login) with your Docker username (not
-   email) or install [Docker Desktop]
-2. Run the command below in the terminal to bring up a Screwdriver cluster locally.
-
-   ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/hashicorp/screwdriver/run-docker-compose-locally.sh)"
-   ```
-
-3. You will be prompted to enter your desired SCM provider as well as the Client ID and Client Secret. Afterwards, type
-   `y` to launch Screwdriver!
-
-- More documentations is [here](https://qubitpi.github.io/screwdriver-cd-guide/cluster-management/running-locally)
-
-Screwdriver API
----------------
-
-- API: `http://10.8.0.6:9001/v4/documentation#/`
+Please walk through ["Quickstart"](https://github.com/QubitPi/screwdriver-cd-in-a-box?tab=readme-ov-file#quickstart) to
+stand up a local Screwdriver CD. If you have any questions, please pin us in
+[![Discord]](https://discord.com/widget?id=1060753787125514332)
 
 [AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
 [AWS EC2]: https://aws.amazon.com/ec2/
@@ -283,9 +286,7 @@ Screwdriver API
 
 [Certbot]: https://certbot.eff.org/
 
-[Docker]: https://www.docker.com/products/docker
-[docker-compose]: https://www.docker.com/products/docker-compose
-[Docker Desktop]: https://www.docker.com/products/docker-desktop/
+[Discord]: https://img.shields.io/discord/1060753787125514332?color=5865F2&logo=discord&logoColor=ffffff&style=for-the-badge
 
 [Google Domain]: https://domains.google/
 
