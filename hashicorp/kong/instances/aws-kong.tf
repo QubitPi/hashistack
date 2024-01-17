@@ -56,12 +56,6 @@ variable "gateway_domain" {
   sensitive = true
 }
 
-variable "sentry_dsn" {
-  type = string
-  description = "Sentry.io DSN"
-  sensitive = true
-}
-
 terraform {
   required_providers {
     aws = {
