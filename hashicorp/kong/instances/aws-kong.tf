@@ -50,7 +50,7 @@ variable "route_53_zone_id" {
   sensitive = true
 }
 
-variable "ws_domain" {
+variable "gateway_domain" {
   type = string
   description = "Domain name that Nexus Graph queries against"
   sensitive = true
@@ -112,7 +112,7 @@ resource "aws_instance" "aws-ws" {
 
 resource "aws_route53_record" "aws-ws" {
   zone_id         = var.route_53_zone_id
-  name            = var.ws_domain
+  name            = var.gateway_domain
   type            = "A"
   ttl             = 300
   records         = [aws_instance.aws-ws.private_ip]
