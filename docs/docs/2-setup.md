@@ -225,6 +225,24 @@ and **/etc/ssl/private/server.key**
 
 :::
 
+:::tip
+
+To update Nginx configuration after modifying the config file, simply run (on Ubuntu):
+
+```console
+sudo nginx -t
+sudo nginx -s reload
+```
+
+The `nginx -t` performs config file validation and, if successful, shall print something similar to
+
+```console
+nginx: the configuration file ... syntax is ok
+nginx: configuration file ... test is successful
+```
+
+:::
+
 Deployment via Screwdriver
 --------------------------
 
