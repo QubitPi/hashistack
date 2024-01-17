@@ -76,14 +76,11 @@ provider "aws" {
   region = var.aws_deploy_region
 }
 
-data "template_file" "aws-ws-init" {
+data "template_file" "aws-kong-init" {
   template = "${file("../scripts/aws-kong-tf-init.sh")}"
-  vars = {
-    sentry_dsn = "${var.sentry_dsn}"
-  }
 }
 
-data "aws_ami" "latest-ws" {
+data "aws_ami" "latest-kong" {
   most_recent = true
   owners = ["899075777617"]
 
@@ -98,8 +95,8 @@ data "aws_ami" "latest-ws" {
   }
 }
 
-resource "aws_instance" "aws-ws" {
-  ami = "${data.aws_ami.latest-ws.id}"
+resource "aws_instance" "aws-kong" {
+  ami = "${data.aws_ami.latest-kong.id}"
   instance_type = "${var.instance_type}"
   tags = {
     Name = "${var.ec2_instance_name}"
@@ -107,14 +104,14 @@ resource "aws_instance" "aws-ws" {
 
   security_groups = var.ec2_security_groups
 
-  user_data = "${data.template_file.aws-ws-init.rendered}"
+  user_data = "${data.template_file.aws-kong-init.rendered}"
 }
 
-resource "aws_route53_record" "aws-ws" {
+resource "aws_route53_record" "aws-kong" {
   zone_id         = var.route_53_zone_id
   name            = var.gateway_domain
   type            = "A"
   ttl             = 300
-  records         = [aws_instance.aws-ws.private_ip]
+  records         = [aws_instance.aws-kong.private_ip]
   allow_overwrite = true
 }
