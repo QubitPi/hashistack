@@ -24,7 +24,7 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 
 # Download Kong
-git clone https://github.com/Kong/docker-kong
+git clone https://github.com/QubitPi/docker-kong.git
 
 # Install Nginx and load SSL config
 sudo apt install -y nginx

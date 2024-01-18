@@ -11,6 +11,23 @@ This section discusses the common issue that can happen during all types of depl
 HashiCorp
 ---------
 
+### I Would Like to SSH into EC2 for Debugging Purposes
+
+Fully adapting
+[immutable infrastructure](https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure),
+hashicorp-aws "seals" EC2 instances once it's created; that means not even admin or anyone else can jump into that
+server vis SSH. _It's completely immutable_
+
+:::tip
+
+[//]: # (TODO)
+[//]: # (Please try our paid HACP platform to deploy a ELK and send app logs to it for debugging purposes)
+
+:::
+
+Another somewhat more time-consuming approach is to manually create an EC2 from pushed AMI image, specifying key pair
+and run each app's corresponding Terraform init script after SSH into it.
+
 ### Value () for parameter groupId is invalid. The value cannot be empty
 
 ```console
