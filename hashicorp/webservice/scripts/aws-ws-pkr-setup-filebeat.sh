@@ -16,12 +16,8 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cp ../images/aws-kong.build.pkr.hcl .
-cp ../images/aws-kong.variables.pkr.hcl .
-packer init .
-packer validate -var "skip_create_ami=true" .
-packer build -var "skip_create_ami=true" .
-
-# cleanup
-rm aws-kong.build.pkr.hcl
-rm aws-kong.variables.pkr.hcl
+# Filebeat
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.9.2-amd64.deb
+sudo dpkg -i filebeat-8.9.2-amd64.deb
+sudo mv ${HOME_DIR}/filebeat.yml /etc/filebeat/filebeat.yml
+sudo chown root /etc/filebeat/filebeat.yml

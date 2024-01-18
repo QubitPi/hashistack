@@ -29,11 +29,12 @@ jobs:
     needs: code-styles
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: true
       matrix:
         docker: [
-          {dockerfile-path: hashicorp/webservice/test, image-name: hashicorp-aws-webservice-test},
-          {dockerfile-path: hashicorp/kong/test, image-name: hashicorp-aws-kong-test},
-          {dockerfile-path: hashicorp/react/test, image-name: hashicorp-aws-react-test},
+          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test},
+          {dockerfile-path: tests/kong, image-name: hashicorp-aws-kong-test},
+          {dockerfile-path: tests/react, image-name: hashicorp-aws-react-test},
         ]
     steps:
       - name: Checkout
@@ -59,15 +60,16 @@ jobs:
     needs: docker-image
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        test-directory: [hashicorp/webservice/test, hashicorp/kong/test, hashicorp/react/test]
+        test-directory: [tests/webservice/images, tests/kong/images, tests/react/images]
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Docker for Integration Tests
+      - name: Set up Docker for AMI Tests
         uses: docker-practice/actions-setup-docker@master
       - run: |
           cd ${{ matrix.test-directory }}
-          ./run-test.sh
+          ./run-tests.sh
 
   list-auxiliary-scripts:
     needs: code-styles

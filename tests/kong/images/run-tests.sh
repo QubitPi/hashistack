@@ -16,12 +16,17 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cp ../images/aws-ws.build.pkr.hcl .
-cp ../images/aws-ws.variables.pkr.hcl .
+mkdir ../scripts
+cp ../../../hashicorp/kong/scripts/* ../scripts
+
+cp ../../../hashicorp/kong/images/aws-kong.build.pkr.hcl .
+cp ../../../hashicorp/kong/images/aws-kong.variables.pkr.hcl .
+
 packer init .
 packer validate -var "skip_create_ami=true" .
 packer build -var "skip_create_ami=true" .
 
 # cleanup
-rm aws-ws.build.pkr.hcl
-rm aws-ws.variables.pkr.hcl
+rm -r ../scripts
+rm aws-kong.build.pkr.hcl
+rm aws-kong.variables.pkr.hcl
