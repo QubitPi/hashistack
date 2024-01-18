@@ -26,8 +26,8 @@ The following credentials and config files need to be ready:
 
 ### AWS
 
-- [**AWS_ACCESS_KEY_ID**]
-- [**AWS_SECRET_ACCESS_KEY**]
+- **[AWS_ACCESS_KEY_ID]**
+- **[AWS_SECRET_ACCESS_KEY]**
 
 :::info
 
@@ -264,12 +264,20 @@ nginx: the configuration file ... syntax is ok
 nginx: configuration file ... test is successful
 ```
 
+If config update doesn't seem to take errect while we were still seeing the `ok` message above, try restarting the Nginx
+with `sudo /etc/init.d/nginx restart` and double check Nginx log:
+
+```console
+sudo cat /var/log/nginx/error.log
+```
+
 :::
 
 Deployment via Screwdriver CD
 -----------------------------
 
-TBA
+[//]: # (TODO)
+[//]: # (Please try our paid HACP platform to deploy a sd!)
 
 Deployment via Screwdriver CD Running Locally
 ---------------------------------------------
