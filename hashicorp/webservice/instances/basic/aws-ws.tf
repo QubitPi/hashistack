@@ -59,7 +59,7 @@ provider "aws" {
 }
 
 data "template_file" "aws-ws-init" {
-  template = "${file("../scripts/aws-ws-tf-init-basic.sh")}"
+  template = "${file("../../scripts/aws-ws-tf-init-basic.sh")}"
 }
 
 data "aws_ami" "latest-ws" {
@@ -87,13 +87,4 @@ resource "aws_instance" "aws-ws" {
   security_groups = var.ec2_security_groups
 
   user_data = "${data.template_file.aws-ws-init.rendered}"
-}
-
-resource "aws_route53_record" "aws-ws" {
-  zone_id         = var.route_53_zone_id
-  name            = var.ws_domain
-  type            = "A"
-  ttl             = 300
-  records         = [aws_instance.aws-ws.private_ip]
-  allow_overwrite = true
 }

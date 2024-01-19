@@ -47,7 +47,7 @@ The following credentials and config files need to be ready:
   **AWS_WS_PKRVARS_HCL** from now on)
 
   <Tabs>
-    <TabItem value="non-ssl" label="non-SSL/HTTPS">
+    <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
       ```hcl
       aws_image_region                 = "my-aws-region"
       ami_name                         = "my-webservice"
@@ -55,7 +55,7 @@ The following credentials and config files need to be ready:
       ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
       ```
     </TabItem>
-    <TabItem value="ssl" label="SSL/HTTPS mode" default>
+    <TabItem value="ssl" label="SSL/HTTPS mode">
       ```hcl
       aws_image_region                 = "my-aws-region"
       ami_name                         = "my-webservice"
@@ -73,7 +73,7 @@ The following credentials and config files need to be ready:
   **AWS_WS_TFVARS** from now on)
 
   <Tabs>
-    <TabItem value="non-ssl" label="non-SSL/HTTPS">
+    <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
       ```hcl
       aws_deploy_region   = "my-aws-region"
       ami_name            = "my-webservice"
@@ -83,7 +83,7 @@ The following credentials and config files need to be ready:
       ws_domain           = "mywebservice.mycompany.com"
       ```
     </TabItem>
-    <TabItem value="ssl" label="SSL/HTTPS mode" default>
+    <TabItem value="ssl" label="SSL/HTTPS mode">
       ```hcl
       aws_deploy_region   = "my-aws-region"
       ami_name            = "my-webservice"
