@@ -16,12 +16,8 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cp ../images/aws-react.build.pkr.hcl .
-cp ../images/aws-react.variables.pkr.hcl .
-packer init .
-packer validate -var "skip_create_ami=true" .
-packer build -var "skip_create_ami=true" .
-
-# cleanup
-rm aws-react.build.pkr.hcl
-rm aws-react.variables.pkr.hcl
+# Install Nginx and load SSL config
+sudo apt install -y nginx
+sudo mv ${HOME_DIR}/nginx-ssl.conf /etc/nginx/sites-enabled/default
+sudo mv ${HOME_DIR}/server.crt /etc/ssl/certs/server.crt
+sudo mv ${HOME_DIR}/server.key /etc/ssl/private/server.key

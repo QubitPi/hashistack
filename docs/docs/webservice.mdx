@@ -17,6 +17,9 @@ title: Jersey-Jetty Based Webservice
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 :::tip
 
 - Yes, we DO NOT support Spring, never ever
@@ -24,40 +27,75 @@ title: Jersey-Jetty Based Webservice
 
 :::
 
+Immutable Webservice by hashicorp-aws supports 2 deployment modes:
+
+1. SSL/HTTPS
+2. non-SSL/HTTPS
+
+The first mode is very suitable for a mini-project such as a frontend backed by a single webservice. The second mode
+is designed for
+[microservices architecture where authentication is deletgated to an API gateway](https://dev.to/behalf/authentication-authorization-in-microservices-architecture-part-i-2cn0#global-authentication-api-gateway-and-authorization-per-service)
+
 Setup
 -----
 
 The following credentials and config files need to be ready:
 
-### HashiCorp
+### HashiCorp Config Files
 
 - A [HashiCorp Packer variable file] with the following variable values (We will refer to the contents of this file as
   **AWS_WS_PKRVARS_HCL** from now on)
 
-  ```hcl
-  aws_image_region                 = "my-aws-region"
-  ami_name                         = "my-webservice"
-  instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-  ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
-  aws_ws_ssl_cert_file_path        = "server.crt"
-  aws_ws_ssl_cert_key_file_path    = "server.key"
-  aws_ws_nginx_config_file_path    = "nginx.conf"
-  aws_ws_filebeat_config_file_path = "filebeat.yml"
-  ```
+  <Tabs>
+    <TabItem value="non-ssl" label="non-SSL/HTTPS">
+      ```hcl
+      aws_image_region                 = "my-aws-region"
+      ami_name                         = "my-webservice"
+      instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+      ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
+      ```
+    </TabItem>
+    <TabItem value="ssl" label="SSL/HTTPS mode" default>
+      ```hcl
+      aws_image_region                 = "my-aws-region"
+      ami_name                         = "my-webservice"
+      instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+      ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
+      aws_ws_ssl_cert_file_path        = "server.crt"
+      aws_ws_ssl_cert_key_file_path    = "server.key"
+      aws_ws_nginx_config_file_path    = "nginx.conf"
+      aws_ws_filebeat_config_file_path = "filebeat.yml"
+      ```
+    </TabItem>
+  </Tabs>
 
 - A [HashiCorp Terraform variable file] with the following variable values (We will refer to the contents of this file as
   **AWS_WS_TFVARS** from now on)
 
-  ```hcl
-  aws_deploy_region   = "my-aws-region"
-  ami_name            = "my-webservice"
-  instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-  ec2_instance_name   = "My Webservice"
-  ec2_security_groups = ["My Webservice"]
-  route_53_zone_id    = "9DQXLTNSN7ZX9P8V2KZII"
-  ws_domain           = "mywebservice.mycompany.com"
-  sentry_dsn          = "can be empty if sentry.io is not needed"
-  ```
+  <Tabs>
+    <TabItem value="non-ssl" label="non-SSL/HTTPS">
+      ```hcl
+      aws_deploy_region   = "my-aws-region"
+      ami_name            = "my-webservice"
+      instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+      ec2_instance_name   = "My Webservice"
+      ec2_security_groups = ["My Webservice"]
+      ws_domain           = "mywebservice.mycompany.com"
+      ```
+    </TabItem>
+    <TabItem value="ssl" label="SSL/HTTPS mode" default>
+      ```hcl
+      aws_deploy_region   = "my-aws-region"
+      ami_name            = "my-webservice"
+      instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+      ec2_instance_name   = "My Webservice"
+      ec2_security_groups = ["My Webservice"]
+      route_53_zone_id    = "9DQXLTNSN7ZX9P8V2KZII"
+      ws_domain           = "mywebservice.mycompany.com"
+      sentry_dsn          = "can be empty if sentry.io is not needed"
+      ```
+    </TabItem>
+  </Tabs>
 
   :::warning
 
