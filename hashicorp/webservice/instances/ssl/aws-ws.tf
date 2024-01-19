@@ -77,7 +77,7 @@ provider "aws" {
 }
 
 data "template_file" "aws-ws-init" {
-  template = "${file("../scripts/aws-ws-tf-init-ssl.sh")}"
+  template = "${file("../../scripts/aws-ws-tf-init-ssl.sh")}"
   vars = {
     sentry_dsn = "${var.sentry_dsn}"
   }
