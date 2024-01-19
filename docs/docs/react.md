@@ -82,8 +82,6 @@ The following script variables need to be defined:
       react_domain        = "myreactapp.mycompany.com"
       ```
 
-Then we can execute the **[deploy.sh]** to manually deploy any React Apps
-
 GitHub Action Automatic Deployment
 ----------------------------------
 
@@ -420,8 +418,6 @@ jobs:
 [AWS_ACCESS_KEY_ID]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 [AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html
 [AWS_SECRET_ACCESS_KEY]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
-
-[deploy.sh]: https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/react/deploy.sh
 
 [ESLint]: https://eslint.org/
 
