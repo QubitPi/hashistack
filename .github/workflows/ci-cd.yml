@@ -25,7 +25,7 @@ jobs:
     uses: ./.github/workflows/yml-and-md-style-checks.yml
 
   docker-image:
-    name: Publish docker images for tests
+    name: Publish docker images for "AMI Build Test"
     needs: code-styles
     runs-on: ubuntu-latest
     strategy:
@@ -56,7 +56,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.docker.image-name }}:latest
 
   tests:
-    name: Test HashiCorp image builds
+    name: AMI Build Test
     needs: docker-image
     runs-on: ubuntu-latest
     strategy:
@@ -72,6 +72,7 @@ jobs:
           ./run-tests.sh
 
   list-auxiliary-scripts:
+    name: Listing Scripts to Test for "Test auxiliary/scripts"
     needs: code-styles
     runs-on: ubuntu-latest
     outputs:
