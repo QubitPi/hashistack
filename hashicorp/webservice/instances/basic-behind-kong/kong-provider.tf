@@ -32,6 +32,12 @@ variable "ws_api_path" {
   description = "The root-path part of the URL param in creating the Kong service. For example the ws_port for service url 'http://10.65.7.22:5000/users' is '/users'"
 }
 
+variable "tls_verify" {
+  type = bool
+  description = "Whether or not TLS verification is enabled while interacting with Kong API. Default to 'true'"
+  default = true
+}
+
 variable "route_name" {
   type = string
   description = "A standard Kong route name"
@@ -52,6 +58,7 @@ resource "kong_service" "service" {
   host        = aws_instance.aws-ws.private_ip
   port        = var.ws_port
   path        = var.ws_api_path
+  tls_verify  = var.tls_verify
 }
 
 resource "kong_route" "route" {
