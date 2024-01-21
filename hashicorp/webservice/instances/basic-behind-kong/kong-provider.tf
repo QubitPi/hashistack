@@ -22,19 +22,19 @@ variable "service_name" {
   description = "A standard Kong service name"
 }
 
-variable "ws_host" {
+variable "ws_private_ip" {
   type = string
-  description = "The host part of the URL param in creating the Kong service. For example the ws_host for service url 'http://ws-dns-name.aws.com:5000/users' is 'ws-dns-name.aws.com'"
+  description = "The IP (private) part of the URL param in creating the Kong service. For example the ws_private_ip for service url 'http://10.65.7.22:5000/users' is '10.65.7.22'"
 }
 
 variable "ws_port" {
   type = string
-  description = "The port part of the URL param in creating the Kong service. For example the ws_port for service url 'http://ws-dns-name.aws.com:5000/users' is '5000'"
+  description = "The port part of the URL param in creating the Kong service. For example the ws_port for service url 'http://10.65.7.22:5000/users' is '5000'"
 }
 
 variable "ws_api_path" {
   type = string
-  description = "The root-path part of the URL param in creating the Kong service. For example the ws_port for service url 'http://ws-dns-name.aws.com:5000/users' is '/users'"
+  description = "The root-path part of the URL param in creating the Kong service. For example the ws_port for service url 'http://10.65.7.22:5000/users' is '/users'"
 }
 
 variable "route_name" {
@@ -54,7 +54,7 @@ provider "kong" {
 resource "kong_service" "service" {
   name        = var.kong_admin_uri
   protocol    = "http"
-  host        = var.ws_host
+  host        = aws_instance.aws-ws.private_ip
   port        = var.ws_port
   path        = var.ws_api_path
 }
