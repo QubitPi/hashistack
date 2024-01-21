@@ -22,11 +22,6 @@ variable "service_name" {
   description = "A standard Kong service name"
 }
 
-variable "ws_private_ip" {
-  type = string
-  description = "The IP (private) part of the URL param in creating the Kong service. For example the ws_private_ip for service url 'http://10.65.7.22:5000/users' is '10.65.7.22'"
-}
-
 variable "ws_port" {
   type = string
   description = "The port part of the URL param in creating the Kong service. For example the ws_port for service url 'http://10.65.7.22:5000/users' is '5000'"
