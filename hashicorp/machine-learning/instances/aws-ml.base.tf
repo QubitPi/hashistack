@@ -37,11 +37,6 @@ variable "ec2_instance_name" {
   description = "EC2 instance name"
 }
 
-variable "key_name" {
-  type = string
-  description = "Keypair name (for, e.g., SSH)"
-}
-
 variable "ec2_security_groups" {
   type = list(string)
   description = "EC2 Security Groups"
@@ -61,11 +56,7 @@ provider "aws" {
   region = var.aws_deploy_region
 }
 
-data "template_file" "init" {
-  template = "${file("../scripts/aws-mlflow-docker-tf-init.sh")}"
-}
-
-data "aws_ami" "latest-mlflow-docker" {
+data "aws_ami" "latest-machine-learning" {
   most_recent = true
   owners = ["899075777617"]
 
@@ -80,14 +71,13 @@ data "aws_ami" "latest-mlflow-docker" {
   }
 }
 
-resource "aws_instance" "mlflow-docker" {
-  ami = "${data.aws_ami.latest-mlflow-docker.id}"
+resource "aws_instance" "machine-learning" {
+  ami = "${data.aws_ami.latest-machine-learning.id}"
   instance_type = "${var.instance_type}"
   tags = {
     Name = "${var.ec2_instance_name}"
   }
 
-  key_name = "${var.key_name}"
   security_groups = var.ec2_security_groups
 
   user_data = "${data.template_file.init.rendered}"
