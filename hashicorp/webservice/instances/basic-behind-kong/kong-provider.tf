@@ -32,9 +32,15 @@ variable "ws_api_path" {
   description = "The root-path part of the URL param in creating the Kong service. For example the ws_port for service url 'http://10.65.7.22:5000/users' is '/users'"
 }
 
+variable "tls_skip_verify" {
+  type = bool
+  description = "Whether or not to skip TLS certificate verification for the kong api when using https"
+  default = true
+}
+
 variable "tls_verify" {
   type = bool
-  description = "Whether or not TLS verification is enabled while interacting with Kong API. Default to 'true'"
+  description = "Whether or not to enable verification of upstream server TLS certificate. Default to 'true'"
   default = true
 }
 
@@ -50,6 +56,7 @@ variable "route_paths" {
 
 provider "kong" {
   kong_admin_uri = var.kong_admin_uri
+  tls_skip_verify = var.tls_skip_verify
 }
 
 resource "kong_service" "service" {
