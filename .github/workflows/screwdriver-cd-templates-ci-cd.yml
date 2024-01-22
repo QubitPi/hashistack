@@ -54,7 +54,7 @@ jobs:
             // Running screwdriver-template-main's template-validate CMD won't work because it's a over-the-wire
             // validation against SD API which requires token authentication... (can't believe this)
             //
-            // The API-based validation, by digging source code, essentially runs the following in API server: 
+            // The API-based validation, by digging source code, essentially runs the following in API server:
             const error = require("screwdriver-data-schema").config.template.template
               .validate(
                 require('js-yaml').load(
