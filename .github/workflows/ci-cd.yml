@@ -32,9 +32,10 @@ jobs:
       fail-fast: true
       matrix:
         docker: [
-          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test},
+          {dockerfile-path: tests/machine-learning, image-name: hashicorp-aws-machine-learning-test},
           {dockerfile-path: tests/kong, image-name: hashicorp-aws-kong-test},
           {dockerfile-path: tests/react, image-name: hashicorp-aws-react-test},
+          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test}
         ]
     steps:
       - name: Checkout
@@ -62,7 +63,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        test-directory: [tests/webservice/images, tests/kong/images, tests/react/images]
+        test-directory: [
+          tests/machine-learning/images,
+          tests/kong/images,
+          tests/react/images,
+          tests/webservice/images
+        ]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Docker for AMI Tests

@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+variable "build_source" {
+  type =  string
+  sensitive = false
+  default = "amazon-ebs.machine-learning"
+}
+
 variable "aws_image_region" {
   type =  string
   sensitive = true
@@ -22,6 +28,12 @@ variable "ami_name" {
   sensitive = true
 }
 
+variable "image_home_dir" {
+  type =  string
+  sensitive = true
+  default = "/home/ubuntu"
+}
+
 variable "instance_type" {
   type        = string
   description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
@@ -30,11 +42,6 @@ variable "instance_type" {
     condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
     error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
   }
-}
-
-variable "ml_models_path" {
-  type =  string
-  sensitive = true
 }
 
 variable "skip_create_ami" {
@@ -51,7 +58,7 @@ packer {
   }
 }
 
-source "amazon-ebs" "mlflow-docker" {
+source "amazon-ebs" "machine-learning" {
   ami_name = "${var.ami_name}"
   force_deregister = "true"
   force_delete_snapshot = "true"
@@ -76,23 +83,4 @@ source "amazon-ebs" "mlflow-docker" {
     owners = ["099720109477"]
   }
   ssh_username = "ubuntu"
-}
-
-build {
-  name = "install-mlflow-docker"
-  sources = [
-    "source.amazon-ebs.mlflow-docker"
-  ]
-
-  # Load ML Model
-  provisioner "file" {
-    source = "${var.ml_models_path}"
-    destination = "/home/ubuntu/ml-models"
-  }
-
-  provisioner "shell" {
-    scripts = [
-      "../scripts/aws-mlflow-docker-pkr-setup.sh"
-    ]
-  }
 }
