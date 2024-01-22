@@ -65,8 +65,6 @@ The following script variables need to be defined:
       ec2_security_groups = ["myKeyPairName"]
       ```
 
-Then we can execute the **[deploy.sh]** to manually deploy any MLflow models
-
 :::info
 
 - The packer simply builds a non-model specific AMI
@@ -84,5 +82,3 @@ Then we can execute the **[deploy.sh]** to manually deploy any MLflow models
 [hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
 [HashiCorp Packer variable file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform variable file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
-
-[deploy.sh]: https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/mlflow/deploy.sh
