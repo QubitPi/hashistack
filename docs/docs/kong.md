@@ -17,8 +17,30 @@ title: Kong API Gateway
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-SSL
----
+Kong API Gateway
+================
+
+hashicorp-aws deploys [Kong API Gateway] in the following way:
+
+- Deploys [Kong API Gateway] in **HTTP** mode
+- Deploys a reverse proxy Nginx in front of the [Kong API Gateway] in the same EC2 to redirect all HTTPS request to
+  gateway's
+  [corresponding](https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/) HTTP
+  ports
+
+The diagram below illustrates the resulting deployment
+
+![Error loading kong-deployment-diagram.png](img/kong-deployment-diagram.png)
+
+Setup
+-----
+
+### SSL
+
+<!-- markdown-link-check-disable -->
+First, please follow the [general setup guide](setup#setup) with some Nginx config modifications
+[discussed in the next section](#nginx-config)
+<!-- markdown-link-check-enable -->
 
 ### Nginx Config
 
@@ -27,12 +49,12 @@ hashicorp-aws assumes the following for all of its management app deployment:
 **Business logic and SSL/HTTP are separate concerns and must be decoupled from each other**
 
 That being said, hashicorp-aws deploys Kong completely without SSL and spins up a Nginx rever proxy to handle the
-HTTPS redirecting to Kong's pure HTTP app. Therefore:
+HTTPS redirections to Kong's HTTP ports. Therefore:
 
 1. hashicorp-aws uses a [customized fork of docker-kong](https://github.com/QubitPi/docker-kong) to
   [fully separate the
    app and SSL](https://github.com/QubitPi/docker-kong/pull/1),
-   and therefore
+   and, therefore,
 2. the Nginx config needs multiple [servers](https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/)
    to ensure all HTTPS ports are mapped to their corresponding HTTP ports as shown in the config snippet below:
 
@@ -48,60 +70,186 @@ HTTPS redirecting to Kong's pure HTTP app. Therefore:
 
    :::
 
-   ```nginx configuration
+<!-- markdown-link-check-disable -->
+Here is an example that modifies the [general Nginx config](setup#configuring-reverse-proxy-on-nginx):
+<!-- markdown-link-check-enable -->
 
-   ...
+```text
 
-   server {
-       root /var/www/html;
+...
 
-       index index.html index.htm index.nginx-debian.html;
-       server_name my.kongdomain.com;
+server {
+    root /var/www/html;
 
-       location / {
-           proxy_pass http://localhost:8002;
-       }
+    index index.html index.htm index.nginx-debian.html;
+    server_name my.kongdomain.com;
 
-       listen [::]:443 ssl ipv6only=on;
-       listen 443 ssl;
-       ssl_certificate /etc/ssl/certs/server.crt;
-       ssl_certificate_key /etc/ssl/private/server.key;
-   }
+    location / {
+        proxy_pass http://localhost:8002;
+    }
 
-   server {
-       root /var/www/html;
+    listen [::]:443 ssl ipv6only=on;
+    listen 443 ssl;
+    ssl_certificate /etc/ssl/certs/server.crt;
+    ssl_certificate_key /etc/ssl/private/server.key;
+}
 
-       index index.html index.htm index.nginx-debian.html;
-       server_name my.kongdomain.com;
+server {
+    root /var/www/html;
 
-       location / {
-           proxy_pass http://localhost:8000;
-       }
+    index index.html index.htm index.nginx-debian.html;
+    server_name my.kongdomain.com;
 
-       listen [::]:8443 ssl ipv6only=on;
-       listen 8443 ssl;
-       ssl_certificate /etc/ssl/certs/server.crt;
-       ssl_certificate_key /etc/ssl/private/server.key;
-   }
-   server {
-       root /var/www/html;
+    location / {
+        proxy_pass http://localhost:8000;
+    }
 
-       index index.html index.htm index.nginx-debian.html;
-       server_name my.kongdomain.com;
+    listen [::]:8443 ssl ipv6only=on;
+    listen 8443 ssl;
+    ssl_certificate /etc/ssl/certs/server.crt;
+    ssl_certificate_key /etc/ssl/private/server.key;
+}
+server {
+    root /var/www/html;
 
-       location / {
-           proxy_pass http://localhost:8001;
-       }
+    index index.html index.htm index.nginx-debian.html;
+    server_name my.kongdomain.com;
 
-       listen [::]:8444 ssl ipv6only=on;
-       listen 8444 ssl;
-       ssl_certificate /etc/ssl/certs/server.crt;
-       ssl_certificate_key /etc/ssl/private/server.key;
-   }
+    location / {
+        proxy_pass http://localhost:8001;
+    }
 
-   ...
+    listen [::]:8444 ssl ipv6only=on;
+    listen 8444 ssl;
+    ssl_certificate /etc/ssl/certs/server.crt;
+    ssl_certificate_key /etc/ssl/private/server.key;
+}
 
-   ```
+...
+
+```
+
+Note how we changed the HTTPS' default port forwarding and added two extra server blocks for other Kong's ports.
+
+Deployment
+----------
+
+### Installing HashiCorp Packer & Terraform
+
+We will go through deployment using Packer & Terraform command line tools which can be installed by following the
+instructions below:
+
+- [Installing Packer](https://qubitpi.github.io/hashicorp-packer/packer/install)
+- [Installing Terraform](https://qubitpi.github.io/hashicorp-terraform/terraform/install)
+
+### Getting HashiCorp Deployment Tool
+
+```console
+git clone https://github.com/QubitPi/hashicorp-aws.git
+```
+
+### Defining Packer Variables
+
+Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.hcl** under
+**[hashicorp-aws/hashicorp/kong/images](https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong/images)**
+directory with the following contents
+
+```hcl
+aws_image_region                 = "us-east-1"
+ami_name                         = "my-kong-ami"
+instance_type                    = "t2.small"
+aws_kong_ssl_cert_file_path      = "/path/to/ssl.crt"
+aws_kong_ssl_cert_key_file_path  = "/path/to/ssl.key"
+aws_kong_nginx_config_file_path  = "/path/to/nginx.conf"
+```
+
+<!-- markdown-link-check-disable -->
+
+- `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
+- `ami_name` is the published AMI name; it can be arbitrary
+- `instance_type` is the recommended [AWS EC2 instance type] running this image
+- `aws_kong_ssl_cert_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of
+  the [SSL certificate file](setup#ssl) for the Kong API Gateway domain
+- `aws_kong_ssl_cert_key_file_path`  is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of the [SSL certificate key file](setup#ssl) for the Kong API Gateway domain
+- `aws_kong_nginx_config_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images`
+  of the [Nginx config file](#nginx-config)
+
+<!-- markdown-link-check-enable -->
+
+### Defining Terraform Variables
+
+Create a [HashiCorp Terraform variable values file] named **aws-kong.auto.tfvars** under
+**[hashicorp-aws/hashicorp/kong/instances](https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong/instances)**
+directory with the following contents:
+
+```hcl
+aws_deploy_region   = "us-east-1"
+ami_name            = "my-kong-ami"
+instance_type       = "t2.small"
+ec2_instance_name   = "My Kong API Gateway"
+ec2_security_groups = ["My Kong API Gateway Security Group"]
+route_53_zone_id    = "MBS8YLKZML18VV2E8M8OK"
+gateway_domain      = "gateway.mycompany.com"
+```
+
+- `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+- `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in AWS_WS_PKRVARS_HCL**
+- `instance_type` is the chosen [AWS EC2 instance type] at runtime
+- `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
+- `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+- `gateway_domain` is the SSL-enabled domain that will serve [Kong manager UI]
+- `route_53_zone_id` is the AWS Route 53 hosted Zone ID that hosts the domain `gateway.mycompany.com`
+
+:::tip
+
+To find the zone ID in AWS Route 53, we can:
+
+1. Sign in to the AWS Management Console
+2. Open the Route 53 console at https://console.aws.amazon.com/route53/
+3. Select Hosted zones in the navigation pane
+4. Find the requested ID in the top level Hosted Zones summary in the Route 53 section
+
+:::
+
+### Building AMI Image
+
+```bash
+cd hashicorp-aws/hashicorp/kong/images
+packer init .
+packer validate -var "skip_create_ami=true" .
+packer build -var "skip_create_ami=false" .
+```
+
+### Deploying to EC2
+
+:::caution
+
+Depending on the [AMI](#defining-packer-variables) and [EC2](#defining-terraform-variables) configs, **please be aware
+AWS credit charges shall incur after the following commands execute**
+
+:::
+
+```bash
+cd ../instances
+terraform init
+terraform validate
+terraform apply -auto-approve
+```
+
+Deployment via Screwdriver CD
+-----------------------------
+
+hashicorp-aws also support deployment using [Screwdriver CD] with this [Kong API Gateway Release Definition Template]
+
+Deployment via HACP
+-------------------
+
+:::tip
+
+[//]: # (TODO)
+[//]: # (Please try our paid HACP platform to deploy a Kong instance)
+
+:::
 
 Troubleshooting
 ---------------
@@ -135,3 +283,17 @@ For example, if our instance has public IP `203.0.113.185` and private IP `10.1.
 like `ec2-203-0-113-185.eu-west-1.compute.amazonaws.com`, which will resolve to `203.0.113.185` if queried externally,
 or `10.1.234.12` if queried internally. This will enable our security groups to work as intended. See
 [this thread](https://stackoverflow.com/a/24242211) for more details.
+
+[AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
+[AWS EC2 instance type]: https://aws.amazon.com/ec2/instance-types/
+[AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
+[AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
+
+[HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+
+[Kong API Gateway]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/
+[Kong API Gateway Release Definition Template]: https://github.com/QubitPi/kong-api-gateway-release-definition-template
+[Kong manager UI]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/kong-manager/
+
+[Screwdriver CD]: https://qubitpi.github.io/screwdriver-cd-homepage/

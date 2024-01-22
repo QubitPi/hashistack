@@ -34,8 +34,8 @@ variable "ws_api_path" {
 
 variable "tls_skip_verify" {
   type = bool
-  description = "Whether or not to skip TLS certificate verification for the kong api when using https"
-  default = true
+  description = "Whether or not to skip TLS certificate verification for the kong api when using https. Default to 'false'"
+  default = false
 }
 
 variable "tls_verify" {
