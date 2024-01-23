@@ -30,7 +30,7 @@ resource "docker_image" "kong-image" {
 
 resource "docker_config" "kong-init" {
   name = "Init script"
-  data = base64encode(templatefile("${path.cwd}/aws-kong-tf-init.sh"))
+  data = base64encode(templatefile("${path.cwd}/aws-kong-tf-init.sh", {}))
 }
 
 resource "docker_container" "kong-container" {
