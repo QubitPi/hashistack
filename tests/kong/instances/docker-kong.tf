@@ -57,5 +57,5 @@ data "docker_logs" "kong-container-logs" {
 }
 
 output "logs" {
-  value = data.docker_logs.kong-container-logs
+  value = data.docker_logs.kong-container-logs.logs_list_string
 }
