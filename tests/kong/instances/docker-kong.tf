@@ -28,16 +28,21 @@ resource "docker_image" "kong-image" {
   keep_locally = false
 }
 
-resource "docker_config" "kong-init" {
-  name = "Init script"
-  data = base64encode(templatefile("${path.cwd}/aws-kong-tf-init.sh", {}))
-}
-
 resource "docker_container" "kong-container" {
   image = docker_image.kong-image.image_id
   name  = "Kong container"
+  volumes {
+    host_path = "${path.cwd}/aws-kong-tf-init.sh"
+    container_path = "/"
+  }
+  command = [
+    "/aws-kong-tf-init.sh"
+  ]
   ports {
-    internal = 8001
-    external = 8001
+    internal = 8002
+    external = 8002
+  }
+  healthcheck {
+    test = ["CMD", "curl", "-f", "localhost:8002"]
   }
 }
