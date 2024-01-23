@@ -23,8 +23,8 @@ cp ../../../hashicorp/kong/images/aws-kong.build.pkr.hcl .
 cp ../../../hashicorp/kong/images/aws-kong.variables.pkr.hcl .
 
 packer init .
-packer validate -var "skip_create_ami=true" .
-packer build -var "skip_create_ami=true" .
+packer validate -var "dockerhub_token=$DOCKERHUB_TOKEN" .
+packer build -var "dockerhub_token=$DOCKERHUB_TOKEN" .
 
 # cleanup
 rm -r ../scripts

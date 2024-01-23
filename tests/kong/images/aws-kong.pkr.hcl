@@ -18,21 +18,6 @@ variable "build_source" {
   default = "amazon-ebs.kong"
 }
 
-variable "aws_image_region" {
-  type =  string
-  sensitive = true
-}
-
-variable "ami_name" {
-  type =  string
-  sensitive = true
-}
-
-variable "skip_create_ami" {
-  type =  bool
-  sensitive = true
-}
-
 variable "image_home_dir" {
   type =  string
   sensitive = true
@@ -54,12 +39,21 @@ variable "aws_kong_nginx_config_file_path" {
   sensitive = true
 }
 
-variable "instance_type" {
-  type        = string
-  description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
+variable "dockerhub_token" {
+  type =  string
+  sensitive = true
+}
 
-  validation {
-    condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
-    error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
+packer {
+  required_plugins {
+    docker = {
+      version = ">= 0.0.7"
+      source = "github.com/hashicorp/docker"
+    }
   }
+}
+
+source "docker" "ubuntu" {
+  image  = "jack20191124/hashicorp-aws-kong-test:latest"
+  commit = true
 }

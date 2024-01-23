@@ -12,16 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-packer {
-  required_plugins {
-    docker = {
-      version = ">= 0.0.7"
-      source = "github.com/hashicorp/docker"
+build {
+  name = "push-test-docker-image"
+  sources = [
+    "source.${var.build_source}"
+  ]
+
+  post-processors {
+    post-processor "docker-tag" {
+      repository =  "jack20191124/hashicorp-aws-kong-tf-test"
+      tag = ["latest"]
+    }
+    post-processor "docker-push" {
+      login = true
+      login_username = "jack20191124"
+      login_password = "${var.dockerhub_token}"
     }
   }
-}
-
-source "docker" "ubuntu" {
-  image  = "jack20191124/hashicorp-aws-kong-test:latest"
-  commit = true
 }
