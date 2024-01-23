@@ -18,8 +18,8 @@ set -e
 
 export SCRIPT_DIR="${PWD}/../../../hashicorp/kong/scripts"
 
-
 cp $SCRIPT_DIR/aws-kong-tf-init.sh .
+chmod u+x aws-kong-tf-init.sh
 
 terraform init
 terraform validate

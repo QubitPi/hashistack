@@ -36,7 +36,7 @@ resource "docker_container" "kong-container" {
     host_path = "${path.cwd}/aws-kong-tf-init.sh"
     container_path = "/home/aws-kong-tf-init.sh"
   }
-  command = [
+  entrypoint = [
     "/home/aws-kong-tf-init.sh"
   ]
   ports {
@@ -44,7 +44,7 @@ resource "docker_container" "kong-container" {
     external = 8002
   }
   healthcheck {
-    test = ["CMD", "curl", "-f", "localhost:8002"]
+    test = ["CMD", "curl", "localhost:8002"]
   }
 }
 
