@@ -24,61 +24,6 @@ jobs:
   code-styles:
     uses: ./.github/workflows/yml-and-md-style-checks.yml
 
-  docker-image:
-    name: Publish docker images for "AMI Build Test"
-    needs: code-styles
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        docker: [
-          {dockerfile-path: tests/machine-learning, image-name: hashicorp-aws-machine-learning-test},
-          {dockerfile-path: tests/kong, image-name: hashicorp-aws-kong-test},
-          {dockerfile-path: tests/react, image-name: hashicorp-aws-react-test},
-          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test}
-        ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: jack20191124
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Push image to DockerHub
-        uses: docker/build-push-action@v3
-        with:
-          context: ${{ matrix.docker.dockerfile-path }}
-          push: true
-          tags: jack20191124/${{ matrix.docker.image-name }}:latest
-
-  tests:
-    name: AMI Build Test
-    needs: docker-image
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        test-directory: [
-          tests/machine-learning/images,
-          tests/kong/images,
-          tests/react/images,
-          tests/webservice/images
-        ]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Docker for AMI Tests
-        uses: docker-practice/actions-setup-docker@master
-      - run: |
-          cd ${{ matrix.test-directory }}
-          ./run-tests.sh
-        env:
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-
   list-auxiliary-scripts:
     name: Listing Scripts to Test for "Test auxiliary/scripts"
     needs: code-styles
@@ -109,9 +54,82 @@ jobs:
       - name: ${{ matrix.test-suite.desc }}
         run: docker run --rm -v $(pwd)/${{ matrix.script }}:/test/script.sh ubuntu /test/script.sh
 
+  docker-image:
+    name: Publish base images for "Image Build Test"
+    needs: code-styles
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        docker: [
+          {dockerfile-path: tests/machine-learning, image-name: hashicorp-aws-machine-learning-test},
+          {dockerfile-path: tests/kong, image-name: hashicorp-aws-kong-test},
+          {dockerfile-path: tests/react, image-name: hashicorp-aws-react-test},
+          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test}
+        ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: jack20191124
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Push image to DockerHub
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ matrix.docker.dockerfile-path }}
+          push: true
+          tags: jack20191124/${{ matrix.docker.image-name }}:latest
+
+  image-tests:
+    name: Image Build Test
+    needs: docker-image
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        test-directory: [
+          tests/machine-learning/images,
+          tests/kong/images,
+          tests/react/images,
+          tests/webservice/images
+        ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Docker for AMI Tests
+        uses: docker-practice/actions-setup-docker@master
+      - run: |
+          cd ${{ matrix.test-directory }}
+          ./run-tests.sh
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  instance-tests:
+    name: Terraform Instance Test
+    needs: image-tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        test-directory: [
+          tests/kong/instances
+        ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Docker for instance tests
+        uses: docker-practice/actions-setup-docker@master
+      - run: |
+          cd ${{ matrix.test-directory }}
+          ./run-tests.sh
+
   documentation-ci-cd:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
-    needs: [tests, test-scripts]
+    needs: [instance-tests, test-scripts]
     runs-on: ubuntu-latest
     defaults:
       run:
