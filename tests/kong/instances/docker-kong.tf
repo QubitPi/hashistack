@@ -30,7 +30,7 @@ resource "docker_image" "kong-image" {
 
 resource "docker_container" "kong-container" {
   image = docker_image.kong-image.image_id
-  name  = "Kong container"
+  name  = "kong"
   volumes {
     host_path = "${path.cwd}/aws-kong-tf-init.sh"
     container_path = "/"
