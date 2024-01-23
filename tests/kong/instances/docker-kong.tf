@@ -46,3 +46,16 @@ resource "docker_container" "kong-container" {
     test = ["CMD", "curl", "-f", "localhost:8002"]
   }
 }
+
+data "docker_logs" "kong-container-logs" {
+  name = docker_container.kong-container.name
+  details = true
+  follow = true
+  logs_list_string_enabled = true
+  show_stderr = true
+  show_stdout = true
+}
+
+output "logs" {
+  value = data.docker_logs.kong-container-logs
+}
