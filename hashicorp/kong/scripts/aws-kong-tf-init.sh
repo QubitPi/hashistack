@@ -16,5 +16,5 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cd /home/ubuntu/docker-kong/compose/
+cd /docker-kong/compose/
 sudo KONG_DATABASE=postgres docker compose --profile database up
