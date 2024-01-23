@@ -31,6 +31,7 @@ resource "docker_image" "kong-image" {
 resource "docker_container" "kong-container" {
   image = docker_image.kong-image.image_id
   name  = "kong"
+  attach = true
   volumes {
     host_path = "${path.cwd}/aws-kong-tf-init.sh"
     container_path = "/home/aws-kong-tf-init.sh"
