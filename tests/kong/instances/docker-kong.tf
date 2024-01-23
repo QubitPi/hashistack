@@ -33,10 +33,10 @@ resource "docker_container" "kong-container" {
   name  = "kong"
   volumes {
     host_path = "${path.cwd}/aws-kong-tf-init.sh"
-    container_path = "/"
+    container_path = "/home"
   }
   command = [
-    "/aws-kong-tf-init.sh"
+    "/home/aws-kong-tf-init.sh"
   ]
   ports {
     internal = 8002
