@@ -16,17 +16,14 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-mkdir ../scripts
-cp ../../../hashicorp/kong/scripts/* ../scripts
+export PACKER_IMAGE_DIR="${PWD}/../../../hashicorp/kong/images"
+export SCRIPT_DIR="${PWD}/../../../hashicorp/kong/scripts"
 
-cp ../../../hashicorp/kong/images/aws-kong.build.pkr.hcl .
-cp ../../../hashicorp/kong/images/aws-kong.variables.pkr.hcl .
+cp aws-kong.pkr.hcl $PACKER_IMAGE_DIR
+cp aws-kong.build.pkr.hcl $PACKER_IMAGE_DIR
+cp aws-kong.test.auto.pkrvars.hcl $PACKER_IMAGE_DIR
 
+cd $PACKER_IMAGE_DIR
 packer init .
 packer validate -var "dockerhub_token=$DOCKERHUB_TOKEN" .
-packer build -var "dockerhub_token=$DOCKERHUB_TOKEN" .
-
-# cleanup
-rm -r ../scripts
-rm aws-kong.build.pkr.hcl
-rm aws-kong.variables.pkr.hcl
+packer build -only "*.docker.ubuntu" -var "dockerhub_token=$DOCKERHUB_TOKEN" .
