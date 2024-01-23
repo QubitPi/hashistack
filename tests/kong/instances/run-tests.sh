@@ -16,6 +16,11 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+export SCRIPT_DIR="${PWD}/../../../hashicorp/kong/scripts"
+
+
+cp $SCRIPT_DIR/aws-kong-tf-init.sh .
+
 terraform init
 terraform validate
 terraform apply -auto-approve
