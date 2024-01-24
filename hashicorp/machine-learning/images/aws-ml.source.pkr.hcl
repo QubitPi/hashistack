@@ -12,12 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "build_source" {
-  type =  string
-  sensitive = false
-  default = "amazon-ebs.machine-learning"
-}
-
 variable "aws_image_region" {
   type =  string
   sensitive = true
@@ -26,12 +20,6 @@ variable "aws_image_region" {
 variable "ami_name" {
   type =  string
   sensitive = true
-}
-
-variable "image_home_dir" {
-  type =  string
-  sensitive = true
-  default = "/home/ubuntu"
 }
 
 variable "instance_type" {
@@ -47,15 +35,6 @@ variable "instance_type" {
 variable "skip_create_ami" {
   type =  bool
   sensitive = true
-}
-
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
-    }
-  }
 }
 
 source "amazon-ebs" "machine-learning" {

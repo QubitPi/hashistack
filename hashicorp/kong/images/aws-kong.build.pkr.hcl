@@ -12,6 +12,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+variable "build_source" {
+  type =  string
+  sensitive = false
+  default = "amazon-ebs.kong"
+}
+
+variable "image_home_dir" {
+  type =  string
+  sensitive = true
+  default = "/home/ubuntu"
+}
+
+variable "aws_kong_ssl_cert_file_path" {
+  type =  string
+  sensitive = true
+}
+
+variable "aws_kong_ssl_cert_key_file_path" {
+  type =  string
+  sensitive = true
+}
+
+variable "aws_kong_nginx_config_file_path" {
+  type =  string
+  sensitive = true
+}
+
 build {
   name = "install-kong"
   sources = [

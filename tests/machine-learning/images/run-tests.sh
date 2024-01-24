@@ -17,20 +17,24 @@ set -e
 # limitations under the License.
 
 export TEST_DIR="${PWD}"
-declare -a images=("mlflow-docker")
+declare -a images=("mlflow-docker") # "mlflow-docker" must be the last element; see 'if [[ "$image" == "mlflow-docker" ]]' block below
 
 for image in "${images[@]}"
 do
     export PACKER_IMAGE_DIR="${PWD}/../../../hashicorp/machine-learning/images/${image}"
     export SCRIPT_DIR="${PWD}/../../../hashicorp/machine-learning/scripts/${image}"
 
-    cp -r models aws-ml.base.pkr.hcl aws-ml.test.auto.pkrvars.hcl $PACKER_IMAGE_DIR
+    cp -r models \
+        ${image}/aws-ml.packer.pkr.hcl \
+        ${image}/aws-ml.source.pkr.hcl \
+        ${image}/aws-ml.auto.pkrvars.hcl \
+        $PACKER_IMAGE_DIR
 
     if [[ "$image" == "mlflow-docker" ]]
     then
-      # https://stackoverflow.com/a/50396798
-      # without "--ignore-installed" pip install fails
-      sed -i -e 's/pip install/pip install --ignore-installed/g' $SCRIPT_DIR/aws-ml-pkr-setup.sh
+        # https://stackoverflow.com/a/50396798
+        # without "--ignore-installed" pip install fails
+        sed -i -e 's/pip install/pip install --ignore-installed/g' $SCRIPT_DIR/aws-ml-pkr-setup.sh
     fi
 
     cd $PACKER_IMAGE_DIR
