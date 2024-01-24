@@ -12,5 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.idea/
-.DS_Store
+source "docker" "ubuntu" {
+  image  = "jack20191124/hashicorp-aws-kong-test:latest"
+  commit = true
+}

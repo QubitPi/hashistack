@@ -12,18 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "build_source" {
-  type =  string
-  sensitive = false
-  default = "docker.ubuntu"
-}
-
-variable "image_home_dir" {
-  type =  string
-  sensitive = true
-  default = "/"
-}
-
 packer {
   required_plugins {
     docker = {
@@ -31,16 +19,4 @@ packer {
       source = "github.com/hashicorp/docker"
     }
   }
-}
-
-source "docker" "ubuntu" {
-  image  = "jack20191124/hashicorp-aws-machine-learning-test:latest"
-  commit = true
-  volumes = {
-    "/var/run/docker.sock": "/var/run/docker.sock"
-  }
-  changes = [
-    "USER ubuntu",
-    "VOLUME /var/run/docker.sock /var/run/docker.sock",
-  ]
 }

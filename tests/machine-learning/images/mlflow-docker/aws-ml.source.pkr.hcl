@@ -12,5 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.idea/
-.DS_Store
+source "docker" "ubuntu" {
+  image  = "jack20191124/hashicorp-aws-machine-learning-test:latest"
+  commit = true
+  volumes = {
+    "/var/run/docker.sock": "/var/run/docker.sock"
+  }
+  changes = [
+    "USER ubuntu",
+    "VOLUME /var/run/docker.sock /var/run/docker.sock",
+  ]
+}

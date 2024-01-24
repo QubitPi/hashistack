@@ -16,17 +16,18 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-mkdir ../scripts
-cp ../../../hashicorp/kong/scripts/* ../scripts
+export TEST_DIR="${PWD}"
 
-cp ../../../hashicorp/kong/images/aws-kong.build.pkr.hcl .
-cp ../../../hashicorp/kong/images/aws-kong.variables.pkr.hcl .
+export PACKER_IMAGE_DIR="${PWD}/../../../hashicorp/kong/images"
+export SCRIPT_DIR="${PWD}/../../../hashicorp/kong/scripts"
 
+cp aws-kong.packer.pkr.hcl $PACKER_IMAGE_DIR
+cp aws-kong.source.pkr.hcl $PACKER_IMAGE_DIR
+cp aws-kong.auto.pkrvars.hcl $PACKER_IMAGE_DIR
+
+cd $PACKER_IMAGE_DIR
 packer init .
-packer validate -var "skip_create_ami=true" .
-packer build -var "skip_create_ami=true" .
+packer validate .
+packer build .
 
-# cleanup
-rm -r ../scripts
-rm aws-kong.build.pkr.hcl
-rm aws-kong.variables.pkr.hcl
+cd $TEST_DIR
