@@ -18,6 +18,13 @@ build {
     "source.${var.build_source}"
   ]
 
+  provisioner "shell" {
+    script = "../scripts/aws-kong-pkr-setup.sh"
+    environment_vars = [
+      "HOME_DIR=${var.image_home_dir}"
+    ]
+  }
+
   post-processors {
     post-processor "docker-tag" {
       repository =  "jack20191124/hashicorp-aws-kong-tf-test"

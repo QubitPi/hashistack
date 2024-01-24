@@ -24,21 +24,6 @@ variable "image_home_dir" {
   default = "/home/ubuntu"
 }
 
-variable "aws_kong_ssl_cert_file_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "aws_kong_ssl_cert_key_file_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "aws_kong_nginx_config_file_path" {
-  type =  string
-  sensitive = true
-}
-
 variable "dockerhub_token" {
   type =  string
   sensitive = true
