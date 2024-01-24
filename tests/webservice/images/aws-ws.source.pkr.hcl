@@ -1,7 +1,3 @@
-#!/bin/bash
-set -x
-set -e
-
 # Copyright Jiaqi Liu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,20 +12,7 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export TEST_DIR="${PWD}"
-declare -a images=("basic" "ssl")
-
-for image in "${images[@]}"
-do
-    export PACKER_IMAGE_DIR="${PWD}/../../../hashicorp/webservice/images/${image}"
-    export SCRIPT_DIR="${PWD}/../../../hashicorp/webservice/scripts"
-
-    cp -r * $PACKER_IMAGE_DIR
-
-    cd $PACKER_IMAGE_DIR
-    packer init .
-    packer validate .
-    packer build .
-
-    cd $TEST_DIR
-done
+source "docker" "ubuntu" {
+  image  = "jack20191124/hashicorp-aws-webservice-test:latest"
+  commit = true
+}

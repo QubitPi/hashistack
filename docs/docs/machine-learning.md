@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: MLflow Model through REST API
+title: Machine Learning Model in REST API
 ---
 
 [//]: # (Copyright Jiaqi Liu)
