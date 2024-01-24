@@ -12,34 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "build_source" {
-  type =  string
-  sensitive = false
-  default = "amazon-ebs.ws"
-}
-
 variable "aws_image_region" {
   type =  string
   sensitive = true
 }
 
 variable "ami_name" {
-  type =  string
-  sensitive = true
-}
-
-variable "skip_create_ami" {
-  type =  bool
-  sensitive = true
-}
-
-variable "image_home_dir" {
-  type =  string
-  sensitive = true
-  default = "/home/ubuntu"
-}
-
-variable "ws_war_path" {
   type =  string
   sensitive = true
 }
@@ -52,4 +30,35 @@ variable "instance_type" {
     condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
     error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
   }
+}
+
+variable "skip_create_ami" {
+  type =  bool
+  sensitive = true
+}
+
+source "amazon-ebs" "ws" {
+  ami_name = "${var.ami_name}"
+  force_deregister = "true"
+  force_delete_snapshot = "true"
+  skip_create_ami = "${var.skip_create_ami}"
+
+  instance_type = "${var.instance_type}"
+  launch_block_device_mappings {
+    device_name = "/dev/sda1"
+    volume_size = 8
+    volume_type = "gp2"
+    delete_on_termination = true
+  }
+  region = "${var.aws_image_region}"
+  source_ami_filter {
+    filters = {
+      name = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"
+      root-device-type = "ebs"
+      virtualization-type = "hvm"
+    }
+    most_recent = true
+    owners = ["099720109477"]
+  }
+  ssh_username = "ubuntu"
 }
