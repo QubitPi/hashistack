@@ -134,13 +134,24 @@ Note how we changed the HTTPS' default port forwarding and added two extra serve
 Deployment
 ----------
 
+### AWS Credentials
+
+The following environment variables need to be defined:
+
+<!-- markdown-link-check-disable -->
+
+- [AWS_ACCESS_KEY_ID](setup#aws)
+- [AWS_SECRET_ACCESS_KEY](setup#aws)
+
+<!-- markdown-link-check-enable -->
+
 ### Installing HashiCorp Packer & Terraform
 
 We will go through deployment using Packer & Terraform command line tools which can be installed by following the
 instructions below:
 
-- [Installing Packer](https://qubitpi.github.io/hashicorp-packer/packer/install)
-- [Installing Terraform](https://qubitpi.github.io/hashicorp-terraform/terraform/install)
+- [Installing Packer][HashiCorp Packer - Install]
+- [Installing Terraform][HashiCorp Terraform - Install]
 
 ### Getting HashiCorp Deployment Tool
 
@@ -151,10 +162,9 @@ git clone https://github.com/QubitPi/hashicorp-aws.git
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.hcl** under
-**[hashicorp-aws/hashicorp/kong/images](https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong/images)**
-directory with the following contents
+**[hashicorp-aws/hashicorp/kong/images]** directory with the following contents:
 
-```hcl
+```hcl title=hashicorp-aws/hashicorp/kong/images/aws-kong.auto.pkrvars.hcl
 aws_image_region                 = "us-east-1"
 ami_name                         = "my-kong-ami"
 instance_type                    = "t2.small"
@@ -179,10 +189,9 @@ aws_kong_nginx_config_file_path  = "/path/to/nginx.conf"
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-kong.auto.tfvars** under
-**[hashicorp-aws/hashicorp/kong/instances](https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong/instances)**
-directory with the following contents:
+**[hashicorp-aws/hashicorp/kong/instances]** directory with the following contents:
 
-```hcl
+```hcl title=hashicorp-aws/hashicorp/kong/instances/aws-kong.auto.tfvars
 aws_deploy_region   = "us-east-1"
 ami_name            = "my-kong-ami"
 instance_type       = "t2.small"
@@ -193,7 +202,8 @@ gateway_domain      = "gateway.mycompany.com"
 ```
 
 - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
-- `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in AWS_WS_PKRVARS_HCL**
+- `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
+  [Packer variable file](#defining-packer-variables)**
 - `instance_type` is the chosen [AWS EC2 instance type] at runtime
 - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
 - `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
@@ -289,7 +299,11 @@ or `10.1.234.12` if queried internally. This will enable our security groups to 
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
+[hashicorp-aws/hashicorp/kong/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong/images
+[hashicorp-aws/hashicorp/kong/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong/instances
+[HashiCorp Packer - Install]: https://qubitpi.github.io/hashicorp-packer/packer/install
 [HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform - Install]: https://qubitpi.github.io/hashicorp-terraform/terraform/install
 [HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [Kong API Gateway]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/
