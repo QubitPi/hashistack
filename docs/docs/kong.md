@@ -40,7 +40,7 @@ Setup
 <!-- markdown-link-check-disable -->
 First, please follow the [general setup guide](setup#setup) with some Nginx config modifications
 [discussed in the next section](#nginx-config)
-<!-- markdown-link-check-enable -->_
+<!-- markdown-link-check-enable -->
 
 ### Nginx Config
 
