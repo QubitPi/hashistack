@@ -1,5 +1,5 @@
 build_source                     = "docker.ubuntu"
 image_home_dir                   = "/"
-aws_kong_ssl_cert_file_path        = "../../fullchain.pem.test"
-aws_kong_ssl_cert_key_file_path    = "../../privkey.pem.test"
-aws_kong_nginx_config_file_path    = "../../nginx.conf.test"
+aws_kong_ssl_cert_file_path        = "../../tests/fullchain.pem.test"
+aws_kong_ssl_cert_key_file_path    = "../../tests/privkey.pem.test"
+aws_kong_nginx_config_file_path    = "../../tests/nginx.conf.test"
