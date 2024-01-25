@@ -20,8 +20,11 @@ server vis SSH. _It's completely immutable_
 
 :::tip
 
-[//]: # (TODO)
-[//]: # (Please try our paid HACP platform to deploy a ELK and send app logs to it for debugging purposes)
+It is very important to connect our deployed infrastructure to an external logging & auditing service like ELK, because
+once being deployed as an immutable infrastructure, the EC2 is completely sealed in a sense that no one can SSH into it.
+This means logs or other metrics are not available unless they are send to an external logging & auditing service such as
+ELK. Our HACP offers out-of-the box deployment of ELK and allow the deployment in EC2 to automatically connect to it to
+send logs and metrics, which gives us a lot better experience on working with webservice logging & auditing.
 
 :::
 

@@ -20,6 +20,9 @@ title: Jersey-Jetty Based Webservice
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+Deploying Jersey-Jetty Based Webservice
+=======================================
+
 :::tip
 
 - Yes, we DO NOT support Spring, never ever
@@ -36,74 +39,260 @@ The first mode is very suitable for a mini-project such as a frontend backed by 
 is designed for
 [microservices architecture where authentication is deletgated to an API gateway](https://dev.to/behalf/authentication-authorization-in-microservices-architecture-part-i-2cn0#global-authentication-api-gateway-and-authorization-per-service)
 
-Setup
------
+SSL
+---
 
-The following credentials and config files need to be ready:
+<!-- markdown-link-check-disable -->
 
-### HashiCorp Config Files
+Please follow the [general setup guide](setup#setup) if we are deploying in SSL/HTTPS mode. Otherwise this section can
+be skipped
 
-- A [HashiCorp Packer variable file] with the following variable values (We will refer to the contents of this file as
-  **AWS_WS_PKRVARS_HCL** from now on)
+<!-- markdown-link-check-enable -->
 
-  <Tabs>
-    <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
-      ```hcl
-      aws_image_region                 = "my-aws-region"
-      ami_name                         = "my-webservice"
-      instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-      ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
-      ```
-    </TabItem>
-    <TabItem value="ssl" label="SSL/HTTPS mode">
-      ```hcl
-      aws_image_region                 = "my-aws-region"
-      ami_name                         = "my-webservice"
-      instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-      ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
-      aws_ws_ssl_cert_file_path        = "server.crt"
-      aws_ws_ssl_cert_key_file_path    = "server.key"
-      aws_ws_nginx_config_file_path    = "nginx.conf"
-      aws_ws_filebeat_config_file_path = "filebeat.yml"
-      ```
-    </TabItem>
-  </Tabs>
+General Deployments
+-------------------
 
-- A [HashiCorp Terraform variable file] with the following variable values (We will refer to the contents of this file as
-  **AWS_WS_TFVARS** from now on)
+### AWS Credentials
 
-  <Tabs>
-    <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
-      ```hcl
-      aws_deploy_region   = "my-aws-region"
-      ami_name            = "my-webservice"
-      instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-      ec2_instance_name   = "My Webservice"
-      ec2_security_groups = ["My Webservice"]
-      ws_domain           = "mywebservice.mycompany.com"
-      ```
-    </TabItem>
-    <TabItem value="ssl" label="SSL/HTTPS mode">
-      ```hcl
-      aws_deploy_region   = "my-aws-region"
-      ami_name            = "my-webservice"
-      instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-      ec2_instance_name   = "My Webservice"
-      ec2_security_groups = ["My Webservice"]
-      route_53_zone_id    = "9DQXLTNSN7ZX9P8V2KZII"
-      ws_domain           = "mywebservice.mycompany.com"
-      sentry_dsn          = "can be empty if sentry.io is not needed"
-      ```
-    </TabItem>
-  </Tabs>
+The following environment variables need to be defined:
 
-  :::warning
+<!-- markdown-link-check-disable -->
 
-  Although the `ws_domain` is a public identity, [hashicorp-aws] will bind a **private IP** address to this domain,
-  because webservice tend to be deployed in a virtual private network and AWS also requires
-  [EC2 instances of different Security Groups to communicate through private IP](https://serverfault.com/a/967483)
+- [AWS_ACCESS_KEY_ID](setup#aws)
+- [AWS_SECRET_ACCESS_KEY](setup#aws)
 
-  :::
+<!-- markdown-link-check-enable -->
+
+### Installing HashiCorp Packer & Terraform
+
+We will go through deployment using Packer & Terraform command line tools which can be installed by following the
+instructions below:
+
+- [Installing Packer][HashiCorp Packer - Install]
+- [Installing Terraform][HashiCorp Terraform - Install]
+
+### Getting HashiCorp Deployment Tool
+
+```console
+git clone https://github.com/QubitPi/hashicorp-aws.git
+```
+
+### Defining Packer Variables
+
+Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl** under one of the subdirectory of
+**[hashicorp-aws/hashicorp/webservice/images]**, depending on the deployment mode, with the following contents:
+
+<Tabs>
+  <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
+    ```hcl title=hashicorp-aws/hashicorp/webservice/images/basic/aws-kong.auto.pkrvars.hcl
+    aws_image_region                 = "my-aws-region"
+    ami_name                         = "my-webservice"
+    instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+    ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
+    aws_ws_filebeat_config_file_path = "filebeat.yml"
+    ```
+
+    - `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
+    - `ami_name` is the published AMI name; it can be arbitrary
+    - `instance_type` is the recommended [AWS EC2 instance type] running this image
+    - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
+      the webservice WAR file we are going to deploy
+    - `aws_ws_filebeat_config_file_path` is the absolute path or the path relative to
+      `hashicorp-aws/hashicorp/webservice/images/basic` of the filebeat config file if the webservice is sending logs
+      to ELK
+
+      :::tip
+
+      It is very important to connect webservice to an external logging & auditing service like ELK, because once
+      webservice is deployed as an immutable infrastructure, it is completely sealed in a sense that no one can SSH into
+      it. This means logs or other metrics are not available unless they are send to an external logging & auditing
+      service such as ELK. Our HACP offers out-of-the box deployment of ELK and allow the webservice to automatically
+      connect to it to send logs and metrics, which gives us a lot better experience on working with webservice logging
+      & auditing.
+
+      :::
+
+  </TabItem>
+  <TabItem value="ssl" label="SSL/HTTPS">
+    ```hcl title=hashicorp-aws/hashicorp/webservice/images/ssl/aws-kong.auto.pkrvars.hcl
+    aws_image_region                 = "my-aws-region"
+    ami_name                         = "my-webservice"
+    instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+    ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
+    aws_ws_filebeat_config_file_path = "filebeat.yml"
+    aws_ws_ssl_cert_file_path        = "server.crt"
+    aws_ws_ssl_cert_key_file_path    = "server.key"
+    aws_ws_nginx_config_file_path    = "nginx.conf"
+    ```
+
+    <!-- markdown-link-check-disable -->
+
+    - `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
+    - `ami_name` is the published AMI name; it can be arbitrary
+    - `instance_type` is the recommended [AWS EC2 instance type] running this image
+    - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
+      the webservice WAR file we are going to deploy
+    - `aws_ws_filebeat_config_file_path` is the absolute path or the path relative to
+      `hashicorp-aws/hashicorp/webservice/images/ssl` of the filebeat config file if the webservice is sending logs
+      to ELK
+
+      :::tip
+
+      It is very important to connect webservice to an external logging & auditing service like ELK, because once
+      webservice is deployed as an immutable infrastructure, it is completely sealed in a sense that no one can SSH into
+      it. This means logs or other metrics are not available unless they are send to an external logging & auditing
+      service such as ELK. Our HACP offers out-of-the box deployment of ELK and allow the webservice to automatically
+      connect to it to send logs and metrics, which gives us a lot better experience on working with webservice logging
+      & auditing.
+
+      :::
+
+    - `aws_kong_ssl_cert_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of
+      the [SSL certificate file](setup#ssl) for the Kong API Gateway domain
+    - `aws_kong_ssl_cert_key_file_path`  is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of the [SSL certificate key file](setup#ssl) for the Kong API Gateway domain
+    - `aws_kong_nginx_config_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images`
+      of the [Nginx config file](#nginx-config)
+
+    <!-- markdown-link-check-enable -->
+
+  </TabItem>
+</Tabs>
+
+### Defining Terraform Variables
+
+Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars** under
+**[hashicorp-aws/hashicorp/webservice/instances]** directory with the following contents:
+
+<Tabs>
+  <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
+    ```hcl title=hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
+    aws_deploy_region   = "my-aws-region"
+    ami_name            = "my-webservice"
+    instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+    ec2_instance_name   = "My Webservice"
+    ec2_security_groups = ["My Webservice"]
+    sentry_dsn          = "https://81usqk92p0qgormxkimcovvqzn27klltvnft1g4ex9cozc7w5p.ingest.sentry.io/5904518766461791"
+    ```
+
+    - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+    - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
+      [Packer variable file](#defining-packer-variables)**
+    - `instance_type` is the chosen [AWS EC2 instance type] at runtime
+    - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
+    - `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+    - `sentry_dsn` is the standard [Sentry Data Source Name (Sentry DSN)]. Please assign it an empty string if not
+      needed
+
+  </TabItem>
+  <TabItem value="ssl" label="SSL/HTTPS">
+    ```hcl title=hashicorp-aws/hashicorp/webservice/instances/ssl/aws-ws.auto.tfvars
+    aws_deploy_region   = "my-aws-region"
+    ami_name            = "my-webservice"
+    instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+    ec2_instance_name   = "My Webservice"
+    ec2_security_groups = ["My Webservice"]
+    sentry_dsn          = "https://81usqk92p0qgormxkimcovvqzn27klltvnft1g4ex9cozc7w5p.ingest.sentry.io/5904518766461791"
+    route_53_zone_id    = "9DQXLTNSN7ZX9P8V2KZII"
+    ws_domain           = "mywebservice.mycompany.com"
+    ```
+
+    - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+    - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
+      [Packer variable file](#defining-packer-variables)**
+    - `instance_type` is the chosen [AWS EC2 instance type] at runtime
+    - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
+    - `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+    - `sentry_dsn` is the standard [Sentry Data Source Name (Sentry DSN)]. Please assign it an empty string if not
+      needed
+    - `ws_domain` is the SSL-enabled domain that will serve webservice API URL
+
+      :::warning
+
+      Although the `ws_domain` is a public identity, hashicorp-aws will bind a **private IP** address to this domain,
+      because webservice tend to be deployed in a virtual private network and AWS also requires
+      [EC2 instances of different Security Groups to communicate through private IP](https://serverfault.com/a/967483)
+
+      :::
+
+    - `route_53_zone_id` is the AWS Route 53 hosted Zone ID that hosts the domain `mywebservice.mycompany.com`
+
+      :::tip
+
+      To find the zone ID in AWS Route 53, we can:
+
+      1. Sign in to the AWS Management Console
+      2. Open the Route 53 console at https://console.aws.amazon.com/route53/
+      3. Select Hosted zones in the navigation pane
+      4. Find the requested ID in the top level Hosted Zones summary in the Route 53 section
+
+      :::
+
+  </TabItem>
+</Tabs>
+
+### Building AMI Image
+
+<Tabs>
+  <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
+    ```console
+    cd hashicorp-aws/hashicorp/kong/images/basic
+    packer init .
+    packer validate -var "skip_create_ami=true" .
+    packer build -var "skip_create_ami=false" .
+    ```
+  </TabItem>
+  <TabItem value="ssl" label="SSL/HTTPS">
+    ```console
+    cd hashicorp-aws/hashicorp/kong/images/ssl
+    packer init .
+    packer validate -var "skip_create_ami=true" .
+    packer build -var "skip_create_ami=false" .
+    ```
+  </TabItem>
+</Tabs>
+
+### Deploying to EC2
+
+:::caution
+
+Depending on the [AMI](#defining-packer-variables) and [EC2](#defining-terraform-variables) configs, **please be aware
+AWS credit charges shall incur after the following commands execute**
+
+:::
+
+<Tabs>
+  <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
+    ```console
+    cd ../instances/basic
+    terraform init
+    terraform validate
+    terraform apply -auto-approve
+    ```
+  </TabItem>
+  <TabItem value="ssl" label="SSL/HTTPS">
+    ```console
+    cd ../instances/ssl
+    terraform init
+    terraform validate
+    terraform apply -auto-approve
+    ```
+  </TabItem>
+</Tabs>
+
+Deployment via Screwdriver CD
+-----------------------------
+
+hashicorp-aws also support deployment using [Screwdriver CD] with this [Jersey Webservice release definition templates]
+
+Deployment via HACP
+-------------------
+
+:::tip
+
+Please try our HACP platform to deploy a Webservice instance. It gives us one-click experience that helps us stand up
+a webservice in a minute.
+
+:::
 
 Deployment via GitHub Actions
 -----------------------------
@@ -204,9 +393,6 @@ jobs:
           model-package: ${{ secrets.MODEL_PACKAGE_NAME }}
 ```
 
-Deployment via Screwdriver CD
------------------------------
-
 Troubleshooting
 ---------------
 
@@ -215,7 +401,7 @@ Troubleshooting
 #### The Webservice was Running Properly Right After Deployment, but NOT After a While with "503 Service Unavailable"
 
 This could be the resource starvation on EC2 instance. Please try using a bigger EC2 sizes. For example, bumping
-_t2.micro_ to _t2.medium_. [hashicorp-aws] currently supports **t2.x** sizes, i.e. one of the following sizes can be
+_t2.micro_ to _t2.medium_. hashicorp-aws currently supports **t2.x** sizes, i.e. one of the following sizes can be
 selected:
 
 - t2.micro
@@ -232,11 +418,14 @@ example:
 instance_type       = "t2.medium"
 ```
 
-[hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+[hashicorp-aws/hashicorp/webservice/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/webservice/images
+[HashiCorp Packer - Install]: https://qubitpi.github.io/hashicorp-packer/packer/install
 [HashiCorp Packer delete_on_termination]: https://qubitpi.github.io/hashicorp-packer/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#:~:text=Optional%3A-,delete_on_termination,-(bool)%20%2D%20Indicates%20whether
-[HashiCorp Packer variable file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
-[HashiCorp Terraform variable file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+[HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform - Install]: https://qubitpi.github.io/hashicorp-terraform/terraform/install
+[HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [jersey-webservice-template]: https://qubitpi.github.io/jersey-webservice-template/
+[Jersey Webservice release definition templates]: https://github.com/QubitPi/jersey-webservice-release-definition-templates
 
-[OAuthFilter]: https://qubitpi.github.io/jersey-webservice-template/apidocs/com/qubitpi/ws/jersey/template/web/filters/OAuthFilter.html
+[Sentry Data Source Name (Sentry DSN)]: https://qubitpi.github.io/sentry-docs/product/sentry-basics/concepts/dsn-explainer/

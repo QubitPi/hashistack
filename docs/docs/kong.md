@@ -17,8 +17,8 @@ title: Kong API Gateway
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Kong API Gateway
-================
+Deploying Kong API Gateway
+==========================
 
 hashicorp-aws deploys [Kong API Gateway] in the following way:
 
@@ -38,8 +38,10 @@ Setup
 ### SSL
 
 <!-- markdown-link-check-disable -->
+
 First, please follow the [general setup guide](setup#setup) with some Nginx config modifications
 [discussed in the next section](#nginx-config)
+
 <!-- markdown-link-check-enable -->
 
 ### Nginx Config
@@ -131,8 +133,8 @@ server {
 
 Note how we changed the HTTPS' default port forwarding and added two extra server blocks for other Kong's ports.
 
-Deployment
-----------
+General Deployment
+------------------
 
 ### AWS Credentials
 
@@ -208,18 +210,25 @@ gateway_domain      = "gateway.mycompany.com"
 - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
 - `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
 - `gateway_domain` is the SSL-enabled domain that will serve [Kong manager UI]
+
+  :::warning
+
+  Although the `gateway_domain` is a public identity, hashicorp-aws will bind a **private IP** address to this domain
+
+  :::
+
 - `route_53_zone_id` is the AWS Route 53 hosted Zone ID that hosts the domain `gateway.mycompany.com`
 
-:::tip
+  :::tip
 
-To find the zone ID in AWS Route 53, we can:
+  To find the zone ID in AWS Route 53, we can:
 
-1. Sign in to the AWS Management Console
-2. Open the Route 53 console at https://console.aws.amazon.com/route53/
-3. Select Hosted zones in the navigation pane
-4. Find the requested ID in the top level Hosted Zones summary in the Route 53 section
+  1. Sign in to the AWS Management Console
+  2. Open the Route 53 console at https://console.aws.amazon.com/route53/
+  3. Select Hosted zones in the navigation pane
+  4. Find the requested ID in the top level Hosted Zones summary in the Route 53 section
 
-:::
+  :::
 
 ### Building AMI Image
 
@@ -256,8 +265,8 @@ Deployment via HACP
 
 :::tip
 
-[//]: # (TODO)
-[//]: # (Please try our paid HACP platform to deploy a Kong instance)
+Please try our HACP platform to deploy a Kong instance. It gives us one-click experience that helps us stand up an API
+gateway in a minute.
 
 :::
 

@@ -23,7 +23,7 @@ Deploying Machine Learning Models to Production as REST API
 MLflow
 ------
 
-### Deployment
+### General Deployment
 
 ### Generating Machine Learning Models
 
@@ -153,8 +153,8 @@ Deployment via HACP
 
 :::tip
 
-[//]: # (TODO)
-[//]: # (Please try our paid HACP platform to deploy a ML instance)
+Please try our HACP platform to deploy a Machine Learning API instance. It gives us one-click experience that helps us
+stand up the API in a minute.
 
 :::
 

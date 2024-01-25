@@ -29,6 +29,11 @@ variable "ws_war_path" {
   sensitive = true
 }
 
+variable "aws_ws_filebeat_config_file_path" {
+  type =  string
+  sensitive = true
+}
+
 build {
   name = "install-ws"
   sources = [

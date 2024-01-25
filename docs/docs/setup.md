@@ -276,8 +276,15 @@ sudo cat /var/log/nginx/error.log
 Deployment via Screwdriver CD
 -----------------------------
 
-[//]: # (TODO)
-[//]: # (Please try our paid HACP platform to deploy a sd!)
+[//]: # (:::tip)
+
+[//]: # ()
+[//]: # (Please try our HACP platform to deploy a Screwdriver CD instance. It gives us one-click experience that helps us stand )
+
+[//]: # (up an CI/CD infrastructure in a minute.)
+
+[//]: # ()
+[//]: # (:::)
 
 Deployment via Screwdriver CD Running Locally
 ---------------------------------------------
