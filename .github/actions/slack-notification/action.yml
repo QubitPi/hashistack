@@ -39,7 +39,7 @@ runs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "✅ Build result of GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ job.status }}\nFiles changed: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  "text": "Build result of GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ job.status }} ✅\nFiles changed: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                 }
               }
             ]
@@ -59,7 +59,7 @@ runs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "❌ Build result of GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ job.status }}\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\nFiles changed: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  "text": "Build result of GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ job.status }} ❌\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\nFiles changed: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                 }
               }
             ]
