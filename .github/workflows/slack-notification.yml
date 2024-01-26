@@ -48,7 +48,7 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook-url }}
+          SLACK_WEBHOOK_URL: ${{ secrets.slack-webhook-url }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: Send GitHub Action result to a specified Slack if build failed
         if: failure()
@@ -68,5 +68,5 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook-url }}
+          SLACK_WEBHOOK_URL: ${{ secrets.slack-webhook-url }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
