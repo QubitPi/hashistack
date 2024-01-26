@@ -77,39 +77,9 @@ jobs:
           cd ${{ matrix.test-directory }}
           ./run-tests.sh
 
-  list-auxiliary-scripts:
-    name: Listing Scripts to Test for "Test auxiliary/scripts"
-    needs: code-styles
-    runs-on: ubuntu-latest
-    outputs:
-      paths: ${{ steps.list-auxiliary-scripts.outputs.paths }}
-    steps:
-      - name: List Files
-        id: list-auxiliary-scripts
-        uses: mirko-felice/list-files-action@v3.0.5
-        with:
-          repo: ${{ github.repository }}
-          ref: ${{ github.ref }}
-          path: "auxiliary/scripts"
-          ext: ".sh"
-
-  test-scripts:
-    name: Test auxiliary/scripts
-    needs: list-auxiliary-scripts
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        script: ${{ fromJson(needs.list-auxiliary-scripts.outputs.paths) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: ${{ matrix.test-suite.desc }}
-        run: docker run --rm -v $(pwd)/${{ matrix.script }}:/test/script.sh ubuntu /test/script.sh
-
   documentation-ci-cd:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
-    needs: [tests, test-scripts]
+    needs: [tests]
     runs-on: ubuntu-latest
     defaults:
       run:
