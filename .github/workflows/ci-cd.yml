@@ -80,6 +80,9 @@ jobs:
   documentation-ci-cd:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
     needs: [tests]
+    outputs:
+      outcome: ${{ job.status }}
+    continue-on-error: true
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -101,3 +104,13 @@ jobs:
           publish_dir: ./docs/build
           user_name: QubitPi
           user_email: jack20220723@gmail.com
+
+  slack-notification:
+    name: Send Slack Notification
+    if: ${{ always() }}
+    needs: documentation-ci-cd
+    uses: QubitPi/hashicorp-aws/.github/workflows/slack-notification.yml@master
+    with:
+      job-status: ${{ needs.documentation-ci-cd.outputs.outcome }}
+    secrets:
+      slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
