@@ -101,4 +101,3 @@ jobs:
           publish_dir: ./docs/build
           user_name: QubitPi
           user_email: jack20220723@gmail.com
-
