@@ -19,9 +19,12 @@ tags: [CI/CD, Slack, Team Efficiency]
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-Sending data into Slack using [this GitHub Action](https://github.com/marketplace/actions/slack-send).
+Sending data into Slack using [slack-send](https://github.com/marketplace/actions/slack-send).
 
 <!--truncate-->
+
+slack-send
+----------
 
 This post discusses practical guide for sending data to Slack via a **Slack Incoming Webhook URL**. The reason we prefer
 webhook approach is to preserve the privacy of team member. The chatbot invite approach potentially
@@ -54,3 +57,23 @@ allow all Slack member to touch a private app of an individual
        secrets:
          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
    ```
+
+slack-send v.s. Github Slack Integration
+----------------------------------------
+
+[Github Slack Integration] offers "on-click" experience with almost no configurations like the one above. In addition,
+it sends notification on GitHub issues open/close, pull requests, GitHub Action workflow _status_, etc. The easier setup
+and richer notifications makes [Github Slack Integration] a better choice for team-collaboration managing multiple
+repositories with a common communication standards
+
+slack-send, on the other hands, supports sending any information about GitHub Action workflow, not just _status_. It
+also supports custom messages; we can inject emoji or custom pictures in the notification messges, which is a big plus
+for those who love personal customizations and focuses on only success-or-fail of each GitHub action run.
+
+:::info
+
+With slack-send we also do not need to run `/invite @GitHub` so our channel is completely private.
+
+:::
+
+[Github Slack Integration]: https://github.com/integrations/slack
