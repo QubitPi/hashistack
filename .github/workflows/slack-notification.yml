@@ -16,6 +16,13 @@ name: Slack Notification
 
 "on":
   workflow_call:
+    inputs:
+      job-status:
+        description: |
+          The current status of the job, which determines the "entire job status" in the Slack message, from caller workflow.
+          Possible values are "success", "failure", ""(skipped), or "cancelled".
+        type: string
+        required: true
     secrets:
       slack-webhook-url:
         description: |
@@ -31,18 +38,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send GitHub Action result to a specified Slack if build succeeded
-        if: success()
+        if: ${{ inputs.job-status == 'success' }}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
             {
-              "text": "GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ job.status }} ✅",
+              "text": "GitHub Action ${{ github.event.repository.name }} ${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ inputs.job-status }} ✅",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Build result of GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ job.status }} ✅\nFiles changed: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": "Build result of GitHub Action ${{ github.event.repository.name }} ${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ inputs.job-status }} ✅\nFiles changed: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                   }
                 }
               ]
@@ -51,18 +58,18 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.slack-webhook-url }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: Send GitHub Action result to a specified Slack if build failed
-        if: failure()
+        if: ${{ inputs.job-status != 'success' }}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
             {
-              "text": "GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ job.status }} ❌",
+              "text": "GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ inputs.job-status || 'failure' }} ❌",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Build result of GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ job.status }} ❌\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\nFiles changed: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": "Build result of GitHub Action ${{ github.event.repository.name }}/${{ github.event.pull_request.title || github.event.head_commit.message }}: ${{ inputs.job-status || 'failure' }} ❌\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\nFiles changed: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                   }
                 }
               ]
