@@ -58,6 +58,18 @@ allow all Slack member to touch a private app of an individual
          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
    ```
 
+   :::info
+
+   Note the key block in `the-last-job`:
+
+   ```yaml
+   outputs:
+     outcome: ${{ job.status }}
+   continue-on-error: true
+   ```
+
+   :::
+
 slack-send v.s. Github Slack Integration
 ----------------------------------------
 
