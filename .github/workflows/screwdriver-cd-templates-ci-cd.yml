@@ -16,6 +16,14 @@ name: CI/CD
 
 "on":
   workflow_call:
+    secrets:
+      slack-webhook-url:
+        description: |
+          A standard Slack Webhook URL that connects to a Slack channel receive validation results.
+          This is the same thing as "SLACK_WEBHOOK_URL"; please see
+          https://github.com/marketplace/actions/slack-send#technique-3-slack-incoming-webhook
+          for more info
+        required: true
 
 jobs:
   list-templates:
@@ -36,6 +44,9 @@ jobs:
   validate:
     name: Validating Template
     needs: list-templates
+    outputs:
+      outcome: ${{ job.status }}
+    continue-on-error: true
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -64,3 +75,13 @@ jobs:
             if (error) {
               require('@actions/core').setFailed(error);
             }
+
+  slack-notification:
+    name: Send Slack Notification
+    if: ${{ always() }}
+    needs: validate
+    uses: QubitPi/hashicorp-aws/.github/workflows/slack-notification.yml@master
+    with:
+      job-status: ${{ needs.validate.outputs.outcome }}
+    secrets:
+      slack-webhook-url: ${{ secrets.slack-webhook-url }}
