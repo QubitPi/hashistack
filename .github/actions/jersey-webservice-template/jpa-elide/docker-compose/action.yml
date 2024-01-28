@@ -26,13 +26,6 @@ inputs:
   model-package:
     description: 'The Java package name containing all JPA-Elide webservice data models, e.g. "com.myorg.webservice.astraios.models"'
     required: true
-  oauth-enabled:
-    description: 'Whether or not to enable OAuthFilter container request filter. Default is "false"'
-    required: false
-    default: "false"
-  jwks_url:
-    description: '(Required if oauth-enabled is set to true) A standard JWKS URL (https://datatracker.ietf.org/doc/html/rfc7517)'
-    required: false
 
 runs:
   using: "composite"
@@ -48,6 +41,6 @@ runs:
     - name: Start Docker Compose
       run: |
         cd jpa-elide-webservice
-        MODEL_PACKAGE_NAME=${{ inputs.model-package }} OAUTH_ENABLED=${{ inputs.oauth-enabled }} JWKS_URL=${{ inputs.jwks_url }} docker compose up --build --force-recreate &
+        MODEL_PACKAGE_NAME=${{ inputs.model-package }} docker compose up --build --force-recreate &
         cd ../
       shell: bash
