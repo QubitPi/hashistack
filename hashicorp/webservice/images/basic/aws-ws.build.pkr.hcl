@@ -40,6 +40,12 @@ build {
     "source.${var.build_source}"
   ]
 
+  # Load Filebeat config into AMI image
+  provisioner "file" {
+    source = "${var.aws_ws_filebeat_config_file_path}"
+    destination = "${var.image_home_dir}/filebeat.yml"
+  }
+
   # Load WS WAR file into AMI image
   provisioner "file" {
     source = "${var.ws_war_path}"
