@@ -29,6 +29,11 @@ variable "ws_war_path" {
   sensitive = true
 }
 
+variable "aws_ws_filebeat_config_file_path" {
+  type =  string
+  sensitive = true
+}
+
 variable "aws_ws_ssl_cert_file_path" {
   type =  string
   sensitive = true
@@ -40,11 +45,6 @@ variable "aws_ws_ssl_cert_key_file_path" {
 }
 
 variable "aws_ws_nginx_config_file_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "aws_ws_filebeat_config_file_path" {
   type =  string
   sensitive = true
 }

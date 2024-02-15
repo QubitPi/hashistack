@@ -51,6 +51,7 @@ build {
       "../../scripts/aws-ws-pkr-base-ami-update.sh",
       "../../scripts/aws-ws-pkr-setup-jdk-17.sh",
       "../../scripts/aws-ws-pkr-setup-jdk-17-jetty.sh",
+      "../../scripts/aws-ws-pkr-setup-filebeat.sh"
     ]
     environment_vars = [
       "HOME_DIR=${var.image_home_dir}"

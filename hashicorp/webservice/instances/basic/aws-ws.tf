@@ -12,83 +12,70 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "aws_deploy_region" {
-  type = string
-  description = "The EC2 region injected through inversion of control"
+variable "init_script" {
+  value = "aws-ws-tf-init-basic.sh"
+  description = "The webservice startup script upon EC2 is up and running"
 }
 
-variable "ami_name" {
-  type = string
-  description = "AMI image name to deploy"
-}
-
-variable "instance_type" {
-  type    = string
-  description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
-
-  validation {
-    condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
-    error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
-  }
-}
-
-variable "ec2_instance_name" {
-  type = string
-  description = "EC2 instance name"
-}
-
-# https://github.com/hashicorp/packer/issues/11354
-# https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
-variable "ec2_security_groups" {
-  type = list(string)
-  description = "EC2 Security Groups"
-}
-
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.42.0"
-    }
-    kong = {
-      source  = "philips-labs/kong"
-      version = "~> 6.630.0"
-    }
-  }
-  required_version = ">= 0.14.5"
-}
-
-provider "aws" {
-  region = var.aws_deploy_region
-}
-
-data "template_file" "aws-ws-init" {
-  template = "${file("../../scripts/aws-ws-tf-init-basic.sh")}"
-}
-
-data "aws_ami" "latest-ws" {
-  most_recent = true
-  owners = ["899075777617"]
-
-  filter {
-    name   = "name"
-    values = ["${var.ami_name}"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-}
-
-resource "aws_instance" "aws-ws" {
-  ami = "${data.aws_ami.latest-ws.id}"
-  instance_type = "${var.instance_type}"
-  tags = {
-    Name = "${var.ec2_instance_name}"
-  }
-
-  security_groups = var.ec2_security_groups
-
-  user_data = "${data.template_file.aws-ws-init.rendered}"
-}
+#variable "kong_admin_uri" {
+#  type = string
+#  description = "Admin API URL with port which listen for calls service/route creations over HTTPS."
+#}
+#
+#variable "service_name" {
+#  type = string
+#  description = "A standard Kong service name"
+#}
+#
+#variable "ws_port" {
+#  type = string
+#  description = "The port part of the URL param in creating the Kong service. For example the ws_port for service url 'http://10.65.7.22:5000/users' is '5000'"
+#}
+#
+#variable "ws_api_path" {
+#  type = string
+#  description = "The root-path part of the URL param in creating the Kong service. For example the ws_port for service url 'http://10.65.7.22:5000/users' is '/users'"
+#}
+#
+#variable "tls_skip_verify" {
+#  type = bool
+#  description = "Whether or not to skip TLS certificate verification for the kong api when using https. Default to 'false'"
+#  default = false
+#}
+#
+#variable "tls_verify" {
+#  type = bool
+#  description = "Whether or not to enable verification of upstream server TLS certificate. Default to 'true'"
+#  default = true
+#}
+#
+#variable "route_name" {
+#  type = string
+#  description = "A standard Kong route name"
+#}
+#
+#variable "route_paths" {
+#  type = list(string)
+#  description = "The standard 'paths' param in creating a Kong route"
+#}
+#
+#provider "kong" {
+#  kong_admin_uri = var.kong_admin_uri
+#  tls_skip_verify = var.tls_skip_verify
+#}
+#
+#resource "kong_service" "service" {
+#  name        = var.kong_admin_uri
+#  protocol    = "http"
+#  host        = aws_instance.aws-ws.private_ip
+#  port        = var.ws_port
+#  path        = var.ws_api_path
+#  tls_verify  = var.tls_verify
+#}
+#
+#resource "kong_route" "route" {
+#  name            = var.route_name
+#  protocols       = [ "http", "https" ]
+#  paths           = var.route_paths
+#  service_id       = kong_service.service.id
+#}

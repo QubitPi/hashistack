@@ -22,9 +22,23 @@ title: Setup
 Setup
 -----
 
-The following credentials and config files need to be ready:
+### Installing HashiCorp Packer & Terraform
+
+Deployment using Packer & Terraform requires command line tools which can be installed by following the instructions
+in the links below:
+
+- [Installing Packer][HashiCorp Packer - Install]
+- [Installing Terraform][HashiCorp Terraform - Install]
+
+### Getting HashiCorp Deployment Tool
+
+```console
+git clone https://github.com/QubitPi/hashicorp-aws.git
+```
 
 ### AWS
+
+The following environment variables need to be defined:
 
 - **[AWS_ACCESS_KEY_ID]**
 - **[AWS_SECRET_ACCESS_KEY]**
@@ -40,6 +54,8 @@ The _IAM user_ associated with the credentials above must have the following [AW
 :::
 
 ### SSL
+
+The following files need to be ready:
 
 > - **SSL_CERTIFICATE** - the content of a SSL certificate file
 > - **SSL_CERTIFICATE_KEY** - the content of a SSL certificate key file
@@ -305,6 +321,8 @@ stand up a local Screwdriver CD. If you have any questions, please pin us in
 
 [Google Domain]: https://domains.google/
 
+[HashiCorp Packer - Install]: https://qubitpi.github.io/hashicorp-packer/packer/install
 [HashiCorp Terraform aws_route53_record]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record.html
+[HashiCorp Terraform - Install]: https://qubitpi.github.io/hashicorp-terraform/terraform/install
 
 [Let's Encrypt]: https://qubitpi.github.io/letsencrypt-website/
