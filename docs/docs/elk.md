@@ -84,10 +84,8 @@ The _IAM user_ associated with the credentials above must have the following [AW
 
 #### Preparing for SSL
 
-<!-- markdown-link-check-disable -->
 Please [obtain SSL certificate and key](2-setup#ssl) and put them in 2 files. Let's call them **server.crt**
 (certificate) and **server.key** (certificate key)
-<!-- markdown-link-check-enable -->
 
 ##### Nginx
 
@@ -154,15 +152,11 @@ ssl_cert_key_file_path     = "/absolute/path/to/server.key"
 ssl_nginx_config_file_path = "/absolute/path/to/nginx-ssl.conf"
 ```
 
-<!-- markdown-link-check-disable -->
-
 - **aws_image_region** is the region where ELK AMI will be published to. The published image will be _private_
 - **ssl_cert_file_path** and **ssl_cert_key_file_path** above are the local absolute paths to SSL certificate file and
   SSL certificate key, respectively. They can be [obtained via Certbot](2-setup#ssl)
 - **ssl_nginx_config_file_path** is the local absolute path to the Nginx config file (see **an example** below) that
   consumes the SSL certificate above and enables HTTPS.
-
-<!-- markdown-link-check-enable -->
 
 #### Defining Terraform Variables
 

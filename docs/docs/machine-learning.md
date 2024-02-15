@@ -49,12 +49,8 @@ to generate the Machine Learning model in a directory ready for use next. We wil
 
 The following environment variables need to be defined:
 
-<!-- markdown-link-check-disable -->
-
 - [AWS_ACCESS_KEY_ID](setup#aws)
 - [AWS_SECRET_ACCESS_KEY](setup#aws)
-
-<!-- markdown-link-check-enable -->
 
 ### Installing HashiCorp Packer & Terraform
 
@@ -82,14 +78,10 @@ instance_type    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2x
 ml_models_path   = "/abs/path/to/mlflow_models/"
 ```
 
-<!-- markdown-link-check-disable -->
-
 - `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the recommended [AWS EC2 instance type] running this image
 - `ml_models_path` is the directory we made ready [previously](#generating-machine-learning-models)
-
-<!-- markdown-link-check-enable -->
 
 ### Defining Terraform Variables
 
