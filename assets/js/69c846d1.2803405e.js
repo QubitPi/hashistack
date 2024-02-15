@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[3776],{7044:a=>{a.exports=JSON.parse('{"label":"Team Efficiency","permalink":"/hashicorp-aws/blog/tags/team-efficiency","allTagsPath":"/hashicorp-aws/blog/tags","count":1,"unlisted":false}')}}]);
