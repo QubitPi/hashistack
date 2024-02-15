@@ -40,6 +40,12 @@ build {
     "source.${var.build_source}"
   ]
 
+  # Load Filebeat config into AMI image
+  provisioner "file" {
+    source = "${var.aws_ws_filebeat_config_file_path}"
+    destination = "${var.image_home_dir}/filebeat.yml"
+  }
+
   # Load WS WAR file into AMI image
   provisioner "file" {
     source = "${var.ws_war_path}"
@@ -51,6 +57,7 @@ build {
       "../../scripts/aws-ws-pkr-base-ami-update.sh",
       "../../scripts/aws-ws-pkr-setup-jdk-17.sh",
       "../../scripts/aws-ws-pkr-setup-jdk-17-jetty.sh",
+      "../../scripts/aws-ws-pkr-setup-filebeat.sh"
     ]
     environment_vars = [
       "HOME_DIR=${var.image_home_dir}"

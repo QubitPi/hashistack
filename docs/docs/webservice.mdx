@@ -35,47 +35,18 @@ Immutable Webservice by hashicorp-aws supports 2 deployment modes:
 1. SSL/HTTPS
 2. non-SSL/HTTPS
 
-The first mode is very suitable for a mini-project such as a frontend backed by a single webservice. The second mode
-is designed for
-[microservices architecture where authentication is deletgated to an API gateway](https://dev.to/behalf/authentication-authorization-in-microservices-architecture-part-i-2cn0#global-authentication-api-gateway-and-authorization-per-service)
-
-SSL
----
-
-<!-- markdown-link-check-disable -->
-
-Please follow the [general setup guide](setup#setup) if we are deploying in SSL/HTTPS mode. Otherwise this section can
-be skipped
-
-<!-- markdown-link-check-enable -->
+The first mode is very suitable for MVP such as a web app backed by a single webservice. The second mode is designed for
+[microservices architecture where authentication is delegated to an API gateway]
 
 General Deployments
 -------------------
 
-### AWS Credentials
+:::info
 
-The following environment variables need to be defined:
+Please complete the [general setup](setup#setup) before proceeding. If you are deploying in _non-SSL/HTTPS mode_, the
+[SSL section](setup#ssl) can be skipped.
 
-<!-- markdown-link-check-disable -->
-
-- [AWS_ACCESS_KEY_ID](setup#aws)
-- [AWS_SECRET_ACCESS_KEY](setup#aws)
-
-<!-- markdown-link-check-enable -->
-
-### Installing HashiCorp Packer & Terraform
-
-We will go through deployment using Packer & Terraform command line tools which can be installed by following the
-instructions below:
-
-- [Installing Packer][HashiCorp Packer - Install]
-- [Installing Terraform][HashiCorp Terraform - Install]
-
-### Getting HashiCorp Deployment Tool
-
-```console
-git clone https://github.com/QubitPi/hashicorp-aws.git
-```
+:::
 
 ### Defining Packer Variables
 
@@ -84,7 +55,7 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
 
 <Tabs>
   <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
-    ```hcl title=hashicorp-aws/hashicorp/webservice/images/basic/aws-kong.auto.pkrvars.hcl
+    ```hcl title=hashicorp-aws/hashicorp/webservice/images/basic/aws-aws.auto.pkrvars.hcl
     aws_image_region                 = "my-aws-region"
     ami_name                         = "my-webservice"
     instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
@@ -114,7 +85,7 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
 
   </TabItem>
   <TabItem value="ssl" label="SSL/HTTPS">
-    ```hcl title=hashicorp-aws/hashicorp/webservice/images/ssl/aws-kong.auto.pkrvars.hcl
+    ```hcl title=hashicorp-aws/hashicorp/webservice/images/ssl/aws-aws.auto.pkrvars.hcl
     aws_image_region                 = "my-aws-region"
     ami_name                         = "my-webservice"
     instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
@@ -147,11 +118,13 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
 
       :::
 
-    - `aws_kong_ssl_cert_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of
-      the [SSL certificate file](setup#ssl) for the Kong API Gateway domain
-    - `aws_kong_ssl_cert_key_file_path`  is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of the [SSL certificate key file](setup#ssl) for the Kong API Gateway domain
-    - `aws_kong_nginx_config_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images`
-      of the [Nginx config file](#nginx-config)
+    - `aws_aws_ssl_cert_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/aws/images/ssl`
+      of the [SSL certificate file](setup#ssl) for the webservice API domain
+    - `aws_ws_ssl_cert_key_file_path`  is the absolute path or the path relative to
+      `hashicorp-aws/hashicorp/webservice/images/ssl` of the [SSL certificate key file](setup#ssl) for the webservice
+      API domain
+    - `aws_ws_nginx_config_file_path` is the absolute path or the path relative to
+      `hashicorp-aws/hashicorp/webservice/images/ssl` of the [Nginx config file](#nginx-config)
 
     <!-- markdown-link-check-enable -->
 
@@ -202,8 +175,8 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
     - `instance_type` is the chosen [AWS EC2 instance type] at runtime
     - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
     - `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
-    - `sentry_dsn` is the standard [Sentry Data Source Name (Sentry DSN)]. Please assign it an empty string if not
-      needed
+    - `sentry_dsn` is the standard [Sentry Data Source Name (Sentry DSN)] if webservice is monitored by [sentry.io].
+      Please assign it an _empty string if not needed_
     - `ws_domain` is the SSL-enabled domain that will serve webservice API URL
 
       :::warning
@@ -235,7 +208,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
 <Tabs>
   <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
     ```console
-    cd hashicorp-aws/hashicorp/kong/images/basic
+    cd hashicorp-aws/hashicorp/webservice/images/basic
     packer init .
     packer validate -var "skip_create_ami=true" .
     packer build -var "skip_create_ami=false" .
@@ -243,7 +216,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
   </TabItem>
   <TabItem value="ssl" label="SSL/HTTPS">
     ```console
-    cd hashicorp-aws/hashicorp/kong/images/ssl
+    cd hashicorp-aws/hashicorp/webservice/images/ssl
     packer init .
     packer validate -var "skip_create_ami=true" .
     packer build -var "skip_create_ami=false" .
@@ -284,6 +257,11 @@ Deployment via Screwdriver CD
 
 hashicorp-aws also support deployment using [Screwdriver CD] with this [Jersey Webservice release definition templates]
 
+Deployment via GitHub Actions
+-----------------------------
+
+
+
 Deployment via HACP
 -------------------
 
@@ -293,101 +271,6 @@ Please try our HACP platform to deploy a Webservice instance. It gives us one-cl
 a webservice in a minute.
 
 :::
-
-Deployment via GitHub Actions
------------------------------
-
-```yaml
-jobs:
-  hashicorp:
-    name: Generated Webservice WAR in GitHub Action, and Publish Template AMI Image and Deploy it to EC2 through HashiCorp
-    needs: tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Deployment environment setup
-        uses: QubitPi/hashicorp-aws/hashicorp/webservice/auxiliary/github/actions/cd-setup@master
-        with:
-          aws-ws-pkrvars-hcl: ${{ secrets.AWS_WS_PKRVARS_HCL }}
-          ssl-certificate: ${{ secrets.SSL_CERTIFICATE }}
-          ssl-certificate-key: ${{ secrets.SSL_CERTIFICATE_KEY }}
-          nginx-config-file: ${{ secrets.NGINX_CONFIG_FILE }}
-          aws-ws-tfvars: ${{ secrets.AWS_WS_TFVARS }}
-      - name: Generate webservice WAR file
-        run: mvn -B clean package
-      - name: Move WAR file to a location for HashiCorp deployment to pickup
-        run: mv target/astraios-1.0-SNAPSHOT.war ../hashicorp-aws/hashicorp/webservice/images/
-      - name: QubitPi/hashicorp-aws
-        uses: QubitPi/hashicorp-aws@master
-        with:
-          hashicorp-dir: ../hashicorp-aws/hashicorp/webservice
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-```
-
-The `cd-setup` step above takes an optional input parameter `filebeat-config-file` which is the Filebeat config file
-
-### Jersey Webservice Template (JPA through Elide)
-
-If deployed webservice is [JWT JPA](https://qubitpi.github.io/jersey-webservice-template/docs/elide/intro) the following
-actions can also be used:
-
-#### Installing Data Models
-
-:::info
-
-- **model-package-jar-group-id** is the Maven group ID of JAR containing data models, e.g. "com.myorg"
-- **model-package-jar-artifact-id** is the Maven artifact ID of JAR containing data models, e.g. "my-data-models"
-- **model-package-jar-version** is the version of JAR containing data models, e.g. "3.1.7"
-- **models-path** is the relative path to the data models repo, usually prefixed by "../". e.g. "../jpa-models"
-
-:::
-
-```yaml
----
-name: My CI/CD
-
-jobs:
-  my-job:
-    name: My job name
-    runs-on: ubuntu-latest
-    steps:
-      - uses: QubitPi/hashicorp-aws/hashicorp/webservice/auxiliary/github/actions/jersey-webservice-template/jpa-elide/install-data-models@master
-        with:
-          model-package-jar-group-id: com.myorg
-          model-package-jar-artifact-id: my-data-models
-          model-package-jar-version: 1.0.0
-          models-path: ../my-data-models
-```
-
-#### Docker Compose
-
-:::info
-
-Required parameters:
-
-- **webservice-repo-clone-url** is the git clone URL of the GitHub repo generated by [jersey-webservice-template]
-- **model-package** is the
-  [fully qualified name of the package containing all JPA models](https://github.com/QubitPi/jersey-webservice-template-jpa-data-model/blob/master/src/main/java/com/qubitpi/ws/jersey/template/models/Book.java#L16)
-
-:::
-
-```yaml
----
-name: My CI/CD
-
-jobs:
-  my-job:
-    name: My job name
-    runs-on: ubuntu-latest
-    steps:
-      - uses: QubitPi/hashicorp-aws/hashicorp/webservice/auxiliary/github/actions/jersey-webservice-template/jpa-elide/docker-compose@master
-        with:
-          webservice-repo-clone-url: https://github.com/QubitPi/jersey-webservice-template.git
-          model-package: ${{ secrets.MODEL_PACKAGE_NAME }}
-```
 
 Troubleshooting
 ---------------
@@ -415,13 +298,14 @@ instance_type       = "t2.medium"
 ```
 
 [hashicorp-aws/hashicorp/webservice/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/webservice/images
-[HashiCorp Packer - Install]: https://qubitpi.github.io/hashicorp-packer/packer/install
 [HashiCorp Packer delete_on_termination]: https://qubitpi.github.io/hashicorp-packer/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#:~:text=Optional%3A-,delete_on_termination,-(bool)%20%2D%20Indicates%20whether
 [HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
-[HashiCorp Terraform - Install]: https://qubitpi.github.io/hashicorp-terraform/terraform/install
 [HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+
+[microservices architecture where authentication is delegated to an API gateway]: https://dev.to/behalf/authentication-authorization-in-microservices-architecture-part-i-2cn0#global-authentication-api-gateway-and-authorization-per-service
 
 [jersey-webservice-template]: https://qubitpi.github.io/jersey-webservice-template/
 [Jersey Webservice release definition templates]: https://github.com/QubitPi/jersey-webservice-release-definition-templates
 
+[sentry.io]: https://qubitpi.github.io/sentry-docs/
 [Sentry Data Source Name (Sentry DSN)]: https://qubitpi.github.io/sentry-docs/product/sentry-basics/concepts/dsn-explainer/

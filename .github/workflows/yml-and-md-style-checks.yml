@@ -30,12 +30,3 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actionshub/markdownlint@main
-  markdown-link-check:
-    name: Markdown Link Check (Replace this horrible action once alternative is found)
-    if: github.ref != 'refs/heads/master'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-verbose-mode: "yes"

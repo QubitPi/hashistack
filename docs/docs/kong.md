@@ -37,12 +37,8 @@ Setup
 
 ### SSL
 
-<!-- markdown-link-check-disable -->
-
 First, please follow the [general setup guide](setup#setup) with some Nginx config modifications
 [discussed in the next section](#nginx-config)
-
-<!-- markdown-link-check-enable -->
 
 ### Nginx Config
 
@@ -72,9 +68,7 @@ HTTPS redirections to Kong's HTTP ports. Therefore:
 
    :::
 
-<!-- markdown-link-check-disable -->
 Here is an example that modifies the [general Nginx config](setup#configuring-reverse-proxy-on-nginx):
-<!-- markdown-link-check-enable -->
 
 ```text
 
@@ -175,8 +169,6 @@ aws_kong_ssl_cert_key_file_path  = "/path/to/ssl.key"
 aws_kong_nginx_config_file_path  = "/path/to/nginx.conf"
 ```
 
-<!-- markdown-link-check-disable -->
-
 - `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the recommended [AWS EC2 instance type] running this image
@@ -185,8 +177,6 @@ aws_kong_nginx_config_file_path  = "/path/to/nginx.conf"
 - `aws_kong_ssl_cert_key_file_path`  is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of the [SSL certificate key file](setup#ssl) for the Kong API Gateway domain
 - `aws_kong_nginx_config_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images`
   of the [Nginx config file](#nginx-config)
-
-<!-- markdown-link-check-enable -->
 
 ### Defining Terraform Variables
 
