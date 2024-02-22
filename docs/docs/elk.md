@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 6
 title: Elastic Stack (ELK)
 ---
 
@@ -45,8 +45,7 @@ General Deployments
 
 :::info
 
-Please complete the [general setup](setup#setup) before proceeding. If you are deploying in _non-SSL/HTTPS mode_, the
-[SSL section](setup#ssl) can be skipped.
+Please complete the [general setup](setup#setup) before proceeding.
 
 :::
 
@@ -57,8 +56,8 @@ Create a [HashiCorp Packer variable values file] named **aws-elk.pkrvars.hcl** w
 ```hcl
 aws_image_region           = "us-east-2"
 ami_name                   = "my-elk-ami"
-ssl_cert_file_path         = "/absolute/path/to/server.crt"
-ssl_cert_key_file_path     = "/absolute/path/to/server.key"
+ssl_cert_file_path         = "/absolute/path/to/ssl.crt"
+ssl_cert_key_file_path     = "/absolute/path/to/ssl.key"
 ssl_nginx_config_file_path = "/absolute/path/to/nginx-ssl.conf"
 ```
 

@@ -95,7 +95,7 @@ resource "aws_instance" "elk" {
   }
 
   key_name = var.key_pair_name
-  security_groups = [var.security_groups]
+  security_groups = var.security_groups
 }
 
 resource "aws_route53_record" "elk" {
