@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[596],{1416:s=>{s.exports=JSON.parse('{"label":"GitHub","permalink":"/hashicorp-aws/blog/tags/git-hub","allTagsPath":"/hashicorp-aws/blog/tags","count":1,"unlisted":false}')}}]);
