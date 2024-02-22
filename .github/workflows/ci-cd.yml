@@ -21,6 +21,16 @@ name: hashicorp-aws CI/CD
       - master
 
 jobs:
+  cancel-previous:
+    name: Cancel Previous Runs In Order to Allocate Action Resources Immediately for Current Run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.10.1
+        if: ${{github.ref != 'refs/head/master'}}
+        with:
+          access_token: ${{ github.token }}
+
   code-styles:
     uses: ./.github/workflows/yml-and-md-style-checks.yml
 

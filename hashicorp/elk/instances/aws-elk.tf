@@ -17,15 +17,14 @@ variable "aws_deploy_region" {
   description = "The EC2 region"
 }
 
-variable "zone_id" {
+variable "ami_name" {
   type = string
-  description = "Hosted zone ID on Route 53"
-  sensitive = true
+  description = "AMI image name to deploy"
 }
 
-variable "elk_doman" {
+variable "instance_name" {
   type = string
-  description = "Domian name of ELK instance, such as myelk.mycompany.com"
+  description = "EC2 instance name hosting the deployed ELK"
   sensitive = true
 }
 
@@ -35,15 +34,22 @@ variable "key_pair_name" {
   sensitive = true
 }
 
-variable "instance_name" {
+# https://github.com/hashicorp/packer/issues/11354
+# https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
+variable "security_groups" {
+  type = list(string)
+  description = "EC2 Security Groups"
+}
+
+variable "route_53_zone_id" {
   type = string
-  description = "EC2 instance name hosting the deployed ELK"
+  description = "Hosted zone ID on Route 53"
   sensitive = true
 }
 
-variable "security_group" {
+variable "elk_doman" {
   type = string
-  description = "AWS Security Group name for the EC2 instance"
+  description = "Domian name of ELK instance, such as myelk.mycompany.com"
   sensitive = true
 }
 
@@ -87,15 +93,16 @@ resource "aws_instance" "elk" {
   tags = {
     Name = var.instance_name
   }
+
   key_name = var.key_pair_name
-  security_groups = [var.security_group]
+  security_groups = [var.security_groups]
 }
 
 resource "aws_route53_record" "elk" {
-  zone_id         = var.zone_id
+  zone_id         = var.route_53_zone_id
   name            = var.elk_doman
   type            = "A"
   ttl             = 300
-  records         = [aws_instance.elk.public_ip]
+  records         = [aws_instance.elk.private_ip]
   allow_overwrite = true
 }

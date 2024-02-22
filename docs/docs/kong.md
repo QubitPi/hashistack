@@ -134,12 +134,8 @@ General Deployment
 
 The following environment variables need to be defined:
 
-<!-- markdown-link-check-disable -->
-
 - [AWS_ACCESS_KEY_ID](setup#aws)
 - [AWS_SECRET_ACCESS_KEY](setup#aws)
-
-<!-- markdown-link-check-enable -->
 
 ### Installing HashiCorp Packer & Terraform
 

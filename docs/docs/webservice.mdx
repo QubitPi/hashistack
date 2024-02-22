@@ -96,10 +96,9 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
     aws_ws_nginx_config_file_path    = "nginx.conf"
     ```
 
-    <!-- markdown-link-check-disable -->
-
-    - `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
-    - `ami_name` is the published AMI name; it can be arbitrary
+    - `aws_image_region` is the [region][AWS regions] where webservice [AMI][AWS AMI] will be published to. The
+      published image will be _private_
+    - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
     - `instance_type` is the recommended [AWS EC2 instance type] running this image
     - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
       the webservice WAR file we are going to deploy
@@ -126,15 +125,13 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
     - `aws_ws_nginx_config_file_path` is the absolute path or the path relative to
       `hashicorp-aws/hashicorp/webservice/images/ssl` of the [Nginx config file](#nginx-config)
 
-    <!-- markdown-link-check-enable -->
-
   </TabItem>
 </Tabs>
 
 ### Defining Terraform Variables
 
-Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars** under
-**[hashicorp-aws/hashicorp/webservice/instances]** directory with the following contents:
+Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars** under one of the subdirectory of
+**[hashicorp-aws/hashicorp/webservice/instances]**, depending on the deployment mode, with the following contents:
 
 <Tabs>
   <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
@@ -260,8 +257,6 @@ hashicorp-aws also support deployment using [Screwdriver CD] with this [Jersey W
 Deployment via GitHub Actions
 -----------------------------
 
-
-
 Deployment via HACP
 -------------------
 
@@ -297,6 +292,12 @@ example:
 instance_type       = "t2.medium"
 ```
 
+[AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
+[AWS EC2 instance type]: https://aws.amazon.com/ec2/instance-types/
+[AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
+[AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
+[Sentry Data Source Name (Sentry DSN)]: https://qubitpi.github.io/sentry-docs/product/sentry-basics/concepts/dsn-explainer/?original_referrer=https%3A%2F%2Fgithub.com%2F
+
 [hashicorp-aws/hashicorp/webservice/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/webservice/images
 [HashiCorp Packer delete_on_termination]: https://qubitpi.github.io/hashicorp-packer/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#:~:text=Optional%3A-,delete_on_termination,-(bool)%20%2D%20Indicates%20whether
 [HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
@@ -307,5 +308,6 @@ instance_type       = "t2.medium"
 [jersey-webservice-template]: https://qubitpi.github.io/jersey-webservice-template/
 [Jersey Webservice release definition templates]: https://github.com/QubitPi/jersey-webservice-release-definition-templates
 
+[Screwdriver CD]: https://qubitpi.github.io/screwdriver-cd-homepage/
 [sentry.io]: https://qubitpi.github.io/sentry-docs/
 [Sentry Data Source Name (Sentry DSN)]: https://qubitpi.github.io/sentry-docs/product/sentry-basics/concepts/dsn-explainer/

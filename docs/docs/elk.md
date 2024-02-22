@@ -40,173 +40,95 @@ size that supports smooth runtime. For that, **please be aware AWS credit charge
 
 :::
 
-Getting ELK Deployer
---------------------
-
-```bash
-git clone https://github.com/QubitPi/hashicorp-aws.git
-cd hashicorp/elk
-```
-
-Configuring Deployment
-----------------------
-
-:::tip
-
-People may jump directly to the end of [this section](#configuring-deployment) to see what the final config looks like
-
-:::
-
-### Authenticating to AWS
-
-Before we can build the AMI, we need to provide our AWS credentials to Packer and Terraform. These credentials have
-permissions to create, modify, and delete AMI images and EC2 instances.
-
-To allow HashiCorp to access our IAM user credentials, set our AWS access key ID and secret key as environment
-variables:
-
-```bash
-AWS_ACCESS_KEY_ID="<YOUR_AWS_ACCESS_KEY_ID>"
-AWS_SECRET_ACCESS_KEY="<YOUR_AWS_SECRET_ACCESS_KEY>"
-```
+General Deployments
+-------------------
 
 :::info
 
-The _IAM user_ associated with the credentials above must have the following [AWS permissions policies]:
-
-- IAMFullAccess
-- AmazonEC2FullAccess
-- AmazonRoute53FullAccess
+Please complete the [general setup](setup#setup) before proceeding. If you are deploying in _non-SSL/HTTPS mode_, the
+[SSL section](setup#ssl) can be skipped.
 
 :::
 
-### Defining Config Directory
+### Defining Packer Variables
 
-#### Preparing for SSL
-
-Please [obtain SSL certificate and key](2-setup#ssl) and put them in 2 files. Let's call them **server.crt**
-(certificate) and **server.key** (certificate key)
-
-##### Nginx
-
-We will have a Nginx reverse proxy to serve HTTPS and have a config file called **nginx-ssl.conf**:
-
-:::tip
-
-Replace `my-domain.com` with the domain backed by the [SSL](#preparing-for-ssl) accordingly below
-
-:::
-
-```text
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-
-    index index.html index.htm index.nginx-debian.html;
-
-    server_name _;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-}
-
-server {
-    root /var/www/html;
-
-    index index.html index.htm index.nginx-debian.html;
-    server_name my-domain.com;
-
-    location / {
-        proxy_pass http://localhost:5601;
-    }
-
-    listen [::]:443 ssl ipv6only=on;
-    listen 443 ssl;
-    ssl_certificate /etc/ssl/certs/server.crt;
-    ssl_certificate_key /etc/ssl/private/server.key;
-}
-
-server {
-    if ($host = my-domain.com) {
-        return 301 https://$host$request_uri;
-    }
-
-    listen 80 ;
-    listen [::]:80 ;
-    server_name my-domain.com;
-    return 404;
-}
-```
-
-#### Defining Packer Variables
-
-Create a file named **aws-elk.pkrvars.hcl** with the following contents:
+Create a [HashiCorp Packer variable values file] named **aws-elk.pkrvars.hcl** with the following contents:
 
 ```hcl
 aws_image_region           = "us-east-2"
+ami_name                   = "my-elk-ami"
 ssl_cert_file_path         = "/absolute/path/to/server.crt"
 ssl_cert_key_file_path     = "/absolute/path/to/server.key"
 ssl_nginx_config_file_path = "/absolute/path/to/nginx-ssl.conf"
 ```
 
-- **aws_image_region** is the region where ELK AMI will be published to. The published image will be _private_
-- **ssl_cert_file_path** and **ssl_cert_key_file_path** above are the local absolute paths to SSL certificate file and
-  SSL certificate key, respectively. They can be [obtained via Certbot](2-setup#ssl)
-- **ssl_nginx_config_file_path** is the local absolute path to the Nginx config file (see **an example** below) that
+- `aws_image_region` is the [region][AWS regions] where ELK [AMI][AWS AMI] will be published to. The published image
+  will be _private_
+- `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
+- `ssl_cert_file_path` and `ssl_cert_key_file_path` above are the local absolute paths to SSL certificate file and SSL
+  certificate key, respectively. They can be [obtained via Certbot](2-setup#ssl)
+- `ssl_nginx_config_file_path` is the local absolute path to the Nginx config file (see **an example** below) that
   consumes the SSL certificate above and enables HTTPS.
 
-#### Defining Terraform Variables
+### Defining Terraform Variables
 
-Create a file named **aws-elk.tfvars** with the following contents:
+Create a [HashiCorp Terraform variable values file] named **aws-elk.tfvars** with the following contents:
 
 ```hcl
 aws_deploy_region = "us-east-2"
-zone_id = "<AWS Route 53 Zone ID>"
-elk_doman = "myelk.mycompany.com"
-key_pair_name = "<AWS keypair name for SSH>"
-instance_name = "<AWS EC2 displayed instance name>"
-security_group = "<AWS Security Group for the EC2 instance>"
+ami_name          = "my-elk-ami"
+instance_name     = "My ELK instance"
+key_pair_name     = "My AWS keypair name"
+security_groups   = ["My ELK Security Group"]
+elk_doman         = "myelk.mycompany.com"
+route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
 ```
 
-#### Defining Config Directory Path
+- `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+- `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
+  [Packer variable file](#defining-packer-variables)**
+- `instance_type` is the chosen [AWS EC2 instance type] at runtime
+- `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
+- `key_pair_name` is the name of
+  [AWS EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) bound to this ELK instance.
+  We will use this key pair to later ssh into the ELK to for [post setup discussed below](#post-setup-in-ec2-instance)
+- `security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+- `elk_doman` is the SSL-enabled domain that will serve [Kibana UI][Kibana]
 
-Put the _aws-elk.pkrvars.hcl_ and _aws-elk.tfvars_ in a directory. We will call it **ELK_HC_CONFIG_DIR** (along with
-our source code dir **ELK_HC_CONFIG_DIR**):
+  :::warning
 
-```bash
-ELK_HC_DIR=...
-ELK_HC_CONFIG_DIR=/absolute/path/to/hashicorp/elk
+  hashicorp-aws will bind a _private_ IP address to this domain for the following reasons:
+
+  - [AWS security groups works for private IP only for DNS resolving](https://serverfault.com/a/967483). Services
+    sending logs to ELK can use this domain.
+  - In the case of internal access, for example developers visiting Kibana UI for debugging purposes, people can still
+    use `https://public-dns:port`
+
+  :::
+
+- `route_53_zone_id` is the AWS Route 53 hosted Zone ID that hosts the domain "myelk.mycompany.com"
+
+  :::tip
+
+  To find the zone ID in AWS Route 53, we can:
+
+  1. Sign in to the AWS Management Console
+  2. Open the Route 53 console at https://console.aws.amazon.com/route53/
+  3. Select Hosted zones in the navigation pane
+  4. Find the requested ID in the top level Hosted Zones summary in the Route 53 section
+
+  :::
+
+### Building AMI Image
+
+```console
+cd hashicorp-aws/hashicorp/elk/images
+packer init .
+packer validate -var "skip_create_ami=true" .
+packer build -var "skip_create_ami=false" .
 ```
 
-:::caution
-
-Make sure `*_DIR` path does not end with "/", for example, instead of `ELK_HC_DIR=/home/ubuntu/config/`, we should use
-`ELK_HC_DIR=/home/ubuntu/config`
-
-:::
-
-At the end of the day, the following environment variable (with example values) needs to be defined:
-
-```bash
-export HC_DIR=/home/ubuntu/hashicorp-aws/hashicorp/elk
-export HC_CONFIG_DIR=/home/ubuntu/hashicorp-aws/hashicorp/elk/config-files/
-export AWS_ACCESS_KEY_ID="LOA8TQ2ZOSKFRLFSHDWC"
-export AWS_SECRET_ACCESS_KEY="F9Wt082IXjW426QGRdvrsowFhHARt85YlJ2WURri"
-```
-
-Running Script
---------------
-
-After running
-
-```bash
-./deploy.sh
-```
-
-record the **Elasticsearch password (for _elastic_ user)** at command line prompt. For example
+Record the **Elasticsearch password (for _elastic_ user)** at command line prompt. For example
 
 ```shell
 ==> install-elk.amazon-ebs.elk: + sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
@@ -219,7 +141,24 @@ record the **Elasticsearch password (for _elastic_ user)** at command line promp
     install-elk.amazon-ebs.elk: New value: dsrg34IKHU787iud=dio
 ```
 
-In this case, the password is **dsrg34IKHU787iud=dio** which is shown in the last line of the output above.
+In this case, the password is **dsrg34IKHU787iud=dio** which is shown in the last line of the output above. **We will be
+using this password in later steps** so please keep it securely
+
+### Deploying to EC2
+
+:::caution
+
+Depending on the [AMI](#defining-packer-variables) and [EC2](#defining-terraform-variables) configs, **please be aware
+AWS credit charges shall incur after the following commands execute**
+
+:::
+
+```console
+cd ../instances/
+terraform init
+terraform validate
+terraform apply -auto-approve
+```
 
 ### Post Setup in EC2 Instance
 
@@ -231,7 +170,7 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope 
 sudo /usr/share/kibana/bin/kibana-verification-code
 ```
 
-Now we can visit `https://myelk.mycompany.com` to enter the token and verification code to access our ELK instance.
+Now we can visit `https://public-dns:port` to enter the token and verification code to access our ELK instance.
 
 #### Logstash
 
@@ -285,10 +224,37 @@ or with nohup at background:
 nohup sudo /usr/share/logstash/bin/logstash -f logstash-filebeat.conf --config.reload.automatic &
 ```
 
-[AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html
+Deployment via Screwdriver CD
+-----------------------------
 
-[hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+hashicorp-aws also support deployment using [Screwdriver CD] with this [elk-release-definition-template]
+
+Deployment via GitHub Actions
+-----------------------------
+
+Deployment via HACP
+-------------------
+
+:::tip
+
+Please try our HACP platform to deploy a Webservice instance. It gives us one-click experience that helps us stand up
+a webservice in a minute.
+
+:::
 
 [Elasticsearch]: https://qubitpi.github.io/elasticsearch/
 [Kibana]: https://qubitpi.github.io/kibana/
 [Logstash]: https://qubitpi.github.io/logstash/
+
+[AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
+[AWS EC2 instance type]: https://aws.amazon.com/ec2/instance-types/
+[AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
+[AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
+
+[elk-release-definition-template]: https://github.com/QubitPi/elk-release-definition-template
+
+[hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+[HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+
+[Screwdriver CD]: https://qubitpi.github.io/screwdriver-cd-homepage/
