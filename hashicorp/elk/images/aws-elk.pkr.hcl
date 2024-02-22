@@ -12,6 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+variable "aws_image_region" {
+  type      = string
+  sensitive = true
+}
+
+variable "ami_name" {
+  type =  string
+  sensitive = true
+}
+
 variable "ssl_cert_file_path" {
   type      = string
   sensitive = true
@@ -23,11 +33,6 @@ variable "ssl_cert_key_file_path" {
 }
 
 variable "ssl_nginx_config_file_path" {
-  type      = string
-  sensitive = true
-}
-
-variable "aws_image_region" {
   type      = string
   sensitive = true
 }
