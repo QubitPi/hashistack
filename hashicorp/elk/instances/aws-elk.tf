@@ -47,7 +47,7 @@ variable "route_53_zone_id" {
   sensitive = true
 }
 
-variable "elk_doman" {
+variable "elk_domain" {
   type = string
   description = "Domian name of ELK instance, such as myelk.mycompany.com"
   sensitive = true
@@ -100,7 +100,7 @@ resource "aws_instance" "elk" {
 
 resource "aws_route53_record" "elk" {
   zone_id         = var.route_53_zone_id
-  name            = var.elk_doman
+  name            = var.elk_domain
   type            = "A"
   ttl             = 300
   records         = [aws_instance.elk.private_ip]
