@@ -43,13 +43,3 @@ aws_instance.***: Creating...
 
 This could happen when hashicorp-aws is using Terraform to launch EC2 instance. One possibility is the security group of
 the instance is not found or hasn't been created yet.
-
-Deployment via GitHub Actions
------------------------------
-
-Deployment via Screwdriver CD
------------------------------
-
-Please visit [Screwdriver troubleshooting] for issues about using Screwdriver CD.
-
-[Screwdriver troubleshooting]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/troubleshooting

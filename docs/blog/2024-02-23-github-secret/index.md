@@ -1,6 +1,8 @@
 ---
-sidebar_position: 7
-title: Configuration Management for Immutable Infrastructure
+slug: github-secret-action
+title: Reusable GitHub Action - Posting GitHub Secrets
+authors: [jiaqi]
+tags: [CI/CD, GitHub]
 ---
 
 [//]: # (Copyright Jiaqi Liu)
@@ -49,10 +51,10 @@ We tried HashiCorp Vault but
 
 :::
 
-So this brought us to the ultimate way of thinking about Configuration Management in Immutable Infrastructure, which is
-depicted below:
+So this brought us to the alternative way of thinking about Configuration Management in Immutable Infrastructure, which
+is depicted below:
 
-![](./img/github-secret.png)
+![](github-secret.png)
 
 We still need GitHub Secrets because our tech dev has a deep integratin with it and that's the most secure way to pass
 our organization credentials around.
