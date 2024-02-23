@@ -58,7 +58,6 @@ aws_image_region           = "us-east-2"
 ami_name                   = "my-elk-ami"
 ssl_cert_file_path         = "/absolute/path/to/ssl.crt"
 ssl_cert_key_file_path     = "/absolute/path/to/ssl.key"
-ssl_nginx_config_file_path = "/absolute/path/to/nginx-ssl.conf"
 ```
 
 - `aws_image_region` is the [region][AWS regions] where ELK [AMI][AWS AMI] will be published to. The published image
@@ -66,8 +65,6 @@ ssl_nginx_config_file_path = "/absolute/path/to/nginx-ssl.conf"
 - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
 - `ssl_cert_file_path` and `ssl_cert_key_file_path` above are the local absolute paths to SSL certificate file and SSL
   certificate key, respectively. They can be [obtained via Certbot](2-setup#ssl)
-- `ssl_nginx_config_file_path` is the local absolute path to the Nginx config file (see **an example** below) that
-  consumes the SSL certificate above and enables HTTPS.
 
 ### Defining Terraform Variables
 
