@@ -40,6 +40,16 @@ size that supports smooth runtime. For that, **please be aware AWS credit charge
 
 :::
 
+hashicorp-aws deploys ELK in the following way:
+
+- Deploys all components of ELK in **HTTP** mode
+- Deploys a reverse proxy Nginx in front of the ELK in the same EC2 to redirect all HTTPS request to ELK's
+  corresponding HTTP ports
+
+The diagram below illustrates the resulting deployment
+
+![Error loading elk-deployment-diagram.png](img/elk-deployment-diagram.png)
+
 General Deployments
 -------------------
 
