@@ -32,11 +32,6 @@ variable "ssl_cert_key_file_path" {
   sensitive = true
 }
 
-variable "ssl_nginx_config_file_path" {
-  type      = string
-  sensitive = true
-}
-
 variable "skip_create_ami" {
   type =  bool
   sensitive = true
@@ -89,7 +84,7 @@ build {
 
   # Load Nginx config file into AMI image
   provisioner "file" {
-    source      = "${var.ssl_nginx_config_file_path}"
+    source      = "./nginx-ssl.conf"
     destination = "/home/ubuntu/nginx-ssl.conf"
   }
 
