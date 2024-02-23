@@ -12,14 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "aws_image_region" {
-  type      = string
-  sensitive = true
+variable "build_source" {
+  type =  string
+  sensitive = false
+  default = "amazon-ebs.elk"
 }
 
-variable "ami_name" {
+variable "image_home_dir" {
   type =  string
   sensitive = true
+  default = "/home/ubuntu"
 }
 
 variable "ssl_cert_file_path" {
@@ -32,63 +34,32 @@ variable "ssl_cert_key_file_path" {
   sensitive = true
 }
 
-variable "skip_create_ami" {
-  type =  bool
-  sensitive = true
-}
-
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
-    }
-  }
-}
-
-source "amazon-ebs" "elk" {
-  ami_name              = "elk"
-  force_deregister      = "true"
-  force_delete_snapshot = "true"
-  skip_create_ami = "${var.skip_create_ami}"
-
-  instance_type = "t2.large"
-  region        = "${var.aws_image_region}"
-  source_ami_filter {
-    filters = {
-      name                = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"
-      root-device-type    = "ebs"
-      virtualization-type = "hvm"
-    }
-    most_recent = true
-    owners      = ["099720109477"]
-  }
-  ssh_username = "ubuntu"
-}
-
 build {
   name = "install-elk"
   sources = [
-    "source.amazon-ebs.elk"
+    "source.${var.build_source}"
   ]
 
   # Load SSL Certificates into AMI image
   provisioner "file" {
     source      = "${var.ssl_cert_file_path}"
-    destination = "/home/ubuntu/server.crt"
+    destination = "${var.image_home_dir}/server.crt"
   }
   provisioner "file" {
     source      = "${var.ssl_cert_key_file_path}"
-    destination = "/home/ubuntu/server.key"
+    destination = "${var.image_home_dir}/server.key"
   }
 
   # Load Nginx config file into AMI image
   provisioner "file" {
     source      = "./nginx-ssl.conf"
-    destination = "/home/ubuntu/nginx-ssl.conf"
+    destination = "${var.image_home_dir}/nginx-ssl.conf"
   }
 
   provisioner "shell" {
     script = "../scripts/aws-elk-pkr-setup.sh"
+    environment_vars = [
+      "HOME_DIR=${var.image_home_dir}"
+    ]
   }
 }

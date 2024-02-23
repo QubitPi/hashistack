@@ -43,9 +43,10 @@ jobs:
       matrix:
         docker: [
           {dockerfile-path: tests/machine-learning, image-name: hashicorp-aws-machine-learning-test},
-          {dockerfile-path: tests/kong, image-name: hashicorp-aws-kong-test},
           {dockerfile-path: tests/react, image-name: hashicorp-aws-react-test},
-          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test}
+          {dockerfile-path: tests/kong, image-name: hashicorp-aws-kong-test},
+          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test},
+          {dockerfile-path: tests/elk, image-name: hashicorp-aws-elk-test}
         ]
     steps:
       - name: Checkout
@@ -75,9 +76,10 @@ jobs:
       matrix:
         test-directory: [
           tests/machine-learning/images,
-          tests/kong/images,
           tests/react/images,
-          tests/webservice/images
+          tests/kong/images,
+          tests/webservice/images,
+          tests/elk/images,
         ]
     steps:
       - uses: actions/checkout@v3

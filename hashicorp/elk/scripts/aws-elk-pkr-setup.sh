@@ -54,6 +54,6 @@ sudo apt-get update && sudo apt-get install logstash
 
 # Configure SSL
 sudo apt install -y nginx
-sudo mv /home/ubuntu/nginx-ssl.conf /etc/nginx/sites-enabled/default
-sudo mv /home/ubuntu/server.crt /etc/ssl/certs/server.crt
-sudo mv /home/ubuntu/server.key /etc/ssl/private/server.key
+sudo mv ${HOME_DIR}/nginx-ssl.conf /etc/nginx/sites-enabled/default
+sudo mv ${HOME_DIR}/server.crt /etc/ssl/certs/server.crt
+sudo mv ${HOME_DIR}/server.key /etc/ssl/private/server.key

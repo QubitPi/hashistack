@@ -73,7 +73,7 @@ data "aws_ami" "latest-elk" {
 
   filter {
     name   = "name"
-    values = ["elk"]
+    values = ["${var.ami_name}"]
   }
 
   filter {
