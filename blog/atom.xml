@@ -2,11 +2,55 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://qubitpi.github.io/hashicorp-aws/blog</id>
     <title>hashicorp-aws Blog</title>
-    <updated>2024-01-27T00:00:00.000Z</updated>
+    <updated>2024-02-23T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://qubitpi.github.io/hashicorp-aws/blog"/>
     <subtitle>hashicorp-aws Blog</subtitle>
     <icon>https://qubitpi.github.io/hashicorp-aws/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Reusable GitHub Action - Posting GitHub Secrets]]></title>
+        <id>https://qubitpi.github.io/hashicorp-aws/blog/github-secret-action</id>
+        <link href="https://qubitpi.github.io/hashicorp-aws/blog/github-secret-action"/>
+        <updated>2024-02-23T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a href="https://qubitpi.github.io/hashicorp-aws/blog/github-secret-action#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview">​</a></h2>
+<p>Being a strong proponent of Immutable Infrastructure, <a href="https://qubitpi.github.io/hashicorp-aws/" target="_blank" rel="noopener noreferrer">hashicorp-aws</a> is constantly pushing the limits of its ability
+in various use cases, one of which is the <em>Configuration Management</em></p>
+<p>Traditional configuration management includes Chef, Puppet, and Ansible. They all assume mutable infrastructure being
+present. For example, Chef has a major component responsible for jumping into a VM, checking if config has been mutated
+before apply any operations.</p>
+<p>With the adoption of Immutable infrastructure, we initially stored and managed our configuration, such as SSL
+certificate or AWS SECRET ACCESS KEY directly in GitHub Secrets. This has the disadvantage of not being able to see
+their values after creation, making it very hard to manage.</p>
+<p>Then we moved to a centralized runbook, where everything can easily be seen and modified by authorized team members. In
+this approache, CI/CD server will pull down the entire runbook and simply pick up the config files. This, however,
+exposed a great security risk because illegal usage could simply leak any credentials to public by <code>cat</code>ing that
+credential file out</p>
+<p>So the problem, or what <a href="https://qubitpi.github.io/hashicorp-aws/" target="_blank" rel="noopener noreferrer">hashicorp-aws</a> is trying to solve here, is</p>
+<ul>
+<li>being able to keep credentials, whether it's string values or values stored in files, <strong>secure</strong>, and</li>
+<li>allowing team member to easily <strong>manage</strong> those credentials</li>
+</ul>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>We tried HashiCorp Vault but
+<a href="https://discuss.hashicorp.com/t/how-to-store-a-file-content-in-hashicorp-kv-secret-engine-as-value-through-cmd-line-or-script/46895/2" target="_blank" rel="noopener noreferrer">it doesn't support storing file credential</a>,
+<a href="https://qubitpi.github.io/hashicorp-aws/" target="_blank" rel="noopener noreferrer">hashicorp-aws</a> addressed exactly how file can be managed in this case</p></div></div>
+<p>So this brought us to the alternative way of thinking about Configuration Management in Immutable Infrastructure, which
+is depicted below:</p>
+<p><img loading="lazy" src="https://qubitpi.github.io/hashicorp-aws/assets/images/github-secret-8df7f31de85271fd5bf4418718da1fae.png" width="1322" height="662" class="img_ev3q"></p>
+<p>We still need GitHub Secrets because our tech dev has a deep integratin with it and that's the most secure way to pass
+our organization credentials around.</p>
+<p>In addition, we will also keep runbook for config management. The runbook will be hosted separately, not in GitHub
+Secrets.</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>Runbooks was used in Yahoo that keeps all DevOps credentials in a dedicated GitHub private repo. It's been proven to
+be an effective way to manage and share a software configurations within a team.</p></div></div>
+<p><a href="https://qubitpi.github.io/hashicorp-aws/" target="_blank" rel="noopener noreferrer">hashicorp-aws</a>'s github-secret now comes into play to bridge the gap between two componet.</p>]]></content>
+        <author>
+            <name>Jiaqi Liu</name>
+            <uri>https://github.com/QubitPi</uri>
+        </author>
+        <category label="CI/CD" term="CI/CD"/>
+        <category label="GitHub" term="GitHub"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Sending GitHub Action Results to Slack Channel]]></title>
         <id>https://qubitpi.github.io/hashicorp-aws/blog/github-slack-notification</id>
