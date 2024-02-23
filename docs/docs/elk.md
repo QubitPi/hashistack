@@ -79,20 +79,19 @@ ami_name          = "my-elk-ami"
 instance_name     = "My ELK instance"
 key_pair_name     = "My AWS keypair name"
 security_groups   = ["My ELK Security Group"]
-elk_doman         = "myelk.mycompany.com"
+elk_domain         = "myelk.mycompany.com"
 route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
 ```
 
-- `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+- `aws_deploy_region` is the [EC2 runtime region][AWS regions] where ELK EC2 instance will be deployed into
 - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
   [Packer variable file](#defining-packer-variables)**
-- `instance_type` is the chosen [AWS EC2 instance type] at runtime
 - `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
 - `key_pair_name` is the name of
   [AWS EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) bound to this ELK instance.
   We will use this key pair to later ssh into the ELK to for [post setup discussed below](#post-setup-in-ec2-instance)
 - `security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
-- `elk_doman` is the SSL-enabled domain that will serve [Kibana UI][Kibana]
+- `elk_domain` is the SSL-enabled domain that will serve various ELK endpoints, such as its API and [Kibana UI][Kibana]
 
   :::warning
 
@@ -246,7 +245,6 @@ a minute.
 [Logstash]: https://qubitpi.github.io/logstash/
 
 [AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
-[AWS EC2 instance type]: https://aws.amazon.com/ec2/instance-types/
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
