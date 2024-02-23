@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 title: Elastic Stack (ELK)
 ---
 
@@ -236,8 +236,8 @@ Deployment via HACP
 
 :::tip
 
-Please try our HACP platform to deploy a Webservice instance. It gives us one-click experience that helps us stand up
-a webservice in a minute.
+Please try our HACP platform to deploy an ELK instance. It gives us one-click experience that helps us stand up ELK in
+a minute.
 
 :::
 
