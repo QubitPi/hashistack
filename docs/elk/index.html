@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">Elastic Stack (ELK) | hashicorp-aws</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://qubitpi.github.io/hashicorp-aws/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://qubitpi.github.io/hashicorp-aws/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://qubitpi.github.io/hashicorp-aws/docs/elk"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Elastic Stack (ELK) | hashicorp-aws"><meta data-rh="true" name="description" content="[//]: # (Copyright Jiaqi Liu)"><meta data-rh="true" property="og:description" content="[//]: # (Copyright Jiaqi Liu)"><link data-rh="true" rel="icon" href="/hashicorp-aws/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://qubitpi.github.io/hashicorp-aws/docs/elk"><link data-rh="true" rel="alternate" href="https://qubitpi.github.io/hashicorp-aws/docs/elk" hreflang="en"><link data-rh="true" rel="alternate" href="https://qubitpi.github.io/hashicorp-aws/docs/elk" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/hashicorp-aws/blog/rss.xml" title="hashicorp-aws RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/hashicorp-aws/blog/atom.xml" title="hashicorp-aws Atom Feed"><link rel="stylesheet" href="/hashicorp-aws/assets/css/styles.ce6ba366.css">
-<script src="/hashicorp-aws/assets/js/runtime~main.22c6b39c.js" defer="defer"></script>
+<script src="/hashicorp-aws/assets/js/runtime~main.022354a7.js" defer="defer"></script>
 <script src="/hashicorp-aws/assets/js/main.e2d0ed82.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -20,6 +20,14 @@ monitoring, faster troubleshooting, security analytics, and more.</p></div></div
 Elasticsearch, Kibana, and Logstash are contained in it, which can cause
 <a href="https://stackoverflow.com/a/50022217" target="_blank" rel="noopener noreferrer">performance issue</a> in small instance. <em>t2.large</em>, by experiment, is the smallest
 size that supports smooth runtime. For that, <strong>please be aware AWS credit charges shall incur afterward</strong></p></div></div>
+<p>hashicorp-aws deploys ELK in the following way:</p>
+<ul>
+<li>Deploys all components of ELK in <strong>HTTP</strong> mode</li>
+<li>Deploys a reverse proxy Nginx in front of the ELK in the same EC2 to redirect all HTTPS request to ELK&#x27;s
+corresponding HTTP ports</li>
+</ul>
+<p>The diagram below illustrates the resulting deployment</p>
+<p><img loading="lazy" alt="Error loading elk-deployment-diagram.png" src="/hashicorp-aws/assets/images/elk-deployment-diagram-a743ebc406fc1cee3e8d6f1229b82411.png" width="1402" height="836" class="img_ev3q"></p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="general-deployments">General Deployments<a href="#general-deployments" class="hash-link" aria-label="Direct link to General Deployments" title="Direct link to General Deployments">​</a></h2>
 <div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>Please complete the <a href="/hashicorp-aws/docs/setup#setup">general setup</a> before proceeding.</p></div></div>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="defining-packer-variables">Defining Packer Variables<a href="#defining-packer-variables" class="hash-link" aria-label="Direct link to Defining Packer Variables" title="Direct link to Defining Packer Variables">​</a></h3>
