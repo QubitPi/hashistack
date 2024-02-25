@@ -59,6 +59,14 @@ Please complete the [general setup](setup#setup) before proceeding.
 
 :::
 
+:::tip[Supporting HTTPS Protocol]
+
+We offer a [Nginx config file](setup#optional-setup-ssl) template.
+[This template](https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/elk/images/nginx-ssl.conf) will be used
+by hashicorp-aws by default
+
+:::
+
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-elk.pkrvars.hcl** with the following contents:
@@ -74,7 +82,7 @@ ssl_cert_key_file_path     = "/absolute/path/to/ssl.key"
   will be _private_
 - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
 - `ssl_cert_file_path` and `ssl_cert_key_file_path` above are the local absolute paths to SSL certificate file and SSL
-  certificate key, respectively. They can be [obtained via Certbot](2-setup#ssl)
+  certificate key, respectively. They can be [obtained via Certbot](setup#optional-setup-ssl)
 
 ### Defining Terraform Variables
 

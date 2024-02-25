@@ -53,13 +53,22 @@ The _IAM user_ associated with the credentials above must have the following [AW
 
 :::
 
-### SSL
+(Optional Setup) SSL
+--------------------
 
-The following files need to be ready:
+:::info hashicorp-aws assumes the following for all of its managed deployments:
 
-> - **SSL_CERTIFICATE** - the content of a SSL certificate file
-> - **SSL_CERTIFICATE_KEY** - the content of a SSL certificate key file
-> - **NGINX_CONFIG_FILE** - the content of Nginx config file serving as the reverse proxy for SSL/HTTPS
+Business logic and SSL/HTTP are separate concerns and must be decoupled from each other
+
+:::
+
+That being said, hashicorp-aws deploys application completely without SSL and spins up a Nginx reverse proxy to handle
+the HTTPS redirections to aplication's HTTP ports. Therefore, if the deployed application is publicly-facing and
+requires HTTPS support, then the following files need to be ready:
+
+- **A SSL certificate file**
+- **A SSL certificate key file**
+- **A Nginx config file serving as the reverse proxy for SSL/HTTPS**
 
 :::tip
 
@@ -71,7 +80,7 @@ _Why do we need the credentials listed above for SSL?_ Let's image the following
 
 1. I purchased a domain from [Google Domain][Google Domain] called **my-domain.com**
 2. I developed a web app that will be exposed at **my-app.my-domain.com**
-3. I will deploy my app to [AWS EC2][AWS EC2] using HashiCorp AWS
+3. I will deploy my app to [AWS EC2][AWS EC2] using hashicorp-aws
 4. When my app is up and running, I need to automatically enable secure SSL communication so that my app can be visited
    at `https://my-app.my-domain.com`
 
@@ -102,37 +111,31 @@ In this case, we can simply connect Google Domain to AWS Route 53 in the followi
 
 _The Route 53, in order to promote the best security practices, requires all EC2 instances behind its domain to be
 accessible at HTTPS_. This requires us or hashicorp-aws to install SSL certificates on each deployed EC2 instance, which
-is why `SSL_CERTIFICATE` and `SSL_CERTIFICATE_KEY` come into play.
+is why SSL certificate file and SSL certificate key file come into play.
 
 In order to simply, or better saying promoting best single-responsibility of any cloud application, deployment,
 _hashicorp-aws assumes application should handle business logics only and not SSL themselves_. It therefore let
 application run under regular and simple HTTP protocol and uses
 [Nginx reverse proxy](https://www.nginx.com/resources/glossary/reverse-proxy-server/) to re-route all HTTPS to HTTP on
-that application. This is the reason `NGINX_CONFIG_FILE` above will be needed.
+that application. This is the reason Nginx config file above will be needed.
 
-To summarize, we have 3 credentials we need to setup:
-
-1. **SSL certificate file** We will refer to the contents of this file as **SSL_CERTIFICATE** from now on
-2. **SSL certificate key file** We will refer to the contents of this file as **SSL_CERTIFICATE_KEY** from now on
-3. **Nginx Reverse Proxy Config file** We will refer to the contents of this file as **NGINX_CONFIG_FILE** from now on
-
-If you are not very familiar with HTTPS/SSL, don't worry, the
+If you are still not very clear about HTTPS/SSL, don't worry, the
 [next section](#installing-free-ssl-certificates-with-certbot-running-on-nginx) offers a step-by-step guide to help you
-get the 3 credentials above ready in a minute!
+get the 3 files ready in a minute!
 
 :::tip
 
-If you have your preferred approach or already have the 3 files above ready, please kip the
+If you have your preferred approach or already have the 3 files above ready, please skip the
 [next section](#installing-free-ssl-certificates-with-certbot-running-on-nginx)
 
 :::
 
-#### Installing Free SSL Certificates with Certbot running on Nginx
+### Installing Free SSL Certificates with Certbot running on Nginx
 
 [Let's Encrypt] provides free SSL certificates for our websites to use secure connections. [Certbot] is free open
 source software that allows us to easily create Let's Encrypt SSLs on our Linux server, such as Ubuntu VM.
 
-##### Installing Certbot on Ubuntu
+#### Installing Certbot on Ubuntu
 
 We will install Certbot on Ubuntu with _snapd_ using the following steps:
 
@@ -167,7 +170,7 @@ We will install Certbot on Ubuntu with _snapd_ using the following steps:
    sudo apt install python3-certbot-nginx -y
    ```
 
-##### Creating SSL Certificate with Certbot
+#### Creating SSL Certificate with Certbot
 
 :::caution
 
@@ -183,10 +186,24 @@ certificates without modifying system files:
 sudo certbot --nginx
 ```
 
-##### Configuring Reverse Proxy on Nginx
+:::info
+
+The locations of the SSL certificate and SSL certificate key file will be printed out in terminal for us to pick up
+afterwards
+
+:::
+
+#### Configuring Reverse Proxy on Nginx
 
 After certificates have been deployed and Nginx has been configured properly for SSL by Certbot, it's time to configure
 routing to direct HTTPS to local HTTP by modifying **/etc/nginx/sites-enabled/default** file.
+
+:::note
+
+The details below posts a general approach for reverse-proxying SSL. It is by no means a config file for any deployments
+in productions. _Please refer to each deployment category documentation for their respective Nginx configs_.
+
+:::
 
 Locate the section of
 

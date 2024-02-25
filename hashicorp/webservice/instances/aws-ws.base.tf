@@ -57,10 +57,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.42.0"
     }
-    kong = {
-      source  = "philips-labs/kong"
-      version = "~> 6.630.0"
-    }
   }
   required_version = ">= 0.14.5"
 }
