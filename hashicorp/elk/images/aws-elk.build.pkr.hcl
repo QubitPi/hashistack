@@ -13,15 +13,15 @@
 # limitations under the License.
 
 variable "build_source" {
-  type =  string
+  type      = string
   sensitive = false
-  default = "amazon-ebs.elk"
+  default   = "amazon-ebs.elk"
 }
 
 variable "image_home_dir" {
-  type =  string
+  type      = string
   sensitive = true
-  default = "/home/ubuntu"
+  default   = "/home/ubuntu"
 }
 
 variable "ssl_cert_file_path" {

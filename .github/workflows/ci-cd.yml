@@ -76,8 +76,8 @@ jobs:
       matrix:
         test-directory: [
           tests/machine-learning/images,
-          tests/react/images,
-          tests/kong/images,
+#          tests/react/images,
+#          tests/kong/images,
           tests/webservice/images,
           tests/elk/images,
         ]

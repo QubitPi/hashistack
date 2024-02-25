@@ -20,18 +20,6 @@ title: Kong API Gateway
 Deploying Kong API Gateway
 ==========================
 
-hashicorp-aws deploys [Kong API Gateway] in the following way:
-
-- Deploys [Kong API Gateway] in **HTTP** mode
-- Deploys a reverse proxy Nginx in front of the [Kong API Gateway] in the same EC2 to redirect all HTTPS request to
-  gateway's
-  [corresponding](https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/) HTTP
-  ports
-
-The diagram below illustrates the resulting deployment
-
-![Error loading kong-deployment-diagram.png](img/kong-deployment-diagram.png)
-
 Setup
 -----
 
@@ -41,13 +29,6 @@ First, please follow the [general setup guide](setup#setup) with some Nginx conf
 [discussed in the next section](#nginx-config)
 
 ### Nginx Config
-
-hashicorp-aws assumes the following for all of its management app deployment:
-
-**Business logic and SSL/HTTP are separate concerns and must be decoupled from each other**
-
-That being said, hashicorp-aws deploys Kong completely without SSL and spins up a Nginx rever proxy to handle the
-HTTPS redirections to Kong's HTTP ports. Therefore:
 
 1. hashicorp-aws uses a [customized fork of docker-kong](https://github.com/QubitPi/docker-kong) to
   [fully separate the
@@ -169,8 +150,8 @@ aws_kong_nginx_config_file_path  = "/path/to/nginx.conf"
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the recommended [AWS EC2 instance type] running this image
 - `aws_kong_ssl_cert_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of
-  the [SSL certificate file](setup#ssl) for the Kong API Gateway domain
-- `aws_kong_ssl_cert_key_file_path`  is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of the [SSL certificate key file](setup#ssl) for the Kong API Gateway domain
+  the [SSL certificate file](setup#optional-setup-ssl) for the Kong API Gateway domain
+- `aws_kong_ssl_cert_key_file_path`  is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of the [SSL certificate key file](setup#optional-setup-ssl) for the Kong API Gateway domain
 - `aws_kong_nginx_config_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images`
   of the [Nginx config file](#nginx-config)
 

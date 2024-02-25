@@ -13,39 +13,39 @@
 # limitations under the License.
 
 variable "build_source" {
-  type =  string
+  type      = string
   sensitive = false
-  default = "amazon-ebs.ws"
+  default   = "amazon-ebs.ws"
 }
 
 variable "image_home_dir" {
-  type =  string
+  type      = string
   sensitive = true
-  default = "/home/ubuntu"
+  default   = "/home/ubuntu"
 }
 
 variable "ws_war_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "aws_ws_filebeat_config_file_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "aws_ws_ssl_cert_file_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "aws_ws_ssl_cert_key_file_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "aws_ws_nginx_config_file_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
@@ -58,29 +58,29 @@ build {
 
   # Load SSL Certificates into AMI image
   provisioner "file" {
-    source = "${var.aws_ws_ssl_cert_file_path}"
+    source      = "${var.aws_ws_ssl_cert_file_path}"
     destination = "${var.image_home_dir}/server.crt"
   }
   provisioner "file" {
-    source = "${var.aws_ws_ssl_cert_key_file_path}"
+    source      = "${var.aws_ws_ssl_cert_key_file_path}"
     destination = "${var.image_home_dir}/server.key"
   }
 
   # Load Nginx config file into AMI image
   provisioner "file" {
-    source = "${var.aws_ws_nginx_config_file_path}"
+    source      = "./nginx-ssl.conf"
     destination = "${var.image_home_dir}/nginx-ssl.conf"
   }
 
   # Load Filebeat config into AMI image
   provisioner "file" {
-    source = "${var.aws_ws_filebeat_config_file_path}"
+    source      = "${var.aws_ws_filebeat_config_file_path}"
     destination = "${var.image_home_dir}/filebeat.yml"
   }
 
   # Load WS WAR file into AMI image
   provisioner "file" {
-    source = "${var.ws_war_path}"
+    source      = "${var.ws_war_path}"
     destination = "${var.image_home_dir}/ROOT.war"
   }
 

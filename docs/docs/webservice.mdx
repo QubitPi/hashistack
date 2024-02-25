@@ -44,7 +44,15 @@ General Deployments
 :::info
 
 Please complete the [general setup](setup#setup) before proceeding. If you are deploying in _non-SSL/HTTPS mode_, the
-[SSL section](setup#ssl) can be skipped.
+[SSL section](setup#optional-setup-ssl) can be skipped.
+
+:::
+
+:::tip[Nginx Config in SSL/HTTPS mode]
+
+We offer a [Nginx config file](setup#optional-setup-ssl) template.
+[This template](https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/webservice/images/ssl/nginx-ssl.conf)
+will be used by hashicorp-aws by default
 
 :::
 
@@ -93,7 +101,6 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
     aws_ws_filebeat_config_file_path = "filebeat.yml"
     aws_ws_ssl_cert_file_path        = "server.crt"
     aws_ws_ssl_cert_key_file_path    = "server.key"
-    aws_ws_nginx_config_file_path    = "nginx.conf"
     ```
 
     - `aws_image_region` is the [region][AWS regions] where webservice [AMI][AWS AMI] will be published to. The
@@ -118,12 +125,10 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
       :::
 
     - `aws_ws_ssl_cert_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/aws/images/ssl`
-      of the [SSL certificate file](setup#ssl) for the webservice API domain
+      of the [SSL certificate file](setup#optional-setup-ssl) for the webservice API domain
     - `aws_ws_ssl_cert_key_file_path`  is the absolute path or the path relative to
-      `hashicorp-aws/hashicorp/webservice/images/ssl` of the [SSL certificate key file](setup#ssl) for the webservice
+      `hashicorp-aws/hashicorp/webservice/images/ssl` of the [SSL certificate key file](setup#optional-setup-ssl) for the webservice
       API domain
-    - `aws_ws_nginx_config_file_path` is the absolute path or the path relative to
-      `hashicorp-aws/hashicorp/webservice/images/ssl` of the [Nginx config file](#nginx-config)
 
   </TabItem>
 </Tabs>
