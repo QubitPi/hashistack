@@ -24,17 +24,12 @@ variable "image_home_dir" {
   default = "/home/ubuntu"
 }
 
-variable "aws_kong_ssl_cert_file_path" {
+variable "ssl_cert_file_path" {
   type =  string
   sensitive = true
 }
 
-variable "aws_kong_ssl_cert_key_file_path" {
-  type =  string
-  sensitive = true
-}
-
-variable "aws_kong_nginx_config_file_path" {
+variable "ssl_cert_key_file_path" {
   type =  string
   sensitive = true
 }
@@ -47,17 +42,17 @@ build {
 
   # Load SSL Certificates into AMI image
   provisioner "file" {
-    source = "${var.aws_kong_ssl_cert_file_path}"
+    source = "${var.ssl_cert_file_path}"
     destination = "${var.image_home_dir}/server.crt"
   }
   provisioner "file" {
-    source = "${var.aws_kong_ssl_cert_key_file_path}"
+    source = "${var.ssl_cert_key_file_path}"
     destination = "${var.image_home_dir}/server.key"
   }
 
   # Load Nginx config file into AMI image
   provisioner "file" {
-    source = "${var.aws_kong_nginx_config_file_path}"
+    source = "./nginx-ssl.conf"
     destination = "${var.image_home_dir}/nginx-ssl.conf"
   }
 

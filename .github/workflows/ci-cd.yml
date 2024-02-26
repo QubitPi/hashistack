@@ -77,7 +77,7 @@ jobs:
         test-directory: [
           tests/machine-learning/images,
 #          tests/react/images,
-#          tests/kong/images,
+          tests/kong/images,
           tests/webservice/images,
           tests/elk/images,
         ]

@@ -43,3 +43,42 @@ aws_instance.***: Creating...
 
 This could happen when hashicorp-aws is using Terraform to launch EC2 instance. One possibility is the security group of
 the instance is not found or hasn't been created yet.
+
+AWS
+---
+
+### Security Group Isn't Working as Expected in AWS
+
+:::info
+
+We take [Kong API Gateway](kong) as an example in the discussion below.
+
+:::
+
+This could happen when we are accessing the deployed gateway from a public IP address, such as our personal computer.
+
+Complying with the best security practice, hashicorp-aws binds _private_ EC2 IP to a Route 53 domain. Since it is a
+common practice to limit the API gateway access by assigning gateway instance with
+[inbound rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html). hashicorp-aws also manages
+to disable all HTTP request to the gateway. Therefore, any public visit to our deployed gateway instance has to go
+through the gateway domain.
+
+But since the domain is bound by a private IP, accessing the gateway through the domain from public IP source will hit
+the private IP, which would always fail _independent_ of security group configs
+
+:::info
+
+The reason we bind _private_ IP to domain is that
+[when gateway is used for inter security-group communication, it works
+over private addressing. If we use the public IP address the firewall rule will not recognise the source security group](https://stackoverflow.com/a/24242211).
+This is particularly important when the gateway is serving API to downstream services such as frontend APP.
+
+:::
+
+_The solution_? To access the gateway manually from our machine, for instance, we should address the instance using the
+Public DNS record - this will actually be pointed at the private IP address when we hit the DNS name.
+
+For example, if our instance has public IP `203.0.113.185` and private IP `10.1.234.12`, we are given a public DNS name
+like `ec2-203-0-113-185.eu-west-1.compute.amazonaws.com`, which will resolve to `203.0.113.185` if queried externally,
+or `10.1.234.12` if queried internally. This will enable our security groups to work as intended. See
+[this thread](https://stackoverflow.com/a/24242211) for more details.

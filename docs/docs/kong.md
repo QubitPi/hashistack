@@ -20,24 +20,40 @@ title: Kong API Gateway
 Deploying Kong API Gateway
 ==========================
 
-Setup
------
+hashicorp-aws deploys [Kong API Gateway] in the following way:
 
-### SSL
+- Deploys [Kong API Gateway] in **HTTP** mode
+- Deploys a reverse proxy Nginx in front of the [Kong API Gateway] in the same EC2 to redirect all HTTPS request to
+  gateway's
+  [corresponding](https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/) HTTP
+  ports
 
-First, please follow the [general setup guide](setup#setup) with some Nginx config modifications
-[discussed in the next section](#nginx-config)
+The diagrams below illustrates the resulting deployment
 
-### Nginx Config
+![Error loading kong-deployment-diagram.png](img/kong-deployment-diagram.png)
+
+General Deployments
+-------------------
+
+:::info
+
+Please complete the [general setup](setup#setup) before proceeding.
+
+:::
+
+:::tip[Supporting HTTPS Protocol]
+
+We offer a [Nginx config file](setup#optional-setup-ssl) template.
+[This template](https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/kong/images/nginx-ssl.conf) will be used
+by hashicorp-aws by default
 
 1. hashicorp-aws uses a [customized fork of docker-kong](https://github.com/QubitPi/docker-kong) to
-  [fully separate the
-   app and SSL](https://github.com/QubitPi/docker-kong/pull/1),
+  [fully separate the app and SSL](https://github.com/QubitPi/docker-kong/pull/1),
    and, therefore,
 2. the Nginx config needs multiple [servers](https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/)
    to ensure all HTTPS ports are mapped to their corresponding HTTP ports as shown in the config snippet below:
 
-   :::tip
+   :::note
 
    All relevant HTTP and HTTPS ports are listed in
    [Kong's documentation here](https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/). In general, our Nginx should **listen on an HTTPS port
@@ -49,138 +65,63 @@ First, please follow the [general setup guide](setup#setup) with some Nginx conf
 
    :::
 
-Here is an example that modifies the [general Nginx config](setup#configuring-reverse-proxy-on-nginx):
+   ![Error loading kong-ports-diagram.png](img/kong-ports-diagram.png)
 
-```text
-
-...
-
-server {
-    root /var/www/html;
-
-    index index.html index.htm index.nginx-debian.html;
-    server_name my.kongdomain.com;
-
-    location / {
-        proxy_pass http://localhost:8002;
-    }
-
-    listen [::]:443 ssl ipv6only=on;
-    listen 443 ssl;
-    ssl_certificate /etc/ssl/certs/server.crt;
-    ssl_certificate_key /etc/ssl/private/server.key;
-}
-
-server {
-    root /var/www/html;
-
-    index index.html index.htm index.nginx-debian.html;
-    server_name my.kongdomain.com;
-
-    location / {
-        proxy_pass http://localhost:8000;
-    }
-
-    listen [::]:8443 ssl ipv6only=on;
-    listen 8443 ssl;
-    ssl_certificate /etc/ssl/certs/server.crt;
-    ssl_certificate_key /etc/ssl/private/server.key;
-}
-server {
-    root /var/www/html;
-
-    index index.html index.htm index.nginx-debian.html;
-    server_name my.kongdomain.com;
-
-    location / {
-        proxy_pass http://localhost:8001;
-    }
-
-    listen [::]:8444 ssl ipv6only=on;
-    listen 8444 ssl;
-    ssl_certificate /etc/ssl/certs/server.crt;
-    ssl_certificate_key /etc/ssl/private/server.key;
-}
-
-...
-
-```
-
-Note how we changed the HTTPS' default port forwarding and added two extra server blocks for other Kong's ports.
-
-General Deployment
-------------------
-
-### AWS Credentials
-
-The following environment variables need to be defined:
-
-- [AWS_ACCESS_KEY_ID](setup#aws)
-- [AWS_SECRET_ACCESS_KEY](setup#aws)
-
-### Installing HashiCorp Packer & Terraform
-
-We will go through deployment using Packer & Terraform command line tools which can be installed by following the
-instructions below:
-
-- [Installing Packer][HashiCorp Packer - Install]
-- [Installing Terraform][HashiCorp Terraform - Install]
-
-### Getting HashiCorp Deployment Tool
-
-```console
-git clone https://github.com/QubitPi/hashicorp-aws.git
-```
+:::
 
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.hcl** under
 **[hashicorp-aws/hashicorp/kong/images]** directory with the following contents:
 
-```hcl title=hashicorp-aws/hashicorp/kong/images/aws-kong.auto.pkrvars.hcl
-aws_image_region                 = "us-east-1"
-ami_name                         = "my-kong-ami"
-instance_type                    = "t2.small"
-aws_kong_ssl_cert_file_path      = "/path/to/ssl.crt"
-aws_kong_ssl_cert_key_file_path  = "/path/to/ssl.key"
-aws_kong_nginx_config_file_path  = "/path/to/nginx.conf"
+```hcl title="hashicorp-aws/hashicorp/kong/images/aws-kong.auto.pkrvars.hcl"
+aws_image_region       = "us-east-1"
+ami_name               = "my-kong-ami"
+instance_type          = "t2.small"
+ssl_cert_file_path     = "/path/to/ssl.crt"
+ssl_cert_key_file_path = "/path/to/ssl.key"
 ```
 
-- `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
+- `aws_image_region` is the [image region][AWS regions] where Kong API Gateway [AMI][AWS AMI] will be published to. The
+  published image will be _private_
 - `ami_name` is the published AMI name; it can be arbitrary
-- `instance_type` is the recommended [AWS EC2 instance type] running this image
-- `aws_kong_ssl_cert_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of
+- `instance_type` is the [AWS EC2 instance type] running this image
+- `ssl_cert_file_path` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong/images] of
   the [SSL certificate file](setup#optional-setup-ssl) for the Kong API Gateway domain
-- `aws_kong_ssl_cert_key_file_path`  is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images` of the [SSL certificate key file](setup#optional-setup-ssl) for the Kong API Gateway domain
-- `aws_kong_nginx_config_file_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/kong/images`
-  of the [Nginx config file](#nginx-config)
+- `ssl_cert_key_file_path`  is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong/images] of the
+  [SSL certificate key file](setup#optional-setup-ssl) for the Kong API Gateway domain
 
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-kong.auto.tfvars** under
 **[hashicorp-aws/hashicorp/kong/instances]** directory with the following contents:
 
-```hcl title=hashicorp-aws/hashicorp/kong/instances/aws-kong.auto.tfvars
-aws_deploy_region   = "us-east-1"
-ami_name            = "my-kong-ami"
-instance_type       = "t2.small"
-ec2_instance_name   = "My Kong API Gateway"
-ec2_security_groups = ["My Kong API Gateway Security Group"]
-route_53_zone_id    = "MBS8YLKZML18VV2E8M8OK"
-gateway_domain      = "gateway.mycompany.com"
+```hcl title="hashicorp-aws/hashicorp/kong/instances/aws-kong.auto.tfvars"
+aws_deploy_region = "us-east-1"
+ami_name          = "my-kong-ami"
+instance_type     = "t2.small"
+ec2_instance_name = "My Kong API Gateway"
+security_groups   = ["My Kong API Gateway Security Group"]
+gateway_domain    = "gateway.mycompany.com"
+route_53_zone_id  = "MBS8YLKZML18VV2E8M8OK"
 ```
 
-- `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+- `aws_deploy_region` is the [EC2 runtime region][AWS regions] where Kong will be deployed into
 - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
   [Packer variable file](#defining-packer-variables)**
 - `instance_type` is the chosen [AWS EC2 instance type] at runtime
 - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
-- `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+- `security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
 - `gateway_domain` is the SSL-enabled domain that will serve [Kong manager UI]
 
   :::warning
 
-  Although the `gateway_domain` is a public identity, hashicorp-aws will bind a **private IP** address to this domain
+  hashicorp-aws will bind a _private_ IP address to this domain for the following reasons:
+
+    - [AWS security groups works for private IP only for DNS resolving](https://serverfault.com/a/967483). Services
+      interacting with Kong gateway can use this domain.
+    - In the case of internal access, for example administrators visiting Kong Manager for config purposes, people can
+      still use `https://public-dns:port`
 
   :::
 
@@ -236,39 +177,6 @@ Please try our HACP platform to deploy a Kong instance. It gives us one-click ex
 gateway in a minute.
 
 :::
-
-Troubleshooting
----------------
-
-### Security Group Isn't Working as Expected in AWS
-
-This could happen when we are accessing the deployed gateway from a public IP address, such as our personal computer.
-
-Complying with the best security practice, hashicorp-aws binds _private_ EC2 IP to a Route 53 domain. Since it is a
-common practice to limit the API gateway access by assigning gateway instance with
-[inbound rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html). hashicorp-aws also manages
-to disable all HTTP request to the gateway. Therefore, any public visit to our deployed gateway instance has to go
-through the gateway domain.
-
-But since the domain is bound by a private IP, accessing the gateway through the domain from public IP source will hit
-the private IP, which would always fail _independent_ of security group configs
-
-:::info
-
-The reason we bind _private_ IP to domain is that
-[when gateway is used for inter security-group communication, it works
-over private addressing. If we use the public IP address the firewall rule will not recognise the source security group](https://stackoverflow.com/a/24242211).
-This is particularly important when the gateway is serving API to downstream services such as frontend APP.
-
-:::
-
-_The solution_? To access the gateway manually from our machine, for instance, we should address the instance using the
-Public DNS record - this will actually be pointed at the private IP address when we hit the DNS name.
-
-For example, if our instance has public IP `203.0.113.185` and private IP `10.1.234.12`, we are given a public DNS name
-like `ec2-203-0-113-185.eu-west-1.compute.amazonaws.com`, which will resolve to `203.0.113.185` if queried externally,
-or `10.1.234.12` if queried internally. This will enable our security groups to work as intended. See
-[this thread](https://stackoverflow.com/a/24242211) for more details.
 
 [AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
 [AWS EC2 instance type]: https://aws.amazon.com/ec2/instance-types/
