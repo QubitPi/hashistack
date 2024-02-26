@@ -100,7 +100,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-kong.auto.tfvars
 aws_deploy_region = "us-east-1"
 ami_name          = "my-kong-ami"
 instance_type     = "t2.small"
-ec2_instance_name = "My Kong API Gateway"
+instance_name = "My Kong API Gateway"
 security_groups   = ["My Kong API Gateway Security Group"]
 gateway_domain    = "gateway.mycompany.com"
 route_53_zone_id  = "MBS8YLKZML18VV2E8M8OK"
@@ -110,7 +110,7 @@ route_53_zone_id  = "MBS8YLKZML18VV2E8M8OK"
 - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
   [Packer variable file](#defining-packer-variables)**
 - `instance_type` is the chosen [AWS EC2 instance type] at runtime
-- `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
+- `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
 - `security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
 - `gateway_domain` is the SSL-enabled domain that will serve [Kong manager UI]
 
