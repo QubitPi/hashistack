@@ -41,7 +41,7 @@ Please complete the [general setup](setup#setup) before proceeding.
 
 :::
 
-:::tip[Supporting HTTPS Protocol]
+::::tip[Supporting HTTPS Protocol]
 
 We offer a [Nginx config file](setup#optional-setup-ssl) template.
 [This template](https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/kong/images/nginx-ssl.conf) will be used
@@ -56,18 +56,18 @@ by hashicorp-aws by default
    :::note
 
    All relevant HTTP and HTTPS ports are listed in
-   [Kong's documentation here](https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/). In general, our Nginx should **listen on an HTTPS port
-   and `proxy_pass` to an HTTP port. For example, ports 8443 and 8444 are `proxy_pass`ed to 8000 and 8001, respectively,
-   both of which are listed in the doc.
+   [Kong's documentation here](https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/).
+   In general, our Nginx should **listen on an HTTPS port and `proxy_pass` to an HTTP port. For example, ports 8443 and
+   8444 are `proxy_pass`ed to 8000 and 8001, respectively, both of which are listed in the doc.
 
    One special case is HTTP port 8002, which is the Kong manager UI port. hashicorp-aws assigns user specified domain
    to each deployed Kong. Hitting the domain will simply open up a user-friendly UI by this configuration.
 
-   :::
-
    ![Error loading kong-ports-diagram.png](img/kong-ports-diagram.png)
 
-:::
+   :::
+
+::::
 
 ### Defining Packer Variables
 
