@@ -32,7 +32,7 @@ variable "instance_type" {
   }
 }
 
-variable "ec2_instance_name" {
+variable "instance_name" {
   type = string
   description = "EC2 instance name"
 }
@@ -93,7 +93,7 @@ resource "aws_instance" "aws-kong" {
   ami = "${data.aws_ami.latest-kong.id}"
   instance_type = "${var.instance_type}"
   tags = {
-    Name = "${var.ec2_instance_name}"
+    Name = "${var.instance_name}"
   }
 
   security_groups = var.security_groups
