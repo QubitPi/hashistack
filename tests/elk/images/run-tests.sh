@@ -23,7 +23,7 @@ export SCRIPT_DIR="${PWD}/../../../hashicorp/elk/scripts"
 
 cp aws-elk.packer.pkr.hcl $PACKER_IMAGE_DIR
 cp aws-elk.source.pkr.hcl $PACKER_IMAGE_DIR
-cp aws-elk.auto.pkrvars.hcl $PACKER_IMAGE_DIR
+cp aws-elk.build.auto.pkrvars.hcl $PACKER_IMAGE_DIR
 
 cd $PACKER_IMAGE_DIR
 packer init .

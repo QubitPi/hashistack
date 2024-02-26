@@ -23,7 +23,7 @@ export SCRIPT_DIR="${PWD}/../../../hashicorp/kong/scripts"
 
 cp aws-kong.packer.pkr.hcl $PACKER_IMAGE_DIR
 cp aws-kong.source.pkr.hcl $PACKER_IMAGE_DIR
-cp aws-kong.auto.pkrvars.hcl $PACKER_IMAGE_DIR
+cp aws-kong.build.auto.pkrvars.hcl $PACKER_IMAGE_DIR
 
 cd $PACKER_IMAGE_DIR
 packer init .

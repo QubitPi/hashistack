@@ -69,26 +69,29 @@ by hashicorp-aws by default
 
 ### Defining Packer Variables
 
-Create a [HashiCorp Packer variable values file] named **aws-elk.pkrvars.hcl** with the following contents:
+Create a [HashiCorp Packer variable values file] named **aws-elk.pkrvars.hcl** under
+**[hashicorp-aws/hashicorp/elk/images]** with the following contents:
 
-```hcl
-aws_image_region           = "us-east-2"
-ami_name                   = "my-elk-ami"
-ssl_cert_file_path         = "/absolute/path/to/ssl.crt"
-ssl_cert_key_file_path     = "/absolute/path/to/ssl.key"
+```hcl title="hashicorp-aws/hashicorp/elk/images/aws-kong.auto.pkrvars.hcl"
+aws_image_region       = "us-east-2"
+ami_name               = "my-elk-ami"
+ssl_cert_file_path     = "/path/to/ssl.crt"
+ssl_cert_key_file_path = "/path/to/ssl.key"
 ```
 
 - `aws_image_region` is the [region][AWS regions] where ELK [AMI][AWS AMI] will be published to. The published image
   will be _private_
 - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
-- `ssl_cert_file_path` and `ssl_cert_key_file_path` above are the local absolute paths to SSL certificate file and SSL
-  certificate key, respectively. They can be [obtained via Certbot](setup#optional-setup-ssl)
+- `ssl_cert_file_path` is the absolute path or the path relative to [hashicorp-aws/hashicorp/elk/images] of
+  the [SSL certificate file](setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
+- `ssl_cert_key_file_path`  is the absolute path or the path relative to [hashicorp-aws/hashicorp/elk/images] of the [SSL certificate key file](setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
 
 ### Defining Terraform Variables
 
-Create a [HashiCorp Terraform variable values file] named **aws-elk.tfvars** with the following contents:
+Create a [HashiCorp Terraform variable values file] named **aws-elk.tfvars** under
+**[hashicorp-aws/hashicorp/elk/instances]**with the following contents:
 
-```hcl
+```hcl title="hashicorp-aws/hashicorp/elk/instances/aws-kong.auto.tfvars"
 aws_deploy_region = "us-east-2"
 ami_name          = "my-elk-ami"
 instance_name     = "My ELK instance"
@@ -266,6 +269,8 @@ a minute.
 [elk-release-definition-template]: https://github.com/QubitPi/elk-release-definition-template
 
 [hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+[hashicorp-aws/hashicorp/elk/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/elk/images
+[hashicorp-aws/hashicorp/elk/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/elk/instances
 [HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
 
