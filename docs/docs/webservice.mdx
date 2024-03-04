@@ -64,20 +64,20 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
 <Tabs>
   <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
     ```hcl title=hashicorp-aws/hashicorp/webservice/images/basic/aws-aws.auto.pkrvars.hcl
-    ami_region                       = "my-aws-region"
-    ami_name                         = "my-webservice"
-    instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-    ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
-    aws_ws_filebeat_config_file_path = "filebeat.yml"
+    ami_region                   = "my-aws-region"
+    ami_name                     = "my-webservice"
+    instance_type                = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+    ws_war_path                  = "my-webservice-1.0-SNAPSHOT.war"
+    ws_filebeat_config_file_path = "filebeat.yml"
     ```
 
     - `ami_region` is the [region][AWS regions] where webservice [AMI][AWS AMI] will be published to. The published
       image will be _private_
     - `ami_name` is the published AMI name; it can be arbitrary
-    - `instance_type` is the recommended [AWS EC2 instance type] running this image
+    - `instance_type` is the [EC2 instance type][AWS EC2 instance type] to use while building the AMI, such as t2.small.
     - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
       the webservice WAR file we are going to deploy
-    - `aws_ws_filebeat_config_file_path` is the absolute path or the path relative to
+    - `ws_filebeat_config_file_path` is the absolute path or the path relative to
       `hashicorp-aws/hashicorp/webservice/images/basic` of the filebeat config file if the webservice is sending logs
       to ELK
 
@@ -95,22 +95,22 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
   </TabItem>
   <TabItem value="ssl" label="SSL/HTTPS">
     ```hcl title=hashicorp-aws/hashicorp/webservice/images/ssl/aws-aws.auto.pkrvars.hcl
-    ami_region                       = "my-aws-region"
-    ami_name                         = "my-webservice"
-    instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-    ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
-    aws_ws_filebeat_config_file_path = "filebeat.yml"
-    aws_ws_ssl_cert_file_path        = "server.crt"
-    aws_ws_ssl_cert_key_file_path    = "server.key"
+    ami_region                    = "my-aws-region"
+    ami_name                      = "my-webservice"
+    instance_type                 = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+    ws_war_path                   = "my-webservice-1.0-SNAPSHOT.war"
+    ws_filebeat_config_file_path  = "filebeat.yml"
+    aws_ws_ssl_cert_file_path     = "server.crt"
+    aws_ws_ssl_cert_key_file_path = "server.key"
     ```
 
     - `ami_region` is the [region][AWS regions] where webservice [AMI][AWS AMI] will be published to. The
       published image will be _private_
     - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
-    - `instance_type` is the recommended [AWS EC2 instance type] running this image
+    - `instance_type` is the [EC2 instance type][AWS EC2 instance type] to use while building the AMI, such as t2.small.
     - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
       the webservice WAR file we are going to deploy
-    - `aws_ws_filebeat_config_file_path` is the absolute path or the path relative to
+    - `ws_filebeat_config_file_path` is the absolute path or the path relative to
       `hashicorp-aws/hashicorp/webservice/images/ssl` of the filebeat config file if the webservice is sending logs
       to ELK
 
