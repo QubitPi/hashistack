@@ -1,6 +1,6 @@
 build_source                     = "docker.ubuntu"
 image_home_dir                   = "/"
-aws_image_region                 = "us-east-1"
+ami_region                       = "us-east-1"
 ami_name                         = "my-ami"
 instance_type                    = "t2.small"
 react_dist_path                  = "dist"
