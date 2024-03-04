@@ -64,14 +64,15 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
 <Tabs>
   <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
     ```hcl title=hashicorp-aws/hashicorp/webservice/images/basic/aws-aws.auto.pkrvars.hcl
-    aws_image_region                 = "my-aws-region"
+    ami_region                       = "my-aws-region"
     ami_name                         = "my-webservice"
     instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
     ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
     aws_ws_filebeat_config_file_path = "filebeat.yml"
     ```
 
-    - `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
+    - `ami_region` is the [region][AWS regions] where webservice [AMI][AWS AMI] will be published to. The published
+      image will be _private_
     - `ami_name` is the published AMI name; it can be arbitrary
     - `instance_type` is the recommended [AWS EC2 instance type] running this image
     - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
@@ -94,7 +95,7 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
   </TabItem>
   <TabItem value="ssl" label="SSL/HTTPS">
     ```hcl title=hashicorp-aws/hashicorp/webservice/images/ssl/aws-aws.auto.pkrvars.hcl
-    aws_image_region                 = "my-aws-region"
+    ami_region                       = "my-aws-region"
     ami_name                         = "my-webservice"
     instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
     ws_war_path                      = "my-webservice-1.0-SNAPSHOT.war"
@@ -103,7 +104,7 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
     aws_ws_ssl_cert_key_file_path    = "server.key"
     ```
 
-    - `aws_image_region` is the [region][AWS regions] where webservice [AMI][AWS AMI] will be published to. The
+    - `ami_region` is the [region][AWS regions] where webservice [AMI][AWS AMI] will be published to. The
       published image will be _private_
     - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
     - `instance_type` is the recommended [AWS EC2 instance type] running this image
