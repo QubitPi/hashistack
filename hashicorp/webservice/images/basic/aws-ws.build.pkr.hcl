@@ -29,7 +29,7 @@ variable "ws_war_path" {
   sensitive = true
 }
 
-variable "aws_ws_filebeat_config_file_path" {
+variable "ws_filebeat_config_file_path" {
   type      = string
   sensitive = true
 }
@@ -42,7 +42,7 @@ build {
 
   # Load Filebeat config into AMI image
   provisioner "file" {
-    source      = "${var.aws_ws_filebeat_config_file_path}"
+    source      = "${var.ws_filebeat_config_file_path}"
     destination = "${var.image_home_dir}/filebeat.yml"
   }
 
