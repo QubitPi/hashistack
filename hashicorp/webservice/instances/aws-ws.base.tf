@@ -44,13 +44,6 @@ variable "ec2_security_groups" {
   description = "EC2 Security Groups"
 }
 
-variable "sentry_dsn" {
-  type = string
-  description = "Sentry.io DSN"
-  sensitive = true
-  default = ""
-}
-
 terraform {
   required_providers {
     aws = {
@@ -70,9 +63,6 @@ variable "init_script_path" {
 }
 data "template_file" "aws-ws-init" {
   template = "${file(${var.init_script_path})}"
-  vars = {
-    sentry_dsn = "${var.sentry_dsn}"
-  }
 }
 
 data "aws_ami" "latest-ws" {
