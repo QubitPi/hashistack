@@ -24,11 +24,11 @@ variable "ami_name" {
 
 variable "instance_type" {
   type        = string
-  description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
+  description = "The EC2 instance type to use while building the AMI, such as t2.small."
 
   validation {
     condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
-    error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
+    error_message = "Allowed values for instance_type are those specified for T2 ONLY."
   }
 }
 
