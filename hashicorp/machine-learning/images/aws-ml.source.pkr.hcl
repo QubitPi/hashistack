@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "aws_image_region" {
+variable "ami_region" {
   type =  string
   sensitive = true
 }
@@ -51,7 +51,7 @@ source "amazon-ebs" "machine-learning" {
     delete_on_termination = true
   }
 
-  region = "${var.aws_image_region}"
+  region = "${var.ami_region}"
   source_ami_filter {
     filters = {
       name = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"

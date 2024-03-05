@@ -73,14 +73,14 @@ Create a [HashiCorp Packer variable values file] named **aws-elk.pkrvars.hcl** u
 **[hashicorp-aws/hashicorp/elk/images]** with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/elk/images/aws-kong.auto.pkrvars.hcl"
-aws_image_region       = "us-east-2"
+ami_region             = "us-east-2"
 ami_name               = "my-elk-ami"
 ssl_cert_file_path     = "/path/to/ssl.crt"
 ssl_cert_key_file_path = "/path/to/ssl.key"
 ```
 
-- `aws_image_region` is the [region][AWS regions] where ELK [AMI][AWS AMI] will be published to. The published image
-  will be _private_
+- `ami_region` is the [region][AWS regions] where ELK [AMI][AWS AMI] will be published to. The published image will be
+  _private_
 - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
 - `ssl_cert_file_path` is the absolute path or the path relative to [hashicorp-aws/hashicorp/elk/images] of
   the [SSL certificate file](setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
