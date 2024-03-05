@@ -72,13 +72,14 @@ Create a [HashiCorp Packer variable values file] named **aws-mlflow-docker.pkrva
 **[hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker]** directory with the following contents
 
 ```hcl title=hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
-aws_image_region = "my-aws-region"
-ami_name         = "my-mlflow-models"
-instance_type    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-ml_models_path   = "/abs/path/to/mlflow_models/"
+ami_region     = "my-aws-region"
+ami_name       = "my-mlflow-models"
+instance_type  = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+ml_models_path = "/abs/path/to/mlflow_models/"
 ```
 
-- `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
+- `ami_region` is the [image region][AWS regions] where ML models [AMI][AWS AMI] will be published to. The published
+  image will be _private_
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the recommended [AWS EC2 instance type] running this image
 - `ml_models_path` is the directory we made ready [previously](#generating-machine-learning-models)

@@ -75,14 +75,14 @@ Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.h
 **[hashicorp-aws/hashicorp/kong/images]** directory with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/kong/images/aws-kong.auto.pkrvars.hcl"
-aws_image_region       = "us-east-1"
+ami_region             = "us-east-1"
 ami_name               = "my-kong-ami"
 instance_type          = "t2.small"
 ssl_cert_file_path     = "/path/to/ssl.crt"
 ssl_cert_key_file_path = "/path/to/ssl.key"
 ```
 
-- `aws_image_region` is the [image region][AWS regions] where Kong API Gateway [AMI][AWS AMI] will be published to. The
+- `ami_region` is the [image region][AWS regions] where Kong API Gateway [AMI][AWS AMI] will be published to. The
   published image will be _private_
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the [AWS EC2 instance type] running this image

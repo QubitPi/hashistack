@@ -60,7 +60,7 @@ The following script variables need to be defined:
       variable values (`/abs/path/to/hashicorp-aws-config-dir/aws-react.pkrvars.hcl`):
 
       ```hcl
-      aws_image_region                 = "my-aws-region"
+      ami_region                       = "my-aws-region"
       ami_name                         = "my-react-app"
       instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
       react_dist_path                  = "../../../../dist"

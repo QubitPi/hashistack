@@ -34,7 +34,7 @@ source "amazon-ebs" "react" {
     volume_type = "gp2"
     delete_on_termination = true
   }
-  region = "${var.aws_image_region}"
+  region = "${var.ami_region}"
   source_ami_filter {
     filters = {
       name = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"
