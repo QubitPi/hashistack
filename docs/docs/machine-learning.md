@@ -90,11 +90,11 @@ Create a [HashiCorp Terraform variable values file] named **aws-mlflow-docker.tf
 **[hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker]** directory with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker/aws-mlflow-docker.tfvars"
-aws_deploy_region   = "my-aws-region"
-ami_name            = "my-mlflow-models"
-instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-ec2_instance_name   = "My MLflow models"
-ec2_security_groups = ["myKeyPairName"]
+aws_deploy_region = "my-aws-region"
+ami_name          = "my-mlflow-models"
+instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+ec2_instance_name = "My MLflow models"
+security_groups   = ["myKeyPairName"]
 ```
 
 - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
@@ -102,7 +102,7 @@ ec2_security_groups = ["myKeyPairName"]
   [Packer variable file](#defining-packer-variables)**
 - `instance_type` is the chosen [AWS EC2 instance type] at runtime
 - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
-- `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+- `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
 
 ### Building AMI Image
 

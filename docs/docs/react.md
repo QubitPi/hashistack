@@ -73,13 +73,13 @@ The following script variables need to be defined:
       following variable values (`/abs/path/to/hashicorp-aws-config-dir/aws-react.tfvars`):
 
       ```hcl
-      aws_deploy_region   = "my-aws-region"
-      route_53_zone_id    = "9DQXLTNSN7ZX9P8V2KZII"
-      ami_name            = "my-react-app"
-      instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-      ec2_instance_name   = "My React App"
-      ec2_security_groups = ["My React App"]
-      react_domain        = "myreactapp.mycompany.com"
+      aws_deploy_region = "my-aws-region"
+      route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
+      ami_name          = "my-react-app"
+      instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+      ec2_instance_name = "My React App"
+      security_groups   = ["My React App"]
+      react_domain      = "myreactapp.mycompany.com"
       ```
 
 GitHub Action Automatic Deployment

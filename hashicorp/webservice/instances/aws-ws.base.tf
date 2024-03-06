@@ -39,7 +39,7 @@ variable "ec2_instance_name" {
 
 # https://github.com/hashicorp/packer/issues/11354
 # https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
-variable "ec2_security_groups" {
+variable "security_groups" {
   type = list(string)
   description = "EC2 Security Groups"
 }
@@ -87,7 +87,7 @@ resource "aws_instance" "aws-ws" {
     Name = "${var.ec2_instance_name}"
   }
 
-  security_groups = var.ec2_security_groups
+  security_groups = var.security_groups
 
   user_data = "${data.template_file.aws-ws-init.rendered}"
 }

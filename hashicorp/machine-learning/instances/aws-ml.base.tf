@@ -37,7 +37,7 @@ variable "ec2_instance_name" {
   description = "EC2 instance name"
 }
 
-variable "ec2_security_groups" {
+variable "security_groups" {
   type = list(string)
   description = "EC2 Security Groups"
 }
@@ -78,7 +78,7 @@ resource "aws_instance" "machine-learning" {
     Name = "${var.ec2_instance_name}"
   }
 
-  security_groups = var.ec2_security_groups
+  security_groups = var.security_groups
 
   user_data = "${data.template_file.init.rendered}"
 }

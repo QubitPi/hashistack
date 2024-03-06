@@ -111,7 +111,7 @@ route_53_zone_id  = "MBS8YLKZML18VV2E8M8OK"
   [Packer variable file](#defining-packer-variables)**
 - `instance_type` is the chosen [AWS EC2 instance type] at runtime
 - `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
-- `security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+- `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
 - `gateway_domain` is the SSL-enabled domain that will serve [Kong manager UI]
 
   :::warning

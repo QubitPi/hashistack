@@ -142,11 +142,11 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
 <Tabs>
   <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
     ```hcl title=hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
-    aws_deploy_region   = "my-aws-region"
-    ami_name            = "my-webservice"
-    instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-    ec2_instance_name   = "My Webservice"
-    ec2_security_groups = ["My Webservice"]
+    aws_deploy_region = "my-aws-region"
+    ami_name          = "my-webservice"
+    instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+    ec2_instance_name = "My Webservice"
+    security_groups   = ["My Webservice"]
     ```
 
     - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
@@ -154,18 +154,18 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
       [Packer variable file](#defining-packer-variables)**
     - `instance_type` is the chosen [AWS EC2 instance type] at runtime
     - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
-    - `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+    - `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
 
   </TabItem>
   <TabItem value="ssl" label="SSL/HTTPS">
     ```hcl title=hashicorp-aws/hashicorp/webservice/instances/ssl/aws-ws.auto.tfvars
-    aws_deploy_region   = "my-aws-region"
-    ami_name            = "my-webservice"
-    instance_type       = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-    ec2_instance_name   = "My Webservice"
-    ec2_security_groups = ["My Webservice"]
-    route_53_zone_id    = "9DQXLTNSN7ZX9P8V2KZII"
-    ws_domain           = "mywebservice.mycompany.com"
+    aws_deploy_region = "my-aws-region"
+    ami_name          = "my-webservice"
+    instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
+    ec2_instance_name = "My Webservice"
+    security_groups   = ["My Webservice"]
+    route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
+    ws_domain         = "mywebservice.mycompany.com"
     ```
 
     - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
@@ -173,7 +173,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
       [Packer variable file](#defining-packer-variables)**
     - `instance_type` is the chosen [AWS EC2 instance type] at runtime
     - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
-    - `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+    - `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
     - `ws_domain` is the SSL-enabled domain that will serve webservice API URL
 
       :::warning

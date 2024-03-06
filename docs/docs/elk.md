@@ -108,7 +108,7 @@ route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
 - `key_pair_name` is the name of
   [AWS EC2 key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) bound to this ELK instance.
   We will use this key pair to later ssh into the ELK to for [post setup discussed below](#post-setup-in-ec2-instance)
-- `security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
+- `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
 - `elk_domain` is the SSL-enabled domain that will serve various ELK endpoints, such as its API and [Kibana UI][Kibana]
 
   :::warning
