@@ -43,29 +43,25 @@ Please complete the [general setup](setup#setup) before proceeding.
 
 ::::tip[Supporting HTTPS Protocol]
 
-We offer a [Nginx config file](setup#optional-setup-ssl) template.
-[This template](https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/kong/images/nginx-ssl.conf) will be used
-by hashicorp-aws by default
+hashicorp-aws uses a [customized fork of docker-kong](https://github.com/QubitPi/docker-kong) to
+[fully separate the app and SSL](https://github.com/QubitPi/docker-kong/pull/1), and, therefore, the Nginx config needs
+multiple [servers](https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/)
+to ensure all HTTPS ports are mapped to their corresponding HTTP ports as shown in the config snippet below:
 
-1. hashicorp-aws uses a [customized fork of docker-kong](https://github.com/QubitPi/docker-kong) to
-  [fully separate the app and SSL](https://github.com/QubitPi/docker-kong/pull/1),
-   and, therefore,
-2. the Nginx config needs multiple [servers](https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/)
-   to ensure all HTTPS ports are mapped to their corresponding HTTP ports as shown in the config snippet below:
+:::note
 
-   :::note
+All relevant HTTP and HTTPS ports are listed in
+[Kong's documentation here](https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/).
+In general, our Nginx should **listen on an HTTPS port and `proxy_pass` to an HTTP port. For example, ports 8443 and
+8444 are `proxy_pass`ed to 8000 and 8001, respectively, both of which are listed in the doc.
 
-   All relevant HTTP and HTTPS ports are listed in
-   [Kong's documentation here](https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/).
-   In general, our Nginx should **listen on an HTTPS port and `proxy_pass` to an HTTP port. For example, ports 8443 and
-   8444 are `proxy_pass`ed to 8000 and 8001, respectively, both of which are listed in the doc.
+One special case is HTTP port 8000, which is the redirect port. hashicorp-aws maps the standard SSL 443 port to 8000 so
+that any downstream (such as UI web app) simply needs to hit the domain without specifying port number and have its
+request be reidrected to upstream services (such as database webservice)
 
-   One special case is HTTP port 8002, which is the Kong manager UI port. hashicorp-aws assigns user specified domain
-   to each deployed Kong. Hitting the domain will simply open up a user-friendly UI by this configuration.
+![Error loading kong-ports-diagram.png](img/kong-ports-diagram.png)
 
-   ![Error loading kong-ports-diagram.png](img/kong-ports-diagram.png)
-
-   :::
+:::
 
 ::::
 
@@ -75,21 +71,24 @@ Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.h
 **[hashicorp-aws/hashicorp/kong/images]** directory with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/kong/images/aws-kong.auto.pkrvars.hcl"
-ami_region             = "us-east-1"
-ami_name               = "my-kong-ami"
-instance_type          = "t2.small"
-ssl_cert_file_path     = "/path/to/ssl.crt"
-ssl_cert_key_file_path = "/path/to/ssl.key"
+ami_region              = "us-east-1"
+ami_name                = "my-kong-ami"
+instance_type           = "t2.small"
+ssl_cert_source         = "/path/to/ssl.crt"
+ssl_cert_key_source     = "/path/to/ssl.key"
+kong_api_gateway_domain = "gateway.mycompany.com"
 ```
 
 - `ami_region` is the [image region][AWS regions] where Kong API Gateway [AMI][AWS AMI] will be published to. The
   published image will be _private_
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the [AWS EC2 instance type] running this image
-- `ssl_cert_file_path` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong/images] of
+- `ssl_cert_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong/images] of
   the [SSL certificate file](setup#optional-setup-ssl) for the Kong API Gateway domain
-- `ssl_cert_key_file_path`  is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong/images] of the
+- `ssl_cert_key_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong/images] of the
   [SSL certificate key file](setup#optional-setup-ssl) for the Kong API Gateway domain
+- `kong_api_gateway_domain` is the SSL-enabled domain that will serve the
+  [various ports of Kong gateway][Kong gateway - various ports]
 
 ### Defining Terraform Variables
 
@@ -193,5 +192,6 @@ gateway in a minute.
 [Kong API Gateway]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/
 [Kong API Gateway Release Definition Template]: https://github.com/QubitPi/kong-api-gateway-release-definition-template
 [Kong manager UI]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/kong-manager/
+[Kong gateway - various ports]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/
 
 [Screwdriver CD]: https://qubitpi.github.io/screwdriver-cd-homepage/
