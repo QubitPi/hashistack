@@ -28,16 +28,19 @@ name: Bump Version (Patch version) By GitHub Tags
 
 jobs:
   bump-version:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Download auto-version bump scripts
-      run: |
-        git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-        cp ../hashicorp-aws/.github/tag-for-release.bash .github/
-        cp ../hashicorp-aws/.github/upversion.py .github/
-    - name: Tag for release
-      run: |
-        git config --global user.name ${{ inputs.user }}
-        git config --global user.email ${{ inputs.email }}
-        .github/tag-for-release.bash
+    name: Bump Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Download auto-version bump scripts
+        run: |
+          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+          cp ../hashicorp-aws/.github/tag-for-release.bash .github/
+          cp ../hashicorp-aws/.github/upversion.py .github/
+      - name: Tag for release
+        run: |
+          git config --global user.name ${{ inputs.user }}
+          git config --global user.email ${{ inputs.email }}
+          .github/tag-for-release.bash
