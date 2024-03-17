@@ -10,7 +10,7 @@ HashiCorp AWS
 [![HashiCorp Terraform Badge][HashiCorp Terraform badge]][HashiCorp Terraform URL]
 [![Screwdriver CD badge][Screwdriver CD badge]][Screwdriver CD url]
 [![Discord]](https://discord.com/widget?id=1060753787125514332)
-[![Apache License][Apache License badge]][Apache License URL]
+[![Apache License][Apache License Badge]][Apache License URL]
 
 </div>
 
@@ -53,7 +53,7 @@ The use and distribution terms for [hashicorp-aws] are covered by the [Apache Li
 </div>
 
 [Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
-[Apache License badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
+[Apache License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
 [Apache License URL]: https://www.apache.org/licenses/LICENSE-2.0
 
 [Discord]: https://img.shields.io/discord/1060753787125514332?color=5865F2&logo=discord&logoColor=ffffff&style=for-the-badge
