@@ -44,7 +44,7 @@ jobs:
         docker: [
           {dockerfile-path: tests/machine-learning, image-name: hashicorp-aws-machine-learning-test},
           {dockerfile-path: tests/react, image-name: hashicorp-aws-react-test},
-          {dockerfile-path: tests/kong, image-name: hashicorp-aws-kong-test},
+          {dockerfile-path: tests/kong-api-gateway, image-name: hashicorp-aws-kong-api-gateway-test},
           {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test},
           {dockerfile-path: tests/elk, image-name: hashicorp-aws-elk-test}
         ]
@@ -77,7 +77,7 @@ jobs:
         test-directory: [
           tests/machine-learning/images,
 #          tests/react/images,
-          tests/kong/images,
+          tests/kong-api-gateway/images,
           tests/webservice/images,
           tests/elk/images,
         ]
@@ -89,9 +89,57 @@ jobs:
           cd ${{ matrix.test-directory }}
           ./run-tests.sh
 
+  list-screwdriver-templates:
+    name: Listing Screwdriver Templates to Validate
+    needs: code-styles
+    runs-on: ubuntu-latest
+    outputs:
+      paths: ${{ steps.list-screwdriver-templates.outputs.paths }}
+    steps:
+      - name: List Files
+        id: list-screwdriver-templates
+        uses: mirko-felice/list-files-action@v3.0.5
+        with:
+          repo: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          path: "adaptors/screwdriver-cd/templates"
+          ext: ".yaml"
+
+  validate-screwdriver-templates:
+    name: Validating Template
+    needs: list-screwdriver-templates
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        template: ${{ fromJson(needs.list-screwdriver-templates.outputs.paths) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Validate ${{ matrix.template }}
+        uses: satackey/action-js-inline@v0.0.2
+        with:
+          required-packages: js-yaml screwdriver-data-schema
+          script: |
+            // Running screwdriver-template-main's template-validate CMD won't work because it's a over-the-wire
+            // validation against SD API which requires token authentication... (can't believe this)
+            //
+            // The API-based validation, by digging source code, essentially runs the following in API server:
+            const error = require("screwdriver-data-schema").config.template.template
+              .validate(
+                require('js-yaml').load(
+                  require("fs").readFileSync("${{ matrix.template }}")
+                )
+            ).error
+            if (error) {
+              require('@actions/core').setFailed(error);
+            }
+
   documentation-ci-cd:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
-    needs: [tests]
+    needs: [tests, validate-screwdriver-templates]
     outputs:
       outcome: ${{ job.status }}
     continue-on-error: true

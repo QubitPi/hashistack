@@ -1,0 +1,8 @@
+{
+  "label": "Kong API Gateway",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Deploying Kong API Gateway to AWS via hashicorp-aws"
+  }
+}
