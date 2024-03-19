@@ -24,12 +24,17 @@ variable "image_home_dir" {
   default = "/home/ubuntu"
 }
 
-variable "ssl_cert_file_path" {
+variable "ssl_cert_source" {
   type =  string
   sensitive = true
 }
 
-variable "ssl_cert_key_file_path" {
+variable "ssl_cert_key_source" {
+  type =  string
+  sensitive = true
+}
+
+variable "kong_api_gateway_domain" {
   type =  string
   sensitive = true
 }
@@ -40,26 +45,10 @@ build {
     "source.${var.build_source}"
   ]
 
-  # Load SSL Certificates into AMI image
-  provisioner "file" {
-    source = "${var.ssl_cert_file_path}"
-    destination = "${var.image_home_dir}/server.crt"
-  }
-  provisioner "file" {
-    source = "${var.ssl_cert_key_file_path}"
-    destination = "${var.image_home_dir}/server.key"
-  }
-
-  # Load Nginx config file into AMI image
-  provisioner "file" {
-    source = "./nginx-ssl.conf"
-    destination = "${var.image_home_dir}/nginx-ssl.conf"
-  }
-
-  provisioner "shell" {
-    script = "../scripts/aws-kong-pkr-setup.sh"
-    environment_vars = [
-      "HOME_DIR=${var.image_home_dir}"
-    ]
+  provisioner "hashicorp-aws-kong-api-gateway-provisioner" {
+    homeDir = "${var.image_home_dir}"
+    sslCertSource = "${var.ssl_cert_source}"
+    sslCertKeySource = "${var.ssl_cert_key_source}"
+    kongApiGatewayDomain = "${var.kong_api_gateway_domain}"
   }
 }

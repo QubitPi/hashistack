@@ -18,5 +18,10 @@ packer {
       version = ">= 0.0.7"
       source = "github.com/hashicorp/docker"
     }
+
+    hashicorp-aws = {
+      version = ">= 0.0.8"
+      source = "github.com/QubitPi/hashicorp-aws"
+    }
   }
 }

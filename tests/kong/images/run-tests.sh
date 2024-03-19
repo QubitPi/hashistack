@@ -19,7 +19,6 @@ set -e
 export TEST_DIR="${PWD}"
 
 export PACKER_IMAGE_DIR="${PWD}/../../../hashicorp/kong/images"
-export SCRIPT_DIR="${PWD}/../../../hashicorp/kong/scripts"
 
 cp aws-kong.packer.pkr.hcl $PACKER_IMAGE_DIR
 cp aws-kong.source.pkr.hcl $PACKER_IMAGE_DIR
