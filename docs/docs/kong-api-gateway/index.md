@@ -1,6 +1,7 @@
 ---
-sidebar_position: 5
-title: Kong API Gateway
+sidebar_position: 1
+title: General Deployment
+description: Configuring logging & audit
 ---
 
 [//]: # (Copyright Jiaqi Liu)
@@ -68,9 +69,9 @@ request be reidrected to upstream services (such as database webservice)
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.hcl** under
-**[hashicorp-aws/hashicorp/kong/images]** directory with the following contents:
+**[hashicorp-aws/hashicorp/kong-api-gateway/images]** directory with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/kong/images/aws-kong.auto.pkrvars.hcl"
+```hcl title="hashicorp-aws/hashicorp/kong-api-gateway/images/aws-kong.auto.pkrvars.hcl"
 ami_region              = "us-east-1"
 ami_name                = "my-kong-ami"
 instance_type           = "t2.small"
@@ -83,9 +84,9 @@ kong_api_gateway_domain = "gateway.mycompany.com"
   published image will be _private_
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the [AWS EC2 instance type] running this image
-- `ssl_cert_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong/images] of
+- `ssl_cert_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong-api-gateway/images] of
   the [SSL certificate file](setup#optional-setup-ssl) for the Kong API Gateway domain
-- `ssl_cert_key_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong/images] of the
+- `ssl_cert_key_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong-api-gateway/images] of the
   [SSL certificate key file](setup#optional-setup-ssl) for the Kong API Gateway domain
 - `kong_api_gateway_domain` is the SSL-enabled domain that will serve the
   [various ports of Kong gateway][Kong gateway - various ports]
@@ -93,9 +94,9 @@ kong_api_gateway_domain = "gateway.mycompany.com"
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-kong.auto.tfvars** under
-**[hashicorp-aws/hashicorp/kong/instances]** directory with the following contents:
+**[hashicorp-aws/hashicorp/kong-api-gateway/instances]** directory with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/kong/instances/aws-kong.auto.tfvars"
+```hcl title="hashicorp-aws/hashicorp/kong-api-gateway/instances/aws-kong.auto.tfvars"
 aws_deploy_region = "us-east-1"
 ami_name          = "my-kong-ami"
 instance_type     = "t2.small"
@@ -140,7 +141,7 @@ route_53_zone_id  = "MBS8YLKZML18VV2E8M8OK"
 ### Building AMI Image
 
 ```bash
-cd hashicorp-aws/hashicorp/kong/images
+cd hashicorp-aws/hashicorp/kong-api-gateway/images
 packer init .
 packer validate -var "skip_create_ami=true" .
 packer build -var "skip_create_ami=false" .
@@ -165,7 +166,8 @@ terraform apply -auto-approve
 Deployment via Screwdriver CD
 -----------------------------
 
-hashicorp-aws also support deployment using [Screwdriver CD] with this [Kong API Gateway Release Definition Template]
+hashicorp-aws also support deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out.
+<img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
 
 Deployment via HACP
 -------------------
@@ -182,15 +184,14 @@ gateway in a minute.
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
-[hashicorp-aws/hashicorp/kong/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong/images
-[hashicorp-aws/hashicorp/kong/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong/instances
+[hashicorp-aws/hashicorp/kong-api-gateway/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong-api-gateway/images
+[hashicorp-aws/hashicorp/kong-api-gateway/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong-api-gateway/instances
 [HashiCorp Packer - Install]: https://qubitpi.github.io/hashicorp-packer/packer/install
 [HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform - Install]: https://qubitpi.github.io/hashicorp-terraform/terraform/install
 [HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [Kong API Gateway]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/
-[Kong API Gateway Release Definition Template]: https://github.com/QubitPi/kong-api-gateway-release-definition-template
 [Kong manager UI]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/kong-manager/
 [Kong gateway - various ports]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/production/networking/default-ports/
 

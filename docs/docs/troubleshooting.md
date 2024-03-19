@@ -51,7 +51,7 @@ AWS
 
 :::info
 
-We take [Kong API Gateway](kong) as an example in the discussion below.
+We take [Kong API Gateway](kong-api-gateway/index) as an example in the discussion below.
 
 :::
 
