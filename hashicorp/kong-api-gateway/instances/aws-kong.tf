@@ -50,7 +50,7 @@ variable "route_53_zone_id" {
   sensitive = true
 }
 
-variable "gateway_domain" {
+variable "kong_api_gateway_domain" {
   type = string
   description = "Domain name that Nexus Graph queries against"
   sensitive = true
@@ -103,7 +103,7 @@ resource "aws_instance" "aws-kong" {
 
 resource "aws_route53_record" "aws-kong" {
   zone_id         = var.route_53_zone_id
-  name            = var.gateway_domain
+  name            = var.kong_api_gateway_domain
   type            = "A"
   ttl             = 300
   records         = [aws_instance.aws-kong.private_ip]
