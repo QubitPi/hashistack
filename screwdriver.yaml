@@ -23,7 +23,7 @@ jobs:
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/kong-api-gateway-sd-template.yaml
   publish-kong-api-gateway-template:
-    requires: main
+    requires: validate-kong-api-gateway-template
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
