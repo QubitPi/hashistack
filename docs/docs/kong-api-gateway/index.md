@@ -97,13 +97,13 @@ Create a [HashiCorp Terraform variable values file] named **aws-kong.auto.tfvars
 **[hashicorp-aws/hashicorp/kong-api-gateway/instances]** directory with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/kong-api-gateway/instances/aws-kong.auto.tfvars"
-aws_deploy_region = "us-east-1"
-ami_name          = "my-kong-ami"
-instance_type     = "t2.small"
-instance_name = "My Kong API Gateway"
-security_groups   = ["My Kong API Gateway Security Group"]
-gateway_domain    = "gateway.mycompany.com"
-route_53_zone_id  = "MBS8YLKZML18VV2E8M8OK"
+aws_deploy_region       = "us-east-1"
+ami_name                = "my-kong-ami"
+instance_type           = "t2.small"
+instance_name           = "My Kong API Gateway"
+security_groups         = ["My Kong API Gateway Security Group"]
+kong_api_gateway_domain = "gateway.mycompany.com"
+route_53_zone_id        = "MBS8YLKZML18VV2E8M8OK"
 ```
 
 - `aws_deploy_region` is the [EC2 runtime region][AWS regions] where Kong will be deployed into
@@ -112,7 +112,7 @@ route_53_zone_id  = "MBS8YLKZML18VV2E8M8OK"
 - `instance_type` is the chosen [AWS EC2 instance type] at runtime
 - `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
 - `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
-- `gateway_domain` is the SSL-enabled domain that will serve [Kong manager UI]
+- `kong_api_gateway_domain` is the SSL-enabled domain that will serve [Kong manager UI]
 
   :::warning
 
