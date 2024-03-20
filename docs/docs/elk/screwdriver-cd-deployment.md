@@ -34,8 +34,7 @@ How to Use This Template
 
 Before preceding, please note that it is assumed
 [the template](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/elk-sd-template.yaml)
-has already been installed in Screwdriver. If not, please see documentation on
-[publishing a template in Screwdriver]
+has already been installed in Screwdriver. If not, please see documentation on [publishing a template in Screwdriver]
 
 The designated [screwdriver.yaml](https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml) file used to
 validate and publish the template is located at the root of hashicorp-aws project
@@ -55,8 +54,8 @@ jobs:
 
 The following [Screwdriver CD Secrets] needs to be defined before running the pipeline:
 
-- [`AWS_ACCESS_KEY_ID`](https://qubitpi.github.io/hashicorp-aws/docs/setup#aws)
-- [`AWS_SECRET_ACCESS_KEY`](https://qubitpi.github.io/hashicorp-aws/docs/setup#aws)
+- [`AWS_ACCESS_KEY_ID`](../setup#aws)
+- [`AWS_SECRET_ACCESS_KEY`](../setup#aws)
 - `SSL_CERTIFICATE` - the content of SSL certificate file serving HTTPS-enabled DNS name of the EC2 hosting our ELK
   instance. This is the same as the `SSL_CERTIFICATE` from the [general SSL setup of hashicorp-aws]
 - `SSL_CERTIFICATE_KEY` - the content of SSL certificate key file serving HTTPS-enabled DNS name of the EC2 hosting our

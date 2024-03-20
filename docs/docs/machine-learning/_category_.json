@@ -1,0 +1,8 @@
+{
+  "label": "Machine Learning",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Deploying Machine Learning Model as REST service to AWS via hashicorp-aws"
+  }
+}
