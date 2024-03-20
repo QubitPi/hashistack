@@ -1,0 +1,89 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+namespace: QubitPi
+name: jersey-webservice-release-definition-jpa
+version: '1.0.0'
+description: |
+  Screwdriver CD template for deploying instantiated jersey webservice to AWS through HashiCorp.
+  This template deploys the jpa-elide branch without SSL/HTTPS or any other addons
+maintainer: jack20220723@gmail.com
+config:
+  template: QubitPi/jersey-webservice-release-definition-basic
+  order: [
+    setup-jdk,
+    install-maven,
+    install-packer,
+    install-terraform,
+
+    checkout-hashicorp-deployment-tool,
+
+    setup-packer,
+    load-packer-variable-file,
+
+    setup-terraform,
+    load-terraform-variable-file,
+
+    clone-webservice,
+    clone-data-models,
+    load-maven-settings-xml,
+    install-data-models,
+
+    generate-war,
+    relocate-war-for-hashicorp,
+    packer-init,
+    packer-validate,
+    packer-build,
+    terraform-init,
+    terraform-validate,
+    terraform-apply,
+  ]
+  parameters:
+    data-models-repo-git:
+      value: "https://github.com/QubitPi/jersey-webservice-template-jpa-data-models.git"
+      description: "The git URL to the repository that contains data models"
+  steps:
+    - clone-data-models: git clone --depth 1 $(meta get parameters.data-models-repo-git.value) ../data-models
+    - load-maven-settings-xml: |
+        mkdir -p ~/.m2
+        cd ../data-models
+
+        GROUP_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout)
+        ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+        VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+
+        cat  << EOF >>~/.m2/settings.xml
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+            <profiles>
+                <profile>
+                    <id>jersey-webservice-template-jpa-data-models</id>
+                    <properties>
+                        <model.package.jar.group.id>$GROUP_ID</model.package.jar.group.id>
+                        <model.package.jar.artifact.id>$ARTIFACT_ID</model.package.jar.artifact.id>
+                        <model.package.jar.version>$VERSION</model.package.jar.version>
+                    </properties>
+                </profile>
+            </profiles>
+
+            <activeProfiles>
+                <activeProfile>jersey-webservice-template-jpa-data-models</activeProfile>
+            </activeProfiles>
+        </settings>
+        EOF
+
+    - install-data-models: cd ../data-models && mvn clean install
