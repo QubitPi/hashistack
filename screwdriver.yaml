@@ -29,3 +29,18 @@ jobs:
       - publish: template-publish --tag latest
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/kong-api-gateway-sd-template.yaml
+
+  validate-elk-template:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/elk-sd-template.yaml
+  publish-elk-template:
+    requires: validate-elk-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/elk-sd-template.yaml

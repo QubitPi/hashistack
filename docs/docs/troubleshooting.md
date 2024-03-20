@@ -82,3 +82,19 @@ For example, if our instance has public IP `203.0.113.185` and private IP `10.1.
 like `ec2-203-0-113-185.eu-west-1.compute.amazonaws.com`, which will resolve to `203.0.113.185` if queried externally,
 or `10.1.234.12` if queried internally. This will enable our security groups to work as intended. See
 [this thread](https://stackoverflow.com/a/24242211) for more details.
+
+Screwdriver CD
+--------------
+
+**Q**: I updated template (such as a template parameter name) but it was not taking effect in the pipeline that uses
+this template.
+
+**A**: This is because the pipeline is still referencing the old template definition. Note that when template is
+republished, it doesn't automatically refresh the pipeline that uses this template. There are 2 approaches for solving
+this problem:
+
+1. Simply delete and recreate the pipeline to pick up the updated template definition
+2. Re-sync pipeline by navigating to **Options** tab of the pipeline UI and then click sync button next to the
+   **Pipeline** in **Sync** section (shown below). _Lastly_, refresh the pipeline **Builds** page.
+
+   ![Error loading resync-pipeline.png](img/resync-pipeline.png)
