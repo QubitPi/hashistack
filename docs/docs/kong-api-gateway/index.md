@@ -1,7 +1,6 @@
 ---
 sidebar_position: 1
 title: General Deployment
-description: Configuring logging & audit
 ---
 
 [//]: # (Copyright Jiaqi Liu)
