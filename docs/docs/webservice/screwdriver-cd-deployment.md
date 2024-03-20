@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Deployment via Screwdriver CD
 description: Deploying Jersey-Jetty Based Webservice via Screwdriver CD Template
 ---

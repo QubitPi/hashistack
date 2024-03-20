@@ -166,8 +166,7 @@ terraform apply -auto-approve
 Deployment via Screwdriver CD
 -----------------------------
 
-hashicorp-aws also support deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out.
-<img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
+hashicorp-aws supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out. <img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
 
 Deployment via HACP
 -------------------
