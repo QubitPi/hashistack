@@ -1,0 +1,46 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+namespace: QubitPi
+name: ml-model-release-definition-template-mlflow-docker
+version: '1.0.0'
+description: Deploying immutable ML models as REST API to AWS through HashiCorp using MLflow Docker
+maintainer: jack20220723@gmail.com
+config:
+  image: buildpack-deps:22.04-scm
+  steps:
+    - build-ml-models: echo "This step must be implemented by pipeline. Please see README doc for more info" && exit 1
+
+    - install-packer: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/scripts/install-hashicorp-packer-ubuntu.sh)"
+    - install-terraform: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/auxiliary/scripts/install-hashicorp-terraform-ubuntu.sh)"
+
+    - setup-hashicorp-deployment-tool: |
+        git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+        cp ../hashicorp-aws/hashicorp/machine-learning/images/aws-ml.base.pkr.hcl ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
+        cp ../hashicorp-aws/hashicorp/machine-learning/instances/aws-ml.base.tf ../hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker
+    - load-packer-variable-file: echo "$AWS_ML_PKRVARS_HCL" > ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker/aws-ml.auto.pkrvars.hcl
+    - load-terraform-variable-file: echo "$AWS_ML_TFVARS" > ../hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker/aws-ml.auto.tfvars
+
+    - packer-init: cd ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker && packer init .
+    - packer-validate: packer validate -var "skip_create_ami=true" .
+    - packer-build: packer build -var "skip_create_ami=false" .
+
+    - terraform-init: cd ../../instances/mlflow-docker && terraform init
+    - terraform-validate: terraform validate
+    - terraform-apply: terraform apply -auto-approve
+  secrets:
+    - AWS_ML_PKRVARS_HCL
+    - AWS_ML_TFVARS
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY

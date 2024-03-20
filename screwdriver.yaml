@@ -44,3 +44,18 @@ jobs:
       - publish: template-publish --tag latest
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/elk-sd-template.yaml
+
+  validate-mlflow-docker-sd-template:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml
+  publish-mlflow-docker-sd-template:
+    requires: validate-mlflow-docker-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml

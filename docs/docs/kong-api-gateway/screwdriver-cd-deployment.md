@@ -34,8 +34,7 @@ How to Use This Template
 
 Before preceding, please note that it is assumed
 [the template](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/kong-api-gateway-sd-template.yaml)
-has already been installed in Screwdriver. If not, please see documentation on
-[publishing a template in Screwdriver]
+has already been installed in Screwdriver. If not, please see documentation on [publishing a template in Screwdriver]
 
 The designated [screwdriver.yaml](https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml) file used to
 validate and publish the template is located at the root of hashicorp-aws project
