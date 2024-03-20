@@ -1,0 +1,136 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+name: "Jersey Webservice Deployment"
+description: "Registers AMI and deploys AWS EC2 instance of Jersey webservice as immutable infrastructure through HashiCorp"
+branding:
+  icon: "package"
+  color: "orange"
+
+inputs:
+  template:
+    type: choice
+    description: Template to deploy
+    options:
+      - basic
+      - jpa
+  ssl:
+    type: boolean
+    description: Whether or not to enable SSL
+    required: true
+
+  aws-ws-pkrvars-hcl:
+    description: 'HashiCorp Packer variable file'
+    required: true
+  aws-ws-tfvars:
+    description: 'HashiCorp Terraform variable file'
+    required: true
+
+  filebeat-config-file:
+    description: '(Optional) Filebeat config file'
+    required: false
+    default: ''
+
+  model-package-jar-group-id:
+    description: 'Maven group ID of JAR containing data models, e.g. "com.myorg"'
+    required: true
+  model-package-jar-artifact-id:
+    description: 'Maven artifact ID of JAR containing data models, e.g. "my-data-models"'
+    required: true
+  model-package-jar-version:
+    description: 'The version of JAR containing data models, e.g. "3.1.7"'
+    required: true
+  models-path:
+    description: 'The relative path to the data models repo, usually prefixed by "../". e.g. "../jpa-models"'
+    required: true
+
+  war-path:
+    description: 'The relative path to the webservice repo, e.g. "./target/myservice-1.0-SNAPSHOT.war"'
+    required: true
+
+  aws-access-key-id:
+    description: "AWS Access Key ID"
+    required: true
+  aws-secret-access-key:
+    description: "AWS Secrete Access Key"
+    required: true
+  aws-region:
+    description: "The region in which the access key ID and Secret access key are valid"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: QubitPi/hashicorp-aws/.github/actions/jdk-setup@master
+
+    - name: Checkout HashiCorp deployment tool and setup directory structure
+      shell: bash
+      run: |
+        git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+        if [ ${{ inputs.ssl }} ]; then
+          cd ../hashicorp-aws/hashicorp/webservice/images
+          mv ssl/* .
+          rm -rf basic
+        else
+          cd ../hashicorp-aws/hashicorp/webservice/images
+          mv basic/* .
+          rm -rf ssl
+        fi
+    - name: Load Packer variable file
+      run: echo '${{ inputs.aws-ws-pkrvars-hcl }}' > ../hashicorp-aws/hashicorp/webservice/images/aws-ws.auto.pkrvars.hcl
+      shell: bash
+    - name: Load Terraform variable file
+      run: echo '${{ inputs.aws-ws-tfvars }}' > ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars
+      shell: bash
+    - name: Configure SSL
+      if: ${{ inputs.ssl }}
+      uses: QubitPi/hashicorp-aws/.github/actions/ssl-setup@master
+      with:
+        aws-ws-pkrvars-hcl: ${{ secrets.AWS_WS_PKRVARS_HCL }}
+        ssl-certificate: ${{ secrets.SSL_CERTIFICATE }}
+        ssl-certificate-key: ${{ secrets.SSL_CERTIFICATE_KEY }}
+        nginx-config-file: ${{ secrets.NGINX_CONFIG_FILE }}
+        aws-ws-tfvars: ${{ secrets.AWS_WS_TFVARS }}
+
+    - name: Load Filebeat config file
+      if: "${{ inputs.filebeat-config-file != '' }}"
+      run: echo '${{ inputs.filebeat-config-file }}' > ../hashicorp-aws/hashicorp/webservice/images/filebeat.yml
+      shell: bash
+
+    - name: Install data-models
+      if: ${{ input.template == 'jps' }}
+      uses: QubitPi/hashicorp-aws/jpa-elide/install-data-models@master
+      with:
+        model-package-jar-group-id: com.qubitpi
+        model-package-jar-artifact-id: jersey-webservice-template-jpa-data-models
+        model-package-jar-version: 1.0.0
+        models-path: ../data-models
+
+    - name: Generate webservice WAR file
+      run: mvn -B clean package
+      shell: bash
+    - name: Move WAR file to a location for HashiCorp deployment to pickup
+      run: mv ${{ inputs.war-path }} ../hashicorp-aws/hashicorp/webservice/images/
+      shell: bash
+
+    - name: Run deployment
+      uses: QubitPi/hashicorp-aws@master
+      with:
+        hashicorp-dir: ../hashicorp-aws/hashicorp/webservice
+        aws-access-key-id: ${{ inputs.aws-access-key-id }}
+        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
+        aws-region: ${{ inputs.aws-region }}
