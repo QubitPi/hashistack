@@ -15,6 +15,21 @@
 shared:
   image: node:18
 jobs:
+  validate-react-app-template:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/react-app-sd-template.yaml
+  publish-react-app-template:
+    requires: validate-react-app-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/react-app-sd-template.yaml
+
   validate-kong-api-gateway-template:
     requires: [~pr, ~commit]
     steps:
@@ -29,36 +44,6 @@ jobs:
       - publish: template-publish --tag latest
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/kong-api-gateway-sd-template.yaml
-
-  validate-elk-template:
-    requires: [~pr, ~commit]
-    steps:
-      - install: npm install -g screwdriver-template-main
-      - validate: template-validate
-    environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/elk-sd-template.yaml
-  publish-elk-template:
-    requires: validate-elk-template
-    steps:
-      - install: npm install -g screwdriver-template-main
-      - publish: template-publish --tag latest
-    environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/elk-sd-template.yaml
-
-  validate-mlflow-docker-sd-template:
-    requires: [~pr, ~commit]
-    steps:
-      - install: npm install -g screwdriver-template-main
-      - validate: template-validate
-    environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml
-  publish-mlflow-docker-sd-template:
-    requires: validate-mlflow-docker-sd-template
-    steps:
-      - install: npm install -g screwdriver-template-main
-      - publish: template-publish --tag latest
-    environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml
 
   validate-jersey-webservice-template-basic-sd-template:
     requires: [~pr, ~commit]
@@ -89,3 +74,33 @@ jobs:
       - publish: template-publish --tag latest
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-jpa-sd-template.yaml
+
+  validate-elk-template:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/elk-sd-template.yaml
+  publish-elk-template:
+    requires: validate-elk-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/elk-sd-template.yaml
+
+  validate-mlflow-docker-sd-template:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml
+  publish-mlflow-docker-sd-template:
+    requires: validate-mlflow-docker-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml

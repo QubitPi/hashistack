@@ -1,6 +1,6 @@
 ---
-sidebar_position: 4
-title: React App
+sidebar_position: 1
+title: General Deployment
 ---
 
 [//]: # (Copyright Jiaqi Liu)
@@ -414,6 +414,11 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
+
+Deployment via Screwdriver CD
+-----------------------------
+
+hashicorp-aws supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out. <img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
 
 [AWS_ACCESS_KEY_ID]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 [AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Elastic Stack (ELK)
+title: General Deployment
 ---
 
 [//]: # (Copyright Jiaqi Liu)

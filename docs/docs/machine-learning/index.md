@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: Machine Learning Model in REST API
+title: General Deployment
 ---
 
 [//]: # (Copyright Jiaqi Liu)
