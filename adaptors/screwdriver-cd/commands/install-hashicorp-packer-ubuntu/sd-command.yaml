@@ -1,0 +1,10 @@
+namespace: QubitPi
+name: install-hashicorp-packer-ubuntu
+version: '1.0.0'
+description: Install HashiCorp Packer command line tool
+usage: |
+  sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
+maintainer: jack20220723@gmail.com
+format: binary
+binary:
+  file: ./run.sh

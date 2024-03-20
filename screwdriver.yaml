@@ -104,3 +104,57 @@ jobs:
       - publish: template-publish --tag latest
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml
+
+  validate-install-hashicorp-packer-ubuntu:
+    requires: [~pr, ~commit]
+    steps:
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-hashicorp-packer-ubuntu/sd-command.yaml
+  publish-install-hashicorp-packer-ubuntu:
+    requires: [validate-install-hashicorp-packer-ubuntu]
+    steps:
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-hashicorp-packer-ubuntu/sd-command.yaml -t latest
+
+  validate-install-hashicorp-terraform-ubuntu:
+    requires: [~pr, ~commit]
+    steps:
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-hashicorp-terraform-ubuntu/sd-command.yaml
+  publish-install-hashicorp-terraform-ubuntu:
+    requires: [validate-install-hashicorp-terraform-ubuntu]
+    steps:
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-hashicorp-terraform-ubuntu/sd-command.yaml -t latest
+
+  validate-install-jdk-ubuntu:
+    requires: [~pr, ~commit]
+    steps:
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-jdk-ubuntu/sd-command.yaml
+  publish-install-jdk-ubuntu:
+    requires: [validate-install-jdk-ubuntu]
+    steps:
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-jdk-ubuntu/sd-command.yaml -t latest
+
+  validate-install-maven-ubuntu:
+    requires: [~pr, ~commit]
+    steps:
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-maven-ubuntu/sd-command.yaml
+  publish-install-maven-ubuntu:
+    requires: [validate-install-maven-ubuntu]
+    steps:
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-maven-ubuntu/sd-command.yaml -t latest
+
+  validate-install-node:
+    requires: [~pr, ~commit]
+    steps:
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-node/sd-command.yaml
+  publish-install-node:
+    requires: [validate-install-node]
+    steps:
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-node/sd-command.yaml -t latest
+
+  validate-install-python:
+    requires: [~pr, ~commit]
+    steps:
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-python/sd-command.yaml
+  publish-install-python:
+    requires: [validate-install-python]
+    steps:
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-python/sd-command.yaml -t latest

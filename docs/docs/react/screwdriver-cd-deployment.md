@@ -21,18 +21,32 @@ description: Deploying React App via Screwdriver CD Template
 React App Release Definition Template
 =====================================
 
-hashicorp-aws offers a [Screwdriver CD template] that deploys an [immutable][Immutable Infrastructure] instance of
-React-based frontend App to AWS. It uses the [screwdriver-template-main npm package] to assist with template
-validation, publishing, and tagging. This template tags the latest versions with the `latest` tag.
+hashicorp-aws offers a [Screwdriver template][Screwdriver CD template] that deploys an
+[immutable][Immutable Infrastructure] instance of React-based frontend App to AWS. It uses the
+[screwdriver-template-main npm package] to assist with template validation, publishing, and tagging. This template tags
+the latest versions with the `latest` tag.
 
 How to Use This Template
 ------------------------
 
-### Installing Required Screwdirver CD Commands
+### Installing Template in Screwdriver
 
-This template makes uses of some [pre-defined Screwdriver commands][screwdriver-cd-commands]. Please install them first.
+The template needs to be installed first in Screwdriver running instance. Installation has two parts:
 
-#### Using The Template
+1. [the template](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/react-app-sd-template.yaml)
+2. Some [pre-defined Screwdriver commands][Screwdriver CD - commands] that this template uses
+
+The template and the commands can be automatically installed using the regular [screwdriver.yaml] config file by
+following the steps below:
+
+1. [Create a Screwdriver pipeline][Screwdriver CD - creating a pipeline] with the repository link being
+   `https://github.com/QubitPi/hashicorp-aws.git`
+2. Trigger a pipeline run, which will install the templates and commands automatically. Wait the pipeline to finish
+   running.
+3. The installed template and commands can be found in [Templates page][Screwdriver CD - finding templates] and
+   [Commands page][Screwdriver CD - finding commands], respectively
+
+### Using the Template
 
 :::warning
 
@@ -64,7 +78,7 @@ jobs:
       - AWS_SECRET_ACCESS_KEY
 ```
 
-The following [Screwdriver Secrets] needs to be defined before running this template:
+The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined before running this template:
 
 - [**AWS_ACCESS_KEY_ID**](../setup#aws)
 - [**AWS_SECRET_ACCESS_KEY**](../setup#aws)
@@ -130,9 +144,14 @@ The following [Screwdriver Secrets] needs to be defined before running this temp
 
 [Immutable Infrastructure]: https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure
 
-[publishing a template in Screwdriver]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates#publishing-a-template
+[publishing a template in Screwdriver]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#publishing-a-template
 
-[screwdriver-cd-commands]: https://github.com/QubitPi/screwdriver-cd-commands
+[screwdriver.yaml]: https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml
+[Screwdriver CD - commands]: https://github.com/QubitPi/screwdriver-cd-commands
+[Screwdriver CD - creating a pipeline]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/quickstart#create-a-new-pipeline
+[Screwdriver CD - creating pipeline from template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates#using-a-template
+[Screwdriver CD - finding templates]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#finding-templates
+[Screwdriver CD - finding commands]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/commands#finding-commands
+[Screwdriver CD Secrets]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/configuration/secrets
 [Screwdriver CD template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates
-[Screwdriver Secrets]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/configuration/secrets
 [screwdriver-template-main npm package]: https://github.com/QubitPi/screwdriver-cd-template-main

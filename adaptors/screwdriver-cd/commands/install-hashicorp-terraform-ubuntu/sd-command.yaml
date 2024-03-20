@@ -1,0 +1,10 @@
+namespace: QubitPi
+name: install-hashicorp-terraform-ubuntu
+version: '1.0.0'
+description: Install HashiCorp Terraform command line tool
+usage: |
+  sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
+maintainer: jack20220723@gmail.com
+format: binary
+binary:
+  file: ./run.sh

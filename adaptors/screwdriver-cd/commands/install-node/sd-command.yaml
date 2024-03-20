@@ -1,0 +1,12 @@
+namespace: QubitPi
+name: install-node
+version: '1.0.0'
+description: Install Node and NPM for frontend projects
+usage: |
+  sd-cmd exec QubitPi/install-node@latest <OPTION>
+  Options:
+          <node version>             Node major version to install. Default to '20' if not specified
+maintainer: jack20220723@gmail.com
+format: binary
+binary:
+  file: ./run.sh
