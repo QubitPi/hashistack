@@ -34,9 +34,9 @@ The following script variables need to be defined:
 
   The _IAM user_ associated with the credentials above must have the following [AWS permissions policies]:
 
-    - IAMFullAccess
-    - AmazonEC2FullAccess
-    - AmazonRoute53FullAccess
+  - IAMFullAccess
+  - AmazonEC2FullAccess
+  - AmazonRoute53FullAccess
 
   :::
 

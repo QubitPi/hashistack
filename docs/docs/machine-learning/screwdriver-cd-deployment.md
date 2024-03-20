@@ -21,9 +21,9 @@ description: Deploying ML Models via Screwdriver CD Template
 Machine Learning Model Release Definition Templates
 ===================================================
 
-hashicorp-aws offers a [Screwdriver CD template] that deploys [immutable][Immutable Infrastructure] instances of
-Machine Learning models as REST API to AWS. It uses the [screwdriver-template-main npm package] to assist with template
-validation, publishing, and tagging.
+hashicorp-aws offers a [Screwdriver template][Screwdriver CD template] that deploys
+[immutable][Immutable Infrastructure] instances of Machine Learning models as REST API to AWS. It uses the
+[screwdriver-template-main npm package] to assist with template validation, publishing, and tagging.
 
 This release definition contains the following templates:
 
@@ -34,20 +34,26 @@ All templates tag the latest versions with the `latest` tag.
 How to Use the Templates
 ------------------------
 
-:::warning
+### Installing Template in Screwdriver
 
-Before preceding, please note that it is assumed
-[the templates](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml)
-has already been installed in Screwdriver. If not, please see documentation on [publishing a template in Screwdriver]
+The template needs to be installed first in Screwdriver running instance. Installation has two parts:
 
-The designated [screwdriver.yaml](https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml) file used to
-validate and publish the template is located at the root of hashicorp-aws project
+1. [the template](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml)
+2. Some [pre-defined Screwdriver commands][Screwdriver CD - commands] that this template uses
 
-:::
+The template and the commands can be automatically installed using the regular [screwdriver.yaml] config file by
+following the steps below:
 
-### Deploying ML models via MLflow Docker Container
+1. [Create a Screwdriver pipeline][Screwdriver CD - creating a pipeline] with the repository link being
+   `https://github.com/QubitPi/hashicorp-aws.git`
+2. Trigger a pipeline run, which will install the templates and commands automatically. Wait the pipeline to finish
+   running.
+3. The installed template and commands can be found in [Templates page][Screwdriver CD - finding templates] and
+   [Commands page][Screwdriver CD - finding commands], respectively
 
-[Create a Screwdriver pipeline that uses this template][Screwdriver - create pipeline from template] with the following
+### Using the Template
+
+[Create a Screwdriver pipeline that uses this template][Screwdriver CD - creating pipeline from template] with the following
 contents:
 
 ```yaml
@@ -65,11 +71,11 @@ jobs:
       - AWS_ML_TFVARS
 ```
 
-The following [Screwdriver steps] must be implemented:
+The following [Screwdriver CD - steps] must be implemented:
 
 - `build-ml-models` - Commands that [package up MLflow Python models](https://mlflow.org/docs/latest/python_api/mlflow.pyfunc.html#creating-custom-pyfunc-models)
 
-The following [Screwdriver Secrets] needs to be defined before running this template:
+The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined before running this template:
 
 - [`AWS_ACCESS_KEY_ID`](../setup#aws)
 - [`AWS_SECRET_ACCESS_KEY`](../setup#aws)
@@ -113,10 +119,15 @@ The following [Screwdriver Secrets] needs to be defined before running this temp
 
 [Immutable Infrastructure]: https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure
 
-[publishing a template in Screwdriver]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates#publishing-a-template
+[publishing a template in Screwdriver]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#publishing-a-template
 
+[screwdriver.yaml]: https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml
+[Screwdriver CD - commands]: https://github.com/QubitPi/screwdriver-cd-commands
+[Screwdriver CD - creating a pipeline]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/quickstart#create-a-new-pipeline
+[Screwdriver CD - creating pipeline from template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates#using-a-template
+[Screwdriver CD - finding templates]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#finding-templates
+[Screwdriver CD - finding commands]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/commands#finding-commands
+[Screwdriver CD Secrets]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/configuration/secrets
+[Screwdriver CD - steps]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/configuration/jobconfiguration.html#steps
 [Screwdriver CD template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates
-[Screwdriver Secrets]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/configuration/secrets
-[Screwdriver steps]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/configuration/jobconfiguration.html#steps
 [screwdriver-template-main npm package]: https://github.com/QubitPi/screwdriver-cd-template-main
-[Screwdriver - create pipeline from template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates#using-a-template

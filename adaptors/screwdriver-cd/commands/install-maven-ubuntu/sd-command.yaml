@@ -1,0 +1,10 @@
+namespace: QubitPi
+name: install-maven-ubuntu
+version: '1.0.0'
+description: Install Maven
+usage: |
+  sd-cmd exec QubitPi/install-maven-ubuntu@latest
+maintainer: jack20220723@gmail.com
+format: binary
+binary:
+  file: ./run.sh

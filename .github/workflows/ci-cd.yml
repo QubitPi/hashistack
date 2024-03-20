@@ -106,7 +106,7 @@ jobs:
           ext: ".yaml"
 
   validate-screwdriver-templates:
-    name: Validating Template
+    name: Validating Screwdriver Templates
     needs: list-screwdriver-templates
     runs-on: ubuntu-latest
     strategy:
@@ -137,9 +137,80 @@ jobs:
               require('@actions/core').setFailed(error);
             }
 
+  list-screwdriver-command-scripts:
+    name: Listing Screwdriver Command Scripts to Test
+    needs: code-styles
+    runs-on: ubuntu-latest
+    outputs:
+      paths: ${{ steps.list-screwdriver-command-scripts.outputs.paths }}
+    steps:
+      - name: List Files
+        id: list-screwdriver-command-scripts
+        uses: mirko-felice/list-files-action@v3.0.5
+        with:
+          repo: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          path: "adaptors/screwdriver-cd/commands"
+          ext: ".sh"
+
+  test-screwdriver-command-scripts:
+    name: Test All run.sh Scripts
+    needs: list-screwdriver-command-scripts
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        script: ${{ fromJson(needs.list-screwdriver-command-scripts.outputs.paths) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: ${{ matrix.test-suite.desc }}
+        run: docker run --rm -v $(pwd)/${{ matrix.script }}:/test/script.sh ubuntu /test/script.sh
+
+  list-screwdriver-commands:
+    name: Listing Screwdriver Commands to Validate
+    needs: code-styles
+    runs-on: ubuntu-latest
+    outputs:
+      paths: ${{ steps.list-screwdriver-commands.outputs.paths }}
+    steps:
+      - name: List Files
+        id: list-screwdriver-commands
+        uses: mirko-felice/list-files-action@v3.0.5
+        with:
+          repo: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          path: "adaptors/screwdriver-cd/commands"
+          ext: ".yaml"
+
+  validate-screwdriver-commands:
+    name: Validating Screwdriver Commands
+    needs: list-screwdriver-commands
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        template: ${{ fromJson(needs.list-screwdriver-commands.outputs.paths) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Validate ${{ matrix.template }}
+        uses: satackey/action-js-inline@v0.0.2
+        with:
+          required-packages: screwdriver-command-validator
+          script: |
+            require("screwdriver-command-validator")(require("fs").readFileSync("${{ matrix.template }}"))
+              .then(response => {
+                if (response.errors.length > 0) {
+                  require('@actions/core').setFailed(response.errors);
+                }
+              })
+
   documentation-ci-cd:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
-    needs: [tests, validate-screwdriver-templates]
+    needs: [tests, validate-screwdriver-templates, validate-screwdriver-commands, test-screwdriver-command-scripts]
     outputs:
       outcome: ${{ job.status }}
     continue-on-error: true
@@ -157,7 +228,7 @@ jobs:
       - name: Build website
         run: yarn build
       - name: Deploy to GitHub Pages
-        # if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
