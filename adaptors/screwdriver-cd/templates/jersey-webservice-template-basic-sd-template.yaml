@@ -1,0 +1,103 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+namespace: QubitPi
+name: jersey-webservice-release-definition-basic
+version: '1.0.0'
+description: |
+  Screwdriver CD template for deploying instantiated jersey webservice to AWS through HashiCorp.
+  This template deploys the webservices without SSL/HTTPS or any other addons
+maintainer: jack20220723@gmail.com
+config:
+  image: buildpack-deps:22.04-scm
+  parameters:
+    ami-region:
+      value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+      description: "The AWS region where webservice AMI will be published to. The published image will be private"
+    ami-name:
+      value: "my-webservice-ami"
+      description: "The published AMI name; it can be arbitrary"
+    instance-type:
+      value: ["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"]
+      description: "The EC2 instance type to use when building an AMI as well as launching the instance"
+    aws-deploy-region:
+      value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+      description: "The AWS region where webservice EC2 instance will be deployed into"
+    instance-name:
+      value: "My webservice instance"
+      description: "The deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary"
+    security-groups:
+      value: '["My WS Security Group 1", "My WS Security Group 2"]'
+      description: "The list of AWS Security Group names (yes, not ID, but name...) bound to the webservice EC2 instance."
+    ws-repo-git:
+      value: "https://github.com/QubitPi/jersey-webservice-template.git"
+      description: "The git URL to the repository of the webservice to be deployed"
+    elk-hosts:
+      value: ["myelk.instance.com:8080"]
+      description: "The list of Logstash hosts with ports to receive webservice log data"
+  steps:
+    - setup-jdk: sd-cmd exec QubitPi/install-jdk-ubuntu@latest
+    - install-maven: sd-cmd exec QubitPi/install-maven-ubuntu@latest
+    - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
+    - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
+
+    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+
+    - setup-packer: |
+        cp ../hashicorp-aws/hashicorp/webservice/images/aws-ws.packer.pkr.hcl ../hashicorp-aws/hashicorp/webservice/images/basic
+        cp ../hashicorp-aws/hashicorp/webservice/images/aws-ws.source.pkr.hcl ../hashicorp-aws/hashicorp/webservice/images/basic
+    - load-packer-variable-file: |
+        echo ami_region                   = \"$(meta get parameters.ami-region.value)\"    >> ../hashicorp-aws/hashicorp/webservice/images/basic/aws-ws.auto.pkrvars.hcl
+        echo ami_name                     = \"$(meta get parameters.ami-name.value)\"      >> ../hashicorp-aws/hashicorp/webservice/images/basic/aws-ws.auto.pkrvars.hcl
+        echo instance_type                = \"$(meta get parameters.instance-type.value)\" >> ../hashicorp-aws/hashicorp/webservice/images/basic/aws-ws.auto.pkrvars.hcl
+        echo ws_war_path                  = \"ROOT.war\"                                   >> ../hashicorp-aws/hashicorp/webservice/images/basic/aws-ws.auto.pkrvars.hcl
+        echo ws_filebeat_config_file_path = \"filebeat.yml\"                               >> ../hashicorp-aws/hashicorp/webservice/images/basic/aws-ws.auto.pkrvars.hcl
+
+        cat  << EOF >>../hashicorp-aws/hashicorp/webservice/images/basic/filebeat.yml
+        filebeat.config.modules:
+          path: ${path.config}/modules.d/*.yml
+          reload.enabled: false
+
+        filebeat.inputs:
+          - type: log
+            paths:
+              - /home/ubuntu/jetty-base/logback/*
+
+        output.logstash:
+          hosts: $(meta get parameters.elk-hosts.value)
+        EOF
+
+    - setup-terraform: cp ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.base.tf ../hashicorp-aws/hashicorp/webservice/instances/basic
+    - load-terraform-variable-file: |
+        echo aws_deploy_region = \"$(meta get parameters.aws-deploy-region.value)\" >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
+        echo ami_name          = \"$(meta get parameters.ami-name.value)\"          >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
+        echo instance_type     = \"$(meta get parameters.instance-type.value)\"     >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
+        echo ec2_instance_name = \"$(meta get parameters.instance-name.value)\"     >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
+        echo security_groups   = $(meta get parameters.security-groups.value)       >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
+
+    - clone-webservice: git clone --depth 1 $(meta get parameters.ws-repo-git.value) ../ws
+
+    - generate-war: cd ../ws && mvn -B clean package -Dcheckstyle.skip -Dmaven.test.skip
+    - relocate-war-for-hashicorp: cd ../ws && mv target/*.war ../hashicorp-aws/hashicorp/webservice/images/basic/ROOT.war
+
+    - packer-init: cd ../hashicorp-aws/hashicorp/webservice/images/basic && packer init .
+    - packer-validate: packer validate -var "skip_create_ami=true" .
+    - packer-build: packer build -var "skip_create_ami=false" .
+
+    - terraform-init: cd ../../instances/basic && terraform init
+    - terraform-validate: terraform validate
+    - terraform-apply: terraform apply -auto-approve
+  secrets:
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY

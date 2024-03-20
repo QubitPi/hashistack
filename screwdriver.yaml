@@ -59,3 +59,33 @@ jobs:
       - publish: template-publish --tag latest
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml
+
+  validate-jersey-webservice-template-basic-sd-template:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-basic-sd-template.yaml
+  publish-jersey-webservice-template-basic-sd-template:
+    requires: validate-jersey-webservice-template-basic-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-basic-sd-template.yaml
+
+  validate-jersey-webservice-template-jpa-sd-template:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-jpa-sd-template.yaml
+  publish-jersey-webservice-template-jpa-sd-template:
+    requires: validate-jersey-webservice-template-jpa-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-jpa-sd-template.yaml
