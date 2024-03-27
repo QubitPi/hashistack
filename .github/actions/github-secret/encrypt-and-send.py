@@ -28,15 +28,18 @@ def __get_repo_public_key(repo_owner: str, repo_name: str, token: str) -> (str, 
         'X-GitHub-Api-Version': '2022-11-28',
     }
 
-    response_body = requests.get(
+    response = requests.get(
         "https://api.github.com/repos/{repo_owner}/{repo_name}/actions/secrets/public-key".format(
             repo_owner=repo_owner,
             repo_name=repo_name
         ),
         headers=headers
-    ).json()
+    )
 
-    return (response_body['key_id'], response_body['key'])
+    if response.status_code == 200:
+        return response.json()['key_id'], response.json()['key']
+
+    sys.exit("Error on fetching public key of '{repo}': {error}".format(repo=repo_name, error=response.json()))
 
 
 def __create_or_update_repo_secret(
@@ -88,8 +91,12 @@ def __create_or_update_repo_secret(
     elif response.status_code == 204:
         print("Successfully updated '{secret_name}'".format(secret_name=secret_name))
     else:
-        print(
-            "Error on creating/updating '{secret_name}': {error}".format(secret_name=secret_name, error=response.json())
+        sys.exit(
+            "Error on creating/updating '{secret_name}' for '{repo_name}': {error}".format(
+                secret_name=secret_name,
+                repo_name=repo_name,
+                error=response.json()
+            )
         )
 
 
