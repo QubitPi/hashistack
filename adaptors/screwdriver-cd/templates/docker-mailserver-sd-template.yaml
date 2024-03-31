@@ -44,7 +44,7 @@ config:
       value: '["My Docker Mailserver API Security Group", "My SSH Security Group"]'
       description: |
         The list of AWS Security Group names (yes, not ID, but name...) bound to the mailserver EC2 instance.
-    base_domain:
+    base-domain:
       value: "mycompany.com"
       description: |
         The base domain name of the MX record. For example, if base domain is 'mycompany.com', the generated MX record
