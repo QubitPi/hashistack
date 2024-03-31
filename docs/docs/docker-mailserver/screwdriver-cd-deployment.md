@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Deployment via Screwdriver CD
-description: Deploying ELK via Screwdriver CD Template
+description: Deploying Docker Mailserver via Screwdriver CD Template
 ---
 
 [//]: # (Copyright Jiaqi Liu)
@@ -18,14 +18,19 @@ description: Deploying ELK via Screwdriver CD Template
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-ELK Release Definition Template
-===============================
+Docker Mailserver Release Definition Template
+=============================================
 
-hashicorp-aws offer a [Screwdriver template][Screwdriver CD template] that deploys
-[immutable][Immutable Infrastructure] instances of ELK to AWS. It uses the [screwdriver-template-main npm package] to
-assist with template validation, publishing, and tagging. The template tags the latest versions with the `latest` tag.
+hashicorp-aws offer a [Screwdriver template][Screwdriver CD template] that deploys an
+[immutable][Immutable Infrastructure] instance of [Docker Mailserver] to AWS. It uses the
+[screwdriver-template-main npm package] to assist with template validation, publishing, and tagging. This template tags
+the latest versions with the `latest` tag.
 
-![Error loading elk-deployment-diagram.png](./img/elk-deployment-diagram.png)
+:::caution
+
+[hashicorp-aws] deploys Docker Mailserver as a [t2.micro](https://aws.amazon.com/ec2/instance-types/t2/) instance.
+
+:::
 
 How to Use This Template
 ------------------------
@@ -34,7 +39,7 @@ How to Use This Template
 
 The template needs to be installed first in Screwdriver running instance. Installation has two parts:
 
-1. [the template](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/elk-sd-template.yaml)
+1. [the template](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/docker-mailserver-sd-template.yaml)
 2. Some [pre-defined Screwdriver commands][Screwdriver CD - commands] that this template uses
 
 The template and the commands can be automatically installed using the regular [screwdriver.yaml] config file by
@@ -57,38 +62,27 @@ following the steps below:
 jobs:
   main:
     requires: [~pr, ~commit]
-    template: QubitPi/elk-release-definition-template@latest
+    template: QubitPi/docker-mailserver-release-definition-template@latest
 ```
 
 The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined before running the pipeline:
 
 - [`AWS_ACCESS_KEY_ID`](../setup#aws)
 - [`AWS_SECRET_ACCESS_KEY`](../setup#aws)
-- `SSL_CERTIFICATE` - the content of SSL certificate file serving HTTPS-enabled DNS name of the EC2 hosting our ELK
-  instance. This is the same as the `SSL_CERTIFICATE` from the
+- `SSL_CERTIFICATE` - the content of SSL certificate file serving HTTPS-enabled DNS name of the EC2 hosting our Docker
+  Mailserver instance. This is the same as the `SSL_CERTIFICATE` from the
   [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
 - `SSL_CERTIFICATE_KEY` - the content of SSL certificate key file serving HTTPS-enabled DNS name of the EC2 hosting our
-  ELK instance. This is the same as the `SSL_CERTIFICATE_KEY` from the
+  Docker Mailserver instance. This is the same as the `SSL_CERTIFICATE_KEY` from the
   [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
 
 To run the pipeline, fill in the AWS-related **parameters** first
 
-![Error loading elk-release-definition-template-parameters.png](./img/elk-release-definition-template-parameters.png)
-
 Then hit "**Submit**" to start deploying.
 
-:::warning
-
-Once the pipeline deploys ELK, we must remember to do the
-[post setup in EC2 instance](index#post-setup-in-ec2-instance).
-
-The password for user 'elastic' can be found _packer-build_ step logs. Here is an example:
-
-![Error loading elastic-password-from-log.png](img/elastic-password-from-log.png)
-
-:::
-
 [Immutable Infrastructure]: https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure
+
+[Docker Mailserver]: https://qubitpi.github.io/docker-mailserver/edge/
 
 [publishing a template in Screwdriver]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#publishing-a-template
 

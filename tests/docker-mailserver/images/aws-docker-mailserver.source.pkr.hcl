@@ -12,16 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
-    }
-
-    hashicorp-aws = {
-      version = ">= 0.0.11"
-      source = "github.com/QubitPi/hashicorp-aws"
-    }
-  }
+source "docker" "ubuntu" {
+  image  = "jack20191124/hashicorp-aws-docker-mailserver-test:latest"
+  commit = true
 }

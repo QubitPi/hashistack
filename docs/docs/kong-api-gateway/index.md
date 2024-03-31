@@ -37,7 +37,7 @@ General Deployments
 
 :::info
 
-Please complete the [general setup](setup#setup) before proceeding.
+Please complete the [general setup](../setup#setup) before proceeding.
 
 :::
 
@@ -84,9 +84,9 @@ kong_api_gateway_domain = "gateway.mycompany.com"
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the [AWS EC2 instance type] running this image
 - `ssl_cert_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong-api-gateway/images] of
-  the [SSL certificate file](setup#optional-setup-ssl) for the Kong API Gateway domain
+  the [SSL certificate file](../setup#optional-setup-ssl) for the Kong API Gateway domain
 - `ssl_cert_key_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong-api-gateway/images] of the
-  [SSL certificate key file](setup#optional-setup-ssl) for the Kong API Gateway domain
+  [SSL certificate key file](../setup#optional-setup-ssl) for the Kong API Gateway domain
 - `kong_api_gateway_domain` is the SSL-enabled domain that will serve the
   [various ports of Kong gateway][Kong gateway - various ports]
 

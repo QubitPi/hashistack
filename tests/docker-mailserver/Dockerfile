@@ -11,17 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+FROM ubuntu:22.04
 
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
-    }
+LABEL maintainer="Jiaqi (Jack) Liu"
+LABEL maintainer-email="jack20220723@gmail.com"
 
-    hashicorp-aws = {
-      version = ">= 0.0.11"
-      source = "github.com/QubitPi/hashicorp-aws"
-    }
-  }
-}
+RUN apt update
+RUN apt upgrade -y
+RUN apt install software-properties-common -y
+RUN apt install wget sudo -y

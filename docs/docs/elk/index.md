@@ -55,13 +55,13 @@ General Deployments
 
 :::info
 
-Please complete the [general setup](setup#setup) before proceeding.
+Please complete the [general setup](../setup#setup) before proceeding.
 
 :::
 
 :::tip[Supporting HTTPS Protocol]
 
-We offer a [Nginx config file](setup#optional-setup-ssl) template.
+We offer a [Nginx config file](../setup#optional-setup-ssl) template.
 [This template](https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/elk/images/nginx-ssl.conf) will be used
 by hashicorp-aws by default
 
@@ -72,7 +72,7 @@ by hashicorp-aws by default
 Create a [HashiCorp Packer variable values file] named **aws-elk.pkrvars.hcl** under
 **[hashicorp-aws/hashicorp/elk/images]** with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/elk/images/aws-kong.auto.pkrvars.hcl"
+```hcl title="hashicorp-aws/hashicorp/elk/images/aws-elk.auto.pkrvars.hcl"
 ami_region             = "us-east-2"
 ami_name               = "my-elk-ami"
 ssl_cert_file_path     = "/path/to/ssl.crt"
@@ -83,15 +83,15 @@ ssl_cert_key_file_path = "/path/to/ssl.key"
   _private_
 - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
 - `ssl_cert_file_path` is the absolute path or the path relative to [hashicorp-aws/hashicorp/elk/images] of
-  the [SSL certificate file](setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
-- `ssl_cert_key_file_path`  is the absolute path or the path relative to [hashicorp-aws/hashicorp/elk/images] of the [SSL certificate key file](setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
+  the [SSL certificate file](../setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
+- `ssl_cert_key_file_path`  is the absolute path or the path relative to [hashicorp-aws/hashicorp/elk/images] of the [SSL certificate key file](../setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
 
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-elk.tfvars** under
 **[hashicorp-aws/hashicorp/elk/instances]**with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/elk/instances/aws-kong.auto.tfvars"
+```hcl title="hashicorp-aws/hashicorp/elk/instances/aws-elk.auto.tfvars"
 aws_deploy_region = "us-east-2"
 ami_name          = "my-elk-ami"
 instance_name     = "My ELK instance"
@@ -179,7 +179,7 @@ terraform apply -auto-approve
 ### Post Setup in EC2 Instance
 
 As we've mentioned in the beginning, this is a semi-deployment and we still need to SSH into the box to manually
-generate Kibana token & verification code. This will make the automated deploymentl logic simple and easy to maintain
+generate Kibana token & verification code. This will make the automated deployment logic simple and easy to maintain
 
 ```bash
 sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana --url "https://localhost:9200"

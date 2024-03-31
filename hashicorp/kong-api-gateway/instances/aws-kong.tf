@@ -52,7 +52,7 @@ variable "route_53_zone_id" {
 
 variable "kong_api_gateway_domain" {
   type = string
-  description = "Domain name that Nexus Graph queries against"
+  description = "Domain name that gateway client queries against"
   sensitive = true
 }
 
@@ -71,7 +71,7 @@ provider "aws" {
 }
 
 data "template_file" "aws-kong-init" {
-  template = "${file("../scripts/aws-kong-tf-init.sh")}"
+  template = file("../scripts/aws-kong-tf-init.sh")
 }
 
 data "aws_ami" "latest-kong" {
@@ -80,7 +80,7 @@ data "aws_ami" "latest-kong" {
 
   filter {
     name   = "name"
-    values = ["${var.ami_name}"]
+    values = [var.ami_name]
   }
 
   filter {
@@ -90,15 +90,15 @@ data "aws_ami" "latest-kong" {
 }
 
 resource "aws_instance" "aws-kong" {
-  ami = "${data.aws_ami.latest-kong.id}"
-  instance_type = "${var.instance_type}"
+  ami = data.aws_ami.latest-kong.id
+  instance_type = var.instance_type
   tags = {
-    Name = "${var.instance_name}"
+    Name = var.instance_name
   }
 
   security_groups = var.security_groups
 
-  user_data = "${data.template_file.aws-kong-init.rendered}"
+  user_data = data.template_file.aws-kong-init.rendered
 }
 
 resource "aws_route53_record" "aws-kong" {

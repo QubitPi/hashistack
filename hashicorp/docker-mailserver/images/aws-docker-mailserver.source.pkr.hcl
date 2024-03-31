@@ -24,12 +24,14 @@ variable "ami_name" {
 
 variable "instance_type" {
   type        = string
-  description = "The EC2 instance type to use while building the AMI, such as t2.small."
+  description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
 
   validation {
     condition     = contains(["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"], var.instance_type)
-    error_message = "Allowed values for instance_type are those specified for T2 ONLY."
+    error_message = "Allowed values for input_parameter are those specified for T2 ONLY."
   }
+
+  default = "t2.micro"
 }
 
 variable "skip_create_ami" {
@@ -37,7 +39,7 @@ variable "skip_create_ami" {
   sensitive = true
 }
 
-source "amazon-ebs" "ws" {
+source "amazon-ebs" "docker-mailserver" {
   ami_name = "${var.ami_name}"
   force_deregister = "true"
   force_delete_snapshot = "true"

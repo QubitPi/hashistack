@@ -33,7 +33,7 @@ config:
       value: "My ELK instance"
       description: "The deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary"
     key-pair-name:
-      value: "My SSH key pair"
+      value: "My AWS SSH key pair name"
       description: |
         The name of AWS EC2 key pair bound to this ELK instance. We will use this key pair to later ssh into the ELK EC2
         to for post setup discussed in hashicorp-aws documentation

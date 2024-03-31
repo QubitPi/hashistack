@@ -43,7 +43,7 @@ source "amazon-ebs" "machine-learning" {
   force_delete_snapshot = "true"
   skip_create_ami = "${var.skip_create_ami}"
 
-  instance_type = "${var.instance_type}"
+  instance_type = var.instance_type
   launch_block_device_mappings {
     device_name = "/dev/sda1"
     volume_size = 30

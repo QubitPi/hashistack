@@ -66,17 +66,17 @@ The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined 
 - [`AWS_ACCESS_KEY_ID`](../setup#aws)
 - [`AWS_SECRET_ACCESS_KEY`](../setup#aws)
 - `SSL_CERTIFICATE` - the content of SSL certificate file serving HTTPS-enabled DNS name of the EC2 hosting our Kong
-  API Gateway instance. This is the same as the `SSL_CERTIFICATE` from the [general SSL setup of hashicorp-aws]
+  API Gateway instance. This is the same as the `SSL_CERTIFICATE` from the
+  [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
 - `SSL_CERTIFICATE_KEY` - the content of SSL certificate key file serving HTTPS-enabled DNS name of the EC2 hosting our
-  API Gateway instance. This is the same as the `SSL_CERTIFICATE_KEY` from the [general SSL setup of hashicorp-aws]
+  API Gateway instance. This is the same as the `SSL_CERTIFICATE_KEY` from the
+  [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
 
 To run the pipeline, fill in the AWS-related **parameters** first
 
 ![Error kong-api-gateway-release-definition-template-parameters.png](img/kong-api-gateway-release-definition-template-parameters.png)
 
 Then hit "**Submit**" to start deploying.
-
-[general SSL setup of hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/docs/setup#ssl
 
 [Immutable Infrastructure]: https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure
 

@@ -1,3 +1,7 @@
+#!/bin/bash
+set -x
+set -e
+
 # Copyright Jiaqi Liu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +16,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
-    }
+cd /home/ubuntu/
 
-    hashicorp-aws = {
-      version = ">= 0.0.11"
-      source = "github.com/QubitPi/hashicorp-aws"
-    }
-  }
-}
+# Enable sudo-less Docker commands
+sudo usermod -aG docker ${USER}
+su - ${USER}
+
+sudo docker compose up &
+sleep 30
+
+wget https://raw.githubusercontent.com/docker-mailserver/docker-mailserver/master/setup.sh
+chmod a+x ./setup.sh
+./setup.sh email add ${FIRST_EMAIL} ${FIRST_EMAIL_PASSWORD}
