@@ -1,3 +1,7 @@
+#!/bin/bash
+set -x
+set -e
+
 # Copyright Jiaqi Liu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +16,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
-    }
+export TEST_DIR="${PWD}"
 
-    hashicorp-aws = {
-      version = ">= 0.0.11"
-      source = "github.com/QubitPi/hashicorp-aws"
-    }
-  }
-}
+export PACKER_IMAGE_DIR="${PWD}/../../../hashicorp/docker-mailserver/images"
+
+cp aws-docker-mailserver.packer.pkr.hcl $PACKER_IMAGE_DIR
+cp aws-docker-mailserver.source.pkr.hcl $PACKER_IMAGE_DIR
+cp aws-docker-mailserver.build.auto.pkrvars.hcl $PACKER_IMAGE_DIR
+
+cd $PACKER_IMAGE_DIR
+packer init .
+packer validate .
+packer build .
+
+cd $TEST_DIR

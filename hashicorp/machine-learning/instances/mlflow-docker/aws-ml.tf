@@ -13,5 +13,5 @@
 # limitations under the License.
 
 data "template_file" "init" {
-  template = "${file("../../scripts/mlflow-docker/aws-ml-tf-init.sh")}"
+  template = file("../../scripts/mlflow-docker/aws-ml-tf-init.sh")
 }

@@ -71,7 +71,7 @@ data "aws_ami" "latest-ws" {
 
   filter {
     name   = "name"
-    values = ["${var.ami_name}"]
+    values = [var.ami_name]
   }
 
   filter {
@@ -81,13 +81,13 @@ data "aws_ami" "latest-ws" {
 }
 
 resource "aws_instance" "aws-ws" {
-  ami = "${data.aws_ami.latest-ws.id}"
-  instance_type = "${var.instance_type}"
+  ami = data.aws_ami.latest-ws.id
+  instance_type = var.instance_type
   tags = {
-    Name = "${var.ec2_instance_name}"
+    Name = var.ec2_instance_name
   }
 
   security_groups = var.security_groups
 
-  user_data = "${data.template_file.aws-ws-init.rendered}"
+  user_data = data.template_file.aws-ws-init.rendered
 }

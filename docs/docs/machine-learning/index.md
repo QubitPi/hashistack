@@ -49,8 +49,8 @@ to generate the Machine Learning model in a directory ready for use next. We wil
 
 The following environment variables need to be defined:
 
-- [AWS_ACCESS_KEY_ID](setup#aws)
-- [AWS_SECRET_ACCESS_KEY](setup#aws)
+- [AWS_ACCESS_KEY_ID](../setup#aws)
+- [AWS_SECRET_ACCESS_KEY](../setup#aws)
 
 ### Installing HashiCorp Packer & Terraform
 

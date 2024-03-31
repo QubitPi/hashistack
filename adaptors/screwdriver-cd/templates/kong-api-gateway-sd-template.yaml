@@ -22,7 +22,7 @@ maintainer: jack20220723@gmail.com
 config:
   image: buildpack-deps:22.04-scm
   parameters:
-    aws-image-region:
+    ami-region:
       value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
       description: "The AWS region where Kong API Gateway AMI will be published to. The published image will be private"
     ami-name:
@@ -56,7 +56,7 @@ config:
     - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../hashicorp-aws/hashicorp/kong-api-gateway/images/ssl.key
 
     - load-packer-variable-file: |
-        echo ami_region              = \"$(meta get parameters.aws-image-region.value)\"        >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
+        echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
         echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
         echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
         echo ssl_cert_source         = \"ssl.crt\"                                              >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl

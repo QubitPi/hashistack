@@ -62,7 +62,7 @@ data "aws_ami" "latest-machine-learning" {
 
   filter {
     name   = "name"
-    values = ["${var.ami_name}"]
+    values = [var.ami_name]
   }
 
   filter {
@@ -72,13 +72,13 @@ data "aws_ami" "latest-machine-learning" {
 }
 
 resource "aws_instance" "machine-learning" {
-  ami = "${data.aws_ami.latest-machine-learning.id}"
-  instance_type = "${var.instance_type}"
+  ami = data.aws_ami.latest-machine-learning.id
+  instance_type = var.instance_type
   tags = {
-    Name = "${var.ec2_instance_name}"
+    Name = var.ec2_instance_name
   }
 
   security_groups = var.security_groups
 
-  user_data = "${data.template_file.init.rendered}"
+  user_data = data.template_file.init.rendered
 }

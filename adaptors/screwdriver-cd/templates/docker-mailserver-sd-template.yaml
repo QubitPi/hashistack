@@ -1,0 +1,104 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+namespace: QubitPi
+name: docker-mailserver-release-definition-template
+version: '1.0.0'
+description: |
+  Screwdriver CD template for deploying Docker Mailserver (https://github.com/docker-mailserver/docker-mailserver) to
+  AWS through HashiCorp.
+maintainer: jack20220723@gmail.com
+config:
+  image: buildpack-deps:22.04-scm
+  parameters:
+    ami-region:
+      value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+      description: |
+        The AWS region where Docker Mailserver AMI will be published to. The published image will be private
+    ami-name:
+      value: "my-docker-mailserver-ami"
+      description: "The published AMI name; it can be arbitrary"
+    aws-deploy-region:
+      value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
+      description: "The AWS region where Docker Mailserver EC2 instance will be deployed into"
+    instance-name:
+      value: "My Docker Mailserver instance"
+      description: "The deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary"
+    key-pair-name:
+      value: "My AWS SSH key pair name"
+      description: |
+        The name of AWS EC2 key pair bound to this docker-mailserver instance. We can use this key pair to later ssh
+        into the instance for admin management purposes
+    security-groups:
+      value: '["My Docker Mailserver API Security Group", "My SSH Security Group"]'
+      description: |
+        The list of AWS Security Group names (yes, not ID, but name...) bound to the mailserver EC2 instance.
+    base_domain:
+      value: "mycompany.com"
+      description: |
+        The base domain name of the MX record. For example, if base domain is 'mycompany.com', the generated MX record
+        will be 'mail.mycompany.com'
+    route-53-zone-id:
+      value: "9DQXLTNSN7ZX9P8V2KZII"
+      description: 'The AWS Route 53 hosted Zone ID that hosts the domain defined by "mycompany.com"'
+    first-email:
+      value: "jack@mycompany.com"
+      description: |
+        The email used for mail server startup.
+        On first start, we will need to add at least one email account. The provided first email will be used for that
+        and can be used for sending/receiving emails immediately after deployment.
+    first-email-password:
+      value: "sdfeo9uig&^&rf8u"
+      description: |
+        The password of the email for mail server startup. On first start, we will need to add at least one email
+        account. The provided first email will be used for that and can be used for sending/receiving emails immediately
+        after deployment
+  steps:
+    - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
+    - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
+    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+
+    - load-ssl-certificate-file: echo "$SSL_CERTIFICATE"         > ../hashicorp-aws/hashicorp/docker-mailserver/images/ssl.crt
+    - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../hashicorp-aws/hashicorp/docker-mailserver/images/ssl.key
+
+    - load-packer-variable-file: |
+        echo ami_region              = \"$(meta get parameters.ami-region.value)\"  >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ami_name                = \"$(meta get parameters.ami-name.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_source         = \"ssl.crt\"                                  >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_source     = \"ssl.key\"                                  >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo base_domain             = \"$(meta get parameters.base-domain.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+
+    - load-terraform-variable-file: |
+        echo aws_deploy_region    = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo ami_name             = \"$(meta get parameters.ami-name.value)\"             >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo instance_name        = \"$(meta get parameters.instance-name.value)\"        >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo key_pair_name        = \"$(meta get parameters.key-pair-name.value)\"        >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo security_groups      = $(meta get parameters.security-groups.value)          >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo base_domain          = \"$(meta get parameters.base-domain.value)\"          >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo route_53_zone_id     = \"$(meta get parameters.route-53-zone-id.value)\"     >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo first_email          = \"$(meta get parameters.first-email.value)\"          >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo first_email_password = \"$(meta get parameters.first-email-password.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+
+    - packer-init: cd ../hashicorp-aws/hashicorp/docker-mailserver/images && packer init .
+    - packer-validate: packer validate -var "skip_create_ami=true" .
+    - packer-build: packer build -var "skip_create_ami=false" .
+
+    - terraform-init: cd ../instances && terraform init
+    - terraform-validate: terraform validate
+    - terraform-apply: terraform apply -auto-approve
+  secrets:
+    - SSL_CERTIFICATE
+    - SSL_CERTIFICATE_KEY
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
