@@ -28,7 +28,8 @@ the latest versions with the `latest` tag.
 
 :::caution
 
-[hashicorp-aws] deploys Docker Mailserver as a [t2.micro](https://aws.amazon.com/ec2/instance-types/t2/) instance.
+hashicorp-aws deploys Docker Mailserver as a [t2.micro](https://aws.amazon.com/ec2/instance-types/t2/) instance by
+default
 
 :::
 
@@ -77,6 +78,8 @@ The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined 
   [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
 
 To run the pipeline, fill in the AWS-related **parameters** first
+
+![Error loading sd-template-parameters.png](./img/sd-template-parameters.png)
 
 Then hit "**Submit**" to start deploying.
 
