@@ -27,6 +27,8 @@ Please complete the following two prerequisite setups before preceding
 1. [general setup](../setup#setup) (without [SSL setup](../setup#optional-setup-ssl))
 2. [DNS setup][docker-mailserver DNS setup]
 
+:::
+
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-docker-mailserver.pkrvars.hcl** under
@@ -45,14 +47,14 @@ base_domain         = "mycompany.com"
 - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
 - `ssl_cert_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/docker-mailserver/images] of
   the [SSL certificate file](../setup#optional-setup-ssl) for the domain serving the docker-mailserver EC2 instance
-- `ssl_cert_key_source`  is the absolute path or the path relative to
+- `ssl_cert_key_source` is the absolute path or the path relative to
   [hashicorp-aws/hashicorp/docker-mailserver/images] of the [SSL certificate key file](../setup#optional-setup-ssl) for
   the domain serving the docker-mailserver EC2 instance
 
   :::info
 
   hashicorp-aws [supports SSL][docker-mailserver SSL setup] with the
-  [Bring Your Own Certificates][docker-mailserver SSL setup - Bring Your Own Certificates] option
+  [Bring Your Own Certificates][docker-mailserver SSL setup - Let's Encrypt] (certbot) option
 
   :::
 
@@ -65,7 +67,7 @@ base_domain         = "mycompany.com"
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-docker-mailserver.tfvars** under
-**[hashicorp-aws/hashicorp/docker-mailserver/instances]**with the following contents:
+**[hashicorp-aws/hashicorp/docker-mailserver/instances]** with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/docker-mailserver/instances/aws-docker-mailserver.auto.tfvars"
 aws_deploy_region    = "us-east-1"
@@ -171,6 +173,66 @@ stand up docker-mailserver in a minute.
 
 :::
 
+FAQ
+---
+
+### How to Add New Email Accounts or Update Email Password
+
+Use [setup.sh][docker-mailserver setup.sh]
+
+```console
+./setup.sh email add <email> <password>
+./setup.sh email update <email> <password>
+./setup.sh email del <email>
+./setup.sh email list
+```
+
+Troubleshooting
+---------------
+
+### Emails Not Sent to External Emails
+
+_While sending emails to external emails such as a working gmail, it does not go through, usually complaining of
+**connection timed out**. An example error log looks like the following_.
+
+```console
+Sep 26 02:47:21 mail postfix/qmgr[1329]: 8167B7F0B1: from=<iam@zp4rker.com>, size=2190, nrcpt=1 (queue active)
+Sep 26 02:47:21 mail amavis[1223]: (01223-02) Passed CLEAN {RelayedOpenRelay}, [110.141.179.150]:60565 [110.141.179.150] <iam@zp4rker.com> -> <iamzp4rker@gmail.com>, Queue-ID: E27927F0C0, Message-ID: <2b0b8cff-b4e5-4f01-b778-9b5d7d76f988@spark>, mail_id: dGghh_AqJFO4, Hits: -0.201, size: 1959, queued_as: 8167B7F0B1, 1501 ms
+Sep 26 02:47:21 mail postfix/smtp-amavis/smtp[2330]: E27927F0C0: to=<iamzp4rker@gmail.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=1.6, delays=0.12/0.01/0/1.5, dsn=2.0.0, status=sent (250 2.0.0 from MTA(smtp:[127.0.0.1]:10025): 250 2.0.0 Ok: queued as 8167B7F0B1)
+Sep 26 02:47:21 mail postfix/qmgr[1329]: E27927F0C0: removed
+Sep 26 02:47:22 mail postfix/smtp[2339]: connect to gmail-smtp-in.l.google.com[2404:6800:4003:c0f::1a]:25: Cannot assign requested address
+Sep 26 02:47:43 mail postfix/smtp[2307]: connect to gmail-smtp-in.l.google.com[142.251.10.27]:25: Connection timed out
+Sep 26 02:47:43 mail postfix/smtp[2307]: connect to gmail-smtp-in.l.google.com[2404:6800:4003:c0f::1b]:25: Cannot assign requested address
+Sep 26 02:47:43 mail postfix/smtp[2307]: connect to alt1.gmail-smtp-in.l.google.com[2607:f8b0:400e:c00::1a]:25: Cannot assign requested address
+Sep 26 02:47:51 mail dovecot: imap(iam@zp4rker.com)<2220><QibNiYvpkexujbOW>: Connection closed (EXPUNGE finished 31.220 secs ago) in=836 out=6270 deleted=1 expunged=1 trashed=0 hdr_count=3 hdr_bytes=64 body_count=0 body_bytes=0
+Sep 26 02:47:51 mail dovecot: imap(iam@zp4rker.com)<2219><FRTNiYvpkOxujbOW>: Connection closed (UID SEARCH finished 31.145 secs ago) in=4407 out=14821 deleted=0 expunged=0 trashed=0 hdr_count=8 hdr_bytes=264 body_count=0 body_bytes=0
+Sep 26 02:47:52 mail postfix/smtp[2339]: connect to gmail-smtp-in.l.google.com[142.251.10.26]:25: Connection timed out
+Sep 26 02:48:13 mail postfix/smtp[2307]: connect to alt1.gmail-smtp-in.l.google.com[173.194.202.27]:25: Connection timed out
+Sep 26 02:48:18 mail postfix/smtpd-amavis/smtpd[1579]: timeout after END-OF-MESSAGE from localhost[127.0.0.1]
+Sep 26 02:48:18 mail postfix/smtpd-amavis/smtpd[1579]: disconnect from localhost[127.0.0.1] ehlo=1 mail=1 rcpt=1 data=1 commands=4
+Sep 26 02:48:22 mail postfix/smtp[2339]: connect to alt1.gmail-smtp-in.l.google.com[173.194.202.27]:25: Connection timed out
+Sep 26 02:48:22 mail postfix/smtp[2339]: connect to alt1.gmail-smtp-in.l.google.com[2607:f8b0:400e:c00::1b]:25: Cannot assign requested address
+Sep 26 02:48:22 mail postfix/smtp[2339]: connect to alt2.gmail-smtp-in.l.google.com[2607:f8b0:4023:c0b::1a]:25: Cannot assign requested address
+Sep 26 02:48:22 mail postfix/smtp[2339]: 8167B7F0B1: to=<iamzp4rker@gmail.com>, relay=none, delay=61, delays=0.01/0.01/61/0, dsn=4.4.1, status=deferred (connect to alt2.gmail-smtp-in.l.google.com[2607:f8b0:4023:c0b::1a]:25: Cannot assign requested address)
+Sep 26 02:48:25 mail postfix/postscreen[2537]: CONNECT from [170.187.162.6]:61000 to [172.25.0.2]:25
+Sep 26 02:48:31 mail postfix/postscreen[2537]: PASS NEW [170.187.162.6]:61000
+Sep 26 02:48:31 mail postfix/smtpd[2554]: connect from cloud-scanner-a68296bf.internet-research-project.net[170.187.162.6]
+Sep 26 02:48:32 mail postfix/smtpd[2554]: lost connection after AUTH from cloud-scanner-a68296bf.internet-research-project.net[170.187.162.6]
+Sep 26 02:48:32 mail postfix/smtpd[2554]: disconnect from cloud-scanner-a68296bf.internet-research-project.net[170.187.162.6] auth=0/1 commands=0/1
+Sep 26 02:48:43 mail postfix/smtp[2307]: connect to alt2.gmail-smtp-in.l.google.com[142.250.141.26]:25: Connection timed out
+Sep 26 02:48:43 mail postfix/smtp[2307]: B00297F0A3: to=<iamzp4rker@gmail.com>, relay=none, delay=623, delays=532/0.01/91/0, dsn=4.4.1, status=deferred (connect to alt2.gmail-smtp-in.l.google.com[142.250.141.26]:25: Connection timed out)
+Sep 26 02:48:50 mail dovecot: imap-login: Login: user=<iam@zp4rker.com>, method=PLAIN, rip=110.141.179.150, lip=172.25.0.2, mpid=2618, TLS, session=<NIhEkYvpo+xujbOW>
+Sep 26 02:48:50 mail dovecot: imap-login: Login: user=<iam@zp4rker.com>, method=PLAIN, rip=110.141.179.150, lip=172.25.0.2, mpid=2619, TLS, session=<Ur9EkYvpouxujbOW>
+```
+
+This is a connection issue. The server is not able to establish outgoing connections on port tcp/25. This might be just
+a missing firewall rule, or the
+[cloud provider blocks port 25, which is the case on AWS](https://repost.aws/knowledge-center/ec2-port-25-throttle).
+You can manually test the connection with `nc alt1.gmail-smtp-in.l.google.com 25` on our server to verify that.
+
+In the case of AWS, we will need to sign in to our AWS account, and then open the
+[Request to remove email sending limitations form](https://aws-portal.amazon.com/gp/aws/html-forms-controller/contactus/ec2-email-limit-rdns-request).
+
 [AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
 [AWS EC2 instance type]: https://aws.amazon.com/ec2/instance-types/
 [AWS EC2 key pair]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
@@ -179,8 +241,9 @@ stand up docker-mailserver in a minute.
 
 [docker-mailserver DNS setup]: https://qubitpi.github.io/docker-mailserver/edge/usage/#minimal-dns-setup
 [docker-mailserver ports]: https://qubitpi.github.io/docker-mailserver/edge/config/security/understanding-the-ports/#overview-of-email-ports
+[docker-mailserver setup.sh]: https://qubitpi.github.io/docker-mailserver/edge/config/setup.sh/
 [docker-mailserver SSL setup]: https://qubitpi.github.io/docker-mailserver/edge/config/security/ssl/
-[docker-mailserver SSL setup - Bring Your Own Certificates]: https://qubitpi.github.io/docker-mailserver/edge/config/security/ssl/#bring-your-own-certificates
+[docker-mailserver SSL setup - Let's Encrypt]: https://docker-mailserver.github.io/docker-mailserver/latest/config/security/ssl/#lets-encrypt-recommended
 
 [hashicorp-aws/hashicorp/docker-mailserver/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/docker-mailserver/images
 [hashicorp-aws/hashicorp/docker-mailserver/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/docker-mailserver/instances
