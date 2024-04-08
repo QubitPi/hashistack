@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: YAML & Markdown Style
+name: YAML & Markdown Style and Link Check
 
 "on":
   workflow_call:
@@ -30,3 +30,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actionshub/markdownlint@main
+  linkChecker:
+    name: Link Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1.9.0
+        with:
+          fail: true

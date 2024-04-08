@@ -92,9 +92,9 @@ Then hit "**Submit**" to start deploying.
 [screwdriver.yaml]: https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml
 [Screwdriver CD - commands]: https://github.com/QubitPi/screwdriver-cd-commands
 [Screwdriver CD - creating a pipeline]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/quickstart#create-a-new-pipeline
-[Screwdriver CD - creating pipeline from template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates#using-a-template
+[Screwdriver CD - creating pipeline from template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#using-a-template
 [Screwdriver CD - finding templates]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#finding-templates
 [Screwdriver CD - finding commands]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/commands#finding-commands
 [Screwdriver CD Secrets]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/configuration/secrets
-[Screwdriver CD template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates
+[Screwdriver CD template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates
 [screwdriver-template-main npm package]: https://github.com/QubitPi/screwdriver-cd-template-main

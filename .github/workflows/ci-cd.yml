@@ -32,7 +32,7 @@ jobs:
           access_token: ${{ github.token }}
 
   code-styles:
-    uses: ./.github/workflows/yml-and-md-style-checks.yml
+    uses: ./.github/workflows/yml-md-style-and-link-checks.yml
 
   docker-image:
     name: Publish docker images for "AMI Build Test"
