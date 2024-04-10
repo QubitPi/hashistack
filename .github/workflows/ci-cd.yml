@@ -210,7 +210,7 @@ jobs:
                 }
               })
 
-  documentation-ci-cd:
+  documentation:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
     needs: [tests, validate-screwdriver-templates, validate-screwdriver-commands, test-screwdriver-command-scripts]
     outputs:
@@ -241,9 +241,9 @@ jobs:
   slack-notification:
     name: Send Slack Notification
     if: ${{ always() }}
-    needs: documentation-ci-cd
+    needs: documentation
     uses: QubitPi/hashicorp-aws/.github/workflows/slack-notification.yml@master
     with:
-      job-status: ${{ needs.documentation-ci-cd.outputs.outcome }}
+      job-status: ${{ needs.documentation.outputs.outcome }}
     secrets:
       slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
