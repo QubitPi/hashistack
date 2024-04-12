@@ -1,0 +1,59 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+name: "Frontend E2E Tests"
+description: "Cypress E2E tests supporting parallel testing with spec granularity"
+
+inputs:
+  node-version:
+    description: 'NodeJS version, such as "16"'
+    required: true
+  start-strategy:
+    description: '"yarn-start" or "serve"'
+    required: true
+  spec-relative-path:
+    description: 'spec.ts file path relative to repo root'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run E2E tests in ${{ inputs.start-strategy }} mode
+      run: |
+        if [[ ${{ inputs.start-strategy }} == 'yarn-start' ]]; then
+            yarn start &
+            yarn wait-on-dev
+            yarn e2e --spec "${{ inputs.spec-relative-path }}"
+        else
+            yarn build
+            npm install -g serve
+            serve -s dist -l 3000 &
+            yarn wait-on-prod
+            yarn e2e --spec "${{ inputs.spec-relative-path }}"
+        fi
+      shell: bash
+    - id: extract-spec-filename
+      if: failure()
+      run: |
+        id=$(echo "${{ inputs.spec-relative-path }}" | sed s:/:_:g)
+        echo "::set-output name=id::$id"
+      shell: bash
+    - name: Upload test videos and screenshots on test failure
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.start-strategy }}-${{steps.extract-spec-filename.outputs.id}}-${{ inputs.node-version }}
+        path: |
+          ./cypress/videos
+          ./cypress/screenshots
