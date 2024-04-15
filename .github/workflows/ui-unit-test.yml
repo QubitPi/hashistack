@@ -13,24 +13,28 @@
 # limitations under the License.
 ---
 name: "UI unit tests"
-description: "Jest unit tests"
 
-inputs:
-  node-version:
-    description: 'NodeJS version, such as "16"'
-    required: true
+"on":
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'NodeJS version, such as "16"'
+        type: string
+        required: true
 
-runs:
-  using: "composite"
-  steps:
-    - uses: actions/checkout@v3
-    - name: Set node version to ${{ inputs.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ inputs.node-version }}
-    - name: Install dependencies
-      run: yarn install
-      shell: bash
-    - name: Run unit tests
-      run: yarn test
-      shell: bash
+jobs:
+  ui-unit-test:
+    name: Ui Unit Test Job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set node version to ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+      - name: Install dependencies
+        run: yarn install
+        shell: bash
+      - name: Run unit tests
+        run: yarn test
+        shell: bash
