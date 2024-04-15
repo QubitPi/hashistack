@@ -41,18 +41,19 @@ name: CI/CD
     branches:
       - master
 
-env:
-  NODE_VERSION: 18
-
-jobs:
   unit-tests:
     name: Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: QubitPi/hashicorp-aws/.github/workflows/ui-unit-test.yml@master
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+    needs: [yml-md-style, code-style]
+    uses: QubitPi/hashicorp-aws/.github/workflows/ui-unit-test.yml@master
+    with:
+      node-version: 18
 ```
+
+:::tip
+
+In the example above, the node 18 is used in the CI/CDed project.
+
+:::
 
 :::tip
 

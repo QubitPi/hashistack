@@ -43,18 +43,18 @@ name: CI/CD
     branches:
       - master
 
-env:
-  NODE_VERSION: 18
-
-jobs:
   code-style:
-    name: Code Style Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: QubitPi/hashicorp-aws/.github/actions/ui-code-style@master
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+    name: React & TS Code Style Check
+    uses: QubitPi/hashicorp-aws/.github/workflows/ui-code-style.yml@master
+    with:
+      node_version: 18
 ```
+
+:::tip
+
+In the example above, the node 18 is used in the CI/CDed project.
+
+:::
 
 The configurations of Prettier and ESLint can be done regularly by following their respective documentations. For
 example, the [.prettierrc.json](https://qubitpi.github.io/prettier/docs/en/configuration) and
