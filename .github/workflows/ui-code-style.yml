@@ -24,7 +24,7 @@ name: "UI Code Style Checks"
 
 jobs:
   ui-code-style-job:
-    name: Ui Code Style Job
+    name: UI Code Style Job
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

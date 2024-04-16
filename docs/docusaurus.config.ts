@@ -45,6 +45,7 @@ const config: Config = {
         },
         blog: {
           showReadingTime: true,
+          blogSidebarCount: 'ALL',
           editUrl: 'https://github.com/QubitPi/hashicorp-aws/tree/master/docs',
         },
         theme: {

@@ -24,7 +24,7 @@ name: "UI unit tests"
 
 jobs:
   ui-unit-test:
-    name: Ui Unit Test Job
+    name: UI Unit Test Job
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
