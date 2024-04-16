@@ -43,7 +43,6 @@ name: CI/CD
 
   unit-tests:
     name: Unit Tests
-    needs: [yml-md-style, code-style]
     uses: QubitPi/hashicorp-aws/.github/workflows/ui-unit-test.yml@master
     with:
       node-version: 18
