@@ -1,4 +1,8 @@
-# Copyright Jiaqi Liu
+#!/bin/bash
+set -x
+set -e
+
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,16 +16,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-packer {
-  required_plugins {
-    docker = {
-      version = ">= 0.0.7"
-      source = "github.com/hashicorp/docker"
-    }
-
-    hashicorp-aws = {
-      version = ">= 0.0.8"
-      source = "github.com/QubitPi/hashicorp-aws"
-    }
-  }
-}
+cd /root/docker-kong/compose/
+sudo KONG_DATABASE=postgres docker compose --profile database up

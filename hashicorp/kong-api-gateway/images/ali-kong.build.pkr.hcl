@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,30 +13,33 @@
 # limitations under the License.
 
 variable "build_source" {
-  type =  string
+  type      = string
   sensitive = false
-  default = "amazon-ebs.kong"
+  default   = "alicloud-ecs.kong-gateway"
 }
 
 variable "image_home_dir" {
-  type =  string
+  type      = string
   sensitive = true
-  default = "/home/ubuntu"
+  default   = "/root"
 }
 
 variable "ssl_cert_source" {
-  type =  string
+  type      = string
   sensitive = true
+  default   = ""
 }
 
 variable "ssl_cert_key_source" {
-  type =  string
+  type      = string
   sensitive = true
+  default   = ""
 }
 
 variable "kong_api_gateway_domain" {
-  type =  string
+  type      = string
   sensitive = true
+  default   = ""
 }
 
 build {
@@ -46,9 +49,9 @@ build {
   ]
 
   provisioner "hashicorp-aws-kong-api-gateway-provisioner" {
-    homeDir = "${var.image_home_dir}"
-    sslCertSource = "${var.ssl_cert_source}"
-    sslCertKeySource = "${var.ssl_cert_key_source}"
+    homeDir              = "${var.image_home_dir}"
+    sslCertSource        = "${var.ssl_cert_source}"
+    sslCertKeySource     = "${var.ssl_cert_key_source}"
     kongApiGatewayDomain = "${var.kong_api_gateway_domain}"
   }
 }

@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-source "docker" "ubuntu" {
-  image  = "jack20191124/hashicorp-aws-kong-api-gateway-test:latest"
-  commit = true
+packer {
+  required_plugins {
+    alicloud = {
+      source  = "github.com/hashicorp/alicloud"
+      version = "~> 1"
+    }
+
+    hashicorp-aws = {
+      version = ">= 0.0.4"
+      source  = "github.com/paion-data/paion-data"
+    }
+  }
 }

@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,16 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
-    }
+variable "docker_image" {
+  type    = string
+  default = "paiondata/hashicorp-ali-kong-api-gateway-test:latest"
+}
 
-    hashicorp-aws = {
-      version = ">= 0.0.8"
-      source = "github.com/QubitPi/hashicorp-aws"
-    }
-  }
+source "docker" "ubuntu" {
+  image  = var.docker_image
+  commit = true
 }
