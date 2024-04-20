@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[8046],{8799:s=>{s.exports=JSON.parse('{"label":"Frontend","permalink":"/hashicorp-aws/blog/tags/frontend","allTagsPath":"/hashicorp-aws/blog/tags","count":4,"unlisted":false}')}}]);
