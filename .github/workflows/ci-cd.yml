@@ -31,12 +31,12 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-#  code-styles:
-#    uses: ./.github/workflows/yml-md-style-and-link-checks.yml
+  yml-md-style-and-link-checks:
+    uses: ./.github/workflows/yml-md-style-and-link-checks.yml
 
   docker-image:
     name: Publish docker images for "AMI Build Test"
-#    needs: code-styles
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -93,7 +93,7 @@ jobs:
 
   list-screwdriver-templates:
     name: Listing Screwdriver Templates to Validate
-#    needs: code-styles
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-templates.outputs.paths }}
@@ -141,7 +141,7 @@ jobs:
 
   list-screwdriver-command-scripts:
     name: Listing Screwdriver Command Scripts to Test
-#    needs: code-styles
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-command-scripts.outputs.paths }}
@@ -171,7 +171,7 @@ jobs:
 
   list-screwdriver-commands:
     name: Listing Screwdriver Commands to Validate
-#    needs: code-styles
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-commands.outputs.paths }}
