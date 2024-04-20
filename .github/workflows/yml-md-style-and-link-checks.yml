@@ -16,6 +16,31 @@ name: YAML & Markdown Style and Link Check
 
 "on":
   workflow_call:
+    inputs:
+      use-custom-yamllint-config-file:
+        description: |
+          Whether or not to use custome .yamllint file located at the root of downstream project.
+          Default to "false"
+        type: boolean
+        required: false
+      use-custom-mdlrc-config-file:
+        description: |
+          Whether or not to use custome .mdlrc file located at the root of downstream project.
+          Default to "false"
+        type: boolean
+        required: false
+      use-custom-markdownlint-config-file:
+        description: |
+          Whether or not to use custome .markdownlint.rb file located at the root of downstream project.
+          Default to "false"
+        type: boolean
+        required: false
+      use-custom-lycheeignore-file:
+        description: |
+          Whether or not to use custome .markdownlint.rb file located at the root of downstream project.
+          Default to "false"
+        type: boolean
+        required: false
 
 jobs:
   yaml-lint:
@@ -23,18 +48,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Load custom config files if specified
+        if: ${{ !inputs.use-custom-yamllint-config-file }}
+        run: |
+          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+          cp ../hashicorp-aws/.github/yml-md-style-and-link-checks/.yamllint .
       - uses: actionshub/yamllint@main
+
   markdown-lint:
     name: Markdown Style Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Load custom config files if specified
+        if: ${{ !inputs.use-custom-mdlrc-config-file }}
+        run: |
+          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+          cp ../hashicorp-aws/.github/yml-md-style-and-link-checks/.mdlrc .
+      - name: Load custom config files if specified
+        if: ${{ !inputs.use-custom-markdownlint-config-file }}
+        run: cp ../hashicorp-aws/.github/yml-md-style-and-link-checks/.markdownlint.rb .
       - uses: actionshub/markdownlint@main
+
   linkChecker:
     name: Link Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        if: ${{ !inputs.use-custom-lycheeignore-file }}
+        run: |
+          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+          cp ../hashicorp-aws/.github/yml-md-style-and-link-checks/.lycheeignore .
       - name: Link Checker
         uses: lycheeverse/lychee-action@v1.9.0
         with:
