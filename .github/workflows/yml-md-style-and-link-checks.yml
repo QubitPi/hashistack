@@ -50,9 +50,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Load custom config files if specified
         if: ${{ !inputs.use-custom-yamllint-config-file }}
-        run: |
-          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-          cp ../hashicorp-aws/.github/yml-md-style-and-link-checks/.yamllint .
+        run: wget https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/.github/yml-md-style-and-link-checks/.yamllint
       - uses: actionshub/yamllint@main
 
   markdown-lint:
@@ -62,12 +60,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Load custom config files if specified
         if: ${{ !inputs.use-custom-mdlrc-config-file }}
-        run: |
-          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-          cp ../hashicorp-aws/.github/yml-md-style-and-link-checks/.mdlrc .
+        run: wget https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/.github/yml-md-style-and-link-checks/.mdlrc
       - name: Load custom config files if specified
         if: ${{ !inputs.use-custom-markdownlint-config-file }}
-        run: cp ../hashicorp-aws/.github/yml-md-style-and-link-checks/.markdownlint.rb .
+        run: wget https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/.github/yml-md-style-and-link-checks/markdownlint.rb
       - uses: actionshub/markdownlint@main
 
   linkChecker:
@@ -75,10 +71,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Load default link check config if not specified
         if: ${{ !inputs.use-custom-lycheeignore-file }}
-        run: |
-          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-          cp ../hashicorp-aws/.github/yml-md-style-and-link-checks/.lycheeignore .
+        run: wget https://raw.githubusercontent.com/QubitPi/hashicorp-aws/master/.github/yml-md-style-and-link-checks/.lycheeignore
       - name: Link Checker
         uses: lycheeverse/lychee-action@v1.9.0
         with:
