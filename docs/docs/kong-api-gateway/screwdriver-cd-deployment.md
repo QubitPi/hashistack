@@ -85,7 +85,7 @@ Then hit "**Submit**" to start deploying.
 [publishing a template in Screwdriver]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#publishing-a-template
 
 [screwdriver.yaml]: https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml
-[Screwdriver CD - commands]: https://github.com/QubitPi/screwdriver-cd-commands
+[Screwdriver CD - commands]: https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/commands
 [Screwdriver CD - creating a pipeline]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/quickstart#create-a-new-pipeline
 [Screwdriver CD - creating pipeline from template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#using-a-template
 [Screwdriver CD - finding templates]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#finding-templates
