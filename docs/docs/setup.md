@@ -17,8 +17,6 @@ title: Setup
 [//]: # (See the License for the specific language governing permissions and)
 [//]: # (limitations under the License.)
 
-[hashicorp-aws] can be used for both and **automatic GitHub Action based** and **Screwdriver CD based** deployments.
-
 Setup
 -----
 
