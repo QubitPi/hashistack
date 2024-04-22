@@ -27,12 +27,13 @@ practice of immutable infrastructure**.
 Documentation
 -------------
 
-More information about [immutable-infrastructure-as-a-service] can be found at our [documentation][immutable-infrastructure-as-a-service].
+More information about IIaaS can be found at our [documentations][immutable-infrastructure-as-a-service].
 
 License
 -------
 
-The use and distribution terms for [immutable-infrastructure-as-a-service] are covered by the [Apache License, Version 2.0].
+The use and distribution terms for [immutable-infrastructure-as-a-service] are covered by the
+[Apache License, Version 2.0].
 
 [Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
 [Apache License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
@@ -44,7 +45,7 @@ The use and distribution terms for [immutable-infrastructure-as-a-service] are c
 [GitHub Workflow Status Badge]: https://img.shields.io/github/actions/workflow/status/paion-data/immutable-infrastructure-as-a-service/ci-cd.yml?branch=master&logo=github&style=for-the-badge
 [GitHub Workflow Status URL]: https://github.com/paion-data/immutable-infrastructure-as-a-service/actions/workflows/ci-cd.yml
 
-[immutable-infrastructure-as-a-service]: https://github.com/paion-data/immutable-infrastructure-as-a-service
+[immutable-infrastructure-as-a-service]: https://immutable-infrastructure.com
 [HashiCorp Packer Badge]: https://img.shields.io/badge/Packer-02A8EF?style=for-the-badge&logo=Packer&logoColor=white
 [HashiCorp Packer URL]: https://developer.hashicorp.com/packer/docs
 [HashiCorp Terraform Badge]: https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white
