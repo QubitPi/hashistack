@@ -23,6 +23,15 @@ We offer a convenient versioning management approach for releasing software on G
 
 <!--truncate-->
 
+:::warning
+
+The GitHub repository must grant *write* access to this workflow permission, i.e. navigate to **Settings** ->
+**Actions** -> **General**; under *Workflow permissions* make sure **Read and write permissions** is checked:
+
+![Error loading permissions.png](./permission.png)
+
+:::
+
 1. Manually create the first tag:
 
    ```shell
