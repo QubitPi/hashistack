@@ -15,6 +15,8 @@
             <pubDate>Fri, 19 Apr 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></description>
             <content:encoded><![CDATA[<p>We offer a convenient versioning management approach for releasing software on GitHub.</p>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><p>The GitHub repository must grant <em>write</em> access to this workflow permission, i.e. navigate to <strong>Settings</strong> -&gt;
+<strong>Actions</strong> -&gt; <strong>General</strong>; under <em>Workflow permissions</em> make sure <strong>Read and write permissions</strong> is checked:</p><p><img loading="lazy" alt="Error loading permissions.png" src="https://qubitpi.github.io/hashicorp-aws/assets/images/permission-9df4c3b51745dedb36834b4434be2bc4.png" width="3584" height="2763" class="img_ev3q"></p></div></div>
 <ol>
 <li>
 <p>Manually create the first tag:</p>
