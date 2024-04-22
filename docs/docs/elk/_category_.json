@@ -1,8 +1,0 @@
-{
-  "label": "ELK",
-  "position": 7,
-  "link": {
-    "type": "generated-index",
-    "description": "Deploying ELK (Elastic Stack) to AWS via hashicorp-aws"
-  }
-}

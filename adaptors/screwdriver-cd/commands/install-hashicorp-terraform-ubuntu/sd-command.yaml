@@ -1,10 +1,10 @@
-namespace: QubitPi
+namespace: paion-data
 name: install-hashicorp-terraform-ubuntu
 version: '1.0.0'
 description: Install HashiCorp Terraform command line tool
 usage: |
-  sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
-maintainer: jack20220723@gmail.com
+  sd-cmd exec paion-data/install-hashicorp-terraform-ubuntu@latest
+maintainer: jingjinghu@paion-data.dev
 format: binary
 binary:
   file: ./run.sh

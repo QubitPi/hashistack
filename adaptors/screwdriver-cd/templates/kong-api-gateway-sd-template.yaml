@@ -1,4 +1,4 @@
-# Copyright Paion Data
+# Copyright Jiaqi Liu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-namespace: QubitPi
+namespace: paion-data
 name: kong-api-gateway-release-definition-template
 version: '1.0.0'
 description: |
-  Screwdriver CD template for deploying Kong API Gateway (https://github.com/QubitPi/docker-kong) to AWS through
+  Screwdriver CD template for deploying Kong API Gateway (https://github.com/paion-data/docker-kong) to AWS through
   HashiCorp.
 maintainer: jack20220723@gmail.com
 config:
   image: buildpack-deps:22.04-scm
   parameters:
-    aws-image-region:
+    ami-region:
       value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
       description: "The AWS region where Kong API Gateway AMI will be published to. The published image will be private"
     ami-name:
@@ -48,31 +48,31 @@ config:
       value: "9DQXLTNSN7ZX9P8V2KZII"
       description: 'The AWS Route 53 hosted Zone ID that hosts the domain defined by "kong-api-gateway-domain"'
   steps:
-    - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
-    - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
-    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+    - install-packer: sd-cmd exec paion-data/install-hashicorp-packer-ubuntu@latest
+    - install-terraform: sd-cmd exec paion-data/install-hashicorp-terraform-ubuntu@latest
+    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/paion-data/immutable-infrastructure-as-a-service.git ../immutable-infrastructure-as-a-service
 
-    - load-ssl-certificate-file: echo "$SSL_CERTIFICATE"         > ../hashicorp-aws/hashicorp/kong-api-gateway/images/ssl.crt
-    - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../hashicorp-aws/hashicorp/kong-api-gateway/images/ssl.key
+    - load-ssl-certificate-file: echo "$SSL_CERTIFICATE"         > ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ssl.crt
+    - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ssl.key
 
     - load-packer-variable-file: |
-        echo ami_region              = \"$(meta get parameters.aws-image-region.value)\"        >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_source         = \"ssl.crt\"                                              >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_source     = \"ssl.key\"                                              >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
+        echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
+        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
+        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_source         = \"ssl.crt\"                                              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_source     = \"ssl.key\"                                              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
+        echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
-        echo aws_deploy_region       = \"$(meta get parameters.aws-deploy-region.value)\"       >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo instance_name           = \"$(meta get parameters.instance-name.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo security_groups         = $(meta get parameters.security-groups.value)             >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo route_53_zone_id        = \"$(meta get parameters.route-53-zone-id.value)\"        >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo aws_deploy_region       = \"$(meta get parameters.aws-deploy-region.value)\"       >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo instance_name           = \"$(meta get parameters.instance-name.value)\"           >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo security_groups         = $(meta get parameters.security-groups.value)             >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo route_53_zone_id        = \"$(meta get parameters.route-53-zone-id.value)\"        >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
 
-    - packer-init: cd ../hashicorp-aws/hashicorp/kong-api-gateway/images && packer init .
+    - packer-init: cd ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images && packer init .
     - packer-validate: packer validate -var "skip_create_ami=true" .
     - packer-build: packer build -var "skip_create_ami=false" .
 

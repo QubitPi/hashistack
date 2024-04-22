@@ -1,4 +1,4 @@
-# Copyright Paion Data
+# Copyright 2024 Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: hashicorp-aws CI/CD
+name: Immutable Infrastructure as a Service CI/CD
 
 "on":
   pull_request:
@@ -31,12 +31,12 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-  code-styles:
-    uses: ./.github/workflows/yml-and-md-style-checks.yml
+  yml-md-style-and-link-checks:
+    uses: paion-data/github-actions-core/.github/workflows/yml-md-style-and-link-checks.yml@master
 
   docker-image:
     name: Publish docker images for "AliCloud Image Build Test"
-    needs: code-styles
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -91,7 +91,7 @@ jobs:
 
   list-screwdriver-templates:
     name: Listing Screwdriver Templates to Validate
-    needs: code-styles
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-templates.outputs.paths }}
@@ -139,7 +139,7 @@ jobs:
 
   list-screwdriver-command-scripts:
     name: Listing Screwdriver Command Scripts to Test
-    needs: code-styles
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-command-scripts.outputs.paths }}
@@ -169,7 +169,7 @@ jobs:
 
   list-screwdriver-commands:
     name: Listing Screwdriver Commands to Validate
-    needs: code-styles
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-commands.outputs.paths }}
@@ -215,9 +215,6 @@ jobs:
       outcome: ${{ job.status }}
     continue-on-error: true
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./docs/
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -225,8 +222,13 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: yarn
+        working-directory: docs
       - name: Build website
         run: yarn build
+        working-directory: docs
+      - name: Load CNAME file
+        if: github.ref == 'refs/heads/master'
+        run: cp docs/CNAME docs/build
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3

@@ -1,4 +1,4 @@
-# Copyright Paion Data
+# Copyright 2024 Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-namespace: QubitPi
+namespace: paion-data
 name: jersey-webservice-release-definition-basic
 version: '1.0.0'
 description: |
   Screwdriver CD template for deploying instantiated jersey webservice to AWS through HashiCorp.
   This template deploys the webservices without SSL/HTTPS or any other addons
-maintainer: jack20220723@gmail.com
+maintainer: jingjinghu@paion-data.dev
 config:
   image: buildpack-deps:22.04-scm
   parameters:
@@ -41,18 +41,18 @@ config:
       value: '["My WS Security Group 1", "My WS Security Group 2"]'
       description: "The list of AWS Security Group names (yes, not ID, but name...) bound to the webservice EC2 instance."
     ws-repo-git:
-      value: "https://github.com/QubitPi/jersey-webservice-template.git"
+      value: "https://github.com/paion-data/astraios.git"
       description: "The git URL to the repository of the webservice to be deployed"
     elk-hosts:
       value: ["myelk.instance.com:8080"]
       description: "The list of Logstash hosts with ports to receive webservice log data"
   steps:
-    - setup-jdk: sd-cmd exec QubitPi/install-jdk-ubuntu@latest
-    - install-maven: sd-cmd exec QubitPi/install-maven-ubuntu@latest
-    - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
-    - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
+    - setup-jdk: sd-cmd exec paion-data/install-jdk-ubuntu@latest
+    - install-maven: sd-cmd exec paion-data/install-maven-ubuntu@latest
+    - install-packer: sd-cmd exec paion-data/install-hashicorp-packer-ubuntu@latest
+    - install-terraform: sd-cmd exec paion-data/install-hashicorp-terraform-ubuntu@latest
 
-    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/paion-data/immutable-infrastructure-as-a-service.git ../hashicorp-aws
 
     - setup-packer: |
         cp ../hashicorp-aws/hashicorp/webservice/images/aws-ws.packer.pkr.hcl ../hashicorp-aws/hashicorp/webservice/images/basic

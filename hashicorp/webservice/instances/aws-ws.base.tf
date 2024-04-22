@@ -1,4 +1,4 @@
-# Copyright Paion Data
+# Copyright 2024 Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ variable "ec2_instance_name" {
 }
 
 # https://github.com/hashicorp/packer/issues/11354
-# https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
+# https://developer.hashicorp.com/terraform/language/expressions/types#list
 variable "security_groups" {
   type = list(string)
   description = "EC2 Security Groups"

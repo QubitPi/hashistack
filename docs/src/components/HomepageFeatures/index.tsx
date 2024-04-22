@@ -1,5 +1,5 @@
 /**
- * Copyright Jiaqi Liu
+ * Copyright 2024 Paion Data
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import { useColorMode } from '@docusaurus/theme-common'
 
 type FeatureItem = {
   title: string;
@@ -25,39 +27,66 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Build AMI Image',
-    Svg: require('@site/static/img/hashicorp-packer.svg').default,
+    title: 'Immutable Infrastructure',
+    Svg: require('@site/static/img/hashicorp-logo.svg').default,
+    scale: 1,
+    id: 'hashicorp-logo',
     description: (
       <>
-        Create identical images for multiple platforms from a single source configuration.
+        IIaaS eliminates all manual management of IT infrastructure using HashiCorp's Packer and Terraform and brings
+        software production more closer to individual level
       </>
     ),
   },
   {
-    title: 'Cloud Native Automation',
-    Svg: require('@site/static/img/aws.svg').default,
+    title: 'Cloud Native',
+    Svg: require('@site/static/img/alicloud.svg').default,
+    scale: 1,
+    id: 'not-used',
     description: (
       <>
-        hashicorp-aws has first-class support for AWS as a cloud provider and frees up dev teams to allow them to focus on adding business value by writing code.
+        Designed for Cloud native, IIaaS has first-class support for Ali Cloud as SaaS platform and flexible plugin
+        architecture which handles nearly any cloud provider for deployment
       </>
     ),
   },
   {
-    title: 'Deploy to EC2',
-    Svg: require('@site/static/img/hashicorp-terraform.svg').default,
+    title: 'Open Source',
+    Svg: require('@site/static/img/apache.svg').default,
+    scale: 0.7,
+    id: 'not-used',
     description: (
       <>
-        Use infrastructure as code to provision and manage any infrastructure across your organization.
+        IIaaS is 100% open source and available on
+        <a href="https://github.com/paion-data/immutable-infrastructure-as-a-service"> Github</a>. Released under the
+        commercial-friendly
+        <a href="http://www.apache.org/licenses/LICENSE-2.0.html"> Apache License, Version 2.0.</a>
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, Svg, scale, id, description}: FeatureItem) {
+  const {colorMode} = useColorMode()
+
+  let fill = undefined
+
+  if ( id === 'hashicorp-logo' && colorMode === 'light' ) {
+    fill = 'black'
+  } else if ( id === 'hashicorp-logo' && colorMode === 'dark') {
+    fill = 'white'
+  }
+
+  if ( id === 'production-quality' && colorMode === 'light' ) {
+    fill = 'black'
+  } else if ( id === 'production-quality' && colorMode === 'dark') {
+    fill = 'white'
+  }
+
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <Svg className={styles.featureSvg} transform={"scale(" + scale + ")"} fill={fill} id={id} role="img" />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>

@@ -1,5 +1,5 @@
 /**
- * Copyright Jiaqi Liu
+ * Copyright 2024 Paion Data
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'hashicorp-aws',
-  tagline: 'Infrastructure as Code via HashiCorp',
+  title: 'Immutable Infrastructure as a Service',
+  tagline: 'Software exists for humans, not organizations',
   favicon: 'img/favicon.ico',
 
-  url: 'https://qubitpi.github.io/',
-  baseUrl: '/hashicorp-aws',
-  organizationName: 'QubitPi',
-  projectName: 'hashicorp-aws',
+  url: 'https://immutable-infrastructure.com',
+  baseUrl: '/',
+
+  organizationName: 'paion-data',
+  projectName: 'immutable-infrastructure-as-a-service',
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', "zh-cn"],
   },
 
   presets: [
@@ -41,11 +43,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/QubitPi/hashicorp-aws/tree/master/docs',
-        },
-        blog: {
-          showReadingTime: true,
-          editUrl: 'https://github.com/QubitPi/hashicorp-aws/tree/master/docs',
+          editUrl: 'https://github.com/paion-data/immutable-infrastructure-as-a-service/tree/master/docs',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -58,23 +56,27 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'hashicorp-aws',
+      title: 'Immutable Infrastructure',
       logo: {
-        alt: 'Site Logo',
+        alt: 'Immutable Infrastructure Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Documentations',
+          type: "localeDropdown",
+          position: "left",
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/QubitPi/hashicorp-aws',
-          label: 'GitHub',
+          type: 'docSidebar',
+          sidebarId: 'docSidebar',
+          position: 'left',
+          label: 'Documentation',
+        },
+        {
+          href: 'https://github.com/paion-data/immutable-infrastructure-as-a-service',
+          label: ' ',
           position: 'right',
+          className: 'header-icon-link header-github-link',
         },
       ],
     },
@@ -85,7 +87,7 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Documentations',
+              label: 'Documentation',
               to: '/docs/intro',
             },
           ],
@@ -93,32 +95,33 @@ const config: Config = {
         {
           title: 'Community',
           items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/hashicorp-aws',
-              },
+            {
+              label: 'Discussions',
+              href: 'https://github.com/paion-data/immutable-infrastructure-as-a-service/discussions',
+            },
           ],
         },
         {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
               label: 'GitHub',
-              href: 'https://github.com/QubitPi/hashicorp-aws',
+              href: 'https://github.com/paion-data/immutable-infrastructure-as-a-service',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Jiaqi Liu. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Paion Data. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
       additionalLanguages: ["java", "bash", "json"]
+    },
+    algolia: {
+      appId: '11324Y7IH1',
+      apiKey: '389a0e5d9d57695cf51d6348fdc9b00b',
+      indexName: 'immutable-infrastructure-as-a-service'
     },
   } satisfies Preset.ThemeConfig,
 };

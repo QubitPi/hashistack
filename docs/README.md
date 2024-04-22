@@ -1,29 +1,17 @@
-[//]: # (Copyright Jiaqi Liu)
-
-[//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
-[//]: # (you may not use this file except in compliance with the License.)
-[//]: # (You may obtain a copy of the License at)
-
-[//]: # (    http://www.apache.org/licenses/LICENSE-2.0)
-
-[//]: # (Unless required by applicable law or agreed to in writing, software)
-[//]: # (distributed under the License is distributed on an "AS IS" BASIS,)
-[//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
-[//]: # (See the License for the specific language governing permissions and)
-[//]: # (limitations under the License.)
-
-hashicorp-aws Documentation
----------------------------
+Immutable Infrastructure Documentation
+======================================
 
 This website is built using [Docusaurus 3](https://docusaurus.io/), a modern static website generator.
 
-### Installation
+Installation
+------------
 
 ```bash
 yarn
 ```
 
-### Local Development
+Local Development
+-----------------
 
 ```bash
 yarn start
@@ -32,21 +20,44 @@ yarn start
 This command starts a local development server and opens up a browser window. Most changes are reflected live without
 having to restart the server.
 
-### Build
+### Translation
+
+Astraios documentation comes with [internationalization][Docusaurus i18n] supporting both **English** and
+**Chinese**. The location of Chinese translation is in [i18n/zh-cn](./i18n/zh-cn) directory
+
+To start the localized site in dev mode, use:
+
+```bash
+yarn start --locale zh-cn
+```
+
+Your site is accessible at `http://localhost:3000/immutable-infrastructure-as-a-service/zh-cn/`
+
+Build
+-----
 
 ```bash
 yarn build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting
-service.
+service. Docusaurus will build one single-page application per locale:
 
-### Deployment
+- **build**: for the default, English language
+- **build/zh-cn**: for the Chinese language
 
-Using SSH:
+### Troubleshooting
 
-```bash
-USE_SSH=true yarn deploy
+#### Docusaurus Blogs Relative Linking is Treated False-Negative by CI Markdown Link check
+
+[CI check for Markdown link](../.github/workflows/ci-cd.yml) (`markdown-link-check`) is turned on and it's not smart
+enough to detect relative linking by Docusaurus. The workaround is to disable the link check at the relevant line. For
+example:
+
+```markdown
+<!-- markdown-link-check-disable -->
+known. Additionally, this process makes it easy to implement a [blue-green deployment](continuous-delivery) or
+<!-- markdown-link-check-enable -->
 ```
 
-hashicorp-aws is using GitHub pages for hosting, this command builds the website and push to the `gh-pages` branch.
+[Docusaurus i18n]: https://docusaurus.io/docs/next/i18n/tutorial

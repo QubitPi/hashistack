@@ -1,4 +1,4 @@
-# Copyright Paion Data
+# Copyright 2024 Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-namespace: QubitPi
+namespace: paion-data
 name: elk-release-definition-template
 version: '1.0.0'
 description: Screwdriver CD template for deploying ELK to AWS through HashiCorp.
-maintainer: jack20220723@gmail.com
+maintainer: jingjinghu@paion-data.dev
 config:
   image: buildpack-deps:22.04-scm
   parameters:
@@ -47,11 +47,11 @@ config:
       value: "9DQXLTNSN7ZX9P8V2KZII"
       description: 'The AWS Route 53 hosted Zone ID that hosts the domain defined by "elk-domain"'
   steps:
-    - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
-    - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
-    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+    - install-packer: sd-cmd exec paion-data/install-hashicorp-packer-ubuntu@latest
+    - install-terraform: sd-cmd exec paion-data/install-hashicorp-terraform-ubuntu@latest
+    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/paion-data/immutable-infrastructure-as-a-service.git ../hashicorp-aws
 
-    - load-ssl-certificate-file: echo "$SSL_CERTIFICATE" > ../hashicorp-aws/hashicorp/elk/images/ssl.crt
+    - load-ssl-certificate-file: echo "$SSL_CERTIFICATE"         > ../hashicorp-aws/hashicorp/elk/images/ssl.crt
     - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../hashicorp-aws/hashicorp/elk/images/ssl.key
     - configure-nginx-ssl: sed -i -e "s/elk.domain.com/$(meta get parameters.elk-domain.value)/g" ../hashicorp-aws/hashicorp/elk/images/nginx-ssl.conf
 
