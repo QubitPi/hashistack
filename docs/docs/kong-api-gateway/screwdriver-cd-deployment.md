@@ -66,10 +66,10 @@ The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined 
 - [`ALICLOUD_SECRET_KEY`](../setup#alicloud)
 - `SSL_CERTIFICATE` - the content of SSL certificate file serving HTTPS-enabled DNS name of the EC2 hosting our Kong
   API Gateway instance. This is the same as the `SSL_CERTIFICATE` from the
-  [general SSL setup of hashicorp-aws](../setup#ssl)
+  [general SSL setup of iiaas](../setup#ssl)
 - `SSL_CERTIFICATE_KEY` - the content of SSL certificate key file serving HTTPS-enabled DNS name of the EC2 hosting our
   API Gateway instance. This is the same as the `SSL_CERTIFICATE_KEY` from the
-  [general SSL setup of hashicorp-aws](../setup#ssl)
+  [general SSL setup of iiaas](../setup#ssl)
 
 To run the pipeline, fill in the AWS-related **parameters** first
 

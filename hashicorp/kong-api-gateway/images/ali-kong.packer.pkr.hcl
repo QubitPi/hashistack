@@ -19,7 +19,7 @@ packer {
       version = "~> 1"
     }
 
-    hashicorp-aws = {
+    iiaas = {
       version = ">= 0.0.4"
       source  = "github.com/paion-data/paion-data"
     }

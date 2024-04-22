@@ -13,6 +13,6 @@
 # limitations under the License.
 
 source "docker" "ubuntu" {
-  image  = "jack20191124/hashicorp-aws-webservice-test:latest"
+  image  = "paiondata/iiaas-webservice-test:latest"
   commit = true
 }

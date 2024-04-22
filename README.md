@@ -1,5 +1,5 @@
-HashiCorp AWS
-=============
+Immutable Infrastructure as a Service (IIaaS)
+=============================================
 
 <div align="center">
     <img src="docs/static/img/logo.svg" width="20%" />
@@ -14,27 +14,15 @@ HashiCorp AWS
 
 </div>
 
-What is hashicorp-aws
----------------------
+What is IIaaS
+-------------
 
 [immutable-infrastructure-as-a-service] is a technology-agnostic framework for general Continuous Delivery/Deployment onto AWS through HashiCorp
 
 The goal of [immutable-infrastructure-as-a-service] is to **empower _individual_ to agnostically deploy and manage applications through the
 practice of immutable infrastructure**.
 
-![Error loading hashicorp-aws.png](./docs/docs/img/hashicorp-aws.png)
-
-How the Amazing Story Began
----------------------------
-
-I was researching deploying k8s (an idea which I abandoned later because I believed any production-quality application should not be deployed onto k8s) online and Google came up a concept I was never heard of:
-[k8s through AMI](https://github.com/awslabs/amazon-eks-ami). It was this GitHub repo that open up a whole new world to
-my career: HashiCorp, AWS AMI, and
-[Immutable Infrastructure](https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure)
-
-The notion of immutable infrastructure as advanced by HashiCorp grabbed my deep interests so intensively that kept
-myself learning and that incubated the most important open source project of my life - [immutable-infrastructure-as-a-service]. It condensed my
-passion for the best practice of software infrastructure used myself and my company.
+![Error loading iiaas.png](./docs/docs/img/iiaas.png)
 
 Documentation
 -------------

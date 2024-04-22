@@ -48,7 +48,7 @@ build {
     "source.${var.build_source}"
   ]
 
-  provisioner "hashicorp-aws-kong-api-gateway-provisioner" {
+  provisioner "iiaas-kong-api-gateway-provisioner" {
     homeDir              = "${var.image_home_dir}"
     sslCertSource        = "${var.ssl_cert_source}"
     sslCertKeySource     = "${var.ssl_cert_key_source}"

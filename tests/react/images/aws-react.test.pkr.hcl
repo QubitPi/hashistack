@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-packer {
+packer {hicorp-aws
   required_plugins {
     docker = {
       version = ">= 0.0.7"
@@ -22,6 +22,6 @@ packer {
 }
 
 source "docker" "ubuntu" {
-  image  = "jack20191124/hashicorp-aws-react-test:latest"
+  image  = "paiondata/iiaas-aws-react-test:latest"
   commit = true
 }

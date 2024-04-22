@@ -53,9 +53,9 @@ All relevant HTTP and HTTPS ports are listed in [Kong's documentation here][Kong
 our Nginx should **listen on an HTTPS port and `proxy_pass` to an HTTP port. For example, ports 8443 and 8444 are
 `proxy_pass`ed to 8000 and 8001, respectively, both of which are listed in the doc.
 
-One special case is HTTP port 8000, which is the redirect port. hashicorp-aws maps the standard SSL 443 port to 8000 so
-that any downstream (such as UI web app) simply needs to hit the domain without specifying port number and have its
-request be reidrected to upstream services (such as database webservice)
+One special case is HTTP port 8000, which is the redirect port. iiaas maps the standard SSL 443 port to 8000 so that any
+downstream (such as UI web app) simply needs to hit the domain without specifying port number and have its request be
+reidrected to upstream services (such as database webservice)
 
 ![Error loading kong-ports-diagram.png](img/kong-ports-diagram.png)
 

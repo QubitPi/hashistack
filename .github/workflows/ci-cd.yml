@@ -42,11 +42,11 @@ jobs:
       fail-fast: true
       matrix:
         docker: [
-          {dockerfile-path: tests/machine-learning, image-name: hashicorp-aws-machine-learning-test},
-          {dockerfile-path: tests/react, image-name: hashicorp-aws-react-test},
+          {dockerfile-path: tests/machine-learning, image-name: iiaas-machine-learning-test},
+          {dockerfile-path: tests/react, image-name: iiaas-react-test},
           {dockerfile-path: tests/kong-api-gateway, image-name: hashicorp-ali-kong-api-gateway-test},
-          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test},
-          {dockerfile-path: tests/elk, image-name: hashicorp-aws-elk-test}
+          {dockerfile-path: tests/webservice, image-name: iiaas-webservice-test},
+          {dockerfile-path: tests/elk, image-name: iiaas-elk-test}
         ]
     steps:
       - name: Checkout
