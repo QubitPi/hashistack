@@ -102,7 +102,7 @@ do:
 - Create DNSSEC keys from the correct device: Ensure that you are trying to create DNSSEC keys from the correct device
   with a database key variable designation of 0.
 - Ensure device certificates have unique names: If the device certificates have the same common name, renew them with
-  unique names and re-exchange them via the "gtm_add <IP>" script.
+  unique names and re-exchange them via the `gtm_add <IP>` script.
 - Remove the DS record: If you don't want to have the zone signed, remove the DS record.
 - Set the DS records for the subdomain: Use the values after clicking on the (i) near the main subdomain
 
