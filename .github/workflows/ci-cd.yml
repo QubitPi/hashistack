@@ -34,6 +34,19 @@ jobs:
   yml-md-style-and-link-checks:
     uses: ./.github/workflows/yml-md-style-and-link-checks.yml
 
+  test-upversion:
+    name: Test upversion.py
+    needs: yml-md-style-and-link-checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "LAST_TAG=1.2.3" >> $GITHUB_ENV
+      - run: |
+          NEW_TAG=$(LAST_TAG=${LAST_TAG} python .github/version-bump/upversion.py)
+          if [[ "$NEW_TAG" != "1.2.4" ]]; then
+              exit 1
+          fi
+
   docker-image:
     name: Publish docker images for "AMI Build Test"
     needs: yml-md-style-and-link-checks
@@ -212,7 +225,13 @@ jobs:
 
   documentation:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
-    needs: [tests, validate-screwdriver-templates, validate-screwdriver-commands, test-screwdriver-command-scripts]
+    needs: [
+      test-upversion,
+      tests,
+      validate-screwdriver-templates,
+      validate-screwdriver-commands,
+      test-screwdriver-command-scripts
+    ]
     outputs:
       outcome: ${{ job.status }}
     continue-on-error: true
