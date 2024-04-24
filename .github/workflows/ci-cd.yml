@@ -35,7 +35,7 @@ jobs:
     uses: paion-data/github-actions-core/.github/workflows/yml-md-style-and-link-checks.yml@master
 
   docker-image:
-    name: Publish docker images for "AliCloud Image Build Test"
+    name: Publish docker images for "Packer Image Build Test"
     needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     strategy:
@@ -44,7 +44,7 @@ jobs:
         docker: [
           {dockerfile-path: tests/machine-learning, image-name: iiaas-machine-learning-test},
           {dockerfile-path: tests/react, image-name: iiaas-react-test},
-          {dockerfile-path: tests/kong-api-gateway, image-name: hashicorp-ali-kong-api-gateway-test},
+          {dockerfile-path: tests/kong-api-gateway, image-name: iiaas-kong-api-gateway-test},
           {dockerfile-path: tests/webservice, image-name: iiaas-webservice-test},
           {dockerfile-path: tests/elk, image-name: iiaas-elk-test}
         ]

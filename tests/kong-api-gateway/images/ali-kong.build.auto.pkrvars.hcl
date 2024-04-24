@@ -1,4 +1,3 @@
-
 build_source            = "docker.ubuntu"
 image_home_dir          = "/"
 kong_api_gateway_domain = "gateway.mycompany.com"

@@ -15,13 +15,21 @@
 variable "build_source" {
   type      = string
   sensitive = false
-  default   = "alicloud-ecs.kong-gateway"
+
+  validation {
+    condition     = contains(["alicloud-ecs.kong-gateway", "amazon-ebs.kong", "docker.ubuntu"], var.build_source)
+    error_message = "Allowed values for build_source are 'alicloud-ecs.kong-gateway' for Alicloud, 'amazon-ebs.kong' for AWS, or 'docker.ubuntu' for Docker."
+  }
 }
 
 variable "image_home_dir" {
   type      = string
   sensitive = true
-  default   = "/root"
+
+  validation {
+    condition     = contains(["/root", "/home/ubuntu", "/"], var.image_home_dir)
+    error_message = "Allowed values for image_home_dir are '/root' for Alicloud, '/home/ubuntu' for AWS, or '/' in general."
+  }
 }
 
 variable "ssl_cert_source" {
@@ -43,7 +51,7 @@ variable "kong_api_gateway_domain" {
 }
 
 build {
-  name = "install-kong"
+  name    = "install-kong"
   sources = [
     "source.${var.build_source}"
   ]

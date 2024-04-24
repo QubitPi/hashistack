@@ -14,6 +14,6 @@
 
 .idea/
 .DS_Store
-*.auto.tfvars
-*.auto.pkrvars.hcl
+hashicorp/*.auto.tfvars
+hashicorp/*.auto.pkrvars.hcl
 .terraform/
