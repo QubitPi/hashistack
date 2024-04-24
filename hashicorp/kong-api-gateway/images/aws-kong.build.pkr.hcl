@@ -13,42 +13,42 @@
 # limitations under the License.
 
 variable "build_source" {
-  type =  string
+  type      = string
   sensitive = false
-  default = "amazon-ebs.kong"
+  default   = "amazon-ebs.kong"
 }
 
 variable "image_home_dir" {
-  type =  string
+  type      = string
   sensitive = true
-  default = "/home/ubuntu"
+  default   = "/home/ubuntu"
 }
 
 variable "ssl_cert_source" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "ssl_cert_key_source" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "kong_api_gateway_domain" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 build {
-  name = "install-kong"
+  name    = "install-kong"
   sources = [
     "source.${var.build_source}"
   ]
 
   provisioner "hashicorp-aws-kong-api-gateway-provisioner" {
-    homeDir = "${var.image_home_dir}"
-    sslCertSource = "${var.ssl_cert_source}"
-    sslCertKeySource = "${var.ssl_cert_key_source}"
+    homeDir              = "${var.image_home_dir}"
+    sslCertSource        = "${var.ssl_cert_source}"
+    sslCertKeySource     = "${var.ssl_cert_key_source}"
     kongApiGatewayDomain = "${var.kong_api_gateway_domain}"
   }
 }
