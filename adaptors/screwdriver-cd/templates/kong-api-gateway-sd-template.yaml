@@ -14,39 +14,50 @@
 ---
 namespace: paion-data
 name: kong-api-gateway-release-definition-template
-version: '1.0.0'
+version: "1.0.0"
 description: |
-  Screwdriver CD template for deploying Kong API Gateway (https://github.com/paion-data/docker-kong) to AWS through
-  HashiCorp.
-maintainer: jack20220723@gmail.com
+  Screwdriver CD template for deploying Kong API Gateway (https://github.com/paion-data/docker-kong) to AliCloud through HashiCorp.
+maintainer: jingjinghu@paion-data.dev
 config:
   image: buildpack-deps:22.04-scm
   parameters:
-    ami-region:
-      value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-      description: "The AWS region where Kong API Gateway AMI will be published to. The published image will be private"
-    ami-name:
-      value: "my-kong-ami"
-      description: "The published AMI name; it can be arbitrary"
+    region:
+      value: ["cn-shenzhen", "cn-beijing", "cn-hangzhou", "cn-shanghai"]
+      description: "The AliCloud region where the instance will be published to. The published image will be private"
+    ali-image-name:
+      value: "ecs-kong"
+      description: "The published alicoud image name; it can be arbitrary"
     instance-type:
-      value: ["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"]
-      description: "The EC2 instance type to use when building an AMI as well as launching the instance"
-    aws-deploy-region:
-      value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-      description: "The AWS region where Kong API Gateway EC2 instance will be deployed into"
+      value: ["ecs.e-c1m1.large"]
+      description: "The ECS instance type to use when building an image as well as launching the instance"
     instance-name:
-      value: "My Kong API Gateway instance"
-      description: "The deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary"
-    security-groups:
-      value: '["My Kong API Security Group", "My Kong Admin Security Group"]'
-      description: "The list of AWS Security Group names (yes, not ID, but name...) bound to the Kong EC2 instance."
+      value: "kong-gateway-instance"
+      description: "The deployed ECS name as appeared in the instance list of AliCloud console; it can be arbitrary"
+    build-source:
+      value: ["alicloud-ecs.kong-gateway"]
+      description: "The source of the image to build"
+    image-home-dir:
+      value: ["/root", "/"]
+      description: "Allowed values for image_home_dir are '/root' for Alicloud, '/home/ubuntu' for AWS, or '/' in general"
+    vswitch-name:
+      value: "Your VSwitch Name"
+      description: "The VSwitch name to use when launching the instance"
+    security-groups-name:
+      value: "Your Security Group Name"
+      description: "The list of Security Group names"
+    internet-charge-type:
+      value: ["PayByBandwidth", "PayByTraffic"]
+      description: "The internet charge type for the instance"
+    system-disk-category:
+      value: ["cloud_efficiency", "cloud_ssd", "cloud_essd"]
+      description: "The system disk category for the instance"
+    internet-max-bandwidth-out:
+      value: "1"
+      description: "The maximum bandwidth out for the instance"
     kong-api-gateway-domain:
-      value: "mygateway.mycompany.com"
+      value: "Your Api gateway domain"
       description: |
         The SSL-enabled domain that will serve various Kong API Gateway endpoints, such as its API and Kong Manager UI
-    route-53-zone-id:
-      value: "9DQXLTNSN7ZX9P8V2KZII"
-      description: 'The AWS Route 53 hosted Zone ID that hosts the domain defined by "kong-api-gateway-domain"'
   steps:
     - install-packer: sd-cmd exec paion-data/install-hashicorp-packer-ubuntu@latest
     - install-terraform: sd-cmd exec paion-data/install-hashicorp-terraform-ubuntu@latest
@@ -56,25 +67,26 @@ config:
     - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ssl.key
 
     - load-packer-variable-file: |
-        echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_source         = \"ssl.crt\"                                              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_source     = \"ssl.key\"                                              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
+        echo region                  = \"$(meta get parameters.region.value)\"                  >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ali.auto.pkrvars.hcl
+        echo ali_image_name          = \"$(meta get parameters.ali-image-name.value)\"          >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ali.auto.pkrvars.hcl
+        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ali.auto.pkrvars.hcl
+        echo ssl_cert_source         = \"ssl.crt"                                               >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ali.auto.pkrvars.hcl
+        echo ssl_cert_key_source     = \"ssl.key"                                               >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ali.auto.pkrvars.hcl
+        echo kong-api-gateway-domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images/ali.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
-        echo aws_deploy_region       = \"$(meta get parameters.aws-deploy-region.value)\"       >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo instance_name           = \"$(meta get parameters.instance-name.value)\"           >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo security_groups         = $(meta get parameters.security-groups.value)             >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo route_53_zone_id        = \"$(meta get parameters.route-53-zone-id.value)\"        >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo ali_image_name             = \"$(meta get parameters.ali-image-name.value)\"             >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
+        echo vswitch_name               = \"$(meta get parameters.vswitch-name.value)\"               >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
+        echo instance_type              = \"$(meta get parameters.instance-type.value)\"              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
+        echo instance_name              = \"$(meta get parameters.instance-name.value)\"              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
+        echo security_groups_name       = \"$(meta get parameters.security-groups-name.value)"        >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
+        echo internet_charge_type       = \"$(meta get parameters.internet-charge-type.value)\"       >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
+        echo system_disk_category       = \"$(meta get parameters.system-disk-category.value)\"       >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
+        echo internet_max_bandwidth_out = \"$(meta get parameters.internet-max-bandwidth-out.value)\" >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
 
     - packer-init: cd ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/images && packer init .
-    - packer-validate: packer validate -var "skip_create_ami=true" .
-    - packer-build: packer build -var "skip_create_ami=false" .
+    - packer-validate: packer validate .
+    - packer-build: packer build .
 
     - terraform-init: cd ../instances && terraform init
     - terraform-validate: terraform validate
@@ -82,5 +94,5 @@ config:
   secrets:
     - SSL_CERTIFICATE
     - SSL_CERTIFICATE_KEY
-    - AWS_ACCESS_KEY_ID
-    - AWS_SECRET_ACCESS_KEY
+    - ALICLOUD_ACCESS_KEY
+    - ALICLOUD_SECRET_KEY

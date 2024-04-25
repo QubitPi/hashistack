@@ -12,16 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "image_id" {
+variable "ali_image_name" {
   type        = string
-  description = "ECS image ID"
+  description = "The name of the image"
 }
 
-variable "vswitch_id" {
-  type        = string
-  description = "value of vswitch_id"
-}
-
+# TODO: instance_type is dependent on the region
 variable "instance_type" {
   type        = string
   description = "EC2 instance types defined in https://www.alibabacloud.com/help/doc-detail/25378.htm"
@@ -31,9 +27,41 @@ variable "instance_name" {
   type = string
 }
 
-variable "security_groups" {
+variable "security_group_names" {
   type        = list(string)
-  description = "ECS Security Groups"
+  description = "ECS security group name"
+}
+
+variable "internet_charge_type" {
+  type        = string
+  description = "The charge type of the instance"
+  default = "PayByBandwidth"
+  
+  validation {
+    condition = contains(["PayByBandwidth", "PayByTraffic"], var.internet_charge_type)
+    error_message = "Invalid internet charge type"
+  }
+}
+
+variable "system_disk_category" {
+  type = string
+  description = "System disk category"
+  default = "cloud_essd_entry"
+
+  validation {
+    condition = contains(["ephemeral_ssd", "cloud_efficiency", "cloud_ssd", "cloud_essd", "cloud_essd_entry", "cloud", "cloud_auto"], var.system_disk_category)
+    error_message = "Invalid system disk category"
+  }
+}
+
+variable "internet_max_bandwidth_out" {
+  type = number
+  description = "The maximum outbound bandwidth of the instance"
+  default = 1
+}
+
+data "alicloud_security_groups" "kong-security-groups" {
+  name_regex  = join("|", var.security_group_names)
 }
 
 data "template_file" "kong-init" {
@@ -42,23 +70,20 @@ data "template_file" "kong-init" {
 
 resource "alicloud_instance" "instance" {
   # charging rules see in https://help.aliyun.com/zh/ecs/product-overview/overview-51
-  internet_charge_type = "PayByBandwidth"
-
-  # network
-  vswitch_id = var.vswitch_id
+  internet_charge_type = "${var.internet_charge_type}"
 
   # instance and image
   # instance type define in https://help.aliyun.com/zh/ecs/user-guide/overview-of-instance-families#enterprise-x86
-  instance_type = var.instance_type
-  image_id      = var.image_id
-  instance_name = var.instance_name
+  instance_type = "${var.instance_type}"
+  image_id      = "${data.alicloud_images.default.images.0.id}"
+  instance_name = "${var.instance_name}"
 
   # disk
-  system_disk_category = "cloud_essd_entry"
+  system_disk_category = "${var.system_disk_category}"
 
   # Bandwidth and safety group
-  internet_max_bandwidth_out = 1
-  security_groups            = var.security_groups
+  internet_max_bandwidth_out = "${var.internet_max_bandwidth_out}"
+  security_groups            = "${data.alicloud_security_groups.kong-security-groups.groups.ids}"
 
   # Management settings
   tags = {
