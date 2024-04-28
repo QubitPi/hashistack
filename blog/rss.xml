@@ -4,10 +4,42 @@
         <title>hashicorp-aws Blog</title>
         <link>https://qubitpi.github.io/hashicorp-aws/blog</link>
         <description>hashicorp-aws Blog</description>
-        <lastBuildDate>Fri, 19 Apr 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 28 Apr 2024 09:38:11 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Testing HashiCorp Terraform]]></title>
+            <link>https://qubitpi.github.io/hashicorp-aws/blog/testing-hashicorp-terraform</link>
+            <guid>https://qubitpi.github.io/hashicorp-aws/blog/testing-hashicorp-terraform</guid>
+            <pubDate>Sun, 28 Apr 2024 09:38:11 GMT</pubDate>
+            <description><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></description>
+            <content:encoded><![CDATA[<p>How do we know if we can run <code>terraform apply</code> to our infrastructure without negatively affecting critical business
+applications? We can run <code>terraform validate</code> and <code>terraform plan</code> to check our configuration, but will that be enough?
+Whether we've updated some HashiCorp Terraform configuration or a new version of a module, we want to catch errors
+quickly before we apply any changes to production infrastructure.</p>
+<p>In this post, We will discuss some testing strategies for HashiCorp Terraform configuration and modules so that we can
+<code>terraform apply</code> with greater confidence.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="the-testing-pyramid">The Testing Pyramid<a href="https://qubitpi.github.io/hashicorp-aws/blog/testing-hashicorp-terraform#the-testing-pyramid" class="hash-link" aria-label="Direct link to The Testing Pyramid" title="Direct link to The Testing Pyramid">​</a></h2>
+<p>In theory, we might decide to align our infrastructure testing strategy with the test pyramid, which groups tests by
+type, scope, and granularity. The testing pyramid suggests that we write fewer tests in the categories at the top of the
+pyramid, and more at the bottom. Those on the pyramid take more time to run and cost more due to the higher number of
+resources we have to configure and create.</p>
+<p><img loading="lazy" alt="Error loading pyramid.png" src="https://qubitpi.github.io/hashicorp-aws/assets/images/pyramid-c61e3ecc738268f3a07cbcf4faeea8a5.png" width="3840" height="2470" class="img_ev3q"></p>
+<p>In reality, our tests may not perfectly align with the pyramid shape. The pyramid offers a common framework to describe
+what scope a test can cover to verify configuration and infrastructure resources. We'll start at the bottom of the
+pyramid with unit tests and work the way up the pyramid to end-to-end tests.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>hashicorp-aws does not merit any manual testing; so it is not discussed here</p></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="linting-and-formatting">Linting and Formatting<a href="https://qubitpi.github.io/hashicorp-aws/blog/testing-hashicorp-terraform#linting-and-formatting" class="hash-link" aria-label="Direct link to Linting and Formatting" title="Direct link to Linting and Formatting">​</a></h2>
+<p>While not on the test pyramid, we often encounter tests to verify the hygiene of your Terraform configuration. Use
+<code>terraform fmt -check</code> and terraform validate to format and validate the correctness of our Terraform configuration.</p>
+<p>When we collaborate on Terraform, we may consider testing the Terraform configuration for a set of standards and best
+practices. Build or use a linting tool to analyze our Terraform configuration for specific best practices and patterns.
+For example, a linter can verify that our teammate defines a Terraform variable for an instance type instead of
+hard-coding the value.</p>]]></content:encoded>
+            <category>HashiCorp</category>
+            <category>Terraform</category>
+        </item>
         <item>
             <title><![CDATA[Bumping Semantic Version by GitHub Tag]]></title>
             <link>https://qubitpi.github.io/hashicorp-aws/blog/version-bump</link>
@@ -2794,33 +2826,6 @@ environment as a result of one or more changes</strong></p>
 technical responsibility. This is because the decisions on scheduling releases can be tied to business strategy from a
 revenue or portfolio management perspective.</p>]]></content:encoded>
             <category>Continuous Delivery</category>
-        </item>
-        <item>
-            <title><![CDATA[Docker cAdvisor]]></title>
-            <link>https://qubitpi.github.io/hashicorp-aws/blog/docker-c-advisor</link>
-            <guid>https://qubitpi.github.io/hashicorp-aws/blog/docker-c-advisor</guid>
-            <pubDate>Sun, 31 Jul 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></description>
-            <content:encoded><![CDATA[<p><a href="https://github.com/google/cadvisor" target="_blank" rel="noopener noreferrer">cAdvisor</a> (Container Advisor) provides Docker container users an understanding of
-the resource usage and performance characteristics of their running containers. It is a running daemon that collects,
-aggregates, processes, and exports information about running containers. Specifically, for each container it keeps
-resource isolation parameters, historical resource usage, histograms of complete historical resource usage and network
-statistics. This data is exported by container and machine-wide.</p>
-<p>Although <a href="https://github.com/google/cadvisor" target="_blank" rel="noopener noreferrer">cAdvisor</a> has some prelimilary (useful though) UI. It also offers</p>
-<ol>
-<li><a href="https://github.com/google/cadvisor/blob/master/docs/api.md" target="_blank" rel="noopener noreferrer">RESTful API to query container stats</a></li>
-<li><a href="https://github.com/google/cadvisor/blob/master/docs/storage/README.md" target="_blank" rel="noopener noreferrer">Export capability to common data storage, such as Elasticsearch</a></li>
-</ol>
-<p>To pull the image and run it:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token function" style="color:#d73a49">sudo</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">docker</span><span class="token plain"> run </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--volume</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">/:/rootfs:ro </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--volume</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">/var/run/docker.sock:/var/run/docker.sock:rw </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--volume</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">/sys:/sys:ro </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--volume</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">/var/lib/docker/:/var/lib/docker:ro </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--volume</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">/dev/disk/:/dev/disk:ro </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--publish</span><span class="token operator" style="color:#393A34">=</span><span class="token number" style="color:#36acaa">8080</span><span class="token plain">:8080 </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--detach</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">true </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--name</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">cadvisor </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--privileged</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--device</span><span class="token operator" style="color:#393A34">=</span><span class="token plain">/dev/kmsg </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    gcr.io/cadvisor/cadvisor:v0.36.0</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
-<p><img loading="lazy" alt="cAdvisor Screenshot 1" src="https://qubitpi.github.io/hashicorp-aws/assets/images/cadvisor-1-f3d37ad695ee8806adcd57ec59893391.png" width="4720" height="5386" class="img_ev3q">
-<img loading="lazy" alt="cAdvisor Screenshot 2" src="https://qubitpi.github.io/hashicorp-aws/assets/images/cadvisor-2-e81d490aab2caa428bfb987f332c7f88.png" width="4320" height="4522" class="img_ev3q"></p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="docker-container-stats"><a href="https://github.com/virtualzone/docker-container-stats" target="_blank" rel="noopener noreferrer">docker-container-stats</a><a href="https://qubitpi.github.io/hashicorp-aws/blog/docker-c-advisor#docker-container-stats" class="hash-link" aria-label="Direct link to docker-container-stats" title="Direct link to docker-container-stats">​</a></h3>
-<p><a href="https://github.com/google/cadvisor" target="_blank" rel="noopener noreferrer">cAdvisor</a> is good for customizing container monitoring, but it's heavy. A
-quick-and-lightweight option would be <a href="https://github.com/virtualzone/docker-container-stats" target="_blank" rel="noopener noreferrer">docker-container-stats</a></p>
-<p><img loading="lazy" alt="docker-container-stats Screenshot" src="https://qubitpi.github.io/hashicorp-aws/assets/images/docker-container-stats-b043603502126026d11f7d14bea837d3.png" width="2560" height="2237" class="img_ev3q"></p>]]></content:encoded>
-            <category>Docker</category>
-            <category>Virtualization</category>
         </item>
     </channel>
 </rss>
