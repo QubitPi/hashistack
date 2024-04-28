@@ -13,17 +13,17 @@
 # limitations under the License.
 
 variable "aws_deploy_region" {
-  type = string
+  type        = string
   description = "The EC2 region injected through inversion of control"
 }
 
 variable "ami_name" {
-  type = string
+  type        = string
   description = "AMI image name to deploy"
 }
 
 variable "instance_type" {
-  type    = string
+  type        = string
   description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
 
   validation {
@@ -33,27 +33,27 @@ variable "instance_type" {
 }
 
 variable "instance_name" {
-  type = string
+  type        = string
   description = "EC2 instance name"
 }
 
 # https://github.com/hashicorp/packer/issues/11354
 # https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
 variable "security_groups" {
-  type = list(string)
+  type        = list(string)
   description = "EC2 Security Groups"
 }
 
 variable "route_53_zone_id" {
-  type = string
+  type        = string
   description = "Hosted zone ID on Route 53"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "kong_api_gateway_domain" {
-  type = string
+  type        = string
   description = "Domain name that gateway client queries against"
-  sensitive = true
+  sensitive   = true
 }
 
 terraform {
@@ -76,7 +76,7 @@ data "template_file" "aws-kong-init" {
 
 data "aws_ami" "latest-kong" {
   most_recent = true
-  owners = ["899075777617"]
+  owners      = ["899075777617"]
 
   filter {
     name   = "name"
@@ -90,7 +90,7 @@ data "aws_ami" "latest-kong" {
 }
 
 resource "aws_instance" "aws-kong" {
-  ami = data.aws_ami.latest-kong.id
+  ami           = data.aws_ami.latest-kong.id
   instance_type = var.instance_type
   tags = {
     Name = var.instance_name

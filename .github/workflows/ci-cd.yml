@@ -34,9 +34,25 @@ jobs:
   yml-md-style-and-link-checks:
     uses: ./.github/workflows/yml-md-style-and-link-checks.yml
 
+  packer-file-linting:
+    name: Packer Files Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-packer@v3
+      - run: packer fmt -check -recursive .
+
+  terraform-file-linting:
+    name: Terraform Files Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+
   test-upversion:
     name: Test upversion.py
-    needs: yml-md-style-and-link-checks
+    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,7 +65,7 @@ jobs:
 
   docker-image:
     name: Publish docker images for "AMI Build Test"
-    needs: yml-md-style-and-link-checks
+    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -90,7 +106,7 @@ jobs:
       matrix:
         test-directory: [
           tests/machine-learning/images,
-#          tests/react/images,
+          #          tests/react/images,
           tests/kong-api-gateway/images,
           tests/webservice/images,
           tests/elk/images,
@@ -106,7 +122,7 @@ jobs:
 
   list-screwdriver-templates:
     name: Listing Screwdriver Templates to Validate
-    needs: yml-md-style-and-link-checks
+    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-templates.outputs.paths }}
@@ -154,7 +170,7 @@ jobs:
 
   list-screwdriver-command-scripts:
     name: Listing Screwdriver Command Scripts to Test
-    needs: yml-md-style-and-link-checks
+    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-command-scripts.outputs.paths }}
@@ -175,16 +191,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        ubuntu-version: [22.04]
         script: ${{ fromJson(needs.list-screwdriver-command-scripts.outputs.paths) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: ${{ matrix.test-suite.desc }}
-        run: docker run --rm -v $(pwd)/${{ matrix.script }}:/test/script.sh ubuntu /test/script.sh
+        run: docker run --rm -v $(pwd)/${{ matrix.script }}:/test/script.sh ubuntu:${{ matrix.ubuntu-version }} /test/script.sh
 
   list-screwdriver-commands:
     name: Listing Screwdriver Commands to Validate
-    needs: yml-md-style-and-link-checks
+    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-commands.outputs.paths }}

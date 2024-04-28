@@ -20,23 +20,23 @@ build {
 
   # Load SSL Certificates into AMI image
   provisioner "file" {
-    source = "${var.aws_react_ssl_cert_file_path}"
+    source      = "${var.aws_react_ssl_cert_file_path}"
     destination = "${var.image_home_dir}/aws-react.crt"
   }
   provisioner "file" {
-    source = "${var.aws_react_ssl_cert_key_file_path}"
+    source      = "${var.aws_react_ssl_cert_key_file_path}"
     destination = "${var.image_home_dir}/aws-react.key"
   }
 
   # Load Nginx config file into AMI image
   provisioner "file" {
-    source = "${var.aws_react_nginx_config_file_path}"
+    source      = "${var.aws_react_nginx_config_file_path}"
     destination = "${var.image_home_dir}/aws-react-nginx.conf"
   }
 
   # Load React dist folder into AMI image
   provisioner "file" {
-    source = "${var.react_dist_path}"
+    source      = "${var.react_dist_path}"
     destination = "${var.image_home_dir}/dist"
   }
 

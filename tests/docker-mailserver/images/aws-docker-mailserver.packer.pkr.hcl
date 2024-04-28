@@ -16,12 +16,12 @@ packer {
   required_plugins {
     docker = {
       version = ">= 0.0.7"
-      source = "github.com/hashicorp/docker"
+      source  = "github.com/hashicorp/docker"
     }
 
     hashicorp-aws = {
       version = ">= 0.0.13"
-      source = "github.com/QubitPi/hashicorp-aws"
+      source  = "github.com/QubitPi/hashicorp-aws"
     }
   }
 }

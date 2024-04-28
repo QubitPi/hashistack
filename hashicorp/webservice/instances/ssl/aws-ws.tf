@@ -13,20 +13,20 @@
 # limitations under the License.
 
 variable "init_script" {
-  value = "aws-ws-tf-init-ssl.sh"
+  value       = "aws-ws-tf-init-ssl.sh"
   description = "The webservice startup script upon EC2 is up and running"
 }
 
 variable "route_53_zone_id" {
-  type = string
+  type        = string
   description = "Hosted zone ID on Route 53"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "ws_domain" {
-  type = string
+  type        = string
   description = "Domain name that Nexus Graph queries against"
-  sensitive = true
+  sensitive   = true
 }
 
 resource "aws_route53_record" "aws-ws" {

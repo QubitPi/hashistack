@@ -13,17 +13,17 @@
 # limitations under the License.
 
 variable "aws_deploy_region" {
-  type = string
+  type        = string
   description = "The EC2 region"
 }
 
 variable "ami_name" {
-  type = string
+  type        = string
   description = "AMI image name to deploy"
 }
 
 variable "instance_type" {
-  type    = string
+  type        = string
   description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
 
   validation {
@@ -33,12 +33,12 @@ variable "instance_type" {
 }
 
 variable "ec2_instance_name" {
-  type = string
+  type        = string
   description = "EC2 instance name"
 }
 
 variable "security_groups" {
-  type = list(string)
+  type        = list(string)
   description = "EC2 Security Groups"
 }
 
@@ -58,7 +58,7 @@ provider "aws" {
 
 data "aws_ami" "latest-machine-learning" {
   most_recent = true
-  owners = ["899075777617"]
+  owners      = ["899075777617"]
 
   filter {
     name   = "name"
@@ -72,7 +72,7 @@ data "aws_ami" "latest-machine-learning" {
 }
 
 resource "aws_instance" "machine-learning" {
-  ami = data.aws_ami.latest-machine-learning.id
+  ami           = data.aws_ami.latest-machine-learning.id
   instance_type = var.instance_type
   tags = {
     Name = var.ec2_instance_name

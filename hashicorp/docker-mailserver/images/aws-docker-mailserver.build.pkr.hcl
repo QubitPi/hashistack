@@ -13,31 +13,31 @@
 # limitations under the License.
 
 variable "build_source" {
-  type =  string
+  type      = string
   sensitive = false
-  default = "amazon-ebs.docker-mailserver"
+  default   = "amazon-ebs.docker-mailserver"
 }
 
 variable "image_home_dir" {
-  type =  string
+  type      = string
   sensitive = true
-  default = "/home/ubuntu"
+  default   = "/home/ubuntu"
 }
 
 variable "ssl_cert_source" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "ssl_cert_key_source" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "base_domain" {
-  type = string
+  type        = string
   description = "The base domain name for the MX record. For example, if base domain is 'mycompany.com', the generated MX record will be 'mail.mycompany.com'"
-  sensitive = true
+  sensitive   = true
 }
 
 build {
@@ -47,9 +47,9 @@ build {
   ]
 
   provisioner "hashicorp-aws-docker-mailserver-provisioner" {
-    homeDir = "${var.image_home_dir}"
-    baseDomain = "${var.base_domain}"
-    sslCertSource = "${var.ssl_cert_source}"
+    homeDir          = "${var.image_home_dir}"
+    baseDomain       = "${var.base_domain}"
+    sslCertSource    = "${var.ssl_cert_source}"
     sslCertKeySource = "${var.ssl_cert_key_source}"
   }
 }
