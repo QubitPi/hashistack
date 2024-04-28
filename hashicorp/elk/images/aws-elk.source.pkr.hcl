@@ -18,12 +18,12 @@ variable "ami_region" {
 }
 
 variable "ami_name" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "skip_create_ami" {
-  type =  bool
+  type      = bool
   sensitive = true
 }
 
@@ -31,7 +31,7 @@ source "amazon-ebs" "elk" {
   ami_name              = "${var.ami_name}"
   force_deregister      = "true"
   force_delete_snapshot = "true"
-  skip_create_ami = "${var.skip_create_ami}"
+  skip_create_ami       = "${var.skip_create_ami}"
 
   instance_type = "t2.large"
   region        = "${var.ami_region}"

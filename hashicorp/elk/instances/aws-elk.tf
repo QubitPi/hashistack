@@ -13,44 +13,44 @@
 # limitations under the License.
 
 variable "aws_deploy_region" {
-  type = string
+  type        = string
   description = "The EC2 region"
 }
 
 variable "ami_name" {
-  type = string
+  type        = string
   description = "AMI image name to deploy"
 }
 
 variable "instance_name" {
-  type = string
+  type        = string
   description = "EC2 instance name hosting the deployed ELK"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "key_pair_name" {
-  type = string
+  type        = string
   description = "AWS SSH key pair name used to generate Kibana enrollment token and verification code"
-  sensitive = true
+  sensitive   = true
 }
 
 # https://github.com/hashicorp/packer/issues/11354
 # https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
 variable "security_groups" {
-  type = list(string)
+  type        = list(string)
   description = "EC2 Security Groups"
 }
 
 variable "route_53_zone_id" {
-  type = string
+  type        = string
   description = "Hosted zone ID on Route 53"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "elk_domain" {
-  type = string
+  type        = string
   description = "Domian name of ELK instance, such as myelk.mycompany.com"
-  sensitive = true
+  sensitive   = true
 }
 
 terraform {
@@ -69,7 +69,7 @@ provider "aws" {
 
 data "aws_ami" "latest-elk" {
   most_recent = true
-  owners = ["899075777617"]
+  owners      = ["899075777617"]
 
   filter {
     name   = "name"
@@ -83,7 +83,7 @@ data "aws_ami" "latest-elk" {
 }
 
 resource "aws_instance" "elk" {
-  ami = data.aws_ami.latest-elk.id
+  ami           = data.aws_ami.latest-elk.id
   instance_type = "t2.large"
 
   root_block_device {
@@ -94,7 +94,7 @@ resource "aws_instance" "elk" {
     Name = var.instance_name
   }
 
-  key_name = var.key_pair_name
+  key_name        = var.key_pair_name
   security_groups = var.security_groups
 }
 

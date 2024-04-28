@@ -13,17 +13,17 @@
 # limitations under the License.
 
 variable "aws_deploy_region" {
-  type = string
+  type        = string
   description = "The EC2 region"
 }
 
 variable "ami_name" {
-  type = string
+  type        = string
   description = "AMI image name to deploy"
 }
 
 variable "instance_type" {
-  type    = string
+  type        = string
   description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
 
   validation {
@@ -33,27 +33,27 @@ variable "instance_type" {
 }
 
 variable "ec2_instance_name" {
-  type = string
+  type        = string
   description = "EC2 instance name"
 }
 
 # https://github.com/hashicorp/packer/issues/11354
 # https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
 variable "security_groups" {
-  type = list(string)
+  type        = list(string)
   description = "EC2 Security Groups"
 }
 
 variable "route_53_zone_id" {
-  type = string
+  type        = string
   description = "Hosted zone ID on Route 53"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "react_domain" {
-  type = string
+  type        = string
   description = "The domain serving the React App; e.g. 'app.mycompany.com'"
-  sensitive = true
+  sensitive   = true
 }
 
 terraform {
@@ -76,7 +76,7 @@ data "template_file" "aws-react-init" {
 
 data "aws_ami" "latest-aws-react" {
   most_recent = true
-  owners = ["899075777617"]
+  owners      = ["899075777617"]
 
   filter {
     name   = "name"
@@ -90,7 +90,7 @@ data "aws_ami" "latest-aws-react" {
 }
 
 resource "aws_instance" "aws-react" {
-  ami = data.aws_ami.latest-aws-react.id
+  ami           = data.aws_ami.latest-aws-react.id
   instance_type = var.instance_type
   tags = {
     Name = var.ec2_instance_name

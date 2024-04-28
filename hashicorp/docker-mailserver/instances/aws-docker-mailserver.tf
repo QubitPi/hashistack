@@ -13,17 +13,17 @@
 # limitations under the License.
 
 variable "aws_deploy_region" {
-  type = string
+  type        = string
   description = "The EC2 region injected through inversion of control"
 }
 
 variable "ami_name" {
-  type = string
+  type        = string
   description = "AMI image name to deploy"
 }
 
 variable "instance_type" {
-  type    = string
+  type        = string
   description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
 
   validation {
@@ -35,45 +35,45 @@ variable "instance_type" {
 }
 
 variable "instance_name" {
-  type = string
+  type        = string
   description = "EC2 instance name"
 }
 
 variable "key_pair_name" {
-  type = string
+  type        = string
   description = "The name of AWS SSH key pair, which is used to SSH into the box for amin purposes"
-  sensitive = true
+  sensitive   = true
 }
 
 # https://github.com/hashicorp/packer/issues/11354
 # https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
 variable "security_groups" {
-  type = list(string)
+  type        = list(string)
   description = "EC2 Security Groups"
 }
 
 variable "route_53_zone_id" {
-  type = string
+  type        = string
   description = "Hosted zone ID on Route 53"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "base_domain" {
-  type = string
+  type        = string
   description = "The base domain name for the MX record. For example, if base domain is 'mycompany.com', the generated MX record will be 'mail.mycompany.com'"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "first_email" {
-  type = string
+  type        = string
   description = "The email used for mail server startup"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "first_email_password" {
-  type = string
+  type        = string
   description = "The password of the email for mail server startup"
-  sensitive = true
+  sensitive   = true
 }
 
 terraform {
@@ -93,15 +93,15 @@ provider "aws" {
 data "template_file" "aws-docker-mailserver-init" {
   template = file("../scripts/aws-docker-mailserver-tf-init.sh")
   vars = {
-    USER = "ubuntu"
-    FIRST_EMAIL = var.first_email
+    USER                 = "ubuntu"
+    FIRST_EMAIL          = var.first_email
     FIRST_EMAIL_PASSWORD = var.first_email_password
   }
 }
 
 data "aws_ami" "latest-docker-mailserver" {
   most_recent = true
-  owners = ["899075777617"]
+  owners      = ["899075777617"]
 
   filter {
     name   = "name"
@@ -115,7 +115,7 @@ data "aws_ami" "latest-docker-mailserver" {
 }
 
 resource "aws_instance" "aws-docker-mailserver" {
-  ami = data.aws_ami.latest-docker-mailserver.id
+  ami           = data.aws_ami.latest-docker-mailserver.id
   instance_type = var.instance_type
   tags = {
     Name = var.instance_name

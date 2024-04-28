@@ -13,19 +13,19 @@
 # limitations under the License.
 
 variable "build_source" {
-  type =  string
+  type      = string
   sensitive = false
-  default = "amazon-ebs.machine-learning"
+  default   = "amazon-ebs.machine-learning"
 }
 
 variable "image_home_dir" {
-  type =  string
+  type      = string
   sensitive = true
-  default = "/home/ubuntu"
+  default   = "/home/ubuntu"
 }
 
 variable "ml_models_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
@@ -37,7 +37,7 @@ build {
 
   # Load ML Model
   provisioner "file" {
-    source = "${var.ml_models_path}"
+    source      = "${var.ml_models_path}"
     destination = "${var.image_home_dir}/ml-models"
   }
 

@@ -21,7 +21,7 @@ packer {
 
     hashicorp-aws = {
       version = ">= 0.0.13"
-      source = "github.com/QubitPi/hashicorp-aws"
+      source  = "github.com/QubitPi/hashicorp-aws"
     }
   }
 }

@@ -22,27 +22,27 @@ packer {
 }
 
 source "amazon-ebs" "react" {
-  ami_name = "${var.ami_name}"
-  force_deregister = "true"
+  ami_name              = "${var.ami_name}"
+  force_deregister      = "true"
   force_delete_snapshot = "true"
-  skip_create_ami = "${var.skip_create_ami}"
+  skip_create_ami       = "${var.skip_create_ami}"
 
   instance_type = var.instance_type
   launch_block_device_mappings {
-    device_name = "/dev/sda1"
-    volume_size = 8
-    volume_type = "gp2"
+    device_name           = "/dev/sda1"
+    volume_size           = 8
+    volume_type           = "gp2"
     delete_on_termination = true
   }
   region = "${var.ami_region}"
   source_ami_filter {
     filters = {
-      name = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"
-      root-device-type = "ebs"
+      name                = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"
+      root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
     most_recent = true
-    owners = ["099720109477"]
+    owners      = ["099720109477"]
   }
   ssh_username = "ubuntu"
 }

@@ -13,29 +13,29 @@
 # limitations under the License.
 
 variable "build_source" {
-  type =  string
+  type      = string
   sensitive = false
-  default = "amazon-ebs.react"
+  default   = "amazon-ebs.react"
 }
 
 variable "ami_region" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "ami_name" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "image_home_dir" {
-  type =  string
+  type      = string
   sensitive = true
-  default = "/home/ubuntu"
+  default   = "/home/ubuntu"
 }
 
 variable "instance_type" {
-  type    = string
+  type        = string
   description = "EC2 instance types defined in https://aws.amazon.com/ec2/instance-types/"
 
   validation {
@@ -45,26 +45,26 @@ variable "instance_type" {
 }
 
 variable "react_dist_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "aws_react_ssl_cert_file_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "aws_react_ssl_cert_key_file_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "aws_react_nginx_config_file_path" {
-  type =  string
+  type      = string
   sensitive = true
 }
 
 variable "skip_create_ami" {
-  type =  bool
+  type      = bool
   sensitive = true
 }

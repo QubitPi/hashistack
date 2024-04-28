@@ -13,6 +13,6 @@
 # limitations under the License.
 
 variable "init_script" {
-  value = "aws-ws-tf-init-basic.sh"
+  value       = "aws-ws-tf-init-basic.sh"
   description = "The webservice startup script upon EC2 is up and running"
 }
