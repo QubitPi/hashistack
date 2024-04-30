@@ -1,0 +1,101 @@
+# Copyright 2024 Paion Data. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+namespace: paion-data
+name: react-app-release-definition-template
+version: '1.0.0'
+description: Screwdriver CD template for deploying React APP to Packer through HashiCorp.
+maintainer: jingjinghu@paion-data.dev
+config:
+  image: buildpack-deps:22.04-scm
+  parameters:
+    region:
+      value: ["cn-shenzhen", "cn-beijing", "cn-hangzhou", "cn-shanghai"]
+      description: "The AliCloud region where the instance will be published to. The published image will be private"
+    ali-image-name:
+      value: "ecs-react"
+      description: "The published alicoud image name; it can be arbitrary"
+    instance-type:
+      value: ["ecs.e-c1m1.large"]
+      description: "The ECS instance type to use when building an image as well as launching the instance"
+    instance-name:
+      value: "react-app-instance"
+      description: "The deployed ECS name as appeared in the instance list of AliCloud console; it can be arbitrary"
+    build-source:
+      value: ["alicloud-ecs.react-app"]
+      description: "The source of the image to build"
+    image-home-dir:
+      value: ["/root", "/"]
+      description: "Allowed values for image_home_dir are '/root' for Alicloud, '/home/ubuntu' for AWS, or '/' in general"
+    vswitch-name:
+      value: "Your VSwitch Name"
+      description: "The VSwitch name to use when launching the instance"
+    security-group-names:
+      value: "Your Security Group Name"
+      description: "The list of Security Group names"
+    internet-charge-type:
+      value: ["PayByBandwidth", "PayByTraffic"]
+      description: "The internet charge type for the instance"
+    system-disk-category:
+      value: ["cloud_efficiency", "cloud_ssd", "cloud_essd"]
+      description: "The system disk category for the instance"
+    internet-max-bandwidth-out:
+      value: "1"
+      description: "The maximum bandwidth out for the instance"
+    react-app-domain:
+      value: "react.mycompany.com"
+      description: |
+        The SSL-enabled domain that will serve various React APP endpoints
+  steps:
+    - install-node: sd-cmd exec paion-data/install-node@latest
+    - install-packer: sd-cmd exec paion-data/install-hashicorp-packer-ubuntu@latest
+    - install-terraform: sd-cmd exec paion-data/install-hashicorp-terraform-ubuntu@latest
+
+    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/paion-data/immutable-infrastructure-as-a-service.git ../immutable-infrastructure-as-a-service
+    - load-ssl-certificate: echo "$SSL_CERTIFICATE" > ../immutable-infrastructure-as-a-service/hashicorp/react/images/alicloud/ssl.crt
+    - load-ssl-certificate-key: echo "$SSL_CERTIFICATE_KEY" > ../immutable-infrastructure-as-a-service/hashicorp/react/images/alicloud/ssl.key
+    - load-packer-variable-file: |
+        echo region                  = \"$(meta get parameters.region.value)\"                  >> ../immutable-infrastructure-as-a-service/hashicorp/react/images/ali.auto.pkrvars.hcl
+        echo ali_image_name          = \"$(meta get parameters.ali-image-name.value)\"          >> ../immutable-infrastructure-as-a-service/hashicorp/react/images/ali.auto.pkrvars.hcl
+        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../immutable-infrastructure-as-a-service/hashicorp/react/images/ali.auto.pkrvars.hcl
+        echo ssl_cert_source         = \"ssl.crt\"                                              >> ../immutable-infrastructure-as-a-service/hashicorp/react/images/ali.auto.pkrvars.hcl
+        echo ssl_cert_key_source     = \"ssl.key\"                                              >> ../immutable-infrastructure-as-a-service/hashicorp/react/images/ali.auto.pkrvars.hcl
+        echo react_app_domain        = \"$(meta get parameters.react-app-domain.value)\"        >> ../immutable-infrastructure-as-a-service/hashicorp/react/images/ali.auto.pkrvars.hcl
+
+    - load-terraform-variable-file: |
+        echo ali_image_name             = \"$(meta get parameters.ali-image-name.value)\"             >> ../immutable-infrastructure-as-a-service/hashicorp/react/instances/alicloud/ali.auto.tfvars
+        echo vswitch_name               = \"$(meta get parameters.vswitch-name.value)\"               >> ../immutable-infrastructure-as-a-service/hashicorp/react/instances/alicloud/ali.auto.tfvars
+        echo instance_type              = \"$(meta get parameters.instance-type.value)\"              >> ../immutable-infrastructure-as-a-service/hashicorp/react/instances/alicloud/ali.auto.tfvars
+        echo instance_name              = \"$(meta get parameters.instance-name.value)\"              >> ../immutable-infrastructure-as-a-service/hashicorp/react/instances/alicloud/ali.auto.tfvars
+        echo security_group_names       = \"$(meta get parameters.security-group-names.value)"        >> ../immutable-infrastructure-as-a-service/hashicorp/react/instances/alicloud/ali.auto.tfvars
+        echo internet_charge_type       = \"$(meta get parameters.internet-charge-type.value)\"       >> ../immutable-infrastructure-as-a-service/hashicorp/react/instances/alicloud/ali.auto.tfvars
+        echo system_disk_category       = \"$(meta get parameters.system-disk-category.value)\"       >> ../immutable-infrastructure-as-a-service/hashicorp/react/instances/alicloud/ali.auto.tfvars
+        echo internet_max_bandwidth_out = \"$(meta get parameters.internet-max-bandwidth-out.value)\" >> ../immutable-infrastructure-as-a-service/hashicorp/react/instances/alicloud/ali.auto.tfvars
+
+    - install-yarn: npm install --global yarn
+    - generate-dist: yarn && yarn build
+    - relocate-dist-for-hashicorp: mv dist ../immutable-infrastructure-as-a-service/hashicorp/react/images/dist
+
+    - packer-init: cd ../immutable-infrastructure-as-a-service/hashicorp/react/images/alicloud/ && packer init .
+    - packer-validate: packer validate .
+    - packer-build: packer build .
+
+    - terraform-init: cd ../instances/alicloud && terraform init
+    - terraform-validate: terraform validate
+    - terraform-apply: terraform apply -auto-approve
+  secrets:
+    - SSL_CERTIFICATE
+    - SSL_CERTIFICATE_KEY
+    - ALICLOUD_ACCESS_KEY
+    - ALICLOUD_SECRET_KEY

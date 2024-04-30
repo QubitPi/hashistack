@@ -42,7 +42,7 @@ config:
     vswitch-name:
       value: "Your VSwitch Name"
       description: "The VSwitch name to use when launching the instance"
-    security-groups-name:
+    security-group-names:
       value: "Your Security Group Name"
       description: "The list of Security Group names"
     internet-charge-type:
@@ -79,7 +79,7 @@ config:
         echo vswitch_name               = \"$(meta get parameters.vswitch-name.value)\"               >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
         echo instance_type              = \"$(meta get parameters.instance-type.value)\"              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
         echo instance_name              = \"$(meta get parameters.instance-name.value)\"              >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
-        echo security_groups_name       = \"$(meta get parameters.security-groups-name.value)"        >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
+        echo security_group_names       = \"$(meta get parameters.security-group-names.value)"        >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
         echo internet_charge_type       = \"$(meta get parameters.internet-charge-type.value)\"       >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
         echo system_disk_category       = \"$(meta get parameters.system-disk-category.value)\"       >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars
         echo internet_max_bandwidth_out = \"$(meta get parameters.internet-max-bandwidth-out.value)\" >> ../immutable-infrastructure-as-a-service/hashicorp/kong-api-gateway/instances/ali.auto.tfvars

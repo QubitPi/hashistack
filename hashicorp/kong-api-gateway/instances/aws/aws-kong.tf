@@ -56,6 +56,11 @@ variable "kong_api_gateway_domain" {
   sensitive = true
 }
 
+variable "image_home_dir" {
+  type        = string
+  description = "The home directory of the image"
+}
+
 terraform {
   required_providers {
     aws = {
@@ -72,6 +77,9 @@ provider "aws" {
 
 data "template_file" "aws-kong-init" {
   template = file("../scripts/aws-kong-tf-init.sh")
+  vars = {
+    home_dir = var.image_home_dir
+  }
 }
 
 data "aws_ami" "latest-kong" {

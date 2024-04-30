@@ -16,5 +16,6 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cd /root/docker-kong/compose/
+HOME_DIR = ${home_dir}
+cd $HOME_DIR/docker-kong/compose/
 sudo KONG_DATABASE=postgres docker compose --profile database up

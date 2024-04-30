@@ -56,6 +56,11 @@ variable "react_domain" {
   sensitive = true
 }
 
+variable "image_home_dir" {
+  type        = string
+  description = "The home directory of the image"
+}
+
 terraform {
   required_providers {
     aws = {
@@ -71,7 +76,10 @@ provider "aws" {
 }
 
 data "template_file" "aws-react-init" {
-  template = "${file("../scripts/aws-react-tf-init.sh")}"
+  template = "${file("../scripts/react-tf-init.sh")}"
+  vars = {
+    home_dir = var.image_home_dir
+  }
 }
 
 data "aws_ami" "latest-aws-react" {

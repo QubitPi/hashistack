@@ -14,14 +14,27 @@
 
 packer {
   required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
+    alicloud = {
+      source  = "github.com/hashicorp/alicloud"
+      version = "~> 1"
     }
 
     iiaas = {
-      version = ">= 0.0.6"
       source  = "github.com/paion-data/paion-data"
+      version = ">= 0.0.6"
     }
   }
+}
+
+source "alicloud-ecs" "react-app" {
+  # Authentication through environmental variables
+  associate_public_ip_address  = true
+  image_force_delete           = true
+  image_force_delete_snapshots = true
+  image_name                   = var.ali_image_name
+  instance_type                = var.instance_type
+  internet_charge_type         = "PayByTraffic"
+  skip_image_validation        = true
+  source_image                 = "ubuntu_22_04_x64_20G_alibase_20240220.vhd"
+  ssh_username                 = "root"
 }

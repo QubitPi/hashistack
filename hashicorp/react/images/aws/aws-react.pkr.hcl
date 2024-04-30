@@ -18,10 +18,15 @@ packer {
       version = ">= 0.0.2"
       source  = "github.com/hashicorp/amazon"
     }
+
+    iiaas = {
+      source  = "github.com/paion-data/paion-data"
+      version = ">= 0.0.6"
+    }
   }
 }
 
-source "amazon-ebs" "react" {
+source "amazon-ebs" "react-app" {
   ami_name = "${var.ami_name}"
   force_deregister = "true"
   force_delete_snapshot = "true"

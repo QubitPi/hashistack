@@ -15,7 +15,7 @@
 variable "build_source" {
   type =  string
   sensitive = false
-  default = "amazon-ebs.react"
+  default = "amazon-ebs.react-app"
 }
 
 variable "ami_region" {

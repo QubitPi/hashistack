@@ -1,4 +1,4 @@
-# Copyright 2024 Paion Data. All rights reserved.
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ variable "image_home_dir" {
 # TODO: instance_type is dependent on the region
 variable "instance_type" {
   type        = string
-  description = "EC2 instance types defined in https://www.alibabacloud.com/help/doc-detail/25378.htm"
+  description = "ECS instance types defined in https://www.alibabacloud.com/help/doc-detail/25378.htm"
 }
 
 variable "instance_name" {
@@ -34,7 +34,7 @@ variable "instance_name" {
 
 variable "security_group_names" {
   type        = list(string)
-  description = "ECS security group name"
+  description = "ECS security group names"
 }
 
 variable "internet_charge_type" {
@@ -51,7 +51,6 @@ variable "internet_charge_type" {
 variable "system_disk_category" {
   type = string
   description = "System disk category"
-  default = "cloud_essd_entry"
 
   validation {
     condition = contains(["ephemeral_ssd", "cloud_efficiency", "cloud_ssd", "cloud_essd", "cloud_essd_entry", "cloud", "cloud_auto"], var.system_disk_category)
@@ -65,44 +64,47 @@ variable "internet_max_bandwidth_out" {
   default = 1
 }
 
-data "alicloud_security_groups" "kong-groups" {
+data "alicloud_security_groups" "react-groups" {
   name_regex  = join("|", var.security_group_names)
 }
 
-data "template_file" "kong-init" {
-  template = file("../scripts/ali-kong-tf-init.sh")
+data "template_file" "react-init" {
+  template = file("../scripts/react-tf-init.sh")
   vars = {
     home_dir = var.image_home_dir
   }
 }
 
-data "alicloud_images" "kong-images" {
+data "alicloud_images" "react-images" {
   image_name = var.ali_image_name
   owners     = "self"
 }
 
-resource "alicloud_instance" "kong-instance" {
+resource "alicloud_instance" "react-instance" {
   # charging rules see in https://help.aliyun.com/zh/ecs/product-overview/overview-51
-  internet_charge_type = "${var.internet_charge_type}"
+  internet_charge_type = var.internet_charge_type
+
+  # network
+  # vswitch_id = "${data.alicloud_vswitches.default.vswitches.0.id}"
 
   # instance and image
   # instance type define in https://help.aliyun.com/zh/ecs/user-guide/overview-of-instance-families#enterprise-x86
-  instance_type = "${var.instance_type}"
-  image_id      = "${data.alicloud_images.kong-images.images.0.id}"
-  instance_name = "${var.instance_name}"
+  instance_type = var.instance_type
+  image_id      = data.alicloud_images.react-images.images[0].id
+  instance_name = var.instance_name
 
   # disk
-  system_disk_category = "${var.system_disk_category}"
+  system_disk_category = var.system_disk_category
 
   # Bandwidth and safety group
-  internet_max_bandwidth_out = "${var.internet_max_bandwidth_out}"
-  security_groups            = "${data.alicloud_security_groups.kong-groups.ids}"
+  internet_max_bandwidth_out = var.internet_max_bandwidth_out
+  security_groups            = data.alicloud_security_groups.react-groups.ids
 
   # Management settings
   tags = {
-    Name = "${var.instance_name}"
+    Name = var.instance_name
   }
-  user_data = data.template_file.kong-init.rendered
+  user_data = data.template_file.react-init.rendered
 }
 
 terraform {
@@ -116,6 +118,8 @@ terraform {
       version = "2.2.0"
     }
   }
+
+  required_version = ">= 1.2.0"
 }
 
 provider "alicloud" {}

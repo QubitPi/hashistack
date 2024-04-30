@@ -12,16 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-packer {
-  required_plugins {
-    amazon = {
-      version = ">= 0.0.2"
-      source  = "github.com/hashicorp/amazon"
-    }
+variable "ali_image_name" {
+  type      = string
+  sensitive = true
+}
 
-    iiaas = {
-      version = ">= 0.0.6"
-      source  = "github.com/paion-data/paion-data"
-    }
-  }
+
+
+variable "instance_type" {
+  type        = string
+  description = "ECS instance types defined in https://www.alibabacloud.com/help/doc-detail/25378.htm"
+}
+
+variable "ssl_cert_source" {
+  type      = string
+  sensitive = true
+}
+
+variable "ssl_cert_key_source" {
+  type      = string
+  sensitive = true
+}
+
+variable "react_app_domain" {
+  type      = string
+  sensitive = true
 }
