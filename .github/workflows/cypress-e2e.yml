@@ -17,10 +17,11 @@ name: "Frontend Cypress E2E Tests"
 "on":
   workflow_call:
     inputs:
-      node-version:
+      node-versions:
         description: NodeJS version to test. Such as 18
         type: string
-        required: true
+        default: '["18"]'
+        required: false
 
 jobs:
   list-e2e-specs:
@@ -44,7 +45,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: ${{ inputs.node-version }}
+        node-version: ${{ fromJSON(github.event.inputs.input-versions) }}
         start-strategy: ["yarn-start", "serve"]
         test-spec: ${{ fromJson(needs.list-e2e-specs.outputs.paths) }}
     steps:
