@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[6071],{5125:a=>{a.exports=JSON.parse('{"label":"Java","permalink":"/hashicorp-aws/blog/tags/java","allTagsPath":"/hashicorp-aws/blog/tags","count":1,"unlisted":false}')}}]);
