@@ -22,8 +22,8 @@ const config: Config = {
   tagline: 'Infrastructure as Code via HashiCorp',
   favicon: 'img/favicon.ico',
 
-  url: 'https://qubitpi.github.io/',
-  baseUrl: '/hashicorp-aws',
+  url: 'https://hashicorp-aws.com',
+  baseUrl: '/',
   organizationName: 'QubitPi',
   projectName: 'hashicorp-aws',
 
