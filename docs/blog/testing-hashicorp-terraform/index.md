@@ -57,3 +57,10 @@ When we collaborate on Terraform, we may consider testing the Terraform configur
 practices. Build or use a linting tool to analyze our Terraform configuration for specific best practices and patterns.
 For example, a linter can verify that our teammate defines a Terraform variable for an instance type instead of
 hard-coding the value.
+
+Unit Tests
+----------
+
+At the bottom of the pyramid, unit tests verify individual resources and configurations for expected values. They should
+answer the question, “Does my configuration or plan contain the correct metadata?” Traditionally, unit tests should run
+independently, without external resources or API calls.

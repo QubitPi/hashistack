@@ -47,7 +47,7 @@ name: CI/CD
     name: React & TS Code Style Check
     uses: QubitPi/hashicorp-aws/.github/workflows/ui-code-style.yml@master
     with:
-      node_version: 18
+      node-version: 18
 ```
 
 :::tip
