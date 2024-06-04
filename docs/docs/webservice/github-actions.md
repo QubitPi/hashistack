@@ -59,7 +59,7 @@ The following inputs are required:
   of the following
 
   - [basic](https://qubitpi.github.io/jersey-webservice-template/docs/intro)
-  - [jpa](https://qubitpi.github.io/jersey-webservice-template/docs/category/jpa-through-yahooelide)
+  - [jpa](https://qubitpi.github.io/jersey-webservice-template/docs/elide/intro)
 
 - `ssl`: whether or not to server webservice API in SSL/HTTPS
 

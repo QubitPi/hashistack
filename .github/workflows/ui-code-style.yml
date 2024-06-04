@@ -17,7 +17,7 @@ name: "UI Code Style Checks"
 "on":
   workflow_call:
     inputs:
-      node_version:
+      node-version:
         description: 'NodeJS version, such as "16"'
         required: true
         type: number
@@ -28,10 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set node version to ${{ inputs.node_version }}
+      - name: Set node version to ${{ inputs.node-version }}
         uses: actions/setup-node@v3
         with:
-          node_version: ${{ inputs.node_version }}
+          node-version: ${{ inputs.node-version }}
       - name: Install dependencies
         run: yarn install
         shell: bash
