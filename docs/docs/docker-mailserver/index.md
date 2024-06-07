@@ -70,7 +70,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-docker-mailserve
 **[hashicorp-aws/hashicorp/docker-mailserver/instances]** with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/docker-mailserver/instances/aws-docker-mailserver.auto.tfvars"
-aws_deploy_region    = "us-east-1"
+aws_ec2_region    = "us-east-1"
 ami_name             = "my-docker-mailserver-ami"
 instance_name        = "My docker-mailserver instance"
 key_pair_name        = "My SSH keypair name"
@@ -81,7 +81,7 @@ first_email          = "jack@mycompany.com"
 first_email_password = "sdfeo9uig&^&rf8u"
 ```
 
-- `aws_deploy_region` is the [EC2 runtime region][AWS regions] where docker-mailserver EC2 instance will be deployed
+- `aws_ec2_region` is the [EC2 runtime region][AWS regions] where docker-mailserver EC2 instance will be deployed
   into
 - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
   [Packer variable file](#defining-packer-variables)**

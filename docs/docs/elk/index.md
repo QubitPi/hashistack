@@ -92,7 +92,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-elk.tfvars** und
 **[hashicorp-aws/hashicorp/elk/instances]**with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/elk/instances/aws-elk.auto.tfvars"
-aws_deploy_region = "us-east-2"
+aws_ec2_region = "us-east-2"
 ami_name          = "my-elk-ami"
 instance_name     = "My ELK instance"
 key_pair_name     = "My AWS keypair name"
@@ -101,7 +101,7 @@ elk_domain         = "myelk.mycompany.com"
 route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
 ```
 
-- `aws_deploy_region` is the [EC2 runtime region][AWS regions] where ELK EC2 instance will be deployed into
+- `aws_ec2_region` is the [EC2 runtime region][AWS regions] where ELK EC2 instance will be deployed into
 - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
   [Packer variable file](#defining-packer-variables)**
 - `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary

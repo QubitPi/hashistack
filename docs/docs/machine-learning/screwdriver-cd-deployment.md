@@ -96,14 +96,14 @@ The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined 
 - **AWS_ML_TFVARS** - A [HashiCorp Terraform variable values file] with the following variable values:
 
   ```hcl
-  aws_deploy_region   = "us-east-2"
+  aws_ec2_region   = "us-east-2"
   ami_name            = "my-ml-ami"
   instance_type       = "t2.small"
   ec2_instance_name   = "My Machine Learning REST Service"
   ec2_security_groups = ["ML REST Service Security Group"]
   ```
 
-  - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+  - `aws_ec2_region` is the [EC2 runtime region][AWS regions]
   - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in AWS_ML_PKRVARS_HCL**
   - `instance_type` is the chosen [AWS EC2 instance type] at runtime
   - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary

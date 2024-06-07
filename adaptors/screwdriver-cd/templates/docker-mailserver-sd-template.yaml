@@ -80,7 +80,7 @@ config:
         echo base_domain             = \"$(meta get parameters.base-domain.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
-        echo aws_deploy_region    = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo aws_ec2_region    = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
         echo ami_name             = \"$(meta get parameters.ami-name.value)\"             >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
         echo instance_name        = \"$(meta get parameters.instance-name.value)\"        >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
         echo key_pair_name        = \"$(meta get parameters.key-pair-name.value)\"        >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars

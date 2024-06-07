@@ -80,7 +80,7 @@ config:
 
     - setup-terraform: cp ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.base.tf ../hashicorp-aws/hashicorp/webservice/instances/basic
     - load-terraform-variable-file: |
-        echo aws_deploy_region = \"$(meta get parameters.aws-deploy-region.value)\" >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
+        echo aws_ec2_region = \"$(meta get parameters.aws-deploy-region.value)\" >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
         echo ami_name          = \"$(meta get parameters.ami-name.value)\"          >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
         echo instance_type     = \"$(meta get parameters.instance-type.value)\"     >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
         echo ec2_instance_name = \"$(meta get parameters.instance-name.value)\"     >> ../hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
