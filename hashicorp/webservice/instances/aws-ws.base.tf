@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "aws_deploy_region" {
+variable "aws_ec2_region" {
   type        = string
   description = "The EC2 region injected through inversion of control"
 }
@@ -55,7 +55,7 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_deploy_region
+  region = var.aws_ec2_region
 }
 
 variable "init_script_path" {

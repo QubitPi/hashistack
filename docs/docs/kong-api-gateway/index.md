@@ -93,7 +93,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-kong.auto.tfvars
 **[hashicorp-aws/hashicorp/kong-api-gateway/instances]** directory with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/kong-api-gateway/instances/aws-kong.auto.tfvars"
-aws_deploy_region       = "us-east-1"
+aws_ec2_region       = "us-east-1"
 ami_name                = "my-kong-ami"
 instance_type           = "t2.small"
 instance_name           = "My Kong API Gateway"
@@ -102,7 +102,7 @@ kong_api_gateway_domain = "gateway.mycompany.com"
 route_53_zone_id        = "MBS8YLKZML18VV2E8M8OK"
 ```
 
-- `aws_deploy_region` is the [EC2 runtime region][AWS regions] where Kong will be deployed into
+- `aws_ec2_region` is the [EC2 runtime region][AWS regions] where Kong will be deployed into
 - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
   [Packer variable file](#defining-packer-variables)**
 - `instance_type` is the chosen [AWS EC2 instance type] at runtime

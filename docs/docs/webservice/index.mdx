@@ -142,14 +142,14 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
 <Tabs>
   <TabItem value="non-ssl" label="non-SSL/HTTPS" default>
     ```hcl title=hashicorp-aws/hashicorp/webservice/instances/basic/aws-ws.auto.tfvars
-    aws_deploy_region = "my-aws-region"
+    aws_ec2_region = "my-aws-region"
     ami_name          = "my-webservice"
     instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
     ec2_instance_name = "My Webservice"
     security_groups   = ["My Webservice"]
     ```
 
-    - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+    - `aws_ec2_region` is the [EC2 runtime region][AWS regions]
     - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
       [Packer variable file](#defining-packer-variables)**
     - `instance_type` is the chosen [AWS EC2 instance type] at runtime
@@ -159,7 +159,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
   </TabItem>
   <TabItem value="ssl" label="SSL/HTTPS">
     ```hcl title=hashicorp-aws/hashicorp/webservice/instances/ssl/aws-ws.auto.tfvars
-    aws_deploy_region = "my-aws-region"
+    aws_ec2_region = "my-aws-region"
     ami_name          = "my-webservice"
     instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
     ec2_instance_name = "My Webservice"
@@ -168,7 +168,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
     ws_domain         = "mywebservice.mycompany.com"
     ```
 
-    - `aws_deploy_region` is the [EC2 runtime region][AWS regions]
+    - `aws_ec2_region` is the [EC2 runtime region][AWS regions]
     - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
       [Packer variable file](#defining-packer-variables)**
     - `instance_type` is the chosen [AWS EC2 instance type] at runtime
