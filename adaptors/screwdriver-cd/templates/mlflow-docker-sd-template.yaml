@@ -28,7 +28,10 @@ config:
 
     - setup-hashicorp-deployment-tool: |
         git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-        cp ../hashicorp-aws/hashicorp/machine-learning/images/aws-ml.base.pkr.hcl ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
+
+        cp ../hashicorp-aws/hashicorp/machine-learning/images/aws-ml.packer.pkr.hcl ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
+        cp ../hashicorp-aws/hashicorp/machine-learning/images/aws-ml.source.pkr.hcl ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
+
         cp ../hashicorp-aws/hashicorp/machine-learning/instances/aws-ml.base.tf ../hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker
     - load-packer-variable-file: echo "$AWS_ML_PKRVARS_HCL" > ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker/aws-ml.auto.pkrvars.hcl
     - load-terraform-variable-file: echo "$AWS_ML_TFVARS" > ../hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker/aws-ml.auto.tfvars
