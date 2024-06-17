@@ -108,6 +108,19 @@ route_53_zone_id        = "MBS8YLKZML18VV2E8M8OK"
 - `instance_type` is the chosen [AWS EC2 instance type] at runtime
 - `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
 - `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
+
+  :::info
+
+  The following [Kong ports][Kong gateway - various ports] need to be open by configuring the inbound rules of the
+  included security groups:
+
+  - 80
+  - 443
+  - 8444
+  - 8445
+
+  :::
+
 - `kong_api_gateway_domain` is the SSL-enabled domain that will serve [Kong manager UI]
 
   :::warning
