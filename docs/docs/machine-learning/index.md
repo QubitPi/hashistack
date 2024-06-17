@@ -90,6 +90,13 @@ ml_models_path = "/abs/path/to/mlflow_models/"
 - `instance_type` is the recommended [AWS EC2 instance type] running this image
 - `ml_models_path` is the directory we made ready [previously](#generating-machine-learning-models)
 
+  :::caution
+
+  [The path must not end with a `/`](https://packer.qubitpi.org/packer/docs/provisioners/file#directory-uploads). For
+  example, it's OK with `ml_models_path = "/home/ubuntu/mymodel"`, but `ml_models_path = "/home/ubuntu/mymodel/"` is not
+
+  :::
+
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-mlflow-docker.tfvars** under
