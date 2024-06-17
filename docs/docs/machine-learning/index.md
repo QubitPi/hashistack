@@ -27,16 +27,20 @@ MLflow
 
 ### Generating Machine Learning Models
 
-hashicorp-aws will deploy an instance
+hashicorp-aws deploys an instance
 [running Machine Learning Model NOT Managed by MLflow as REST API in Docker Container][MLflow - Running Machine Learning Model NOT Managed by MLflow as REST API in Docker Container]
-and [expose that API to public][MLflow - Serving the Model in Docker Container via REST API].
+and [exposes that API to public][MLflow - Serving the Model in Docker Container via REST API].
 
 Please follow
 [this dedicated guide][MLflow - Running Machine Learning Model NOT Managed by MLflow as REST API in Docker Container]
 to generate the Machine Learning model in a directory ready for use next. We will call this directory
 **/abs/path/to/mlflow_models/** from now on
 
-After model is generated, add a **PORT** file containing a port number only to
+After model is generated, add a **PORT** file containing a port number only. For eample,
+
+```text title="PORT"
+8080
+```
 
 :::info[After model is generated...]
 
@@ -92,7 +96,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-mlflow-docker.tf
 **[hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker]** directory with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker/aws-mlflow-docker.tfvars"
-aws_ec2_region = "my-aws-region"
+aws_ec2_region    = "my-aws-region"
 ami_name          = "my-mlflow-models"
 instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
 ec2_instance_name = "My MLflow models"
