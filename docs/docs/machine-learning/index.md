@@ -36,10 +36,12 @@ Please follow
 to generate the Machine Learning model in a directory ready for use next. We will call this directory
 **/abs/path/to/mlflow_models/** from now on
 
+After model is generated, add a **PORT** file containing a port number only to
+
 :::info[After model is generated...]
 
 - If the container runs multiple models at different ports, please make sure to add a **PORT** file containing a port
-  number only in each sub-dir of `/abs/path/to/mlflow_models/` with one sub-dir holding one model
+  number only to each sub-dir of `/abs/path/to/mlflow_models/` with one sub-dir holding one model
 - If we need custom module imports in a model, add module.py and a `__init__.py` file to the sub-dir of that model under
   `/abs/path/to/mlflow_models/`
 
