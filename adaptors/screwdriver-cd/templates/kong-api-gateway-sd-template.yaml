@@ -64,7 +64,7 @@ config:
         echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
-        echo aws_ec2_region       = \"$(meta get parameters.aws-deploy-region.value)\"       >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
+        echo aws_ec2_region          = \"$(meta get parameters.aws-deploy-region.value)\"       >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
         echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
         echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
         echo instance_name           = \"$(meta get parameters.instance-name.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
