@@ -36,6 +36,11 @@ build {
   ]
 
   # Load ML Model
+  provisioner "shell" {
+    inline = [
+      "mkdir -p ${var.image_home_dir}/ml-models",
+    ]
+  }
   provisioner "file" {
     source      = "${var.ml_models_path}"
     destination = "${var.image_home_dir}/ml-models"
@@ -44,6 +49,9 @@ build {
   provisioner "shell" {
     scripts = [
       "../../scripts/mlflow-docker/aws-ml-pkr-setup.sh"
+    ]
+    environment_vars = [
+      "HOME_DIR=${var.image_home_dir}"
     ]
   }
 }

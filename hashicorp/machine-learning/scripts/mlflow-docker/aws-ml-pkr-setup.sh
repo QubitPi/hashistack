@@ -23,7 +23,7 @@ sudo apt upgrade -y
 sudo apt-get -y install python3-pip
 pip3 install --upgrade pip
 sudo apt -y install python3.10-venv
-PATH=$PATH:/home/ubuntu/.local/bin
+PATH=$PATH:${HOME_DIR}/.local/bin
 
 python3 --version
 
