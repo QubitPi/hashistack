@@ -16,6 +16,8 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+alias python=python3.8
+
 touch /home/ubuntu/aws-mlflow-docker-tf-init.log
 export TF_INIT_LOG=/home/ubuntu/aws-mlflow-docker-tf-init.log
 echo "aws-base-tf-init started executing..."       >>$TF_INIT_LOG 2>&1
