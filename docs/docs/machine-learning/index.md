@@ -34,7 +34,25 @@ and [exposes that API to public][MLflow - Serving the Model in Docker Container 
 Please follow
 [this dedicated guide][MLflow - Running Machine Learning Model NOT Managed by MLflow as REST API in Docker Container]
 to generate the Machine Learning model in a directory ready for use next. We will call this directory
-**/abs/path/to/mlflow_models/** from now on
+__/abs/path/to/mlflow_models/__ from now on
+
+:::tip[Support custom module import]
+
+Suppose our ML model depends on a custom module called `my_module`:
+
+```python
+from my_module import my_function
+
+class MyModel(mlflow.pyfunc.PythonModel):
+    ...
+```
+
+How do we make `my_module` available at runtime? It's very easy. Simply put the custom module under
+`/abs/path/to/mlflow_models/` and import that module as is. hashicorp-aws will bind `/abs/path/to/mlflow_models/`
+to [`PYTHONPATH`] at runtime so that `my_module` will be available as long as both `MyModel` and `my_module` are under
+`/abs/path/to/mlflow_models/` directory.
+
+:::
 
 After model is generated, add a **PORT** file containing a port number only. For eample,
 
@@ -203,5 +221,7 @@ stand up the API in a minute.
 [Machine Learning model release definition template]: https://github.com/QubitPi/machine-learning-model-release-definition-templates
 [MLflow - Running Machine Learning Model NOT Managed by MLflow as REST API in Docker Container]: https://qubitpi.github.io/mlflow/getting-started/quickstart-2/index.html#running-machine-learning-model-not-managed-by-mlflow-as-rest-api-in-docker-container
 [MLflow - Serving the Model in Docker Container via REST API]: https://qubitpi.github.io/mlflow/getting-started/quickstart-2/index.html#serving-the-model-in-docker-container-via-rest-api
+
+[`PYTHONPATH`]: https://qubitpi.github.io/cpython/using/cmdline.html#envvar-PYTHONPATH
 
 [Screwdriver CD]: https://qubitpi.github.io/screwdriver-cd-homepage/

@@ -28,6 +28,7 @@ for ML_MODEL_PATH in /home/ubuntu/ml-models/*; do
     --memory=4000m \
     -p $PUBLIC_PORT:8080 \
     -v $ML_MODEL_PATH:/opt/ml/model \
+    -e PYTHONPATH="/opt/ml/model:$PYTHONPATH" \
     -e GUNICORN_CMD_ARGS="--timeout 600 -k gevent --workers=1" \
     "mlflow-model-container"                                                         >>$TF_INIT_LOG 2>&1
 
