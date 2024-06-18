@@ -47,7 +47,11 @@ sudo usermod -aG docker $USER
 sudo chmod o+rw /var/run/docker.sock # https://stackoverflow.com/a/76329637
 
 # Build ML model Docker image
-pip install mlflow
-pip install mlflow-skinny
+pip install mlflow==2.9.2 # The latest version doesn't work
+pip install mlflow-skinny==2.9.2
 pip install mlflow[extras]
+
+# https://www.reddit.com/r/docker/comments/1cwx3pg/comment/l4zh2pm/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+pip install requests==2.31.0
+
 mlflow models build-docker --name "mlflow-model-container"
