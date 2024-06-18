@@ -106,6 +106,6 @@ resource "aws_route53_record" "aws-kong" {
   name            = var.kong_api_gateway_domain
   type            = "A"
   ttl             = 300
-  records         = [aws_instance.aws-kong.private_ip]
+  records         = [aws_instance.aws-kong.public_ip]
   allow_overwrite = true
 }
