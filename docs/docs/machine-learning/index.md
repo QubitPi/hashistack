@@ -148,6 +148,31 @@ terraform validate
 terraform apply -auto-approve
 ```
 
+Troubleshooting
+---------------
+
+### Model REST Container Fails to Start
+
+```console
+WARNING mlflow.utils.virtualenv: Encountered unexpected error while creating /root/.mlflow/envs/mlflow-8aab4f34fgrg33aa5987gyub0037333d3e4a818bc5e
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/local/lib/python3.8/dist-packages/mlflow/models/container/__init__.py", line 92, in _install_pyfunc_deps
+    activate_cmd = _install_model_dependencies_to_env(model_path, env_manager) if model_path else []
+  File "/usr/local/lib/python3.8/dist-packages/mlflow/models/container/__init__.py", line 167, in _install_model_dependencies_to_env
+    env_activate_cmd = _get_or_create_virtualenv(model_path)
+  File "/usr/local/lib/python3.8/dist-packages/mlflow/utils/virtualenv.py", line 379, in _get_or_create_virtualenv
+    activate_cmd = _create_virtualenv(
+  File "/usr/local/lib/python3.8/dist-packages/mlflow/utils/virtualenv.py", line 289, in _create_virtualenv
+    _exec_cmd(cmd, capture_output=capture_output, cwd=tmpdir, extra_env=extra_env)
+  File "/usr/local/lib/python3.8/dist-packages/mlflow/utils/process.py", line 120, in _exec_cmd
+    raise ShellCommandException.from_completed_process(comp_process)
+mlflow.utils.process.ShellCommandException: Non-zero exit code: -9
+Command: ['bash', '-c', 'source /root/.mlflow/envs/mlflow-8aab4f34fgrg33aa5987gyub0037333d3e4a818bc5e/bin/activate && python -m pip install --quiet -r requirements.afergr030a0aedfe32e4a0a6f2e57.txt']
+```
+
+__The container requires at least 4 GB of memory. Please make sure the EC2 instance has enough memory__
+
 Deployment via Screwdriver CD
 -----------------------------
 

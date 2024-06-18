@@ -18,16 +18,16 @@ set -e
 
 touch /home/ubuntu/aws-mlflow-docker-tf-init.log
 export TF_INIT_LOG=/home/ubuntu/aws-mlflow-docker-tf-init.log
-echo "aws-base-tf-init started executing..."       >>$TF_INIT_LOG 2>&1
+echo "aws-base-tf-init started executing..."                                         >>$TF_INIT_LOG 2>&1
 
 for ML_MODEL_PATH in /home/ubuntu/ml-models/*; do
   PUBLIC_PORT=$( cat $ML_MODEL_PATH/PORT )                                           >>$TF_INIT_LOG 2>&1
   echo "Running container serving model under $ML_MODEL_PATH with port $PUBLIC_PORT" >>$TF_INIT_LOG 2>&1
+  echo "PYTHONPATH=${PYTHONPATH}"                                                    >>$TF_INIT_LOG 2>&1
 
   sudo docker run --detach --rm \
     --memory=4000m \
     -p $PUBLIC_PORT:8080 \
-    -e PYTHONPATH="/opt/ml/model:$PYTHONPATH" \
     -v $ML_MODEL_PATH:/opt/ml/model \
     -e GUNICORN_CMD_ARGS="--timeout 600 -k gevent --workers=1" \
     "mlflow-model-container"                                                         >>$TF_INIT_LOG 2>&1
