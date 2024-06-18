@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hashicorp-aws.com/blog</id>
     <title>hashicorp-aws Blog</title>
-    <updated>2024-06-18T02:53:21.000Z</updated>
+    <updated>2024-06-18T03:33:37.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hashicorp-aws.com/blog"/>
     <subtitle>hashicorp-aws Blog</subtitle>
@@ -11,7 +11,7 @@
         <title type="html"><![CDATA[Testing HashiCorp Terraform]]></title>
         <id>https://hashicorp-aws.com/blog/testing-hashicorp-terraform</id>
         <link href="https://hashicorp-aws.com/blog/testing-hashicorp-terraform"/>
-        <updated>2024-06-18T02:53:21.000Z</updated>
+        <updated>2024-06-18T03:33:37.000Z</updated>
         <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
         <content type="html"><![CDATA[<p>How do we know if we can run <code>terraform apply</code> to our infrastructure without negatively affecting critical business
 applications? We can run <code>terraform validate</code> and <code>terraform plan</code> to check our configuration, but will that be enough?
