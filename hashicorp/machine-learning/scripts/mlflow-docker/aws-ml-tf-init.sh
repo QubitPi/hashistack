@@ -23,7 +23,6 @@ echo "aws-base-tf-init started executing..."                                    
 for ML_MODEL_PATH in /home/ubuntu/ml-models/*; do
   PUBLIC_PORT=$( cat $ML_MODEL_PATH/PORT )                                           >>$TF_INIT_LOG 2>&1
   echo "Running container serving model under $ML_MODEL_PATH with port $PUBLIC_PORT" >>$TF_INIT_LOG 2>&1
-  echo "PYTHONPATH=${PYTHONPATH}"                                                    >>$TF_INIT_LOG 2>&1
 
   sudo docker run --detach --rm \
     --memory=4000m \
