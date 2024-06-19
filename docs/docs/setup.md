@@ -191,6 +191,21 @@ afterwards
 
 :::
 
+:::tip[DNSKEY Missing]
+
+If the `sudo certbot --nginx` results in the following error
+
+```console
+Certbot failed to authenticate some domains (authenticator: nginx). The Certificate Authority reported these problems:
+Domain: mydomain.com
+Type:   dns
+Detail: DNS problem: looking up A for mydomain.com: DNSSEC: DNSKEY Missing; DNS problem: looking up AAAA for gateway.theresa-api.com: DNSSEC: DNSKEY Missing
+```
+
+Simply delete the DNSSEC record on the DNS provider side (given one has access)
+
+:::
+
 #### Configuring Reverse Proxy on Nginx
 
 After certificates have been deployed and Nginx has been configured properly for SSL by Certbot, it's time to configure
@@ -288,6 +303,24 @@ sudo nginx -t
 sudo nginx -s reload
 ```
 
+:::tip[Nginx Invalid PID number]
+
+If `sudo nginx -s reload` gives the following error
+
+```console
+$ sudo nginx -s reload
+nginx: [error] invalid PID number "" in "/run/nginx.pid"
+```
+
+[This means we don't have a running Nginx process to send a signal to](https://stackoverflow.com/a/7647458). Just start
+the Nginx after `sudo nginx -t` with
+
+```console
+sudo service nginx start
+```
+
+:::
+
 The `nginx -t` performs config file validation and, if successful, shall print something similar to
 
 ```console
@@ -295,7 +328,7 @@ nginx: the configuration file ... syntax is ok
 nginx: configuration file ... test is successful
 ```
 
-If config update doesn't seem to take errect while we were still seeing the `ok` message above, try restarting the Nginx
+If config update doesn't seem to take effect while we were still seeing the `ok` message above, try restarting the Nginx
 with `sudo /etc/init.d/nginx restart` and double check Nginx log:
 
 ```console
