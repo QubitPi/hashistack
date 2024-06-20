@@ -49,12 +49,12 @@ config:
       description: |
         The base/apex domain of the MX record. For example, if base domain is 'mycompany.com', the generated MX record
         will be 'mail.mycompany.com'
-    ssl-cert-base-64:
+    ssl-cert-base64:
       value: "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
       description: |
         A base64 encoded string of the content of SSL certificate file for the MX record domain, i.e.
         'mail.mycompany.com' given the base-domain is 'mycompany.com'
-    ssl-cert-key-base-64:
+    ssl-cert-key-base64:
       value: "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
       description: |
         A base64 encoded string of the content of SSL certificate key file for the MX record domain, i.e.
@@ -83,8 +83,8 @@ config:
         echo ami_region          = \"$(meta get parameters.ami-region.value)\"           >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
         echo ami_name            = \"$(meta get parameters.ami-name.value)\"             >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
         echo base_domain         = \"$(meta get parameters.base-domain.value)\"          >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_base64     = \"$(meta get parameters.ssl-cert-base-64.value)\"     >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_base64 = \"$(meta get parameters.ssl-cert-key-base-64.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_base64     = \"$(meta get parameters.ssl-cert-base64.value)\"     >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_base64 = \"$(meta get parameters.ssl-cert-key-base64.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
         echo aws_ec2_region       = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars

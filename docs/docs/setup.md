@@ -64,9 +64,20 @@ That being said, hashicorp-aws deploys application completely without SSL and sp
 the HTTPS redirections to aplication's HTTP ports. Therefore, if the deployed application is publicly-facing and
 requires HTTPS support, then the following files need to be ready:
 
-- **A SSL certificate file**
-- **A SSL certificate key file**
-- **A Nginx config file serving as the reverse proxy for SSL/HTTPS**
+- __A SSL certificate file__
+- __A SSL certificate key file__
+- __A Nginx config file serving as the reverse proxy for SSL/HTTPS__
+
+The contents of both SSL certificate file and SSL certificate key file need to be __base64 encoded__ with the following
+commands
+
+```console
+openssl enc -base64 -in cert.pem -out cert.base64
+openssl enc -base64 -in key.pem -out key.base64
+```
+
+where `cert.pem` and `key.pem` are the SSL certificate file and SSL certificate key file, respectively. Please keep
+`cert.base64` and `key.base64` files which will be referenced and used later
 
 :::tip
 
