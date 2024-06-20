@@ -20,7 +20,7 @@ maintainer: jack20220723@gmail.com
 config:
   image: buildpack-deps:22.04-scm
   steps:
-    - install-python: sd-cmd exec QubitPi/install-python@latest
+    - install-python: sd-cmd exec QubitPi/install-python-310@latest
     - build-ml-models: echo "This step must be implemented by pipeline. Please see README doc for more info" && exit 1
 
     - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest

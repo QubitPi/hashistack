@@ -1,9 +1,9 @@
 namespace: QubitPi
-name: install-python
+name: install-python-310
 version: '1.0.0'
 description: Install Python 3.10
 usage: |
-  sd-cmd exec QubitPi/install-python@latest
+  sd-cmd exec QubitPi/install-python-310@latest
 maintainer: jack20220723@gmail.com
 format: binary
 binary:

@@ -165,11 +165,11 @@ jobs:
     steps:
       - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-node/sd-command.yaml -t latest
 
-  validate-install-python:
+  validate-install-python-310:
     requires: [~pr, ~commit]
     steps:
-      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-python/sd-command.yaml
-  publish-install-python:
-    requires: [validate-install-python]
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-python-310/sd-command.yaml
+  publish-install-python-310:
+    requires: [validate-install-python-310]
     steps:
-      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-python/sd-command.yaml -t latest
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-python-310/sd-command.yaml -t latest
