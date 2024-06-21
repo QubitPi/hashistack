@@ -47,8 +47,18 @@ config:
     base-domain:
       value: "mycompany.com"
       description: |
-        The base domain name of the MX record. For example, if base domain is 'mycompany.com', the generated MX record
+        The base/apex domain of the MX record. For example, if base domain is 'mycompany.com', the generated MX record
         will be 'mail.mycompany.com'
+    ssl-cert-base-64:
+      value: "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
+      description: |
+        A base64 encoded string of the content of SSL certificate file for the MX record domain, i.e.
+        'mail.mycompany.com' given the base-domain is 'mycompany.com'
+    ssl-cert-key-base-64:
+      value: "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
+      description: |
+        A base64 encoded string of the content of SSL certificate key file for the MX record domain, i.e.
+        'mail.mycompany.com' given the base-domain is 'mycompany.com'
     route-53-zone-id:
       value: "9DQXLTNSN7ZX9P8V2KZII"
       description: 'The AWS Route 53 hosted Zone ID that hosts the domain defined by "mycompany.com"'
@@ -69,18 +79,15 @@ config:
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
     - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
 
-    - load-ssl-certificate-file: echo "$SSL_CERTIFICATE"         > ../hashicorp-aws/hashicorp/docker-mailserver/images/ssl.crt
-    - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../hashicorp-aws/hashicorp/docker-mailserver/images/ssl.key
-
     - load-packer-variable-file: |
-        echo ami_region              = \"$(meta get parameters.ami-region.value)\"  >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_source         = \"ssl.crt\"                                  >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_source     = \"ssl.key\"                                  >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo base_domain             = \"$(meta get parameters.base-domain.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ami_region          = \"$(meta get parameters.ami-region.value)\"           >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ami_name            = \"$(meta get parameters.ami-name.value)\"             >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo base_domain         = \"$(meta get parameters.base-domain.value)\"          >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_base64     = \"$(meta get parameters.ssl-cert-base-64.value)\"     >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_base64 = \"$(meta get parameters.ssl-cert-key-base-64.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
-        echo aws_ec2_region    = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo aws_ec2_region       = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
         echo ami_name             = \"$(meta get parameters.ami-name.value)\"             >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
         echo instance_name        = \"$(meta get parameters.instance-name.value)\"        >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
         echo key_pair_name        = \"$(meta get parameters.key-pair-name.value)\"        >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
@@ -98,7 +105,5 @@ config:
     - terraform-validate: terraform validate
     - terraform-apply: terraform apply -auto-approve
   secrets:
-    - SSL_CERTIFICATE
-    - SSL_CERTIFICATE_KEY
     - AWS_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY

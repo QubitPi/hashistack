@@ -37,19 +37,21 @@ Create a [HashiCorp Packer variable values file] named **aws-docker-mailserver.p
 ```hcl title="hashicorp-aws/hashicorp/docker-mailserver/images/aws-docker-mailserver.auto.pkrvars.hcl"
 ami_region          = "us-east-1"
 ami_name            = "my-docker-mailserver-ami"
-ssl_cert_source     = "/path/to/ssl.crt"
-ssl_cert_key_source = "/path/to/ssl.key"
 base_domain         = "mycompany.com"
+ssl_cert_base64     = "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
+ssl_cert_key_base64 = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
 ```
 
 - `ami_region` is the [region][AWS regions] where docker-mailserver [AMI][AWS AMI] will be published to. The published
   image will be _private_
 - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
-- `ssl_cert_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/docker-mailserver/images] of
-  the [SSL certificate file](../setup#optional-setup-ssl) for the domain serving the docker-mailserver EC2 instance
-- `ssl_cert_key_source` is the absolute path or the path relative to
-  [hashicorp-aws/hashicorp/docker-mailserver/images] of the [SSL certificate key file](../setup#optional-setup-ssl) for
-  the domain serving the docker-mailserver EC2 instance
+- `base_domain` is the base domain name of the MX record. For example, if base domain is 'mycompany.com', the generated
+  MX record will be 'mail.mycompany.com'
+- `ssl_cert_base64` is a __base64 encoded__ string of the content of [SSL certificate file](../setup#optional-setup-ssl)
+  for the MX record domain, i.e. 'mail.mycompany.com' given the `base_domain` is 'mycompany.com'
+- `ssl_cert_key_base64` is a __base64 encoded__ string of the content of
+  [SSL certificate key file](../setup#optional-setup-ssl) for the MX record domain, i.e. 'mail.mycompany.com' given the
+  `base_domain` is 'mycompany.com'
 
   :::info
 
@@ -57,9 +59,6 @@ base_domain         = "mycompany.com"
   [Bring Your Own Certificates][docker-mailserver SSL setup - Let's Encrypt] (certbot) option
 
   :::
-
-- `base_domain` is the base domain name of the MX record. For example, if base domain is 'mycompany.com', the generated
-  MX record will be 'mail.mycompany.com'
 
 - (Optional) `instance_type`: is the [AWS EC2 instance type] building this image. hashicorp-aws uses "t2.micro" as
   default value if this value is unspecified
