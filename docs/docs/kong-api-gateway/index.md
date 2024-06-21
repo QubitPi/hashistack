@@ -71,21 +71,23 @@ Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.h
 ami_region              = "us-east-1"
 ami_name                = "my-kong-ami"
 instance_type           = "t2.small"
-ssl_cert_source         = "/path/to/ssl.crt"
-ssl_cert_key_source     = "/path/to/ssl.key"
 kong_api_gateway_domain = "gateway.mycompany.com"
+ssl_cert_base64         = "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
+ssl_cert_key_base64     = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
 ```
 
 - `ami_region` is the [image region][AWS regions] where Kong API Gateway [AMI][AWS AMI] will be published to. The
   published image will be _private_
 - `ami_name` is the published AMI name; it can be arbitrary
 - `instance_type` is the [AWS EC2 instance type] running this image
-- `ssl_cert_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong-api-gateway/images] of
-  the [SSL certificate file](../setup#optional-setup-ssl) for the Kong API Gateway domain
-- `ssl_cert_key_source` is the absolute path or the path relative to [hashicorp-aws/hashicorp/kong-api-gateway/images] of the
-  [SSL certificate key file](../setup#optional-setup-ssl) for the Kong API Gateway domain
 - `kong_api_gateway_domain` is the SSL-enabled domain that will serve the
   [various ports of Kong gateway][Kong gateway - various ports]
+- `ssl_cert_base64` is a __base64 encoded__ string of the content of
+  [SSL certificate file](../setup#optional-setup-ssl) for the SSL-enabled domain, i.e. 'mygateway.mycompany.com' given
+  the `kong_api_gateway_domain` is 'mygateway.mycompany.com'
+- `ssl_cert_key_base64` is a __base64 encoded__ string of the content of
+  [SSL certificate file](../setup#optional-setup-ssl) for the SSL-enabled domain, i.e. 'mygateway.mycompany.com' given
+  the kong-api-gateway-domain is 'mygateway.mycompany.com'
 
 ### Defining Terraform Variables
 

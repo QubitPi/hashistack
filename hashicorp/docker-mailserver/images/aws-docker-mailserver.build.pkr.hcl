@@ -24,12 +24,12 @@ variable "image_home_dir" {
   default   = "/home/ubuntu"
 }
 
-variable "ssl_cert_source" {
+variable "ssl_cert_base64" {
   type      = string
   sensitive = true
 }
 
-variable "ssl_cert_key_source" {
+variable "ssl_cert_key_base64" {
   type      = string
   sensitive = true
 }
@@ -49,7 +49,7 @@ build {
   provisioner "hashicorp-aws-docker-mailserver-provisioner" {
     homeDir          = "${var.image_home_dir}"
     baseDomain       = "${var.base_domain}"
-    sslCertSource    = "${var.ssl_cert_source}"
-    sslCertKeySource = "${var.ssl_cert_key_source}"
+    sslCertBase64    = "${var.ssl_cert_base64}"
+    sslCertKeyBase64 = "${var.ssl_cert_key_base64}"
   }
 }
