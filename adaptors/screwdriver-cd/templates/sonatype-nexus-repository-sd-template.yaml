@@ -25,8 +25,10 @@ config:
     install-packer,
     install-terraform,
     checkout-hashicorp-deployment-tool,
-    load-packer-variable-file,
-    load-terraform-variable-file,
+    load-packer-ami-variables,
+    load-sonatype-nexus-repository-ssl-configs,
+    load-terraform-ec2-variables,
+    load-terraform-ssl-variables,
     packer-init,
     packer-validate,
     packer-build,
@@ -35,13 +37,10 @@ config:
     terraform-apply
   ]
   steps:
-    - postload-packer-variable-file: |
+    - load-sonatype-nexus-repository-ssl-configs: |
         echo sonatype_nexus_repository_domain = \"$(meta get parameters.domain.value)\"              >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws.auto.pkrvars.hcl
         echo ssl_cert_base64                  = \"$(meta get parameters.ssl-cert-base64.value)\"     >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws.auto.pkrvars.hcl
         echo ssl_cert_key_base64              = \"$(meta get parameters.ssl-cert-key-base64.value)\" >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws.auto.pkrvars.hcl
-    - postload-terraform-variable-file: |
-        echo domain           = \"$(meta get parameters.domain.value)\"           >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
-        echo route_53_zone_id = \"$(meta get parameters.route-53-zone-id.value)\" >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
 
   environment:
     HASHICORP_AWS_INFRASTRUCTURE_DIR: ../hashicorp-aws/hashicorp/sonatype-nexus-repository

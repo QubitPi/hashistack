@@ -52,12 +52,12 @@ config:
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
     - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
 
-    - load-packer-variable-file: |
+    - load-packer-ami-variables: |
         echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws/aws.auto.pkrvars.hcl
         echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws/aws.auto.pkrvars.hcl
         echo instance_type           = \"$(meta get parameters.ami-build-instance-type.value)\" >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws/aws.auto.pkrvars.hcl
 
-    - load-terraform-variable-file: |
+    - load-terraform-ec2-variables: |
         echo aws_ec2_region          = \"$(meta get parameters.aws-deploy-region.value)\"       >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
         echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
         echo instance_type           = \"$(meta get parameters.aws-ec2-instance-type.value)\"   >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars

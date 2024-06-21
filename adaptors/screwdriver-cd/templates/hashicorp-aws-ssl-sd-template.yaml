@@ -26,8 +26,9 @@ config:
     install-packer,
     install-terraform,
     checkout-hashicorp-deployment-tool,
-    load-packer-variable-file,
-    load-terraform-variable-file,
+    load-packer-ami-variables,
+    load-terraform-ec2-variables,
+    load-terraform-ssl-variables,
     packer-init,
     packer-validate,
     packer-build,
@@ -52,3 +53,7 @@ config:
     route-53-zone-id:
       value: "9DQXLTNSN7ZX9P8V2KZII"
       description: 'The AWS Route 53 hosted Zone ID that hosts the domain of, for example, "app.mycompany.com"'
+  steps:
+    - load-terraform-ssl-variables: |
+        echo domain           = \"$(meta get parameters.domain.value)\"           >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
+        echo route_53_zone_id = \"$(meta get parameters.route-53-zone-id.value)\" >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
