@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: hashicorp-aws CI/CD
+name: CI/CD
 
 "on":
   pull_request:
@@ -62,63 +62,6 @@ jobs:
           if [[ "$NEW_TAG" != "1.2.4" ]]; then
               exit 1
           fi
-
-  docker-image:
-    name: Publish docker images for "AMI Build Test"
-    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        docker: [
-          {dockerfile-path: tests/machine-learning, image-name: hashicorp-aws-machine-learning-test},
-          {dockerfile-path: tests/react, image-name: hashicorp-aws-react-test},
-          {dockerfile-path: tests/kong-api-gateway, image-name: hashicorp-aws-kong-api-gateway-test},
-          {dockerfile-path: tests/webservice, image-name: hashicorp-aws-webservice-test},
-          {dockerfile-path: tests/elk, image-name: hashicorp-aws-elk-test},
-          {dockerfile-path: tests/docker-mailserver, image-name: hashicorp-aws-docker-mailserver-test}
-        ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: jack20191124
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Push image to DockerHub
-        uses: docker/build-push-action@v3
-        with:
-          context: ${{ matrix.docker.dockerfile-path }}
-          push: true
-          tags: jack20191124/${{ matrix.docker.image-name }}:latest
-
-  tests:
-    name: AMI Build Test
-    needs: docker-image
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        test-directory: [
-          tests/machine-learning/images,
-          #          tests/react/images,
-          tests/kong-api-gateway/images,
-          tests/webservice/images,
-          tests/elk/images,
-          tests/docker-mailserver/images
-        ]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Docker for AMI Tests
-        uses: docker-practice/actions-setup-docker@master
-      - run: |
-          cd ${{ matrix.test-directory }}
-          ./run-tests.sh
 
   list-screwdriver-templates:
     name: Listing Screwdriver Templates to Validate
@@ -244,7 +187,6 @@ jobs:
     name: Test Documentation Build & Deploy Documentation to GitHub Pages
     needs: [
       test-upversion,
-      tests,
       validate-screwdriver-templates,
       validate-screwdriver-commands,
       test-screwdriver-command-scripts

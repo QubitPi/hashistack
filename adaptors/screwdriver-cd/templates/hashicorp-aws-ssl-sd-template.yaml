@@ -1,0 +1,54 @@
+# Copyright Jiaqi Liu
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+namespace: QubitPi
+name: hashicorp-aws-ssl-release-definition-template
+version: '1.0.0'
+description: |
+  Screwdriver CD template for deploying an immutable SSL-protected service to AWS through HashiCorp.
+  The template installs all required packages for running HashiCorp commands, publishes a regular AMI, and deploys an
+  EC2 instance accessible by a SSL domain
+maintainer: jack20220723@gmail.com
+config:
+  template: QubitPi/hashicorp-aws-base-release-definition-template
+  order: [
+    install-packer,
+    install-terraform,
+    checkout-hashicorp-deployment-tool,
+    load-packer-variable-file,
+    load-terraform-variable-file,
+    packer-init,
+    packer-validate,
+    packer-build,
+    terraform-init,
+    terraform-validate,
+    terraform-apply
+  ]
+  parameters:
+    domain:
+      value: "app.mycompany.com"
+      description: "The SSL-enabled domain where the deployed infrastructure is accessible at"
+    ssl-cert-base64:
+      value: "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
+      description: |
+        A base64 encoded string of the content of SSL certificate file for the SSL-enabled domain, i.e.
+        'app.mycompany.com' given the domain is 'mygateway.mycompany.com'
+    ssl-cert-key-base64:
+      value: "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
+      description: |
+        A base64 encoded string of the content of SSL certificate key file for the SSL-enabled domain, i.e.
+        'app.mycompany.com' given the domain is 'mygateway.mycompany.com'
+    route-53-zone-id:
+      value: "9DQXLTNSN7ZX9P8V2KZII"
+      description: 'The AWS Route 53 hosted Zone ID that hosts the domain of, for example, "app.mycompany.com"'
