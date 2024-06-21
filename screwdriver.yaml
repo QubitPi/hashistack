@@ -15,6 +15,51 @@
 shared:
   image: node:18
 jobs:
+  validate-hashicorp-aws-base-sd-template:
+    requires: [~pr, ~commit]
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-base-sd-template.yaml
+  publish-hashicorp-aws-base-sd-template:
+    requires: validate-hashicorp-aws-base-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-base-sd-template.yaml
+
+  validate-hashicorp-aws-ssl-sd-template:
+    requires: publish-hashicorp-aws-base-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-ssl-sd-template.yaml
+  publish-hashicorp-aws-ssl-sd-template:
+    requires: validate-hashicorp-aws-ssl-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-ssl-sd-template.yaml
+
+  validate-sonatype-nexus-repository-sd-template:
+    requires: publish-hashicorp-aws-ssl-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - validate: template-validate
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/sonatype-nexus-repository-sd-template.yaml
+  publish-sonatype-nexus-repository-sd-template:
+    requires: validate-sonatype-nexus-repository-sd-template
+    steps:
+      - install: npm install -g screwdriver-template-main
+      - publish: template-publish --tag latest
+    environment:
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/sonatype-nexus-repository-sd-template.yaml
+
   validate-react-app-template:
     requires: [~pr, ~commit]
     steps:
