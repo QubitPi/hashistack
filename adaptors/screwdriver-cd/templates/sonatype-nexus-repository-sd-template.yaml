@@ -38,9 +38,9 @@ config:
   ]
   steps:
     - load-sonatype-nexus-repository-ssl-configs: |
-        echo sonatype_nexus_repository_domain = \"$(meta get parameters.domain.value)\"              >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_base64                  = \"$(meta get parameters.ssl-cert-base64.value)\"     >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_base64              = \"$(meta get parameters.ssl-cert-key-base64.value)\" >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws.auto.pkrvars.hcl
+        echo sonatype_nexus_repository_domain = \"$(meta get parameters.domain.value)\"              >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/images/aws/aws.auto.pkrvars.hcl
+        echo ssl_cert_base64                  = \"$(meta get parameters.ssl-cert-base64.value)\"     >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/images/aws/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_base64              = \"$(meta get parameters.ssl-cert-key-base64.value)\" >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/images/aws/aws.auto.pkrvars.hcl
 
   environment:
-    HASHICORP_AWS_INFRASTRUCTURE_DIR: ../hashicorp-aws/hashicorp/sonatype-nexus-repository
+    HASHICORP_INFRASTRUCTURE_CONFIG_DIR: ../hashicorp-aws/hashicorp/sonatype-nexus-repository
