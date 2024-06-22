@@ -1,0 +1,8 @@
+{
+  "label": "Adaptors",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "Integrating hashicorp-aws into other CI/CD systems"
+  }
+}

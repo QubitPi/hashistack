@@ -4,20 +4,6 @@ title: Deployment via Screwdriver CD
 description: Deploying React App via Screwdriver CD Template
 ---
 
-[//]: # (Copyright Jiaqi Liu)
-
-[//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
-[//]: # (you may not use this file except in compliance with the License.)
-[//]: # (You may obtain a copy of the License at)
-
-[//]: # (    http://www.apache.org/licenses/LICENSE-2.0)
-
-[//]: # (Unless required by applicable law or agreed to in writing, software)
-[//]: # (distributed under the License is distributed on an "AS IS" BASIS,)
-[//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
-[//]: # (See the License for the specific language governing permissions and)
-[//]: # (limitations under the License.)
-
 React App Release Definition Template
 =====================================
 
@@ -59,7 +45,7 @@ validate and publish the template is located at the root of hashicorp-aws projec
 
 :::
 
-[Create a Screwdriver pipeline that uses this template](https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#using-a-template).
+[Create a Screwdriver pipeline that uses this template](https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#using-a-template).
 Here is an example:
 
 ```yaml
@@ -101,7 +87,9 @@ The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined 
   ```
 
     - `aws_image_region` is the [image region][AWS regions] of [AWS AMI]
-    - `ami_name` is the published AMI name; it can be arbitrary
+    - `ami_name` is the name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs. This
+  can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
+  with the current built one
     - `instance_type` is the recommended [AWS EC2 instance type] running this image
     - Please keep the values of `react_dist_path`, `aws_react_ssl_cert_file_path`, `aws_react_ssl_cert_key_file_path`, and
       `aws_react_nginx_config_file_path` as they are. They are used by [template](../hashicorp-aws/adaptors/screwdriver-cd/templates/sd-template.yaml) so that SSL
@@ -121,7 +109,7 @@ The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined 
 
     - `aws_ec2_region` is the [EC2 runtime region][AWS regions]
     - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in AWS_REACT_PKRVARS_HCL**
-    - `instance_type` is the chosen [AWS EC2 instance type] at runtime
+    - `instance_type` is the [AWS EC2 instance type] used for deployed infrastructure
     - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
     - `ec2_security_groups` is the [AWS Security Group] _name_ (yes, not ID, but name...)
     - `react_domain` is the SSL-enabled domain that will serve the React App
@@ -140,19 +128,19 @@ The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined 
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
-[HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
-[HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+[HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [Immutable Infrastructure]: https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure
 
-[publishing a template in Screwdriver]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#publishing-a-template
+[publishing a template in Screwdriver]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#publishing-a-template
 
 [screwdriver.yaml]: https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml
 [Screwdriver CD - commands]: https://github.com/QubitPi/screwdriver-cd-commands
 [Screwdriver CD - creating a pipeline]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/quickstart#create-a-new-pipeline
-[Screwdriver CD - creating pipeline from template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#using-a-template
-[Screwdriver CD - finding templates]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates#finding-templates
-[Screwdriver CD - finding commands]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/commands#finding-commands
-[Screwdriver CD Secrets]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/configuration/secrets
-[Screwdriver CD template]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/templates/job-templates
+[Screwdriver CD - creating pipeline from template]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#using-a-template
+[Screwdriver CD - finding templates]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#finding-templates
+[Screwdriver CD - finding commands]: https://screwdriver-docs.qubitpi.org/user-guide/commands#finding-commands
+[Screwdriver CD Secrets]: https://screwdriver-docs.qubitpi.org/user-guide/configuration/secrets
+[Screwdriver CD template]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates
 [screwdriver-template-main npm package]: https://github.com/QubitPi/screwdriver-cd-template-main

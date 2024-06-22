@@ -5,20 +5,6 @@ authors: [jiaqi]
 tags: [Object Storage]
 ---
 
-[//]: # (Copyright Jiaqi Liu)
-
-[//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
-[//]: # (you may not use this file except in compliance with the License.)
-[//]: # (You may obtain a copy of the License at)
-
-[//]: # (    http://www.apache.org/licenses/LICENSE-2.0)
-
-[//]: # (Unless required by applicable law or agreed to in writing, software)
-[//]: # (distributed under the License is distributed on an "AS IS" BASIS,)
-[//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
-[//]: # (See the License for the specific language governing permissions and)
-[//]: # (limitations under the License.)
-
 Yahoo stores more than 250 Billion objects and half an exabyte of perpetually durable user content such as photos,
 videos, email, and blog posts. Object storage at Yahoo is growing at 20-25% annually. The growth is primarily driven by
 mobile, images, video, and user growth. Yahoo is betting on software defined storage to scale storage cost effectively
