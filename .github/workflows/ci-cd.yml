@@ -34,6 +34,19 @@ jobs:
   yml-md-style-and-link-checks:
     uses: ./.github/workflows/yml-md-style-and-link-checks.yml
 
+  test-upversion:
+    name: Test upversion.py
+    needs: [yml-md-style-and-link-checks]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "LAST_TAG=1.2.3" >> $GITHUB_ENV
+      - run: |
+          NEW_TAG=$(LAST_TAG=${LAST_TAG} python .github/version-bump/upversion.py)
+          if [[ "$NEW_TAG" != "1.2.4" ]]; then
+              exit 1
+          fi
+
   packer-file-linting:
     name: Packer Files Linting
     runs-on: ubuntu-latest
@@ -50,22 +63,40 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
       - run: terraform fmt -check -recursive
 
-  test-upversion:
-    name: Test upversion.py
-    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
+  packer-validate:
+    name: Validate the Syntax and Configuration of Templates
+    needs: [yml-md-style-and-link-checks, packer-file-linting]
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        infrastructure: [
+          {
+            name: Sonatype Nexus Repository,
+            packer-conf-dir: hashicorp/sonatype-nexus-repository/images/aws,
+            packer-var-file: .github/hashicorp/sonatype-nexus-repository.auto.pkrvars.hcl
+          }
+        ]
     steps:
-      - uses: actions/checkout@v4
-      - run: echo "LAST_TAG=1.2.3" >> $GITHUB_ENV
-      - run: |
-          NEW_TAG=$(LAST_TAG=${LAST_TAG} python .github/version-bump/upversion.py)
-          if [[ "$NEW_TAG" != "1.2.4" ]]; then
-              exit 1
-          fi
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Packer
+        uses: hashicorp/setup-packer@v3
+      - name: Setup Packer configuration templates
+        run: |
+          cp hashicorp/common/images/aws/aws-builder.pkr.hcl ${{ matrix.infrastructure.packer-conf-dir }}
+          cp hashicorp/common/images/aws/aws-packer.pkr.hcl ${{ matrix.infrastructure.packer-conf-dir }}
+      - name: Load Packer variables
+        run: cp ${{ matrix.infrastructure.packer-var-file }} ${{ matrix.infrastructure.packer-conf-dir }}
+      - name: Validate
+        run: |
+          cd ${{ matrix.infrastructure.packer-conf-dir }}
+          packer init .
+          packer validate .
 
   list-screwdriver-templates:
     name: Listing Screwdriver Templates to Validate
-    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
+    needs: packer-validate
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-templates.outputs.paths }}
@@ -113,7 +144,7 @@ jobs:
 
   list-screwdriver-command-scripts:
     name: Listing Screwdriver Command Scripts to Test
-    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
+    needs: packer-validate
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-command-scripts.outputs.paths }}
@@ -144,7 +175,7 @@ jobs:
 
   list-screwdriver-commands:
     name: Listing Screwdriver Commands to Validate
-    needs: [yml-md-style-and-link-checks, packer-file-linting, terraform-file-linting]
+    needs: packer-validate
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-commands.outputs.paths }}

@@ -41,6 +41,5 @@ config:
         echo sonatype_nexus_repository_domain = \"$(meta get parameters.domain.value)\"              >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
         echo ssl_cert_base64                  = \"$(meta get parameters.ssl-cert-base64.value)\"     >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
         echo ssl_cert_key_base64              = \"$(meta get parameters.ssl-cert-key-base64.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
-
   environment:
     INFRASTRUCTURE: sonatype-nexus-repository
