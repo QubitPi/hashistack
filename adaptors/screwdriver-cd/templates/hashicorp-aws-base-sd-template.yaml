@@ -52,23 +52,23 @@ config:
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
     - setup-hashicorp-deployment-tool: |
         git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-        cp ../hashicorp-aws/hashicorp/common/images/aws/* $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws
-        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-ec2.tf $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances
-        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-terraform.tf $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances
+        cp ../hashicorp-aws/hashicorp/common/images/aws/* $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/images/aws
+        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-ec2.tf $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/instances/aws
+        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-terraform.tf $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/instances/aws
 
     - load-packer-ami-variables: |
-        echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws/aws.auto.pkrvars.hcl
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws/aws.auto.pkrvars.hcl
-        echo instance_type           = \"$(meta get parameters.ami-build-instance-type.value)\" >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws/aws.auto.pkrvars.hcl
+        echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/images/aws/aws.auto.pkrvars.hcl
+        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/images/aws/aws.auto.pkrvars.hcl
+        echo instance_type           = \"$(meta get parameters.ami-build-instance-type.value)\" >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/images/aws/aws.auto.pkrvars.hcl
 
     - load-terraform-ec2-variables: |
-        echo aws_ec2_region          = \"$(meta get parameters.aws-deploy-region.value)\"       >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
-        echo instance_type           = \"$(meta get parameters.aws-ec2-instance-type.value)\"   >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
-        echo instance_name           = \"$(meta get parameters.instance-name.value)\"           >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
-        echo security_groups         = $(meta get parameters.security-groups.value)             >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
+        echo aws_ec2_region          = \"$(meta get parameters.aws-deploy-region.value)\"       >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/instances/aws/aws.auto.tfvars
+        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/instances/aws/aws.auto.tfvars
+        echo instance_type           = \"$(meta get parameters.aws-ec2-instance-type.value)\"   >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/instances/aws/aws.auto.tfvars
+        echo instance_name           = \"$(meta get parameters.instance-name.value)\"           >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/instances/aws/aws.auto.tfvars
+        echo security_groups         = $(meta get parameters.security-groups.value)             >> $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/instances/aws/aws.auto.tfvars
 
-    - packer-init: cd $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws && packer init .
+    - packer-init: cd $HASHICORP_INFRASTRUCTURE_CONFIG_DIR/images/aws && packer init .
     - packer-validate: packer validate .
     - packer-build: packer build .
 
@@ -76,7 +76,7 @@ config:
     - terraform-validate: terraform validate
     - terraform-apply: terraform apply -auto-approve
   environment:
-    HASHICORP_AWS_INFRASTRUCTURE_DIR: ../hashicorp-aws/hashicorp/common
+    HASHICORP_INFRASTRUCTURE_CONFIG_DIR: ../hashicorp-aws/hashicorp/common
   secrets:
     - AWS_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY
