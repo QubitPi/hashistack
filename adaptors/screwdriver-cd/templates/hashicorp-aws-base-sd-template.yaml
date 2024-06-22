@@ -50,7 +50,11 @@ config:
   steps:
     - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
-    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+    - setup-hashicorp-deployment-tool: |
+        git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+        cp ../hashicorp-aws/hashicorp/common/images/aws/* $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws
+        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-ec2.tf $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances
+        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-terraform.tf $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances
 
     - load-packer-ami-variables: |
         echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws/aws.auto.pkrvars.hcl

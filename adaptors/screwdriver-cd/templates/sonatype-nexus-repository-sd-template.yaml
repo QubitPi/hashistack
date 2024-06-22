@@ -24,7 +24,7 @@ config:
   order: [
     install-packer,
     install-terraform,
-    checkout-hashicorp-deployment-tool,
+    setup-hashicorp-deployment-tool,
     load-packer-ami-variables,
     load-sonatype-nexus-repository-ssl-configs,
     load-terraform-ec2-variables,

@@ -25,7 +25,7 @@ config:
   order: [
     install-packer,
     install-terraform,
-    checkout-hashicorp-deployment-tool,
+    setup-hashicorp-deployment-tool,
     load-packer-ami-variables,
     load-terraform-ec2-variables,
     load-terraform-ssl-variables,
@@ -54,6 +54,12 @@ config:
       value: "9DQXLTNSN7ZX9P8V2KZII"
       description: 'The AWS Route 53 hosted Zone ID that hosts the domain of, for example, "app.mycompany.com"'
   steps:
+    - setup-hashicorp-deployment-tool: |
+        git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+        cp ../hashicorp-aws/hashicorp/common/images/aws/* $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws
+        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-ec2.tf $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances
+        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-terraform.tf $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances
+        cp ../hashicorp-aws/hashicorp/common/instances/aws/ssl-terraform.tf $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances
     - load-terraform-ssl-variables: |
         echo domain           = \"$(meta get parameters.domain.value)\"           >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
         echo route_53_zone_id = \"$(meta get parameters.route-53-zone-id.value)\" >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
