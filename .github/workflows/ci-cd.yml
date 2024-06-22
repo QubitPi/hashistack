@@ -94,9 +94,41 @@ jobs:
           packer init .
           packer validate .
 
+  terraform-validate:
+    name: Validate the Terraform Configuration Files
+    needs: [yml-md-style-and-link-checks, terraform-file-linting]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        infrastructure: [
+          {
+            name: Sonatype Nexus Repository,
+            terraform-conf-dir: hashicorp/sonatype-nexus-repository/instances/aws,
+            ssl-enabled: true
+          }
+        ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Setup Terraform configuration templates
+        run: |
+          cp hashicorp/common/instances/aws/aws-ec2.tf ${{ matrix.infrastructure.terraform-conf-dir }}
+          cp hashicorp/common/instances/aws/aws-terraform.tf ${{ matrix.infrastructure.terraform-conf-dir }}
+      - name: Setup SSL configuration templates if needed
+        if: ${{ matrix.infrastructure.ssl-enabled }} == true
+        run: cp hashicorp/common/instances/aws/aws-ssl.tf ${{ matrix.infrastructure.terraform-conf-dir }}
+      - name: Validate
+        run: |
+          cd ${{ matrix.infrastructure.terraform-conf-dir }}
+          terraform init
+          terraform validate
+
   list-screwdriver-templates:
     name: Listing Screwdriver Templates to Validate
-    needs: packer-validate
+    needs: [packer-validate, terraform-validate]
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-templates.outputs.paths }}
@@ -144,7 +176,7 @@ jobs:
 
   list-screwdriver-command-scripts:
     name: Listing Screwdriver Command Scripts to Test
-    needs: packer-validate
+    needs: [packer-validate, terraform-validate]
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-command-scripts.outputs.paths }}
@@ -175,7 +207,7 @@ jobs:
 
   list-screwdriver-commands:
     name: Listing Screwdriver Commands to Validate
-    needs: packer-validate
+    needs: [packer-validate, terraform-validate]
     runs-on: ubuntu-latest
     outputs:
       paths: ${{ steps.list-screwdriver-commands.outputs.paths }}
