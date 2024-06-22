@@ -36,7 +36,6 @@ source "amazon-ebs" "hashicorp-aws" {
   ami_name              = "${var.ami_name}"
   force_deregister      = "true"
   force_delete_snapshot = "true"
-  skip_create_ami       = "${var.skip_create_ami}"
 
   instance_type = var.instance_type
   launch_block_device_mappings {

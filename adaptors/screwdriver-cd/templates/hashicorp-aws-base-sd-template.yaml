@@ -69,8 +69,8 @@ config:
         echo security_groups         = $(meta get parameters.security-groups.value)             >> $HASHICORP_AWS_INFRASTRUCTURE_DIR/instances/aws.auto.tfvars
 
     - packer-init: cd $HASHICORP_AWS_INFRASTRUCTURE_DIR/images/aws && packer init .
-    - packer-validate: packer validate -var "skip_create_ami=true" .
-    - packer-build: packer build -var "skip_create_ami=false" .
+    - packer-validate: packer validate .
+    - packer-build: packer build .
 
     - terraform-init: cd ../../instances/aws && terraform init
     - terraform-validate: terraform validate
