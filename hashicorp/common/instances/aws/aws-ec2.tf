@@ -43,7 +43,7 @@ data "template_file" "ec2-init" {
   template = file("ec2-tf-init.sh")
 }
 
-data "aws_ami" "latest-kong" {
+data "aws_ami" "latest-ami" {
   most_recent = true
   owners      = ["899075777617"]
 
@@ -59,7 +59,7 @@ data "aws_ami" "latest-kong" {
 }
 
 resource "aws_instance" "ec2" {
-  ami           = data.aws_ami.latest-kong.id
+  ami           = data.aws_ami.latest-ami.id
   instance_type = var.instance_type
   tags = {
     Name = var.instance_name
