@@ -9,8 +9,7 @@ Screwdriver CD
 :::info
 
 It is assumed a functioning Screwdriver CD instance is ready. If not, please follow our
- [dedicated guide on deploying a Screwdriver instance in production](https://screwdriver-docs.qubitpi.org/cluster-management/docker-compose#running-docker-compose-in-aws-ec2-production-deployment)
-<img src="https://github.com/QubitPi/QubitPi/blob/master/img/%E5%BF%83%E6%B5%B7/%E5%BF%83%E6%B5%B7-17.png?raw=true" height="40px"/>
+ [dedicated guide on deploying a Screwdriver instance in production](https://screwdriver-docs.qubitpi.org/cluster-management/docker-compose#running-docker-compose-in-aws-ec2-production-deployment) <img src="https://github.com/QubitPi/QubitPi/blob/master/img/%E5%BF%83%E6%B5%B7/%E5%BF%83%E6%B5%B7-17.png?raw=true" height="50px"/>
 
 :::
 
