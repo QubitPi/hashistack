@@ -3,20 +3,6 @@ sidebar_position: 1
 title: General Deployment
 ---
 
-[//]: # (Copyright Jiaqi Liu)
-
-[//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
-[//]: # (you may not use this file except in compliance with the License.)
-[//]: # (You may obtain a copy of the License at)
-
-[//]: # (    http://www.apache.org/licenses/LICENSE-2.0)
-
-[//]: # (Unless required by applicable law or agreed to in writing, software)
-[//]: # (distributed under the License is distributed on an "AS IS" BASIS,)
-[//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
-[//]: # (See the License for the specific language governing permissions and)
-[//]: # (limitations under the License.)
-
 Deploying Kong API Gateway
 ==========================
 
@@ -78,8 +64,10 @@ ssl_cert_key_base64     = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
 
 - `ami_region` is the [image region][AWS regions] where Kong API Gateway [AMI][AWS AMI] will be published to. The
   published image will be _private_
-- `ami_name` is the published AMI name; it can be arbitrary
-- `instance_type` is the [AWS EC2 instance type] running this image
+- `ami_name` is the name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs. This
+  can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
+  with the current built one
+- `instance_type` The [AWS EC2 instance type] to use while _building_ the AMI
 - `kong_api_gateway_domain` is the SSL-enabled domain that will serve the
   [various ports of Kong gateway][Kong gateway - various ports]
 - `ssl_cert_base64` is a __base64 encoded__ string of the content of
@@ -107,7 +95,7 @@ route_53_zone_id        = "MBS8YLKZML18VV2E8M8OK"
 - `aws_ec2_region` is the [EC2 runtime region][AWS regions] where Kong will be deployed into
 - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
   [Packer variable file](#defining-packer-variables)**
-- `instance_type` is the chosen [AWS EC2 instance type] at runtime
+- `instance_type` is the [AWS EC2 instance type] used for deployed infrastructure
 - `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
 - `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
 
@@ -129,10 +117,10 @@ route_53_zone_id        = "MBS8YLKZML18VV2E8M8OK"
 
   hashicorp-aws will bind a _private_ IP address to this domain for the following reasons:
 
-    - [AWS security groups works for private IP only for DNS resolving](https://serverfault.com/a/967483). Services
-      interacting with Kong gateway can use this domain.
-    - In the case of internal access, for example administrators visiting Kong Manager for config purposes, people can
-      still use `https://public-dns:port`
+  - [AWS security groups works for private IP only for DNS resolving](https://serverfault.com/a/967483). Services
+    interacting with Kong gateway can use this domain.
+  - In the case of internal access, for example administrators visiting Kong Manager for config purposes, people can
+    still use `https://public-dns:port`
 
   :::
 
@@ -196,10 +184,10 @@ gateway in a minute.
 
 [hashicorp-aws/hashicorp/kong-api-gateway/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong-api-gateway/images
 [hashicorp-aws/hashicorp/kong-api-gateway/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong-api-gateway/instances
-[HashiCorp Packer - Install]: https://qubitpi.github.io/hashicorp-packer/packer/install
-[HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
-[HashiCorp Terraform - Install]: https://qubitpi.github.io/hashicorp-terraform/terraform/install
-[HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+[HashiCorp Packer - Install]: https://packer.qubitpi.org/packer/install
+[HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform - Install]: https://terraform.qubitpi.org/terraform/install
+[HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [Kong API Gateway]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/
 [Kong manager UI]: https://qubitpi.github.io/docs.konghq.com/gateway/latest/kong-manager/

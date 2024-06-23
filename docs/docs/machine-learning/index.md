@@ -90,7 +90,9 @@ ml_models_path = "/abs/path/to/mlflow_models/"
 
 - `ami_region` is the [image region][AWS regions] where ML models [AMI][AWS AMI] will be published to. The published
   image will be _private_
-- `ami_name` is the published AMI name; it can be arbitrary
+- `ami_name` is the name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs. This
+  can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
+  with the current built one
 - `instance_type` is the recommended [AWS EC2 instance type] running this image
 - `ml_models_path` is the directory we made ready [previously](#generating-machine-learning-models)
 
@@ -117,7 +119,7 @@ security_groups   = ["myKeyPairName"]
 - `aws_ec2_region` is the [EC2 runtime region][AWS regions]
 - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
   [Packer variable file](#defining-packer-variables)**
-- `instance_type` is the chosen [AWS EC2 instance type] at runtime
+- `instance_type` is the [AWS EC2 instance type] used for deployed infrastructure
 - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
 - `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
 
@@ -199,10 +201,10 @@ stand up the API in a minute.
 
 [hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/machine-learning/images/mlflow-docker
 [hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/machine-learning/instances/mlflow-docker
-[HashiCorp Packer - Install]: https://qubitpi.github.io/hashicorp-packer/packer/install
-[HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
-[HashiCorp Terraform - Install]: https://qubitpi.github.io/hashicorp-terraform/terraform/install
-[HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+[HashiCorp Packer - Install]: https://packer.qubitpi.org/packer/install
+[HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform - Install]: https://terraform.qubitpi.org/terraform/install
+[HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [Machine Learning model release definition template]: https://github.com/QubitPi/machine-learning-model-release-definition-templates
 [MLflow - Running Machine Learning Model NOT Managed by MLflow as REST API in Docker Container]: https://qubitpi.github.io/mlflow/getting-started/quickstart-2/index.html#running-machine-learning-model-not-managed-by-mlflow-as-rest-api-in-docker-container

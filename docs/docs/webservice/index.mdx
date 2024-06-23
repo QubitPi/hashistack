@@ -3,20 +3,6 @@ sidebar_position: 1
 title: General Deployment
 ---
 
-[//]: # (Copyright Jiaqi Liu)
-
-[//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
-[//]: # (you may not use this file except in compliance with the License.)
-[//]: # (You may obtain a copy of the License at)
-
-[//]: # (    http://www.apache.org/licenses/LICENSE-2.0)
-
-[//]: # (Unless required by applicable law or agreed to in writing, software)
-[//]: # (distributed under the License is distributed on an "AS IS" BASIS,)
-[//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
-[//]: # (See the License for the specific language governing permissions and)
-[//]: # (limitations under the License.)
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -73,7 +59,9 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
 
     - `ami_region` is the [region][AWS regions] where webservice [AMI][AWS AMI] will be published to. The published
       image will be _private_
-    - `ami_name` is the published AMI name; it can be arbitrary
+    - `ami_name` is the name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs. This
+  can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
+  with the current built one
     - `instance_type` is the [EC2 instance type][AWS EC2 instance type] to use while building the AMI, such as t2.small.
     - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
       the webservice WAR file we are going to deploy
@@ -152,7 +140,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
     - `aws_ec2_region` is the [EC2 runtime region][AWS regions]
     - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
       [Packer variable file](#defining-packer-variables)**
-    - `instance_type` is the chosen [AWS EC2 instance type] at runtime
+    - `instance_type` is the [AWS EC2 instance type] used for deployed infrastructure
     - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
     - `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
 
@@ -171,7 +159,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-ws.auto.tfvars**
     - `aws_ec2_region` is the [EC2 runtime region][AWS regions]
     - `ami_name` is the name of the published AMI; **it must be the same as the `ami_name` in
       [Packer variable file](#defining-packer-variables)**
-    - `instance_type` is the chosen [AWS EC2 instance type] at runtime
+    - `instance_type` is the [AWS EC2 instance type] used for deployed infrastructure
     - `ec2_instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
     - `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
     - `ws_domain` is the SSL-enabled domain that will serve webservice API URL
@@ -301,8 +289,8 @@ instance_type       = "t2.medium"
 
 [hashicorp-aws/hashicorp/webservice/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/webservice/images
 [HashiCorp Packer delete_on_termination]: https://qubitpi.github.io/hashicorp-packer/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#:~:text=Optional%3A-,delete_on_termination,-(bool)%20%2D%20Indicates%20whether
-[HashiCorp Packer variable values file]: https://qubitpi.github.io/hashicorp-packer/packer/guides/hcl/variables#from-a-file
-[HashiCorp Terraform variable values file]: https://qubitpi.github.io/hashicorp-terraform/terraform/language/values/variables#variable-definitions-tfvars-files
+[HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [microservices architecture where authentication is delegated to an API gateway]: https://dev.to/behalf/authentication-authorization-in-microservices-architecture-part-i-2cn0#global-authentication-api-gateway-and-authorization-per-service
 
