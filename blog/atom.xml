@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hashicorp-aws.com/blog</id>
     <title>hashicorp-aws Blog</title>
-    <updated>2024-06-22T13:02:22.000Z</updated>
+    <updated>2024-06-23T13:29:58.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hashicorp-aws.com/blog"/>
     <subtitle>hashicorp-aws Blog</subtitle>
@@ -11,8 +11,8 @@
         <title type="html"><![CDATA[Testing HashiCorp Terraform]]></title>
         <id>https://hashicorp-aws.com/blog/testing-hashicorp-terraform</id>
         <link href="https://hashicorp-aws.com/blog/testing-hashicorp-terraform"/>
-        <updated>2024-06-22T13:02:22.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <updated>2024-06-23T13:29:58.000Z</updated>
+        <summary type="html"><![CDATA[How do we know if we can run terraform apply to our infrastructure without negatively affecting critical business]]></summary>
         <content type="html"><![CDATA[<p>How do we know if we can run <code>terraform apply</code> to our infrastructure without negatively affecting critical business
 applications? We can run <code>terraform validate</code> and <code>terraform plan</code> to check our configuration, but will that be enough?
 Whether we've updated some HashiCorp Terraform configuration or a new version of a module, we want to catch errors
@@ -52,7 +52,7 @@ independently, without external resources or API calls.</p>]]></content>
         <id>https://hashicorp-aws.com/blog/version-bump</id>
         <link href="https://hashicorp-aws.com/blog/version-bump"/>
         <updated>2024-04-19T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[We offer a convenient versioning management approach for releasing software on GitHub.]]></summary>
         <content type="html"><![CDATA[<p>We offer a convenient versioning management approach for releasing software on GitHub.</p>
 <div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><p>The GitHub repository must grant <em>write</em> access to this workflow permission, i.e. navigate to <strong>Settings</strong> -&gt;
 <strong>Actions</strong> -&gt; <strong>General</strong>; under <em>Workflow permissions</em> make sure <strong>Read and write permissions</strong> is checked:</p><p><img loading="lazy" alt="Error loading permissions.png" src="https://hashicorp-aws.com/assets/images/permission-9df4c3b51745dedb36834b4434be2bc4.png" width="3584" height="2763" class="img_ev3q"></p></div></div>
@@ -149,7 +149,7 @@ webpack configuration which makes the tests more comprehensive</p></div></div>]]
         <id>https://hashicorp-aws.com/blog/jdk-setup</id>
         <link href="https://hashicorp-aws.com/blog/jdk-setup"/>
         <updated>2024-04-14T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[Installing JDK 17]]></summary>
         <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="installing-jdk-17">Installing JDK 17<a href="https://hashicorp-aws.com/blog/jdk-setup#installing-jdk-17" class="hash-link" aria-label="Direct link to Installing JDK 17" title="Direct link to Installing JDK 17">​</a></h2>
 <p>The standard <a href="https://github.com/actions/setup-java" target="_blank" rel="noopener noreferrer">actions/setup-java</a> requires us to specify JDK distributions other
 than JDK version. Looking up JDK distributions wastes user's time and gives opportunities to error.</p>
@@ -191,7 +191,7 @@ NPM in the action. Then use the following template in CI/CD:</p>
         <id>https://hashicorp-aws.com/blog/ui-unit-test</id>
         <link href="https://hashicorp-aws.com/blog/ui-unit-test"/>
         <updated>2024-04-14T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[The UI unit test action runs unit tests and assumes the yarn package manager and requires a test script to be]]></summary>
         <content type="html"><![CDATA[<p>The UI unit test action runs unit tests and assumes the <strong>yarn</strong> package manager and requires a <code>test</code> script to be
 defined in projects <code>package.json</code> file. For example, the following uses <a href="https://jestjs.io/" target="_blank" rel="noopener noreferrer">Jest</a> as the unit test runner:</p>
 <div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token property" style="color:#36acaa">"scripts"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token property" style="color:#36acaa">"test"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"jest"</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
@@ -213,7 +213,7 @@ defined in projects <code>package.json</code> file. For example, the following u
         <id>https://hashicorp-aws.com/blog/ui-code-style</id>
         <link href="https://hashicorp-aws.com/blog/ui-code-style"/>
         <updated>2024-04-13T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[In Frontend dev realm, there are lots of code style checker. Assembling all of them together takes efforts and pains.]]></summary>
         <content type="html"><![CDATA[<p>In Frontend dev realm, there are lots of code style checker. Assembling all of them together takes efforts and pains.
 This action runs the following two code style checker specifically for frontend dev:</p>
 <ol>
@@ -253,7 +253,7 @@ linters for code-quality concerns, as outlined in
         <id>https://hashicorp-aws.com/blog/yml-and-md-style-checks</id>
         <link href="https://hashicorp-aws.com/blog/yml-and-md-style-checks"/>
         <updated>2024-04-08T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[Inspired by Sous Chefs, hashicorp-aws]]></summary>
         <content type="html"><![CDATA[<p>Inspired by <a href="https://github.com/sous-chefs/.github/blob/main/.github/workflows/lint-unit.yml" target="_blank" rel="noopener noreferrer">Sous Chefs</a>, hashicorp-aws
 offers a <a href="https://docs.github.com/en/actions/using-workflows/reusing-workflows" target="_blank" rel="noopener noreferrer">reusable workflow</a> that performs the
 following code style checks:</p>
@@ -314,7 +314,7 @@ relative file links with the following default:</p>
         <id>https://hashicorp-aws.com/blog/github-secret-action</id>
         <link href="https://hashicorp-aws.com/blog/github-secret-action"/>
         <updated>2024-02-23T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[Overview]]></summary>
         <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a href="https://hashicorp-aws.com/blog/github-secret-action#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview">​</a></h2>
 <p>Being a strong proponent of Immutable Infrastructure, <a href="https://qubitpi.github.io/hashicorp-aws/" target="_blank" rel="noopener noreferrer">hashicorp-aws</a> is constantly pushing the limits of its ability
 in various use cases, one of which is the <em>Configuration Management</em></p>
@@ -358,7 +358,7 @@ be an effective way to manage and share a software configurations within a team.
         <id>https://hashicorp-aws.com/blog/github-slack-notification</id>
         <link href="https://hashicorp-aws.com/blog/github-slack-notification"/>
         <updated>2024-01-27T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[Sending data into Slack using slack-send.]]></summary>
         <content type="html"><![CDATA[<p>Sending data into Slack using <a href="https://github.com/marketplace/actions/slack-send" target="_blank" rel="noopener noreferrer">slack-send</a>.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="slack-send">slack-send<a href="https://hashicorp-aws.com/blog/github-slack-notification#slack-send" class="hash-link" aria-label="Direct link to slack-send" title="Direct link to slack-send">​</a></h2>
 <p>This post discusses practical guide for sending data to Slack via a <strong>Slack Incoming Webhook URL</strong>. The reason we prefer
@@ -403,7 +403,7 @@ for those who love personal customizations and focuses on only success-or-fail o
         <id>https://hashicorp-aws.com/blog/github-matrix</id>
         <link href="https://hashicorp-aws.com/blog/github-matrix"/>
         <updated>2023-11-24T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[A matrix strategy lets you use variables in a single job definition to automatically create multiple job runs that are]]></summary>
         <content type="html"><![CDATA[<p>A matrix strategy lets you use variables in a single job definition to automatically create multiple job runs that are
 based on the combinations of the variables. For example, you can use a matrix strategy to test your code in multiple
 versions of a language or on multiple operating systems.</p>
@@ -543,7 +543,7 @@ all six jobs at once.</p>
         <id>https://hashicorp-aws.com/blog/openssl-encrypt</id>
         <link href="https://hashicorp-aws.com/blog/openssl-encrypt"/>
         <updated>2023-11-23T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[OpenSSL is a powerful cryptography toolkit. Many of us have already used OpenSSL for creating RSA Private Keys or CSR]]></summary>
         <content type="html"><![CDATA[<p>OpenSSL is a powerful cryptography toolkit. Many of us have already used OpenSSL for creating RSA Private Keys or CSR
 (Certificate Signing Request). However, did you know that we can use OpenSSL to benchmark our computer speed or that we
 can also encrypt files or messages? This post will provide you with some simple to follow tips on how to encrypt
@@ -626,7 +626,7 @@ automated encrypted backup script.</p>]]></content>
         <id>https://hashicorp-aws.com/blog/dockerhub-github-actions</id>
         <link href="https://hashicorp-aws.com/blog/dockerhub-github-actions"/>
         <updated>2023-11-20T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[On every push to GitHub, GitHub Action can]]></summary>
         <content type="html"><![CDATA[<p>On every push to GitHub, <a href="https://github.com/marketplace/actions/build-and-push-docker-images" target="_blank" rel="noopener noreferrer">GitHub Action</a> can
 auto-trigger the docker image build and push to <a href="https://hub.docker.com/" target="_blank" rel="noopener noreferrer">Docker Hub</a>. We will be able to see that each
 push results in a usable image, which enhances the quality of a docker image a lot.</p>
@@ -664,7 +664,7 @@ that GitHub supports out-of-the-box.</p>]]></content>
         <id>https://hashicorp-aws.com/blog/nvm</id>
         <link href="https://hashicorp-aws.com/blog/nvm"/>
         <updated>2023-04-21T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[Node Version Manager is a tool that helps us manage Node versions and is a convenient]]></summary>
         <content type="html"><![CDATA[<p><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener noreferrer">Node Version Manager</a> is a tool that helps us manage Node versions and is a convenient
 way to install Node. Think of it as npm or Yarn that helps manage Node packages, but instead of packages, NVM manages
 Node versions.</p>
@@ -720,7 +720,7 @@ that's fair, as it's a volunteer-driven project).</p>
         <id>https://hashicorp-aws.com/blog/jenkins-on-aws</id>
         <link href="https://hashicorp-aws.com/blog/jenkins-on-aws"/>
         <updated>2022-10-31T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[Jenkins is an open-source automation server that integrates with a number of AWS Services, including: AWS CodeCommit,]]></summary>
         <content type="html"><![CDATA[<p>Jenkins is an open-source automation server that integrates with a number of AWS Services, including: AWS CodeCommit,
 AWS CodeDeploy, Amazon EC2 Spot, and Amazon EC2 Fleet. We can use Amazon Elastic Compute Cloud (Amazon EC2) to deploy a
 Jenkins application on AWS.</p>
@@ -1491,7 +1491,7 @@ again.</p>
         <id>https://hashicorp-aws.com/blog/aws-troubleshooting</id>
         <link href="https://hashicorp-aws.com/blog/aws-troubleshooting"/>
         <updated>2022-10-12T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[New Volume in EC2 Instance Not Reflecting]]></summary>
         <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="new-volume-in-ec2-instance-not-reflecting">New Volume in EC2 Instance Not Reflecting<a href="https://hashicorp-aws.com/blog/aws-troubleshooting#new-volume-in-ec2-instance-not-reflecting" class="hash-link" aria-label="Direct link to New Volume in EC2 Instance Not Reflecting" title="Direct link to New Volume in EC2 Instance Not Reflecting">​</a></h2>
 <p>When we have increased the size of the volume attached a running EC2 instance. We are able to see the new volume using
 <code>lsblk</code>:</p>
@@ -1524,7 +1524,7 @@ is given in the following AWS documentation:</p>
         <id>https://hashicorp-aws.com/blog/aws-iam</id>
         <link href="https://hashicorp-aws.com/blog/aws-iam"/>
         <updated>2022-10-09T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[IAM provides the infrastructure necessary to control authentication and authorization for a user's account.]]></summary>
         <content type="html"><![CDATA[<p>IAM provides the infrastructure necessary to control authentication and authorization for a user's account.</p>
 <p>The IAM infrastructure includes the following elements:</p>
 <p><img loading="lazy" alt="Error loading intro-diagram-policies-800.png" src="https://hashicorp-aws.com/assets/images/intro-diagram-policies-800-7cb01199ea1fa02446443f875f03bd7a.png" width="800" height="709" class="img_ev3q"></p>
@@ -1693,7 +1693,7 @@ other resource-based policies, see
         <id>https://hashicorp-aws.com/blog/nexus</id>
         <link href="https://hashicorp-aws.com/blog/nexus"/>
         <updated>2022-09-30T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[The proliferation of different repository formats and tools accessing them as well as the emergence of more publicly]]></summary>
         <content type="html"><![CDATA[<p>The proliferation of different repository formats and tools accessing them as well as the emergence of more publicly
 available repositories has triggered the need to manage access and usage of these repositories and the components they
 contain.</p>
@@ -2436,7 +2436,7 @@ details about the error by going down to the Nexus server log.</p>
         <id>https://hashicorp-aws.com/blog/continuous-delivery</id>
         <link href="https://hashicorp-aws.com/blog/continuous-delivery"/>
         <updated>2022-08-31T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[Continuous delivery is an approach where teams release quality products frequently and predictably from source code]]></summary>
         <content type="html"><![CDATA[<p>Continuous delivery is an approach where teams release quality products frequently and predictably from source code
 repository to production in an automated fashion.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="what-is-continuous-delivery">What is Continuous Delivery<a href="https://hashicorp-aws.com/blog/continuous-delivery#what-is-continuous-delivery" class="hash-link" aria-label="Direct link to What is Continuous Delivery" title="Direct link to What is Continuous Delivery">​</a></h2>
@@ -2892,7 +2892,7 @@ process so frequently, we’re forced to simplify and automate it which further 
         <id>https://hashicorp-aws.com/blog/deploying-vs-releasing</id>
         <link href="https://hashicorp-aws.com/blog/deploying-vs-releasing"/>
         <updated>2022-08-29T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[[//]: # (Copyright Jiaqi Liu)]]></summary>
+        <summary type="html"><![CDATA[The key distinction between deployment and release is the business rationale. Deployment doesn't necessarily mean users]]></summary>
         <content type="html"><![CDATA[<p>The key distinction between deployment and release is the business rationale. Deployment doesn't necessarily mean users
 have access to features. Some companies will release at the same time as deployment to production is taking place.</p>
 <p>Others will choose to wait, thereby having the new features in production but not availed to users until the business
