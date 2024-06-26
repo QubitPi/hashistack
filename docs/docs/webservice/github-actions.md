@@ -45,7 +45,7 @@ The following inputs are required:
   of the following
 
   - [basic](https://qubitpi.github.io/jersey-webservice-template/docs/intro)
-  - [jpa](https://qubitpi.github.io/jersey-webservice-template/docs/elide/intro)
+  - [jpa](https://qubitpi.github.io/jersey-webservice-template/docs/crud/)
 
 - `ssl`: whether or not to server webservice API in SSL/HTTPS
 
@@ -66,7 +66,7 @@ The following GitHub Secrets needs to be defined:
 
 ### Jersey Webservice Template (JPA through Elide)
 
-If deployed webservice is [JWT JPA](https://qubitpi.github.io/jersey-webservice-template/docs/elide/intro) the following
+If deployed webservice is [JWT JPA](https://qubitpi.github.io/jersey-webservice-template/docs/crud/) the following
 inputs are also required
 
 - **model-package-jar-group-id** is the Maven group ID of JAR containing data models, e.g. "com.myorg"

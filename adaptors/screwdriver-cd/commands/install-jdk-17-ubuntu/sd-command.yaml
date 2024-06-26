@@ -1,9 +1,9 @@
 namespace: QubitPi
-name: install-jdk-ubuntu
+name: install-jdk-17-ubuntu
 version: '1.0.0'
 description: Install JDK 17
 usage: |
-  sd-cmd exec QubitPi/install-jdk-ubuntu@latest
+  sd-cmd exec QubitPi/install-jdk-17-ubuntu@latest
 maintainer: jack20220723@gmail.com
 format: binary
 binary:
