@@ -183,14 +183,14 @@ jobs:
     steps:
       - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-hashicorp-terraform-ubuntu/sd-command.yaml -t latest
 
-  validate-install-jdk-ubuntu:
+  validate-install-jdk-17-ubuntu:
     requires: [~pr, ~commit]
     steps:
-      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-jdk-ubuntu/sd-command.yaml
-  publish-install-jdk-ubuntu:
-    requires: [validate-install-jdk-ubuntu]
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-jdk-17-ubuntu/sd-command.yaml
+  publish-install-jdk-17-ubuntu:
+    requires: [validate-install-jdk-17-ubuntu]
     steps:
-      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-jdk-ubuntu/sd-command.yaml -t latest
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-jdk-17-ubuntu/sd-command.yaml -t latest
 
   validate-install-maven-ubuntu:
     requires: [~pr, ~commit]

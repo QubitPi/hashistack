@@ -47,7 +47,7 @@ config:
       value: ["myelk.instance.com:8080"]
       description: "The list of Logstash hosts with ports to receive webservice log data"
   steps:
-    - setup-jdk: sd-cmd exec QubitPi/install-jdk-ubuntu@latest
+    - setup-jdk: sd-cmd exec QubitPi/install-jdk-17-ubuntu@latest
     - install-maven: sd-cmd exec QubitPi/install-maven-ubuntu@latest
     - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
