@@ -84,6 +84,13 @@ config:
                         <model.package.jar.artifact.id>$ARTIFACT_ID</model.package.jar.artifact.id>
                         <model.package.jar.version>$VERSION</model.package.jar.version>
                     </properties>
+                    <repositories>
+                        <repository>
+                            <id>jersey-webservice-template-jpa-data-models</id>
+                            <name>Jersey Webservice Template JPA Data Models Repository</name>
+                            <url>${DATA_MODELS_REPO_URL}</url>
+                        </repository>
+                    </repositories>
                 </profile>
             </profiles>
 
@@ -116,6 +123,7 @@ config:
   secrets:
     - SERVER_USERNAME
     - SERVER_PASSWORD
+    - DATA_MODELS_REPO_URL
     - DB_USER
     - DB_PASSWORD
     - DB_URL
