@@ -89,8 +89,8 @@ config:
             <servers>
                 <server>
                     <id>jersey-webservice-template-jpa-data-models</id>
-                    <username>${env.SERVER_USERNAME}</username>
-                    <password>${env.SERVER_PASSWORD}</password>
+                    <username>${SERVER_USERNAME}</username>
+                    <password>${SERVER_PASSWORD}</password>
                 </server>
             </servers>
 
@@ -102,12 +102,12 @@ config:
     - load-application-properties-file: |
         echo MODEL_PACKAGE_NAME=$(meta get parameters.model-package-name.value) >> src/main/resources/application.properties
     - load-jpadatastore-properties-file: |
-        echo DB_USER=${env.DB_USER}                               >> src/main/resources/jpadatastore.properties
-        echo DB_PASSWORD=${env.DB_PASSWORD}                       >> src/main/resources/jpadatastore.properties
-        echo DB_URL=${env.DB_URL}                                 >> src/main/resources/jpadatastore.properties
-        echo DB_DRIVER=${env.DB_DRIVER}                           >> src/main/resources/jpadatastore.properties
-        echo DB_DIALECT=${env.DB_DIALECT}                         >> src/main/resources/jpadatastore.properties
-        echo HIBERNATE_HBM2DDL_AUTO=${env.HIBERNATE_HBM2DDL_AUTO} >> src/main/resources/jpadatastore.properties
+        echo DB_USER=${DB_USER}                               >> src/main/resources/jpadatastore.properties
+        echo DB_PASSWORD=${DB_PASSWORD}                       >> src/main/resources/jpadatastore.properties
+        echo DB_URL=${DB_URL}                                 >> src/main/resources/jpadatastore.properties
+        echo DB_DRIVER=${DB_DRIVER}                           >> src/main/resources/jpadatastore.properties
+        echo DB_DIALECT=${DB_DIALECT}                         >> src/main/resources/jpadatastore.properties
+        echo HIBERNATE_HBM2DDL_AUTO=${HIBERNATE_HBM2DDL_AUTO} >> src/main/resources/jpadatastore.properties
 
   secrets:
     - SERVER_USERNAME
