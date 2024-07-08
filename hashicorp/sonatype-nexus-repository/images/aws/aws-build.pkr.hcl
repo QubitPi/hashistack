@@ -12,12 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "image_home_dir" {
-  type      = string
-  sensitive = true
-  default   = "/home/ubuntu"
-}
-
 variable "ssl_cert_base64" {
   type      = string
   sensitive = true
@@ -39,7 +33,7 @@ build {
   ]
 
   provisioner "hashicorp-aws-sonatype-nexus-repository-provisioner" {
-    homeDir                       = "${var.image_home_dir}"
+    homeDir                       = "/home/ubuntu"
     sslCertBase64                 = "${var.ssl_cert_base64}"
     sslCertKeyBase64              = "${var.ssl_cert_key_base64}"
     sonatypeNexusRepositoryDomain = "${var.sonatype_nexus_repository_domain}"
