@@ -90,35 +90,35 @@ jobs:
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/kong-api-gateway-sd-template.yaml
 
-  validate-jersey-webservice-template-basic-sd-template:
-    requires: [~pr, ~commit]
+  validate-jersey-webservice-basic-sd-template:
+    requires: publish-hashicorp-aws-base-sd-template
     steps:
       - install: npm install -g screwdriver-template-main
       - validate: template-validate
     environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-basic-sd-template.yaml
-  publish-jersey-webservice-template-basic-sd-template:
-    requires: validate-jersey-webservice-template-basic-sd-template
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-basic-sd-template.yaml
+  publish-jersey-webservice-basic-sd-template:
+    requires: validate-jersey-webservice-basic-sd-template
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
     environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-basic-sd-template.yaml
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-basic-sd-template.yaml
 
-  validate-jersey-webservice-template-jpa-sd-template:
-    requires: [publish-jersey-webservice-template-basic-sd-template]
+  validate-jersey-webservice-jpa-sd-template:
+    requires: [publish-jersey-webservice-basic-sd-template]
     steps:
       - install: npm install -g screwdriver-template-main
       - validate: template-validate
     environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-jpa-sd-template.yaml
-  publish-jersey-webservice-template-jpa-sd-template:
-    requires: validate-jersey-webservice-template-jpa-sd-template
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-jpa-sd-template.yaml
+  publish-jersey-webservice-jpa-sd-template:
+    requires: validate-jersey-webservice-jpa-sd-template
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
     environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-template-jpa-sd-template.yaml
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-jpa-sd-template.yaml
 
   validate-elk-template:
     requires: [~pr, ~commit]

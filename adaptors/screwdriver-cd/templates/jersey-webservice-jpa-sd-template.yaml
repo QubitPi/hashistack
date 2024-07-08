@@ -13,33 +13,22 @@
 # limitations under the License.
 ---
 namespace: QubitPi
-name: jersey-webservice-release-definition-jpa
+name: jersey-webservice-jpa-release-definition-jpa
 version: '1.0.0'
 description: |
   Screwdriver CD template for deploying instantiated jersey webservice to AWS through HashiCorp.
   This template deploys the jpa-elide branch without SSL/HTTPS or any other addons
 maintainer: jack20220723@gmail.com
 config:
-  template: QubitPi/jersey-webservice-release-definition-basic
+  template: QubitPi/jersey-webservice-basic-release-definition-template
   order: [
-    setup-jdk,
-    install-maven,
     install-packer,
     install-terraform,
-
-    checkout-hashicorp-deployment-tool,
-
-    setup-packer,
-    load-packer-variable-file,
-
-    setup-terraform,
-    load-terraform-variable-file,
-
-    clone-webservice,
-    clone-data-models,
+    setup-hashicorp-deployment-tool,
+    install-jdk,
+    install-maven,
+    load-packer-ami-variables,
     load-maven-settings-xml,
-    install-data-models,
-
     generate-war,
     relocate-war-for-hashicorp,
     packer-init,
@@ -47,21 +36,31 @@ config:
     packer-build,
     terraform-init,
     terraform-validate,
-    terraform-apply,
+    terraform-apply
   ]
   parameters:
-    data-models-repo-git:
-      value: "https://github.com/QubitPi/jersey-webservice-template-jpa-data-models.git"
-      description: "The git URL to the repository that contains data models"
+    data-models-group-id:
+      value: "io.github.qubitpi"
+      description: |
+        The group ID of the JPA data models.
+        See https://github.com/QubitPi/jersey-webservice-template-jpa-data-models for example
+    data-models-artifact-id:
+      value: "jersey-webservice-template-jpa-data-models"
+      description: |
+        The artifact ID of the JPA data models.
+        See https://github.com/QubitPi/jersey-webservice-template-jpa-data-models for example
+    data-models-version:
+      value: "1.0.1"
+      description: |
+        The sementic version of the JPA data models.
+        See https://github.com/QubitPi/jersey-webservice-template-jpa-data-models for example
   steps:
-    - clone-data-models: git clone --depth 1 $(meta get parameters.data-models-repo-git.value) ../data-models
     - load-maven-settings-xml: |
         mkdir -p ~/.m2
-        cd ../data-models
 
-        GROUP_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.groupId -q -DforceStdout)
-        ARTIFACT_ID=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout)
-        VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+        GROUP_ID=$(meta get parameters.data-models-group-id.value)
+        ARTIFACT_ID=$(meta get parameters.data-models-artifact-id.value)
+        VERSION=$(meta get parameters.data-models-version.value)
 
         cat  << EOF >>~/.m2/settings.xml
         <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
@@ -85,5 +84,3 @@ config:
             </activeProfiles>
         </settings>
         EOF
-
-    - install-data-models: cd ../data-models && mvn clean install
