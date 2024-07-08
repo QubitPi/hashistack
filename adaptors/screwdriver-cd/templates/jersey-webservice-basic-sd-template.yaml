@@ -66,8 +66,8 @@ config:
         EOF
 
     - download-webservice-source-code: |
-        git clone --depth 1 https://github.com/QubitPi/jersey-webservice-template.git
-        cd jersey-webservice-template
+        git clone --depth 1 https://github.com/QubitPi/jersey-webservice-template.git ../jersey-webservice-template
+        cd ../jersey-webservice-template
 
     - generate-war: |
         if [ ! -f settings.xml ]; then
