@@ -109,7 +109,7 @@ config:
         EOF
     - download-webservice-source-code: |
         git clone --depth 1 -b jpa-elide https://github.com/QubitPi/jersey-webservice-template.git ../jersey-webservice-template
-        cd jersey-webservice-template
+        cd ../jersey-webservice-template
     - load-application-properties-file: |
         echo MODEL_PACKAGE_NAME=$(meta get parameters.model-package-name.value) >> src/main/resources/application.properties
     - load-jpadatastore-properties-file: |
