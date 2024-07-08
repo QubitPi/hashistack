@@ -28,6 +28,7 @@ config:
     install-jdk,
     install-maven,
     load-packer-ami-variables,
+    download-webservice-source-code,
     generate-war,
     relocate-war-for-hashicorp,
     packer-init,
@@ -63,6 +64,10 @@ config:
         output.logstash:
           hosts: $(meta get parameters.elk-hosts.value)
         EOF
+
+    - download-webservice-source-code: |
+        git clone --depth 1 https://github.com/QubitPi/jersey-webservice-template.git
+        cd jersey-webservice-template
 
     - generate-war: |
         if [ ! -f settings.xml ]; then
