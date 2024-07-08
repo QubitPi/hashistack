@@ -1,7 +1,3 @@
-#!/bin/bash
-set -x
-set -e
-
 # Copyright Jiaqi Liu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +12,17 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Filebeat
-curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.9.2-amd64.deb
-sudo dpkg -i filebeat-8.9.2-amd64.deb
-sudo mv ${HOME_DIR}/filebeat.yml /etc/filebeat/filebeat.yml
-sudo chown root /etc/filebeat/filebeat.yml
+variable "war_source" {
+  type      = string
+  sensitive = true
+}
+
+build {
+  sources = [
+    "source.amazon-ebs.hashicorp-aws"
+  ]
+
+  provisioner "hashicorp-aws-webservice-provisioner" {
+    warSource = "${var.image_home_dir}"
+  }
+}
