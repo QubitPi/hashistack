@@ -64,7 +64,13 @@ config:
           hosts: $(meta get parameters.elk-hosts.value)
         EOF
 
-    - generate-war: mvn -B clean package -Dcheckstyle.skip -Dmaven.test.skip
+    - generate-war: |
+        if [ ! -f settings.xml ]; then
+          mvn -B clean package -Dcheckstyle.skip -Dmaven.test.skip
+        else
+          mvn -B clean package --settings settings.xml -Dcheckstyle.skip -Dmaven.test.skip
+        fi
+
     - relocate-war-for-hashicorp: mv target/*.war ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/ROOT.war
   environment:
     INFRASTRUCTURE: webservice

@@ -38,12 +38,22 @@ How to Use This Template
 forked or instantiated repo of `https://github.com/QubitPi/jersey-webservice-template`
 
 <Tabs>
-  <TabItem value="basic" label="Basic Webservice Repo URL" default>
-    <img alt="Error loading create-sd-pipeline-basic.png" src="./img/create-sd-pipeline-basic.png"/>
-  </TabItem>
-  <TabItem value="jpa" label="JPA Webservice Repo URL">
-    <img alt="Error loading create-sd-pipeline-jpa.png" src="./img/create-sd-pipeline-jpa.png"/>
-  </TabItem>
+<TabItem value="basic" label="Basic Webservice Repo URL" default>
+
+![Error loading create-sd-pipeline-basic.png](./img/create-sd-pipeline-basic.png)
+
+</TabItem>
+<TabItem value="jpa" label="JPA Webservice Repo URL">
+
+:::note
+
+The branch name of __jpa-elide__ needs to be appended with a `#` sign as shown below
+
+:::
+
+![Error loading create-sd-pipeline-basic.png](./img/create-sd-pipeline-jpa.png)
+
+</TabItem>
 </Tabs>
 
 In addition, the following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined before running the pipeline:
@@ -56,6 +66,12 @@ To run the pipeline, fill in the AWS-related **parameters** first
 ![Error loading jersey-webservice-release-definition-templates-parameters.png](img/jersey-webservice-release-definition-templates-parameters.png)
 
 Then hit "**Submit**" to start deploying.
+
+### Configuration
+
+If a custom `settings.xml` is needed, simply place it in the root of the pipeline project, in which case the template
+will use it to override all other `settings.xml` configs. If no `settings.xml` is provided, it will simply use the
+default one, such as `~/.m2/settings.xml`
 
 [Immutable Infrastructure]: https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure
 
