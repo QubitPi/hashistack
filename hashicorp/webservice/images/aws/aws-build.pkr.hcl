@@ -23,6 +23,6 @@ build {
   ]
 
   provisioner "hashicorp-aws-webservice-provisioner" {
-    warSource = "${var.image_home_dir}"
+    warSource = "${var.war_source}"
   }
 }
