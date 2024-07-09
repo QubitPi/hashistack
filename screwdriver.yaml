@@ -31,14 +31,14 @@ jobs:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-base-sd-template.yaml
 
   validate-hashicorp-aws-ssl-sd-template:
-    requires: publish-hashicorp-aws-base-sd-template
+    requires: [~pr, ~commit]
     steps:
       - install: npm install -g screwdriver-template-main
       - validate: template-validate
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-ssl-sd-template.yaml
   publish-hashicorp-aws-ssl-sd-template:
-    requires: validate-hashicorp-aws-ssl-sd-template
+    requires: [validate-hashicorp-aws-ssl-sd-template, publish-hashicorp-aws-base-sd-template]
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
@@ -46,14 +46,14 @@ jobs:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-ssl-sd-template.yaml
 
   validate-sonatype-nexus-repository-sd-template:
-    requires: publish-hashicorp-aws-ssl-sd-template
+    requires: [~pr, ~commit]
     steps:
       - install: npm install -g screwdriver-template-main
       - validate: template-validate
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/sonatype-nexus-repository-sd-template.yaml
   publish-sonatype-nexus-repository-sd-template:
-    requires: validate-sonatype-nexus-repository-sd-template
+    requires: [validate-sonatype-nexus-repository-sd-template, publish-hashicorp-aws-ssl-sd-template]
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
@@ -91,14 +91,14 @@ jobs:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/kong-api-gateway-sd-template.yaml
 
   validate-jersey-webservice-basic-sd-template:
-    requires: publish-hashicorp-aws-base-sd-template
+    requires: [~pr, ~commit]
     steps:
       - install: npm install -g screwdriver-template-main
       - validate: template-validate
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-basic-sd-template.yaml
   publish-jersey-webservice-basic-sd-template:
-    requires: validate-jersey-webservice-basic-sd-template
+    requires: [validate-jersey-webservice-basic-sd-template, publish-hashicorp-aws-base-sd-template]
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
@@ -106,14 +106,14 @@ jobs:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-basic-sd-template.yaml
 
   validate-jersey-webservice-jpa-sd-template:
-    requires: [publish-jersey-webservice-basic-sd-template]
+    requires: [~pr, ~commit]
     steps:
       - install: npm install -g screwdriver-template-main
       - validate: template-validate
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-jpa-sd-template.yaml
   publish-jersey-webservice-jpa-sd-template:
-    requires: validate-jersey-webservice-jpa-sd-template
+    requires: [validate-jersey-webservice-jpa-sd-template, publish-jersey-webservice-basic-sd-template]
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
