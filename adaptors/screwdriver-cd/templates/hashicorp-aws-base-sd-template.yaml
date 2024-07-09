@@ -57,16 +57,16 @@ config:
         cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-terraform.tf ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws
 
     - load-packer-ami-variables: |
-        echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
-        echo instance_type           = \"$(meta get parameters.ami-build-instance-type.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ami_region    = \"$(meta get parameters.ami-region.value)\"              >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ami_name      = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo instance_type = \"$(meta get parameters.ami-build-instance-type.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
 
     - load-terraform-ec2-variables: |
-        echo aws_ec2_region          = \"$(meta get parameters.aws-deploy-region.value)\"       >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo instance_type           = \"$(meta get parameters.aws-ec2-instance-type.value)\"   >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo instance_name           = \"$(meta get parameters.instance-name.value)\"           >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo security_groups         = $(meta get parameters.security-groups.value)             >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo aws_ec2_region  = \"$(meta get parameters.aws-deploy-region.value)\"     >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo ami_name        = \"$(meta get parameters.ami-name.value)\"              >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo instance_type   = \"$(meta get parameters.aws-ec2-instance-type.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo instance_name   = \"$(meta get parameters.instance-name.value)\"         >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo security_groups = $(meta get parameters.security-groups.value)           >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
 
     - packer-init: cd ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws && packer init .
     - packer-validate: packer validate .

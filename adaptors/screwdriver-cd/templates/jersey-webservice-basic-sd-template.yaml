@@ -25,12 +25,16 @@ config:
     install-packer,
     install-terraform,
     setup-hashicorp-deployment-tool,
+    load-packer-ami-variables,
+    load-war-file-path,
+    load-terraform-ec2-variables,
+
     install-jdk,
     install-maven,
-    load-packer-ami-variables,
     download-webservice-source-code,
     generate-war,
     relocate-war-for-hashicorp,
+
     packer-init,
     packer-validate,
     packer-build,
