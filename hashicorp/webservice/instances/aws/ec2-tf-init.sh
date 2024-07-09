@@ -18,7 +18,7 @@ set -e
 
 export JETTY_HOME=/home/ubuntu/jetty-home-11.0.15
 
-sudo /usr/bin/filebeat -e -c filebeat.yml -d "publish" &
+# sudo /usr/bin/filebeat -e -c filebeat.yml -d "publish" &
 
 cd /home/ubuntu/jetty-base
 java -jar $JETTY_HOME/start.jar
