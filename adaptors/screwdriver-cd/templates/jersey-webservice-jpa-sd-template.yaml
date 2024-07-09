@@ -30,6 +30,7 @@ config:
     load-packer-ami-variables,
     load-maven-settings-xml,
     download-webservice-source-code,
+    switch-branch,
     load-application-properties-file,
     load-jpadatastore-properties-file,
     generate-war,
@@ -107,9 +108,7 @@ config:
             </activeProfiles>
         </settings>
         EOF
-    - download-webservice-source-code: |
-        git clone --depth 1 -b jpa-elide https://github.com/QubitPi/jersey-webservice-template.git ../jersey-webservice-template
-        cd ../jersey-webservice-template
+    - switch-branch: git checkout jpa-elide
     - load-application-properties-file: |
         echo MODEL_PACKAGE_NAME=$(meta get parameters.model-package-name.value) >> src/main/resources/application.properties
     - load-jpadatastore-properties-file: |
