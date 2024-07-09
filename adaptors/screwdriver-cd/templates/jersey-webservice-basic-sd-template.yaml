@@ -66,7 +66,7 @@ config:
         EOF
 
     - download-webservice-source-code: |
-        git clone --depth 1 https://github.com/QubitPi/jersey-webservice-template.git ../jersey-webservice-template
+        git clone https://github.com/QubitPi/jersey-webservice-template.git ../jersey-webservice-template
         cd ../jersey-webservice-template
 
     - generate-war: |
@@ -76,7 +76,9 @@ config:
           mvn -B clean package --settings settings.xml -Dcheckstyle.skip -Dmaven.test.skip
         fi
 
-    - relocate-war-for-hashicorp: mv target/*.war ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/ROOT.war
+    - relocate-war-for-hashicorp: |
+        mv target/*.war ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/ROOT.war
+        echo war_source = \"ROOT.war\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
   environment:
     INFRASTRUCTURE: webservice
   secrets:
