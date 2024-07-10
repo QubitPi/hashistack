@@ -38,7 +38,7 @@ variable "ec2_instance_name" {
 }
 
 # https://github.com/hashicorp/packer/issues/11354
-# https://qubitpi.github.io/hashicorp-terraform/terraform/language/expressions/types#list
+# https://terraform.qubitpi.org/terraform/language/expressions/types#list
 variable "security_groups" {
   type        = list(string)
   description = "EC2 Security Groups"
