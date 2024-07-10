@@ -18,37 +18,27 @@ version: '1.0.0'
 description: Screwdriver CD template for deploying React APP to AWS through HashiCorp.
 maintainer: jack20220723@gmail.com
 config:
-  image: buildpack-deps:22.04-scm
+  template: QubitPi/hashicorp-aws-ssl-release-definition-template
+  order: [
+    install-packer,
+    install-terraform,
+    setup-hashicorp-deployment-tool,
+    setup-hashicorp-ssl-configs,
+    load-packer-ami-variables,
+    load-react-app-ssl-configs,
+    load-terraform-ec2-variables,
+    load-terraform-ssl-variables,
+    packer-init,
+    packer-validate,
+    packer-build,
+    terraform-init,
+    terraform-validate,
+    terraform-apply
+  ]
   steps:
-    - install-node: sd-cmd exec QubitPi/install-node@latest
-    - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
-    - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
-
-    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-    - load-packer-variable-file: echo "$AWS_REACT_PKRVARS_HCL" > ../hashicorp-aws/hashicorp/react/images/aws-react.auto.pkrvars.hcl
-    - load-ssl-certificate: echo "$SSL_CERTIFICATE" > ../hashicorp-aws/hashicorp/react/images/ssl.crt
-    - load-ssl-certificate-key: echo "$SSL_CERTIFICATE_KEY" > ../hashicorp-aws/hashicorp/react/images/ssl.key
-    - load-nginx-config-file-for-ssl: echo "$NGINX_CONFIG_FILE" > ../hashicorp-aws/hashicorp/react/images/nginx.conf
-
-    - load-terraform-variable-file: echo "$AWS_REACT_TFVARS" > ../hashicorp-aws/hashicorp/react/instances/aws-react.auto.tfvars
-
-    - load-dot-env-file: echo "$DOT_ENV_FILE" > .env
-    - generate-dist: yarn && yarn build
-    - relocate-dist-for-hashicorp: mv dist ../hashicorp-aws/hashicorp/react/images/dist
-
-    - packer-init: cd ../hashicorp-aws/hashicorp/react/images/ && packer init .
-    - packer-validate: packer validate -var "skip_create_ami=true" .
-    - packer-build: packer build -var "skip_create_ami=false" .
-
-    - terraform-init: cd ../instances && terraform init
-    - terraform-validate: terraform validate
-    - terraform-apply: terraform apply -auto-approve
-  secrets:
-    - AWS_REACT_PKRVARS_HCL
-    - SSL_CERTIFICATE
-    - SSL_CERTIFICATE_KEY
-    - NGINX_CONFIG_FILE
-    - AWS_REACT_TFVARS
-    - DOT_ENV_FILE
-    - AWS_ACCESS_KEY_ID
-    - AWS_SECRET_ACCESS_KEY
+    - load-react-app-ssl-configs: |
+        echo react_app_domain    = \"$(meta get parameters.domain.value)\"              >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ssl_cert_base64     = \"$(meta get parameters.ssl-cert-base64.value)\"     >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_base64 = \"$(meta get parameters.ssl-cert-key-base64.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+  environment:
+    INFRASTRUCTURE: sonatype-nexus-repository
