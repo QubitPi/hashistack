@@ -13,7 +13,7 @@
 # limitations under the License.
 ---
 namespace: QubitPi
-name: jersey-webservice-jpa-release-definition-jpa
+name: jersey-webservice-jpa-release-definition-template
 version: '1.0.0'
 description: |
   Screwdriver CD template for deploying instantiated jersey webservice to AWS through HashiCorp.
