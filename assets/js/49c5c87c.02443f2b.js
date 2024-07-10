@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[7949],{9316:e=>{e.exports=JSON.parse('{"permalink":"/blog/tags/team-efficiency","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

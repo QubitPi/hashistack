@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[7969],{6104:a=>{a.exports=JSON.parse('{"permalink":"/blog/tags/java","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

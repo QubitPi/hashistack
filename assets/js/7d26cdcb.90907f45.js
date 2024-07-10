@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[1096],{2146:s=>{s.exports=JSON.parse('{"label":"Code Style","permalink":"/blog/tags/code-style","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

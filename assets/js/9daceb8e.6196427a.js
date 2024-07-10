@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhashicorp_aws=self.webpackChunkhashicorp_aws||[]).push([[6536],{6201:a=>{a.exports=JSON.parse('{"label":"Virtualization","permalink":"/blog/tags/virtualization","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);
