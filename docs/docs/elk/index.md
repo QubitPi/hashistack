@@ -254,7 +254,7 @@ a minute.
 
 [elk-release-definition-template]: https://github.com/QubitPi/elk-release-definition-template
 
-[hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+[hashicorp-aws]: https://hashicorp-aws.com/
 [hashicorp-aws/hashicorp/elk/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/elk/images
 [hashicorp-aws/hashicorp/elk/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/elk/instances
 [HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file

@@ -62,7 +62,7 @@ The use and distribution terms for [hashicorp-aws] are covered by the [Apache Li
 [GitHub Workflow Status Badge]: https://img.shields.io/github/actions/workflow/status/QubitPi/hashicorp-aws/ci-cd.yml?branch=master&logo=github&style=for-the-badge
 [GitHub Workflow Status URL]: https://github.com/QubitPi/hashicorp-aws/actions/workflows/ci-cd.yml
 
-[hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+[hashicorp-aws]: https://hashicorp-aws.com/
 [HashiCorp Packer Badge]: https://img.shields.io/badge/Packer-02A8EF?style=for-the-badge&logo=Packer&logoColor=white
 [HashiCorp Packer URL]: https://packer.qubitpi.org/packer/docs
 [HashiCorp Terraform Badge]: https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white
