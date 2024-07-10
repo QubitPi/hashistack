@@ -267,7 +267,10 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: yarn
+        run: |
+          : # https://yarnpkg.com/corepack
+          npm install -g corepack
+          yarn
       - name: Build website
         run: yarn build
       - name: Load CNAME file
