@@ -57,4 +57,4 @@ be an effective way to manage and share a software configurations within a team.
 
 [hashicorp-aws]'s github-secret now comes into play to bridge the gap between two componet.
 
-[hashicorp-aws]: https://qubitpi.github.io/hashicorp-aws/
+[hashicorp-aws]: https://hashicorp-aws.com/
