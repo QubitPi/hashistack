@@ -13,7 +13,7 @@
 # limitations under the License.
 ---
 namespace: QubitPi
-name: ml-model-release-definition-template-mlflow-docker
+name: mlflow-docker-release-definition-template
 version: '1.0.0'
 description: Deploying immutable ML models as REST API to AWS through HashiCorp using MLflow Docker
 maintainer: jack20220723@gmail.com
