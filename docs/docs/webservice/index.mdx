@@ -53,7 +53,7 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
     ami_region                   = "my-aws-region"
     ami_name                     = "my-webservice"
     instance_type                = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-    ws_war_path                  = "my-webservice-1.0-SNAPSHOT.war"
+    war_source                   = "my-webservice-1.0-SNAPSHOT.war"
     ws_filebeat_config_file_path = "filebeat.yml"
     ```
 
@@ -63,7 +63,7 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
   can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
   with the current built one
     - `instance_type` is the [EC2 instance type][AWS EC2 instance type] to use while building the AMI, such as t2.small.
-    - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
+    - `war_source` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
       the webservice WAR file we are going to deploy
     - `ws_filebeat_config_file_path` is the absolute path or the path relative to
       `hashicorp-aws/hashicorp/webservice/images/basic` of the filebeat config file if the webservice is sending logs
@@ -86,7 +86,7 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
     ami_region                    = "my-aws-region"
     ami_name                      = "my-webservice"
     instance_type                 = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-    ws_war_path                   = "my-webservice-1.0-SNAPSHOT.war"
+    war_source                    = "my-webservice-1.0-SNAPSHOT.war"
     ws_filebeat_config_file_path  = "filebeat.yml"
     aws_ws_ssl_cert_file_path     = "server.crt"
     aws_ws_ssl_cert_key_file_path = "server.key"
@@ -96,7 +96,7 @@ Create a [HashiCorp Packer variable values file] named **aws-ws.auto.pkrvars.hcl
       published image will be _private_
     - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
     - `instance_type` is the [EC2 instance type][AWS EC2 instance type] to use while building the AMI, such as t2.small.
-    - `ws_war_path` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
+    - `war_source` is the absolute path or the path relative to `hashicorp-aws/hashicorp/webservice/images/basic` of
       the webservice WAR file we are going to deploy
     - `ws_filebeat_config_file_path` is the absolute path or the path relative to
       `hashicorp-aws/hashicorp/webservice/images/ssl` of the filebeat config file if the webservice is sending logs

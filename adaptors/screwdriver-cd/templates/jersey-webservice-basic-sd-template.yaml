@@ -16,7 +16,7 @@ namespace: QubitPi
 name: jersey-webservice-basic-release-definition-template
 version: '1.0.0'
 description: |
-  Screwdriver CD template for deploying instantiated jersey webservice to AWS through HashiCorp.
+  Screwdriver CD template for deploying instantiated Jersey webservice to AWS through HashiCorp.
   This template deploys the webservices without SSL/HTTPS or any other addons
 maintainer: jack20220723@gmail.com
 config:
@@ -50,7 +50,7 @@ config:
     - install-jdk: sd-cmd exec QubitPi/install-jdk-17-ubuntu@latest
     - install-maven: sd-cmd exec QubitPi/install-maven-ubuntu@latest
 
-    - load-war-file-path: echo ws_war_path = \"ROOT.war\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+    - load-war-file-path: echo war_source = \"ROOT.war\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
 
     - load-filebeat-file: |
         echo ws_filebeat_config_file_path = \"filebeat.yml\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
@@ -82,7 +82,6 @@ config:
 
     - relocate-war-for-hashicorp: |
         mv target/*.war ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/ROOT.war
-        echo war_source = \"ROOT.war\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
   environment:
     INFRASTRUCTURE: webservice
   secrets:
