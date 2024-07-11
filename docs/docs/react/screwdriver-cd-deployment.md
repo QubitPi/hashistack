@@ -4,6 +4,15 @@ title: Deployment via Screwdriver CD
 description: Deploying React App via Screwdriver CD Template
 ---
 
+:::note
+
+- We take an opinionated React app deployment, which goes with SSL required, because it is a security standard to put
+  all user-facing resources behind HTTPS/SSL
+- All `dist` executables are assumed to be generated in Screwdriver executor runtime (not in Packer or Terraform
+  environment)
+
+:::
+
 React App Release Definition Template
 =====================================
 

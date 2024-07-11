@@ -56,7 +56,7 @@ config:
       description: 'The AWS Route 53 hosted Zone ID that hosts the domain of, for example, "app.mycompany.com"'
   steps:
     - setup-hashicorp-ssl-configs: |
-        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-ssl.tf       ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws
+        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-ssl.tf ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws
     - load-terraform-ssl-variables: |
         echo domain           = \"$(meta get parameters.domain.value)\"           >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
         echo route_53_zone_id = \"$(meta get parameters.route-53-zone-id.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars

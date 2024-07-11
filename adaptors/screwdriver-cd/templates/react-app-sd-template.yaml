@@ -28,6 +28,11 @@ config:
     load-react-app-ssl-configs,
     load-terraform-ec2-variables,
     load-terraform-ssl-variables,
+
+    install-node,
+    generate-dist,
+    relocate-dist-for-hashicorp,
+
     packer-init,
     packer-validate,
     packer-build,
@@ -35,10 +40,21 @@ config:
     terraform-validate,
     terraform-apply
   ]
+  parameters:
+    node-version:
+      value: "18"
+      description: "Node.js version for compiling and running React app"
   steps:
+    - install-node: sd-cmd exec QubitPi/install-node@latest $(meta get parameters.node-version.value)
+    - generate-dist: |
+        echo "This step must be implemented by pipeline."
+        echo "The end result of this step must be a 'dist' file at the check-out root"
+        echo "An example implementation should be 'yarn && yarn build'"
+        exit 1
+    - relocate-dist-for-hashicorp: mv dist ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/
     - load-react-app-ssl-configs: |
         echo react_app_domain    = \"$(meta get parameters.domain.value)\"              >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
         echo ssl_cert_base64     = \"$(meta get parameters.ssl-cert-base64.value)\"     >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
         echo ssl_cert_key_base64 = \"$(meta get parameters.ssl-cert-key-base64.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
   environment:
-    INFRASTRUCTURE: sonatype-nexus-repository
+    INFRASTRUCTURE: react
