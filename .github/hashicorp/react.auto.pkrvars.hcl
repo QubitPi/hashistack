@@ -1,0 +1,7 @@
+ami_region          = "us-west-2"
+ami_name            = "my-nexus-ami"
+instance_type       = "t2.small"
+ssl_cert_base64     = "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
+ssl_cert_key_base64 = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
+react_app_domain    = "app.mycompany.com"
+dist_source         = "dist"

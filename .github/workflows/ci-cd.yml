@@ -72,6 +72,16 @@ jobs:
       matrix:
         infrastructure: [
           {
+            name: React App,
+            packer-conf-dir: hashicorp/react/images/aws,
+            packer-var-file: .github/hashicorp/react.auto.pkrvars.hcl
+          },
+          {
+            name: Jersey Webservice,
+            packer-conf-dir: hashicorp/webservice/images/aws,
+            packer-var-file: .github/hashicorp/webservice.auto.pkrvars.hcl
+          },
+          {
             name: Sonatype Nexus Repository,
             packer-conf-dir: hashicorp/sonatype-nexus-repository/images/aws,
             packer-var-file: .github/hashicorp/sonatype-nexus-repository.auto.pkrvars.hcl
@@ -102,6 +112,16 @@ jobs:
       fail-fast: false
       matrix:
         infrastructure: [
+          {
+            name: React App,
+            terraform-conf-dir: hashicorp/react/instances/aws,
+            ssl-enabled: true
+          },
+          {
+            name: Jersey Webservice,
+            terraform-conf-dir: hashicorp/webservice/instances/aws,
+            ssl-enabled: true
+          },
           {
             name: Sonatype Nexus Repository,
             terraform-conf-dir: hashicorp/sonatype-nexus-repository/instances/aws,
