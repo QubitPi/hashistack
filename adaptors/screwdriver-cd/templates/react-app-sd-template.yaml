@@ -30,6 +30,7 @@ config:
     load-terraform-ssl-variables,
 
     install-node,
+    install-yarn,
     generate-dist,
     relocate-dist-for-hashicorp,
 
@@ -46,6 +47,7 @@ config:
       description: "Node.js version for compiling and running React app"
   steps:
     - install-node: sd-cmd exec QubitPi/install-node@latest $(meta get parameters.node-version.value)
+    - install-yarn: npm install -g yarn
     - generate-dist: |
         echo "This step must be implemented by pipeline."
         echo "The end result of this step must be a 'dist' file at the check-out root"

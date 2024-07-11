@@ -10,6 +10,7 @@ description: Deploying React App via Screwdriver CD Template
   all user-facing resources behind HTTPS/SSL
 - All `dist` executables are assumed to be generated in Screwdriver executor runtime (not in Packer or Terraform
   environment)
+- The template assumes [Yarn 2](https://yarnpkg.com/migration/guide) is used as package manager
 
 :::
 
