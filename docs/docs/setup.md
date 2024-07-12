@@ -54,20 +54,19 @@ requires HTTPS support, then the following files need to be ready:
 - __A SSL certificate key file__
 - __A Nginx config file serving as the reverse proxy for SSL/HTTPS__
 
-The contents of both SSL certificate file and SSL certificate key file need to be __base64 encoded__ with the following
-commands
+The contents of both SSL certificate file and SSL certificate key file need to be __base64 encoded__.
+
+:::tip
+
+One can use the following commands quick commands to convert the certificates to base64 forms:<img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="50px" />
 
 ```console
-openssl enc -base64 -in cert.pem -out cert.base64
-openssl enc -base64 -in key.pem -out key.base64
+openssl enc -base64 -in cert.pem | tr '\n' ' ' > cert.base64
+openssl enc -base64 -in key.pem | tr '\n' ' ' > key.base64
 ```
 
 where `cert.pem` and `key.pem` are the SSL certificate file and SSL certificate key file, respectively. Please keep
 `cert.base64` and `key.base64` files which will be referenced and used later
-
-:::tip
-
-All 3 credentials, including how to obtain their values, are discussed below
 
 :::
 
