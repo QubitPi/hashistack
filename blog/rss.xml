@@ -4,7 +4,7 @@
         <title>hashicorp-aws Blog</title>
         <link>https://hashicorp-aws.com/blog</link>
         <description>hashicorp-aws Blog</description>
-        <lastBuildDate>Fri, 12 Jul 2024 06:47:04 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 12 Jul 2024 07:07:59 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[Testing HashiCorp Terraform]]></title>
             <link>https://hashicorp-aws.com/blog/testing-hashicorp-terraform</link>
             <guid>https://hashicorp-aws.com/blog/testing-hashicorp-terraform</guid>
-            <pubDate>Fri, 12 Jul 2024 06:47:04 GMT</pubDate>
+            <pubDate>Fri, 12 Jul 2024 07:07:59 GMT</pubDate>
             <description><![CDATA[How do we know if we can run terraform apply to our infrastructure without negatively affecting critical business]]></description>
             <content:encoded><![CDATA[<p>How do we know if we can run <code>terraform apply</code> to our infrastructure without negatively affecting critical business
 applications? We can run <code>terraform validate</code> and <code>terraform plan</code> to check our configuration, but will that be enough?
