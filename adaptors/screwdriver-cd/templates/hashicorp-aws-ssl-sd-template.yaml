@@ -41,16 +41,6 @@ config:
     domain:
       value: "app.mycompany.com"
       description: "The SSL-enabled domain where the deployed infrastructure is accessible at"
-    ssl-cert-base64:
-      value: "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
-      description: |
-        A base64 encoded string of the content of SSL certificate file for the SSL-enabled domain, i.e.
-        'app.mycompany.com' given the domain is 'mygateway.mycompany.com'
-    ssl-cert-key-base64:
-      value: "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
-      description: |
-        A base64 encoded string of the content of SSL certificate key file for the SSL-enabled domain, i.e.
-        'app.mycompany.com' given the domain is 'mygateway.mycompany.com'
     route-53-zone-id:
       value: "9DQXLTNSN7ZX9P8V2KZII"
       description: 'The AWS Route 53 hosted Zone ID that hosts the domain of, for example, "app.mycompany.com"'
@@ -60,3 +50,6 @@ config:
     - load-terraform-ssl-variables: |
         echo domain           = \"$(meta get parameters.domain.value)\"           >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
         echo route_53_zone_id = \"$(meta get parameters.route-53-zone-id.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+  secrets:
+    - SSL_CERT_BASE_64
+    - SSL_CERT_KEY_BASE_64

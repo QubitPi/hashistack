@@ -3,110 +3,144 @@ sidebar_position: 1
 title: General Deployment
 ---
 
-:::tip
+Deploying React APP
+===================
 
-- EBS volumes during build time will [automatically be removed][HashiCorp Packer delete_on_termination]
+hashicorp-aws deploys React-based frontend project in the following way:
+
+- Deploys the APP in **HTTP** mode
+- Deploys a reverse proxy Nginx in front of the APP in the same EC2 to redirect all HTTPS request to its default 3000
+  HTTP port
+
+General Deployments
+-------------------
+
+:::info
+
+Please complete the [general setup](../setup#setup) before proceeding.
 
 :::
 
-Manual Deployment
------------------
+### Defining Packer Variables
 
-The following script variables need to be defined:
+Create a [HashiCorp Packer variable values file] named "aws-kong.auto.pkrvars.hcl" under
+__hashicorp-aws/hashicorp/react/images/aws__ directory with the following contents:
 
-- [**AWS_ACCESS_KEY_ID**][AWS_ACCESS_KEY_ID] & [**AWS_SECRET_ACCESS_KEY**][AWS_SECRET_ACCESS_KEY]
+```hcl title="hashicorp-aws/hashicorp/react/images/aws/aws.auto.pkrvars.hcl"
+ami_region          = "us-west-2"
+ami_name            = "my-react-ami"
+instance_type       = "t2.small"
+node-version        = "18"
+react_app_domain    = "app.mycompany.com"
+ssl_cert_base64     = "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
+ssl_cert_key_base64 = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
+```
+
+:::tip
+
+`node-version` is optional and, if unspecified, defaults to 18
+
+:::
+
+- `ami_region` is the [image region][AWS regions] where Nexus [AMI][AWS AMI] will be published to. The
+  published image will be _private_
+- `ami_name` is the name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs. This
+  can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
+  with the current built one
+- `instance_type` The [AWS EC2 instance type] to use while _building_ the AMI
+- `react_app_domain` is the SSL-enabled domain that will serve the deployed React App instance.
+- `ssl_cert_base64` is a __base64 encoded__ string of the content of
+  [SSL certificate file](../setup#optional-setup-ssl) for the SSL-enabled domain, i.e. `app.mycompany.com` given the `react_app_domain` is
+  `app.mycompany.com`
+- `ssl_cert_key_base64` is a __base64 encoded__ string of the content of
+  [SSL certificate file](../setup#optional-setup-ssl) for the SSL-enabled domain, i.e. `app.mycompany.com` given the `react_app_domain` is
+  `app.mycompany.com`
+
+### Building AMI Image
+
+```bash
+cd hashicorp-aws
+
+cp hashicorp/common/images/aws/aws-builder.pkr.hcl hashicorp/react/images/aws
+cp hashicorp/common/images/aws/aws-packer.pkr.hcl hashicorp/react/images/aws
+
+cd hashicorp/react/images/aws
+packer init .
+packer validate .
+packer build .
+```
+
+:::note
+
+EBS volumes during build time will [automatically be removed][HashiCorp Packer delete_on_termination]
+
+:::
+
+This will take a while and to save time, we can leave it here and proceed immediately to the next step.
+
+### Defining Terraform Variables
+
+Create a [HashiCorp Terraform variable values file] named "aws.auto.tfvars" under
+__hashicorp-aws/hashicorp/react/instances/aws__ directory with the following contents:
+
+```hcl title="hashicorp-aws/hashicorp/react/instances/aws/aws.auto.tfvars"
+aws_ec2_region   = "us-west-2"
+ami_name         = "my-react-ami"
+instance_type    = "t2.medium"
+instance_name    = "My React APP"
+security_groups  = ["My Nexus Security Group A", "My Nexus Security Group B", "My Nexus Security Group C"]
+route_53_zone_id = "MBS8YLKZML18VV2E8M8OK"
+domain           = "app.mycompany.com"
+```
+
+- `aws_ec2_region` is the [EC2 runtime region][AWS regions] where Kong will be deployed into
+- `ami_name` is the name of the published AMI; __it must be the same as the `ami_name` in
+  [Packer variable file](#defining-packer-variables)__
+- `instance_type` is the [AWS EC2 instance type] used for deployed Nexus
+- `instance_name` is the deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary
+- `security_groups` is the list of [AWS Security Group] _names_ to associate with (yes, not ID, but name...)
 
   :::info
 
-  The _IAM user_ associated with the credentials above must have the following [AWS permissions policies]:
-
-  - IAMFullAccess
-  - AmazonEC2FullAccess
-  - AmazonRoute53FullAccess
+  The standard HTTPS port 443 need to be open by configuring the inbound rules
 
   :::
 
-- **REACT_DIR**: The local absolute path to the React project repo
+- `domain` is the SSL-enabled domain that will serve the Nexus
+- `route_53_zone_id` is the AWS Route 53 hosted Zone ID that hosts the domain `nexus.mycompany.com`
 
-  :::caution
+  :::tip
 
-  Should the React App be built with [.env file], this file MUST exist at `$REACT_DIR/.env` at this moment. This .env
-  file is essentially the same one mentioned in the `HC_CONFIG_DIR` part below
+  To find the zone ID in AWS Route 53, we can:
+
+    1. Sign in to the AWS Management Console
+    2. Open the Route 53 console at https://console.aws.amazon.com/route53/
+    3. Select Hosted zones in the navigation pane
+    4. Find the requested ID in the top level Hosted Zones summary in the Route 53 section
 
   :::
 
-- **HC_DIR**: The local absolute path to the [hashicorp-aws] directory
-- **HC_CONFIG_DIR**: The local absolute path to a directory containing the following deployment files:
+### Deploying to EC2
 
-    - SSL cert file located (`/abs/path/to/hashicorp-aws-config-dir/server.crt`)
-    - SSL cert key file (`/abs/path/to/hashicorp-aws-config-dir/server.key`)
-    - Nginx config file (`/abs/path/to/hashicorp-aws-config-dir/nginx.conf`)
-    - .env file (`/abs/path/to/hashicorp-aws-config-dir/.env`)
-    - A [HashiCorp Packer variable file][HashiCorp Packer variable file] named **aws-react.pkrvars.hcl** with the following
-      variable values (`/abs/path/to/hashicorp-aws-config-dir/aws-react.pkrvars.hcl`):
+:::caution
 
-      ```hcl
-      ami_region                       = "my-aws-region"
-      ami_name                         = "my-react-app"
-      instance_type                    = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-      react_dist_path                  = "../../../../dist"
-      aws_react_ssl_cert_file_path     = "../../../../hashicorp-aws-config-dir/server.crt"
-      aws_react_ssl_cert_key_file_path = "../../../../hashicorp-aws-config-dir/server.key"
-      aws_react_nginx_config_file_path = "../../../../hashicorp-aws-config-dir/nginx.conf"
-      ```
+Depending on the [AMI](#defining-packer-variables) and [EC2](#defining-terraform-variables) configs, **please be aware AWS credit charges shall incur after the following
+commands execute**
 
-    - A [HashiCorp Terraform variable file][HashiCorp Terraform variable file] named **aws-react.tfvars** with the
-      following variable values (`/abs/path/to/hashicorp-aws-config-dir/aws-react.tfvars`):
+:::
 
-      ```hcl
-      aws_ec2_region = "my-aws-region"
-      route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
-      ami_name          = "my-react-app"
-      instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
-      ec2_instance_name = "My React App"
-      security_groups   = ["My React App"]
-      react_domain      = "myreactapp.mycompany.com"
-      ```
+When [AMI image finishes building](#building-ami-image), we can go ahead to deploy that image as an EC2 instance:
 
-GitHub Action Automatic Deployment
-----------------------------------
+```bash
+cd ../../instances/aws
 
-### General Template in Downstream Repo
+cp ../../../common/instances/aws/aws-ec2.tf .
+cp ../../../common/instances/aws/aws-ssl.tf .
+cp ../../../common/instances/aws/aws-terraform.tf .
 
-```yaml
-env:
-  NODE_VERSION: 16
-
-jobs:
-  hashicorp:
-    name: Generated React dist in GitHub Action, publish its AMI and deploy the AMI to EC2 through HashiCorp
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set node version to ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - name: Checkout HashiCorp deployment tool
-        run: git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-      - name: Load hashicorp-aws-config-dir and put it in the same directory as hashicorp-aws
-        run: ...
-      - name: Load Packer variable file
-        run: cp ../hashicorp-aws-config-dir/aws-react.pkrvars.hcl ../hashicorp-aws/hashicorp/react/images/aws-react.auto.pkrvars.hcl
-      - name: Load Terraform variable file
-        run: cp ../hashicorp-aws-config-dir/aws-react.tfvars ../hashicorp-aws/hashicorp/react/instances/aws-react.auto.tfvars
-      - name: Generate dist
-        run: cp ../hashicorp-aws-config-dir/.env . && yarn && yarn build
-      - name: Move dist to a location for HashiCorp deployment to pickup
-        run: mv dist ../
-      - name: QubitPi/hashicorp-aws
-        uses: QubitPi/hashicorp-aws@master
-        with:
-          hashicorp-dir: ../hashicorp-aws/hashicorp/react
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+terraform init
+terraform validate
+terraform apply -auto-approve
 ```
 
 Deployment via Screwdriver CD
@@ -114,23 +148,20 @@ Deployment via Screwdriver CD
 
 hashicorp-aws supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out. <img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
 
-[AWS_ACCESS_KEY_ID]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
-[AWS permissions policies]: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_access-management.html
-[AWS_SECRET_ACCESS_KEY]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
+Deployment via HACP
+-------------------
 
-[ESLint]: https://eslint.org/
+:::tip
 
-[hashicorp-aws]: https://hashicorp-aws.com/
-[HashiCorp Packer delete_on_termination]: https://packer.qubitpi.org/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#:~:text=Optional%3A-,delete_on_termination,-(bool)%20%2D%20Indicates%20whether
-[HashiCorp Packer variable file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
-[HashiCorp Terraform variable file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files
+Please try our HACP platform to deploy a Nexus instance. It gives us one-click experience that helps us stand up a
+software artifactory in a minute.
 
-[Jest]: https://qubitpi.github.io/jest/
+:::
 
-[Prettier]: https://qubitpi.github.io/prettier/docs/en/install.html
+[AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
+[AWS EC2 instance type]: https://aws.amazon.com/ec2/instance-types/
+[AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
+[AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
-[typescript-eslint]: https://typescript-eslint.io/
-
-[wait-on]: https://github.com/jeffbski/wait-on
-
-[.env file]: https://create-react-app.dev/docs/adding-custom-environment-variables/#adding-development-environment-variables-in-env
+[HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
+[HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files

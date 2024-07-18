@@ -229,7 +229,7 @@ nohup sudo /usr/share/logstash/bin/logstash -f logstash-filebeat.conf --config.r
 Deployment via Screwdriver CD
 -----------------------------
 
-hashicorp-aws also support deployment using [Screwdriver CD] with this [elk-release-definition-template]
+hashicorp-aws also support deployment using [Screwdriver CD]
 
 Deployment via GitHub Actions
 -----------------------------
@@ -251,8 +251,6 @@ a minute.
 [AWS AMI]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
-
-[elk-release-definition-template]: https://github.com/QubitPi/elk-release-definition-template
 
 [hashicorp-aws]: https://hashicorp-aws.com/
 [hashicorp-aws/hashicorp/elk/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/elk/images

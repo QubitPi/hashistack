@@ -20,72 +20,27 @@ description: |
   HashiCorp.
 maintainer: jack20220723@gmail.com
 config:
-  image: buildpack-deps:22.04-scm
-  parameters:
-    ami-region:
-      value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-      description: "The AWS region where Kong API Gateway AMI will be published to. The published image will be private"
-    ami-name:
-      value: "my-kong-ami"
-      description: "The published AMI name; it can be arbitrary"
-    instance-type:
-      value: ["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"]
-      description: "The EC2 instance type to use when building an AMI as well as launching the instance"
-    aws-deploy-region:
-      value: ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-      description: "The AWS region where Kong API Gateway EC2 instance will be deployed into"
-    instance-name:
-      value: "My Kong API Gateway instance"
-      description: "The deployed EC2 name as appeared in the instance list of AWS console; it can be arbitrary"
-    security-groups:
-      value: '["My Kong API Security Group", "My Kong Admin Security Group"]'
-      description: "The list of AWS Security Group names (yes, not ID, but name...) bound to the Kong EC2 instance."
-    kong-api-gateway-domain:
-      value: "mygateway.mycompany.com"
-      description: |
-        The SSL-enabled domain that will serve various Kong API Gateway endpoints, such as its API and Kong Manager UI
-    ssl-cert-base64:
-      value: "YXNkZnNnaHRkeWhyZXJ3ZGZydGV3ZHNmZ3RoeTY0cmV3ZGZyZWd0cmV3d2ZyZw=="
-      description: |
-        A base64 encoded string of the content of SSL certificate file for the SSL-enabled domain, i.e.
-        'mygateway.mycompany.com' given the kong-api-gateway-domain is 'mygateway.mycompany.com'
-    ssl-cert-key-base64:
-      value: "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
-      description: |
-        A base64 encoded string of the content of SSL certificate key file for the SSL-enabled domain, i.e.
-        'mygateway.mycompany.com' given the kong-api-gateway-domain is 'mygateway.mycompany.com'
-    route-53-zone-id:
-      value: "9DQXLTNSN7ZX9P8V2KZII"
-      description: 'The AWS Route 53 hosted Zone ID that hosts the domain defined by "kong-api-gateway-domain"'
+  template: QubitPi/hashicorp-aws-ssl-release-definition-template
+  order: [
+    install-packer,
+    install-terraform,
+    setup-hashicorp-deployment-tool,
+    setup-hashicorp-ssl-configs,
+    load-packer-ami-variables,
+    load-packer-ssl-configs,
+    load-terraform-ec2-variables,
+    load-terraform-ssl-variables,
+    packer-init,
+    packer-validate,
+    packer-build,
+    terraform-init,
+    terraform-validate,
+    terraform-apply
+  ]
   steps:
-    - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
-    - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
-    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-
-    - load-packer-variable-file: |
-        echo ami_region              = \"$(meta get parameters.ami-region.value)\"              >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_base64         = \"$(meta get parameters.ssl-cert-base64.value)\"        >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_base64     = \"$(meta get parameters.ssl-cert-key-base64.value)\"    >> ../hashicorp-aws/hashicorp/kong-api-gateway/images/aws.auto.pkrvars.hcl
-
-    - load-terraform-variable-file: |
-        echo aws_ec2_region          = \"$(meta get parameters.aws-deploy-region.value)\"       >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo ami_name                = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo instance_type           = \"$(meta get parameters.instance-type.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo instance_name           = \"$(meta get parameters.instance-name.value)\"           >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo security_groups         = $(meta get parameters.security-groups.value)             >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo kong_api_gateway_domain = \"$(meta get parameters.kong-api-gateway-domain.value)\" >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-        echo route_53_zone_id        = \"$(meta get parameters.route-53-zone-id.value)\"        >> ../hashicorp-aws/hashicorp/kong-api-gateway/instances/aws.auto.tfvars
-
-    - packer-init: cd ../hashicorp-aws/hashicorp/kong-api-gateway/images && packer init .
-    - packer-validate: packer validate -var "skip_create_ami=true" .
-    - packer-build: packer build -var "skip_create_ami=false" .
-
-    - terraform-init: cd ../instances && terraform init
-    - terraform-validate: terraform validate
-    - terraform-apply: terraform apply -auto-approve
-  secrets:
-    - AWS_ACCESS_KEY_ID
-    - AWS_SECRET_ACCESS_KEY
+    - load-packer-ssl-configs: |
+        echo kong_api_gateway_domain = \"$(meta get parameters.domain.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ssl_cert_base64         = \"$SSL_CERT_BASE_64\"                   >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_base64     = \"$SSL_CERT_KEY_BASE_64\"               >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+  environment:
+    INFRASTRUCTURE: kong-api-gateway

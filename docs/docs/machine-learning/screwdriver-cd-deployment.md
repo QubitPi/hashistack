@@ -20,23 +20,6 @@ All templates tag the latest versions with the `latest` tag.
 How to Use the Templates
 ------------------------
 
-### Installing Template in Screwdriver
-
-The template needs to be installed first in Screwdriver running instance. Installation has two parts:
-
-1. [the template](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/mlflow-docker-sd-template.yaml)
-2. Some [pre-defined Screwdriver commands][Screwdriver CD - commands] that this template uses
-
-The template and the commands can be automatically installed using the regular [screwdriver.yaml] config file by
-following the steps below:
-
-1. [Create a Screwdriver pipeline][Screwdriver CD - creating a pipeline] with the repository link being
-   `https://github.com/QubitPi/hashicorp-aws.git`
-2. Trigger a pipeline run, which will install the templates and commands automatically. Wait the pipeline to finish
-   running.
-3. The installed template and commands can be found in [Templates page][Screwdriver CD - finding templates] and
-   [Commands page][Screwdriver CD - finding commands], respectively
-
 ### Using the Template
 
 [Create a Screwdriver pipeline that uses this template][Screwdriver CD - creating pipeline from template] with the following
