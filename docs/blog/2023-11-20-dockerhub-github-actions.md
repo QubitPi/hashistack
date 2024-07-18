@@ -19,8 +19,8 @@ Before we start, ensure you can access [Docker Hub](https://hub.docker.com/) fro
 1. Add your Docker ID as a secret to GitHub. Navigate to your GitHub repository and click **Settings** > **Secrets** >
    **New secret**.
 2. Create a new secret with the name DOCKERHUB_USERNAME and your Docker ID as value.
-3. Create a new Personal Access Token (PAT). To create a new token, go to
-   [Docker Hub Settings](https://hub.docker.com/settings/security) and then click **New Access Token**.
+3. Create a new Personal Access Token (PAT). To create a new token, go to Docker Hub Settings at
+   `https://hub.docker.com/settings/security` and then click **New Access Token**.
 
 Define CI Workflow on GitHub
 ----------------------------

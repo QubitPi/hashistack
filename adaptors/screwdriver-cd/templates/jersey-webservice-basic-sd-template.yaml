@@ -53,7 +53,7 @@ config:
     - load-war-file-path: echo war_source = \"ROOT.war\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
 
     - load-filebeat-file: |
-        echo ws_filebeat_config_file_path = \"filebeat.yml\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo filebeat_path = \"filebeat.yml\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
 
         cat  << EOF >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/filebeat.yml
         filebeat.config.modules:

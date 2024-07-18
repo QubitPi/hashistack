@@ -17,27 +17,21 @@ the latest versions with the `latest` tag.
 How to Use This Template
 ------------------------
 
-### Installing Template in Screwdriver
+Please follow the sections below to get started using this template <img src="https://github.com/QubitPi/QubitPi/blob/master/img/%E5%BF%83%E6%B5%B7/%E5%BF%83%E6%B5%B7-17.png?raw=true" height="50px"/>
 
-The template needs to be installed first in Screwdriver running instance. Installation has two parts:
+### Installing the Template
 
-1. [the template](https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/templates/kong-api-gateway-sd-template.yaml)
-2. Some [pre-defined Screwdriver commands][Screwdriver CD - commands] that this template uses
+Please follow the [instructions](../adaptors/screwdriver-cd#installing-templates-and-commands) here and make sure, once
+done, we are able to see the two following template shown in the templates page:
 
-The template and the commands can be automatically installed using the regular [screwdriver.yaml] config file by
-following the steps below:
+- __kong-api-gateway-release-definition-template__
 
-1. [Create a Screwdriver pipeline][Screwdriver CD - creating a pipeline] with the repository link being
-   `https://github.com/QubitPi/hashicorp-aws.git`
-2. Trigger a pipeline run, which will install the templates and commands automatically. Wait the pipeline to finish
-   running.
-3. The installed template and commands can be found in [Templates page][Screwdriver CD - finding templates] and
-   [Commands page][Screwdriver CD - finding commands], respectively
+![Error loading templates-installed.png](./img/templates-installed.png)
 
-### Using the Template
+### Creating Pipeline from Template
 
-[Create a Screwdriver pipeline that uses this template][Screwdriver CD - creating pipeline from template] with the
-`screwdriver.yaml` file of
+[Create a Screwdriver pipeline](../adaptors/screwdriver-cd#1-creating-a-screwdriver-pipeline) with the URL of a GitHub
+repo that contains a `screwdriver.yaml` file with the following content
 
 ```yaml
 ---
@@ -47,16 +41,18 @@ jobs:
     template: QubitPi/kong-api-gateway-release-definition-template@latest
 ```
 
+### Configuring Pipeline
+
 The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined before running the pipeline:
 
-- [`AWS_ACCESS_KEY_ID`](../setup#aws)
-- [`AWS_SECRET_ACCESS_KEY`](../setup#aws)
-- `SSL_CERTIFICATE` - the content of SSL certificate file serving HTTPS-enabled DNS name of the EC2 hosting our Kong
-  API Gateway instance. This is the same as the `SSL_CERTIFICATE` from the
-  [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
-- `SSL_CERTIFICATE_KEY` - the content of SSL certificate key file serving HTTPS-enabled DNS name of the EC2 hosting our
-  API Gateway instance. This is the same as the `SSL_CERTIFICATE_KEY` from the
-  [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
+- [AWS_ACCESS_KEY_ID](../setup#aws)
+- [AWS_SECRET_ACCESS_KEY](../setup#aws)
+- SSL_CERT_BASE_64: A base64 encoded string of the content of SSL certificate file for the SSL-enabled domain for the
+  Kong Gateway
+- SSL_CERT_KEY_BASE_64: A base64 encoded string of the content of SSL certificate key file for the SSL-enabled domain
+  Kong Gateway
+
+### Running Pipeline
 
 To run the pipeline, fill in the AWS-related **parameters** first
 
@@ -68,14 +64,6 @@ Then hit "**Submit**" to start deploying.
 
 [Kong API Gateway]: https://qubitpi.github.io/docs.konghq.com/
 
-[publishing a template in Screwdriver]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#publishing-a-template
-
-[screwdriver.yaml]: https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml
-[Screwdriver CD - commands]: https://github.com/QubitPi/hashicorp-aws/tree/master/adaptors/screwdriver-cd/commands
-[Screwdriver CD - creating a pipeline]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/quickstart#create-a-new-pipeline
-[Screwdriver CD - creating pipeline from template]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#using-a-template
-[Screwdriver CD - finding templates]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#finding-templates
-[Screwdriver CD - finding commands]: https://screwdriver-docs.qubitpi.org/user-guide/commands#finding-commands
 [Screwdriver CD Secrets]: https://screwdriver-docs.qubitpi.org/user-guide/configuration/secrets
 [Screwdriver CD template]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates
 [screwdriver-template-main npm package]: https://github.com/QubitPi/screwdriver-cd-template-main

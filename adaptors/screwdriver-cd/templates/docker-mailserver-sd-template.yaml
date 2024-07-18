@@ -83,8 +83,8 @@ config:
         echo ami_region          = \"$(meta get parameters.ami-region.value)\"           >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
         echo ami_name            = \"$(meta get parameters.ami-name.value)\"             >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
         echo base_domain         = \"$(meta get parameters.base-domain.value)\"          >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_base64     = \"$(meta get parameters.ssl-cert-base64.value)\"     >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_base64 = \"$(meta get parameters.ssl-cert-key-base64.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_base64     = \"$SSL_CERT_BASE_64\"     >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_base64 = \"$SSL_CERT_KEY_BASE_64\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
         echo aws_ec2_region       = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
@@ -107,3 +107,5 @@ config:
   secrets:
     - AWS_ACCESS_KEY_ID
     - AWS_SECRET_ACCESS_KEY
+    - SSL_CERT_BASE_64
+    - SSL_CERT_KEY_BASE_64

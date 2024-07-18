@@ -140,11 +140,24 @@ route_53_zone_id        = "MBS8YLKZML18VV2E8M8OK"
 ### Building AMI Image
 
 ```bash
-cd hashicorp-aws/hashicorp/kong-api-gateway/images
+cd hashicorp-aws
+
+cp hashicorp/common/images/aws/aws-builder.pkr.hcl hashicorp/kong-api-gateway/images/aws
+cp hashicorp/common/images/aws/aws-packer.pkr.hcl hashicorp/kong-api-gateway/images/aws
+
+cd hashicorp/kong-api-gateway/images/aws
 packer init .
-packer validate -var "skip_create_ami=true" .
-packer build -var "skip_create_ami=false" .
+packer validate .
+packer build .
 ```
+
+:::note
+
+EBS volumes during build time will [automatically be removed][HashiCorp Packer delete_on_termination]
+
+:::
+
+This will take a while and to save time, we can leave it here and proceed immediately to the next step.
 
 ### Deploying to EC2
 
@@ -156,7 +169,12 @@ AWS credit charges shall incur after the following commands execute**
 :::
 
 ```bash
-cd ../instances
+cd ../../instances/aws
+
+cp ../../../common/instances/aws/aws-ec2.tf .
+cp ../../../common/instances/aws/aws-ssl.tf .
+cp ../../../common/instances/aws/aws-terraform.tf .
+
 terraform init
 terraform validate
 terraform apply -auto-approve

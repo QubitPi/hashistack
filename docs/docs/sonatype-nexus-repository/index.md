@@ -23,8 +23,8 @@ Please complete the [general setup](../setup#setup) before proceeding.
 
 ### Defining Packer Variables
 
-Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.hcl** under
-**[hashicorp-aws/hashicorp/sonatype-nexus-repository/images/aws]** directory with the following contents:
+Create a [HashiCorp Packer variable values file] named "aws-kong.auto.pkrvars.hcl" under
+__hashicorp-aws/hashicorp/sonatype-nexus-repository/images/aws__ directory with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/sonatype-nexus-repository/images/aws/aws.auto.pkrvars.hcl"
 ami_region                       = "us-west-2"
@@ -49,10 +49,32 @@ ssl_cert_key_base64              = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0c
   [SSL certificate file](../setup#optional-setup-ssl) for the SSL-enabled domain, i.e. `nexus.mycompany.com` given
   the kong-api-gateway-domain is `nexus.mycompany.com`
 
+### Building AMI Image
+
+```bash
+cd hashicorp-aws
+
+cp hashicorp/common/images/aws/aws-builder.pkr.hcl hashicorp/sonatype-nexus-repository/images/aws
+cp hashicorp/common/images/aws/aws-packer.pkr.hcl hashicorp/sonatype-nexus-repository/images/aws
+
+cd hashicorp/sonatype-nexus-repository/images/aws
+packer init .
+packer validate .
+packer build .
+```
+
+:::note
+
+EBS volumes during build time will [automatically be removed][HashiCorp Packer delete_on_termination]
+
+:::
+
+This will take a while and to save time, we can leave it here and proceed immediately to the next step.
+
 ### Defining Terraform Variables
 
-Create a [HashiCorp Terraform variable values file] named **aws.auto.tfvars** under
-**[hashicorp-aws/hashicorp/sonatype-nexus-repository/instances/aws]** directory with the following contents:
+Create a [HashiCorp Terraform variable values file] named "aws.auto.tfvars" under
+__hashicorp-aws/hashicorp/sonatype-nexus-repository/instances/aws__ directory with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/sonatype-nexus-repository/instances/aws/aws.auto.tfvars"
 aws_ec2_region   = "us-west-2"
@@ -73,7 +95,7 @@ domain           = "nexus.mycompany.com"
 
   :::info
 
-  The port [8081][Sonatype Nexus Repository default HTTP port] need to be open by configuring the inbound rules
+  The standard HTTPS port 443 need to be open by configuring the inbound rules
 
   :::
 
@@ -91,31 +113,24 @@ domain           = "nexus.mycompany.com"
 
   :::
 
-### Building AMI Image
-
-```bash
-cd hashicorp-aws
-
-cp hashicorp/common/images/aws/aws-builder.pkr.hcl hashicorp/sonatype-nexus-repository/images/aws
-cp hashicorp/common/images/aws/aws-packer.pkr.hcl hashicorp/sonatype-nexus-repository/images/aws
-
-cd hashicorp/sonatype-nexus-repository/images/aws
-packer init .
-packer validate.
-packer build .
-```
-
 ### Deploying to EC2
 
 :::caution
 
-Depending on the [AMI](#defining-packer-variables) and [EC2](#defining-terraform-variables) configs, **please be aware
-AWS credit charges shall incur after the following commands execute**
+Depending on the [AMI](#defining-packer-variables) and [EC2](#defining-terraform-variables) configs, **please be aware AWS credit charges shall incur after the following
+commands execute**
 
 :::
 
+When [AMI image finishes building](#building-ami-image), we can go ahead to deploy that image as an EC2 instance:
+
 ```bash
 cd ../../instances/aws
+
+cp ../../../common/instances/aws/aws-ec2.tf .
+cp ../../../common/instances/aws/aws-ssl.tf .
+cp ../../../common/instances/aws/aws-terraform.tf .
+
 terraform init
 terraform validate
 terraform apply -auto-approve
@@ -141,11 +156,7 @@ software artifactory in a minute.
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
-[hashicorp-aws/hashicorp/sonatype-nexus-repository/images/aws]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/sonatype-nexus-repository/images/aws
-[hashicorp-aws/hashicorp/sonatype-nexus-repository/instances/aws]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/sonatype-nexus-repository/instances/aws
-[HashiCorp Packer - Install]: https://packer.qubitpi.org/packer/install
 [HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
-[HashiCorp Terraform - Install]: https://terraform.qubitpi.org/terraform/install
 [HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [Sonatype Nexus Repository]: https://github.com/QubitPi/docker-nexus3
