@@ -4,7 +4,7 @@
         <title>hashicorp-aws Blog</title>
         <link>https://hashicorp-aws.com/blog</link>
         <description>hashicorp-aws Blog</description>
-        <lastBuildDate>Fri, 12 Jul 2024 07:07:59 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 18 Jul 2024 05:10:07 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[Testing HashiCorp Terraform]]></title>
             <link>https://hashicorp-aws.com/blog/testing-hashicorp-terraform</link>
             <guid>https://hashicorp-aws.com/blog/testing-hashicorp-terraform</guid>
-            <pubDate>Fri, 12 Jul 2024 07:07:59 GMT</pubDate>
+            <pubDate>Thu, 18 Jul 2024 05:10:07 GMT</pubDate>
             <description><![CDATA[How do we know if we can run terraform apply to our infrastructure without negatively affecting critical business]]></description>
             <content:encoded><![CDATA[<p>How do we know if we can run <code>terraform apply</code> to our infrastructure without negatively affecting critical business
 applications? We can run <code>terraform validate</code> and <code>terraform plan</code> to check our configuration, but will that be enough?
@@ -589,8 +589,8 @@ push results in a usable image, which enhances the quality of a docker image a l
 <li>Add your Docker ID as a secret to GitHub. Navigate to your GitHub repository and click <strong>Settings</strong> &gt; <strong>Secrets</strong> &gt;
 <strong>New secret</strong>.</li>
 <li>Create a new secret with the name DOCKERHUB_USERNAME and your Docker ID as value.</li>
-<li>Create a new Personal Access Token (PAT). To create a new token, go to
-<a href="https://hub.docker.com/settings/security" target="_blank" rel="noopener noreferrer">Docker Hub Settings</a> and then click <strong>New Access Token</strong>.</li>
+<li>Create a new Personal Access Token (PAT). To create a new token, go to Docker Hub Settings at
+<code>https://hub.docker.com/settings/security</code> and then click <strong>New Access Token</strong>.</li>
 </ol>
 <h2 class="anchor anchorWithStickyNavbar_G07S" id="define-ci-workflow-on-github">Define CI Workflow on GitHub<a href="https://hashicorp-aws.com/blog/dockerhub-github-actions#define-ci-workflow-on-github" class="hash-link" aria-label="Direct link to Define CI Workflow on GitHub" title="Direct link to Define CI Workflow on GitHub">​</a></h2>
 <p><code>git checkout</code> the branch that contains the docker image definition, i.e. Dockerfile, and add a new YAML file to the

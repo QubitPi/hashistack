@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.0.0">
 <title data-rh="true">Build and Push Docker Images through GitHub Action | hashicorp-aws</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://hashicorp-aws.com/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://hashicorp-aws.com/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://hashicorp-aws.com/blog/dockerhub-github-actions"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="Build and Push Docker Images through GitHub Action | hashicorp-aws"><meta data-rh="true" name="description" content="On every push to GitHub, GitHub Action can"><meta data-rh="true" property="og:description" content="On every push to GitHub, GitHub Action can"><meta data-rh="true" property="og:type" content="article"><meta data-rh="true" property="article:published_time" content="2023-11-20T00:00:00.000Z"><meta data-rh="true" property="article:author" content="https://github.com/QubitPi"><meta data-rh="true" property="article:tag" content="Docker"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://hashicorp-aws.com/blog/dockerhub-github-actions"><link data-rh="true" rel="alternate" href="https://hashicorp-aws.com/blog/dockerhub-github-actions" hreflang="en"><link data-rh="true" rel="alternate" href="https://hashicorp-aws.com/blog/dockerhub-github-actions" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="hashicorp-aws RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="hashicorp-aws Atom Feed"><link rel="stylesheet" href="/assets/css/styles.8cbc6638.css">
-<script src="/assets/js/runtime~main.a5d954f7.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.eed1ef5a.js" defer="defer"></script>
 <script src="/assets/js/main.148d848d.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -18,8 +18,8 @@ push results in a usable image, which enhances the quality of a docker image a l
 <li>Add your Docker ID as a secret to GitHub. Navigate to your GitHub repository and click <strong>Settings</strong> &gt; <strong>Secrets</strong> &gt;
 <strong>New secret</strong>.</li>
 <li>Create a new secret with the name DOCKERHUB_USERNAME and your Docker ID as value.</li>
-<li>Create a new Personal Access Token (PAT). To create a new token, go to
-<a href="https://hub.docker.com/settings/security" target="_blank" rel="noopener noreferrer">Docker Hub Settings</a> and then click <strong>New Access Token</strong>.</li>
+<li>Create a new Personal Access Token (PAT). To create a new token, go to Docker Hub Settings at
+<code>https://hub.docker.com/settings/security</code> and then click <strong>New Access Token</strong>.</li>
 </ol>
 <h2 class="anchor anchorWithStickyNavbar_G07S" id="define-ci-workflow-on-github">Define CI Workflow on GitHub<a href="#define-ci-workflow-on-github" class="hash-link" aria-label="Direct link to Define CI Workflow on GitHub" title="Direct link to Define CI Workflow on GitHub">​</a></h2>
 <p><code>git checkout</code> the branch that contains the docker image definition, i.e. Dockerfile, and add a new YAML file to the
