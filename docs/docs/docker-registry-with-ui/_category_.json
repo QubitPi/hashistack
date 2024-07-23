@@ -1,0 +1,8 @@
+{
+  "label": "Docker Registry + UI",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Deploying a private Docker Registry with an user interface"
+  }
+}

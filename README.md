@@ -27,9 +27,9 @@ practice of immutable infrastructure**.
 How the Amazing Story Began
 ---------------------------
 
-I was researching deploying k8s (an idea which I abandoned later because I believed any production-quality application should not be deployed onto k8s) online and Google came up a concept I was never heard of:
-[k8s through AMI](https://github.com/awslabs/amazon-eks-ami). It was this GitHub repo that open up a whole new world to
-my career: HashiCorp, AWS AMI, and
+I was researching deploying k8s (an idea which I abandoned later because I believed any production-quality application
+should not be deployed onto k8s) online and Google came up a concept I was never heard of: [k8s through AMI](https://github.com/awslabs/amazon-eks-ami). It
+was this GitHub repo that open up a whole new world to my career: HashiCorp, AWS AMI, and
 [Immutable Infrastructure](https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure)
 
 The notion of immutable infrastructure as advanced by HashiCorp grabbed my deep interests so intensively that kept
