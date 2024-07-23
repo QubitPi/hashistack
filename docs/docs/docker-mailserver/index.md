@@ -55,7 +55,7 @@ Create a [HashiCorp Terraform variable values file] named **aws-docker-mailserve
 **[hashicorp-aws/hashicorp/docker-mailserver/instances]** with the following contents:
 
 ```hcl title="hashicorp-aws/hashicorp/docker-mailserver/instances/aws-docker-mailserver.auto.tfvars"
-aws_ec2_region    = "us-east-1"
+aws_ec2_region       = "us-east-1"
 ami_name             = "my-docker-mailserver-ami"
 instance_name        = "My docker-mailserver instance"
 key_pair_name        = "My SSH keypair name"
