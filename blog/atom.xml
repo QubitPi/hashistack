@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hashicorp-aws.com/blog</id>
     <title>hashicorp-aws Blog</title>
-    <updated>2024-07-23T13:16:35.000Z</updated>
+    <updated>2024-07-24T14:29:40.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hashicorp-aws.com/blog"/>
     <subtitle>hashicorp-aws Blog</subtitle>
@@ -11,7 +11,7 @@
         <title type="html"><![CDATA[Testing HashiCorp Terraform]]></title>
         <id>https://hashicorp-aws.com/blog/testing-hashicorp-terraform</id>
         <link href="https://hashicorp-aws.com/blog/testing-hashicorp-terraform"/>
-        <updated>2024-07-23T13:16:35.000Z</updated>
+        <updated>2024-07-24T14:29:40.000Z</updated>
         <summary type="html"><![CDATA[How do we know if we can run terraform apply to our infrastructure without negatively affecting critical business]]></summary>
         <content type="html"><![CDATA[<p>How do we know if we can run <code>terraform apply</code> to our infrastructure without negatively affecting critical business
 applications? We can run <code>terraform validate</code> and <code>terraform plan</code> to check our configuration, but will that be enough?
@@ -924,9 +924,10 @@ introduce the Secure Sockets Layer (SSL) application-level protocol, and particu
 SSL, in the context of using in Jenkins. After a brief description of exactly what OpenSSL is, and what it is useful
 for, the section will further illustrate the practical usage of OpenSSL in Jenkins service for the purpose of serving
 secured Jenkins resources from our EC2 instance.</p>
-<p>While previous familiarity with Server Sockets Layer (SSL), or the OpenSSL implementation in particular, is not required
-for this section, if desired, the reader is advised to pursue further learning from the <a href="https://hashicorp-aws.com/blog/jenkins-on-aws#resources">resources</a> listed
-below in order to broaden his/her understanding of this powerful security layer.</p>
+<p>While previous familiarity with Server Sockets Layer (SSL), or the <a href="https://help.ubuntu.com/community/OpenSSL" target="_blank" rel="noopener noreferrer">OpenSSL</a>
+implementation in particular, is not required for this section, if desired, the reader is advised to pursue further
+learning from the <a href="https://hashicorp-aws.com/blog/jenkins-on-aws#resources">resources</a> listed below in order to broaden his/her understanding of this powerful
+security layer.</p>
 <h3 class="anchor anchorWithStickyNavbar_G07S" id="resources">Resources<a href="https://hashicorp-aws.com/blog/jenkins-on-aws#resources" class="hash-link" aria-label="Direct link to Resources" title="Direct link to Resources">​</a></h3>
 <h4 class="anchor anchorWithStickyNavbar_G07S" id="local-system-resources">Local System Resources<a href="https://hashicorp-aws.com/blog/jenkins-on-aws#local-system-resources" class="hash-link" aria-label="Direct link to Local System Resources" title="Direct link to Local System Resources">​</a></h4>
 <table><thead><tr><th>command</th><th>description</th></tr></thead><tbody><tr><td><strong><code>man config</code></strong></td><td>System manual page for the OpenSSL library configuration files</td></tr><tr><td><strong><code>man gendsa</code></strong></td><td>System manual page for the gendsa DSA private key generator</td></tr><tr><td><strong><code>man genrsa</code></strong></td><td>System manual page for the genrsa RSA private key generator</td></tr><tr><td><strong><code>man openssl</code></strong></td><td>System manual page for the openssl command-line tool</td></tr><tr><td><strong><code>man rand</code></strong></td><td>System manual page for the rand pseudo-random byte generator utility</td></tr><tr><td><strong><code>man x509</code></strong></td><td>System manual page for the x509 certificate display and signing utility</td></tr></tbody></table>
@@ -935,21 +936,6 @@ below in order to broaden his/her understanding of this powerful security layer.
 <li><a href="http://www.openssl.org/" target="_blank" rel="noopener noreferrer">OpenSSL Website</a></li>
 <li><a href="http://www.ietf.org/html.charters/pkix-charter.html" target="_blank" rel="noopener noreferrer">Public Key Infrastructure (X.509) (pkix)</a></li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_G07S" id="about-openssl">About OpenSSL<a href="https://hashicorp-aws.com/blog/jenkins-on-aws#about-openssl" class="hash-link" aria-label="Direct link to About OpenSSL" title="Direct link to About OpenSSL">​</a></h3>
-<p><strong>Secure Sockets Layer</strong> is an application-level protocol which was developed by the Netscape Corporation for the
-purpose of transmitting sensitive information, such as Credit Card details, via the Internet. SSL works by using a
-private key to encrypt data transferred over the SSL-enabled connection, thus thwarting eavesdropping of the
-information. The most popular use of SSL is in conjunction with web browsing (using the HTTP protocol), but many network
-applications can benefit from using SSL. By convention, URLs that require an SSL connection start with "https:" instead
-of "http:"</p>
-<p><strong>OpenSSL</strong> is a robust, commercial-grade implementation of SSL tools, and related general purpose library based upon
-SSLeay, developed by Eric A. Young and Tim J. Hudson. OpenSSL is available as an Open Source equivalent to commercial
-implementations of SSL via an <a href="http://www.openssl.org/source/license.html" target="_blank" rel="noopener noreferrer">Apache-style license</a>.</p>
-<h4 class="anchor anchorWithStickyNavbar_G07S" id="about-x509">About X.509<a href="https://hashicorp-aws.com/blog/jenkins-on-aws#about-x509" class="hash-link" aria-label="Direct link to About X.509" title="Direct link to About X.509">​</a></h4>
-<p>X.509 is a specification for digital certificates published by the International Telecommunications Union -
-Telecommunication (ITU-T). It specifies information and attributes required for the identification of a person or a
-computer system, and is used for secure management and distribution of digitally signed certificates across secure
-Internet networks. OpenSSL most commonly uses X.509 certificates.</p>
 <h3 class="anchor anchorWithStickyNavbar_G07S" id="installing-openssl-toolkit">Installing OpenSSL Toolkit<a href="https://hashicorp-aws.com/blog/jenkins-on-aws#installing-openssl-toolkit" class="hash-link" aria-label="Direct link to Installing OpenSSL Toolkit" title="Direct link to Installing OpenSSL Toolkit">​</a></h3>
 <p>AWS EC2 instance usually have OpenSSL installed and configured properly.</p>
 <h3 class="anchor anchorWithStickyNavbar_G07S" id="generating-ssl-certificates">Generating SSL Certificates<a href="https://hashicorp-aws.com/blog/jenkins-on-aws#generating-ssl-certificates" class="hash-link" aria-label="Direct link to Generating SSL Certificates" title="Direct link to Generating SSL Certificates">​</a></h3>
