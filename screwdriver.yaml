@@ -165,6 +165,15 @@ jobs:
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/docker-mailserver-sd-template.yaml
 
+  validate-install-docker:
+    requires: [~pr, ~commit]
+    steps:
+      - validate: sd-cmd validate -f adaptors/screwdriver-cd/commands/install-docker/sd-command.yaml
+  publish-install-docker:
+    requires: [validate-install-docker]
+    steps:
+      - publish: sd-cmd publish -f adaptors/screwdriver-cd/commands/install-docker/sd-command.yaml -t latest
+
   validate-install-hashicorp-packer-ubuntu:
     requires: [~pr, ~commit]
     steps:

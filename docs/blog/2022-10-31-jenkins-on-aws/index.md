@@ -256,9 +256,10 @@ SSL, in the context of using in Jenkins. After a brief description of exactly wh
 for, the section will further illustrate the practical usage of OpenSSL in Jenkins service for the purpose of serving
 secured Jenkins resources from our EC2 instance.
 
-While previous familiarity with Server Sockets Layer (SSL), or the OpenSSL implementation in particular, is not required
-for this section, if desired, the reader is advised to pursue further learning from the [resources](#resources) listed
-below in order to broaden his/her understanding of this powerful security layer.
+While previous familiarity with Server Sockets Layer (SSL), or the [OpenSSL](https://help.ubuntu.com/community/OpenSSL)
+implementation in particular, is not required for this section, if desired, the reader is advised to pursue further
+learning from the [resources](#resources) listed below in order to broaden his/her understanding of this powerful
+security layer.
 
 ### Resources
 
@@ -277,26 +278,6 @@ below in order to broaden his/her understanding of this powerful security layer.
 
 - [OpenSSL Website](http://www.openssl.org/)
 - [Public Key Infrastructure (X.509) (pkix)](http://www.ietf.org/html.charters/pkix-charter.html)
-
-### About OpenSSL
-
-**Secure Sockets Layer** is an application-level protocol which was developed by the Netscape Corporation for the
-purpose of transmitting sensitive information, such as Credit Card details, via the Internet. SSL works by using a
-private key to encrypt data transferred over the SSL-enabled connection, thus thwarting eavesdropping of the
-information. The most popular use of SSL is in conjunction with web browsing (using the HTTP protocol), but many network
-applications can benefit from using SSL. By convention, URLs that require an SSL connection start with "https:" instead
-of "http:"
-
-**OpenSSL** is a robust, commercial-grade implementation of SSL tools, and related general purpose library based upon
-SSLeay, developed by Eric A. Young and Tim J. Hudson. OpenSSL is available as an Open Source equivalent to commercial
-implementations of SSL via an [Apache-style license](http://www.openssl.org/source/license.html).
-
-#### About X.509
-
-X.509 is a specification for digital certificates published by the International Telecommunications Union -
-Telecommunication (ITU-T). It specifies information and attributes required for the identification of a person or a
-computer system, and is used for secure management and distribution of digitally signed certificates across secure
-Internet networks. OpenSSL most commonly uses X.509 certificates.
 
 ### Installing OpenSSL Toolkit
 
