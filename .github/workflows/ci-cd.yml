@@ -294,10 +294,10 @@ jobs:
       - name: Build website
         run: yarn build
       - name: Load CNAME file
-        if: github.ref == 'refs/heads/master'
+        #if: github.ref == 'refs/heads/master'
         run: cp CNAME build
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/master'
+        #if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -309,7 +309,7 @@ jobs:
     name: Send Slack Notification
     if: ${{ always() }}
     needs: documentation
-    uses: QubitPi/hashicorp-aws/.github/workflows/slack-notification.yml@master
+    uses: QubitPi/hashistack/.github/workflows/slack-notification.yml@master
     with:
       job-status: ${{ needs.documentation.outputs.outcome }}
     secrets:
