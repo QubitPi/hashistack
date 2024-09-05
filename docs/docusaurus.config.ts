@@ -18,14 +18,14 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'hashicorp-aws',
+  title: 'hashistack',
   tagline: 'Infrastructure as Code via HashiCorp',
   favicon: 'img/favicon.ico',
 
-  url: 'https://hashicorp-aws.com',
+  url: 'https://hashistack.org',
   baseUrl: '/',
   organizationName: 'QubitPi',
-  projectName: 'hashicorp-aws',
+  projectName: 'hashistack',
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -41,12 +41,12 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/QubitPi/hashicorp-aws/tree/master/docs',
+          editUrl: 'https://github.com/QubitPi/hashistack/tree/master/docs',
         },
         blog: {
           showReadingTime: true,
           blogSidebarCount: 'ALL',
-          editUrl: 'https://github.com/QubitPi/hashicorp-aws/tree/master/docs',
+          editUrl: 'https://github.com/QubitPi/hashistack/tree/master/docs',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -59,7 +59,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'hashicorp-aws',
+      title: 'hashistack',
       logo: {
         alt: 'Site Logo',
         src: 'img/logo.svg',
@@ -73,7 +73,7 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/QubitPi/hashicorp-aws',
+          href: 'https://github.com/QubitPi/hashistack',
           label: 'GitHub',
           position: 'right',
         },
@@ -96,7 +96,7 @@ const config: Config = {
           items: [
               {
                 label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/hashicorp-aws',
+                href: 'https://stackoverflow.com/questions/tagged/hashistack',
               },
           ],
         },
@@ -109,7 +109,7 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/QubitPi/hashicorp-aws',
+              href: 'https://github.com/QubitPi/hashistack',
             },
           ],
         },

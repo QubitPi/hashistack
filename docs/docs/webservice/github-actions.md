@@ -52,9 +52,9 @@ The following inputs are required:
 The following GitHub Secrets needs to be defined:
 
 - `AWS_WS_PKRVARS_HCL`: A [HashiCorp Packer variable values file] with the variable values presented
-  [here](https://hashicorp-aws.com/docs/webservice#defining-packer-variables)
+  [here](https://hashistack.org/docs/webservice#defining-packer-variables)
 - `AWS_WS_TFVARS` - A [HashiCorp Terraform variable values file] with the variable values presented
-  [here](https://hashicorp-aws.com/docs/webservice#defining-terraform-variables)
+  [here](https://hashistack.org/docs/webservice#defining-terraform-variables)
 
 - AWS credentials
 
