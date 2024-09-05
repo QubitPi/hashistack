@@ -4,7 +4,7 @@
         <title>hashistack Blog</title>
         <link>https://hashistack.org/blog</link>
         <description>hashistack Blog</description>
-        <lastBuildDate>Thu, 05 Sep 2024 09:15:44 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 05 Sep 2024 09:21:27 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[Testing HashiCorp Terraform]]></title>
             <link>https://hashistack.org/blog/testing-hashicorp-terraform</link>
             <guid>https://hashistack.org/blog/testing-hashicorp-terraform</guid>
-            <pubDate>Thu, 05 Sep 2024 09:15:44 GMT</pubDate>
+            <pubDate>Thu, 05 Sep 2024 09:21:27 GMT</pubDate>
             <description><![CDATA[How do we know if we can run terraform apply to our infrastructure without negatively affecting critical business]]></description>
             <content:encoded><![CDATA[<p>How do we know if we can run <code>terraform apply</code> to our infrastructure without negatively affecting critical business
 applications? We can run <code>terraform validate</code> and <code>terraform plan</code> to check our configuration, but will that be enough?
