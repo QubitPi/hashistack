@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hashicorp-aws.com/blog</id>
     <title>hashicorp-aws Blog</title>
-    <updated>2024-07-24T14:29:40.000Z</updated>
+    <updated>2024-09-05T09:04:22.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hashicorp-aws.com/blog"/>
     <subtitle>hashicorp-aws Blog</subtitle>
@@ -11,7 +11,7 @@
         <title type="html"><![CDATA[Testing HashiCorp Terraform]]></title>
         <id>https://hashicorp-aws.com/blog/testing-hashicorp-terraform</id>
         <link href="https://hashicorp-aws.com/blog/testing-hashicorp-terraform"/>
-        <updated>2024-07-24T14:29:40.000Z</updated>
+        <updated>2024-09-05T09:04:22.000Z</updated>
         <summary type="html"><![CDATA[How do we know if we can run terraform apply to our infrastructure without negatively affecting critical business]]></summary>
         <content type="html"><![CDATA[<p>How do we know if we can run <code>terraform apply</code> to our infrastructure without negatively affecting critical business
 applications? We can run <code>terraform validate</code> and <code>terraform plan</code> to check our configuration, but will that be enough?
@@ -2305,7 +2305,7 @@ Ultimately, we could assign our roles to a <a href="https://hashicorp-aws.com/bl
 Repository Manager.</p>
 <table><thead><tr><th><strong>Attribute</strong></th><th><strong>Allowed Values</strong></th></tr></thead><tbody><tr><td>format</td><td>The format of the content for which we query</td></tr><tr><td>path</td><td>The path of our repository content</td></tr></tbody></table>
 <p>Valid Operators are</p>
-<table><thead><tr><th style="text-align:center">Operator</th><th style="text-align:center">Definition</th><th style="text-align:center">Example</th></tr></thead><tbody><tr><td style="text-align:center"><code>==</code></td><td style="text-align:center">Matches text <em>exactly</em></td><td style="text-align:center"><code>format == "maven2"</code></td></tr><tr><td style="text-align:center"><code>=~</code></td><td style="text-align:center">Matches a Java regular expression pattern</td><td style="text-align:center"><code>path =~ "^/org/apache/commons/.*"</code></td></tr><tr><td style="text-align:center"><code>=^</code></td><td style="text-align:center">Starts with text.</td><td style="text-align:center"><code>path =^ "/com/example/"</code></td></tr><tr><td style="text-align:center"><code>and</code></td><td style="text-align:center">Match all expressions</td><td style="text-align:center"><code>format == "maven2" and path =~ "^/org/apache/commons/.*"</code></td></tr><tr><td style="text-align:center"><code>or</code></td><td style="text-align:center">Match any expression</td><td style="text-align:center"><code>format == "maven2" or format == "npm"</code></td></tr><tr><td style="text-align:center"><code>( expr )</code></td><td style="text-align:center">Group multiple expressions.</td><td style="text-align:center"><sup><a href="https://hashicorp-aws.com/blog/nexus#user-content-fn-example-002a79" id="user-content-fnref-example-002a79" data-footnote-ref="true" aria-describedby="footnote-label">1</a></sup></td></tr></tbody></table>
+<table><thead><tr><th style="text-align:center">Operator</th><th style="text-align:center">Definition</th><th style="text-align:center">Example</th></tr></thead><tbody><tr><td style="text-align:center"><code>==</code></td><td style="text-align:center">Matches text <em>exactly</em></td><td style="text-align:center"><code>format == "maven2"</code></td></tr><tr><td style="text-align:center"><code>=~</code></td><td style="text-align:center">Matches a Java regular expression pattern</td><td style="text-align:center"><code>path =~ "^/org/apache/commons/.*"</code></td></tr><tr><td style="text-align:center"><code>=^</code></td><td style="text-align:center">Starts with text.</td><td style="text-align:center"><code>path =^ "/com/example/"</code></td></tr><tr><td style="text-align:center"><code>and</code></td><td style="text-align:center">Match all expressions</td><td style="text-align:center"><code>format == "maven2" and path =~ "^/org/apache/commons/.*"</code></td></tr><tr><td style="text-align:center"><code>or</code></td><td style="text-align:center">Match any expression</td><td style="text-align:center"><code>format == "maven2" or format == "npm"</code></td></tr><tr><td style="text-align:center"><code>( expr )</code></td><td style="text-align:center">Group multiple expressions.</td><td style="text-align:center"><sup><a href="https://hashicorp-aws.com/blog/nexus#user-content-fn-example-52b64b" id="user-content-fnref-example-52b64b" data-footnote-ref="true" aria-describedby="footnote-label">1</a></sup></td></tr></tbody></table>
 <div class="theme-admonition theme-admonition-info admonition_ti4u alert alert--info"><div class="admonitionHeading_HhbD"><span class="admonitionIcon_EB9A"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>Version Range Regular Expressions</div><div class="admonitionContent_SnZd"><p>To avoid encountering database errors, we should escape dashes in version range regular expressions. For example,
 <code>path =~ "[0-9a-zA-Z\-_]"</code></p></div></div>
 <div class="theme-admonition theme-admonition-caution admonition_ti4u alert alert--warning"><div class="admonitionHeading_HhbD"><span class="admonitionIcon_EB9A"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>caution</div><div class="admonitionContent_SnZd"><p>When writing a content selector, remember that the asset's path will always begin with a leading slash when the
@@ -2406,8 +2406,8 @@ details about the error by going down to the Nexus server log.</p>
 <code>/nexus-data/log/nexus.log</code></p>
 <section data-footnotes="true" class="footnotes"><h2 class="anchor anchorWithStickyNavbar_G07S sr-only" id="footnote-label">Footnotes<a href="https://hashicorp-aws.com/blog/nexus#footnote-label" class="hash-link" aria-label="Direct link to Footnotes" title="Direct link to Footnotes">​</a></h2>
 <ol>
-<li id="user-content-fn-example-002a79">
-<p><code>format == "npm" or (format == "maven2" and path =~ "^/org/apache/commons/.*")</code> <a href="https://hashicorp-aws.com/blog/nexus#user-content-fnref-example-002a79" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
+<li id="user-content-fn-example-52b64b">
+<p><code>format == "npm" or (format == "maven2" and path =~ "^/org/apache/commons/.*")</code> <a href="https://hashicorp-aws.com/blog/nexus#user-content-fnref-example-52b64b" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>]]></content>
