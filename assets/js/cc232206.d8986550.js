@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhashistack=self.webpackChunkhashistack||[]).push([[6761],{5917:a=>{a.exports=JSON.parse('{"label":"Team Efficiency","permalink":"/blog/tags/team-efficiency","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

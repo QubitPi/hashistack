@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhashistack=self.webpackChunkhashistack||[]).push([[8817],{7657:s=>{s.exports=JSON.parse('{"permalink":"/blog/tags/object-storage","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
