@@ -32,7 +32,7 @@ variable "instance_type" {
   }
 }
 
-source "amazon-ebs" "hashicorp-aws" {
+source "amazon-ebs" "hashistack" {
   ami_name              = "${var.ami_name}"
   force_deregister      = "true"
   force_delete_snapshot = "true"

@@ -19,9 +19,9 @@ packer {
       source  = "github.com/hashicorp/amazon"
     }
 
-    hashicorp-aws = {
+    hashistack = {
       version = ">= 0.0.32"
-      source  = "github.com/QubitPi/hashicorp-aws"
+      source  = "github.com/QubitPi/hashistack"
     }
   }
 }

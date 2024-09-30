@@ -29,7 +29,7 @@ pyramid with unit tests and work the way up the pyramid to end-to-end tests.
 
 :::note
 
-hashicorp-aws does not merit any manual testing; so it is not discussed here
+hashistack does not merit any manual testing; so it is not discussed here
 
 :::
 

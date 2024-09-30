@@ -15,35 +15,35 @@
 shared:
   image: node:18
 jobs:
-  validate-hashicorp-aws-base-sd-template:
+  validate-hashistack-base-sd-template:
     requires: [~pr, ~commit]
     steps:
       - install: npm install -g screwdriver-template-main
       - validate: template-validate
     environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-base-sd-template.yaml
-  publish-hashicorp-aws-base-sd-template:
-    requires: validate-hashicorp-aws-base-sd-template
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashistack-base-sd-template.yaml
+  publish-hashistack-base-sd-template:
+    requires: validate-hashistack-base-sd-template
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
     environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-base-sd-template.yaml
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashistack-base-sd-template.yaml
 
-  validate-hashicorp-aws-ssl-sd-template:
+  validate-hashistack-ssl-sd-template:
     requires: [~pr, ~commit]
     steps:
       - install: npm install -g screwdriver-template-main
       - validate: template-validate
     environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-ssl-sd-template.yaml
-  publish-hashicorp-aws-ssl-sd-template:
-    requires: [validate-hashicorp-aws-ssl-sd-template, publish-hashicorp-aws-base-sd-template]
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashistack-ssl-sd-template.yaml
+  publish-hashistack-ssl-sd-template:
+    requires: [validate-hashistack-ssl-sd-template, publish-hashistack-base-sd-template]
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
     environment:
-      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashicorp-aws-ssl-sd-template.yaml
+      SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/hashistack-ssl-sd-template.yaml
 
   validate-sonatype-nexus-repository-sd-template:
     requires: [~pr, ~commit]
@@ -53,7 +53,7 @@ jobs:
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/sonatype-nexus-repository-sd-template.yaml
   publish-sonatype-nexus-repository-sd-template:
-    requires: [validate-sonatype-nexus-repository-sd-template, publish-hashicorp-aws-ssl-sd-template]
+    requires: [validate-sonatype-nexus-repository-sd-template, publish-hashistack-ssl-sd-template]
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest
@@ -98,7 +98,7 @@ jobs:
     environment:
       SD_TEMPLATE_PATH: adaptors/screwdriver-cd/templates/jersey-webservice-basic-sd-template.yaml
   publish-jersey-webservice-basic-sd-template:
-    requires: [validate-jersey-webservice-basic-sd-template, publish-hashicorp-aws-base-sd-template]
+    requires: [validate-jersey-webservice-basic-sd-template, publish-hashistack-base-sd-template]
     steps:
       - install: npm install -g screwdriver-template-main
       - publish: template-publish --tag latest

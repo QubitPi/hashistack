@@ -19,10 +19,10 @@ variable "war_source" {
 
 build {
   sources = [
-    "source.amazon-ebs.hashicorp-aws"
+    "source.amazon-ebs.hashistack"
   ]
 
-  provisioner "hashicorp-aws-webservice-provisioner" {
+  provisioner "hashistack-webservice-provisioner" {
     warSource = "${var.war_source}"
   }
 }

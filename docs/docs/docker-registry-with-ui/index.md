@@ -3,10 +3,10 @@ sidebar_position: 1
 title: General Deployment
 ---
 
-Quick Start (Manual Deployment without hashicorp-aws)
+Quick Start (Manual Deployment without hashistack)
 -----------------------------------------------------
 
-This section is to give you a taste of what's behind the scene of hashicorp-aws deployment. Let's make some directories
+This section is to give you a taste of what's behind the scene of hashistack deployment. Let's make some directories
 first:
 
 ```console

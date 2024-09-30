@@ -36,7 +36,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
-      - uses: QubitPi/hashicorp-aws/.github/actions/npm-release.yml@master
+      - uses: QubitPi/hashistack/.github/actions/npm-release.yml@master
         with:
           node-version: ${{ env.NODE_VERSION }}
           npm-token: ${{ env.NPM_TOKEN }}

@@ -31,7 +31,7 @@ name: CI/CD
 
   code-style:
     name: React & TS Code Style Check
-    uses: QubitPi/hashicorp-aws/.github/workflows/ui-code-style.yml@master
+    uses: QubitPi/hashistack/.github/workflows/ui-code-style.yml@master
     with:
       node-version: 18
 ```
@@ -43,8 +43,8 @@ In the example above, the node 18 is used in the CI/CDed project.
 :::
 
 The configurations of Prettier and ESLint can be done regularly by following their respective documentations. For
-example, the [.prettierrc.json](https://qubitpi.github.io/prettier/docs/en/configuration) and
-[.prettierignore](https://qubitpi.github.io/prettier/docs/en/ignore.html) can be placed at the project root with the
+example, the [.prettierrc.json](https://prettier.io/docs/en/configuration) and
+[.prettierignore](https://prettier.io/docs/en/ignore.html) can be placed at the project root with the
 following contents:
 
 ```json title=".prettierrc.json"
@@ -84,7 +84,7 @@ yarn run eslint --init # https://dev.to/maithanhdanh/configuration-for-eslint-b4
 Linters usually contain not only code quality rules, but also stylistic rules. Most stylistic rules are unnecessary
 when using Prettier, but worse - they might conflict with Prettier! Use Prettier for code formatting concerns, and
 linters for code-quality concerns, as outlined in
-[Prettier vs. Linters](https://qubitpi.github.io/prettier/docs/en/comparison).
+[Prettier vs. Linters](https://prettier.io/docs/en/comparison).
 
 Luckily it's easy to turn off rules that conflict or are unnecessary with Prettier, by using these pre-made configs:
 

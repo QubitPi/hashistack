@@ -29,7 +29,7 @@ name: CI/CD
 
   unit-tests:
     name: Unit Tests
-    uses: QubitPi/hashicorp-aws/.github/workflows/ui-unit-test.yml@master
+    uses: QubitPi/hashistack/.github/workflows/ui-unit-test.yml@master
     with:
       node-version: 18
 ```

@@ -77,27 +77,27 @@ config:
   steps:
     - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
-    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashistack.git ../hashistack
 
     - load-packer-variable-file: |
-        echo ami_region          = \"$(meta get parameters.ami-region.value)\"           >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ami_name            = \"$(meta get parameters.ami-name.value)\"             >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo base_domain         = \"$(meta get parameters.base-domain.value)\"          >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_base64     = \"$SSL_CERT_BASE_64\"     >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_base64 = \"$SSL_CERT_KEY_BASE_64\" >> ../hashicorp-aws/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ami_region          = \"$(meta get parameters.ami-region.value)\"           >> ../hashistack/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ami_name            = \"$(meta get parameters.ami-name.value)\"             >> ../hashistack/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo base_domain         = \"$(meta get parameters.base-domain.value)\"          >> ../hashistack/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_base64     = \"$SSL_CERT_BASE_64\"     >> ../hashistack/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_base64 = \"$SSL_CERT_KEY_BASE_64\" >> ../hashistack/hashicorp/docker-mailserver/images/aws.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
-        echo aws_ec2_region       = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
-        echo ami_name             = \"$(meta get parameters.ami-name.value)\"             >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
-        echo instance_name        = \"$(meta get parameters.instance-name.value)\"        >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
-        echo key_pair_name        = \"$(meta get parameters.key-pair-name.value)\"        >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
-        echo security_groups      = $(meta get parameters.security-groups.value)          >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
-        echo base_domain          = \"$(meta get parameters.base-domain.value)\"          >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
-        echo route_53_zone_id     = \"$(meta get parameters.route-53-zone-id.value)\"     >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
-        echo first_email          = \"$(meta get parameters.first-email.value)\"          >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
-        echo first_email_password = \"$(meta get parameters.first-email-password.value)\" >> ../hashicorp-aws/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo aws_ec2_region       = \"$(meta get parameters.aws-deploy-region.value)\"    >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo ami_name             = \"$(meta get parameters.ami-name.value)\"             >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo instance_name        = \"$(meta get parameters.instance-name.value)\"        >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo key_pair_name        = \"$(meta get parameters.key-pair-name.value)\"        >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo security_groups      = $(meta get parameters.security-groups.value)          >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo base_domain          = \"$(meta get parameters.base-domain.value)\"          >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo route_53_zone_id     = \"$(meta get parameters.route-53-zone-id.value)\"     >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo first_email          = \"$(meta get parameters.first-email.value)\"          >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
+        echo first_email_password = \"$(meta get parameters.first-email-password.value)\" >> ../hashistack/hashicorp/docker-mailserver/instances/aws.auto.tfvars
 
-    - packer-init: cd ../hashicorp-aws/hashicorp/docker-mailserver/images && packer init .
+    - packer-init: cd ../hashistack/hashicorp/docker-mailserver/images && packer init .
     - packer-validate: packer validate -var "skip_create_ami=true" .
     - packer-build: packer build -var "skip_create_ami=false" .
 

@@ -43,9 +43,9 @@ runs:
         registry-url: "https://registry.npmjs.org"
     - name: Tag for release
       run: |
-        git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-        cp ../hashicorp-aws/.github/version-bump/tag-for-release.bash    .github/tag-for-release.bash
-        cp ../hashicorp-aws/.github/version-bump/upversion.py            .github/upversion.py
+        git clone --depth 1 https://github.com/QubitPi/hashistack.git ../hashistack
+        cp ../hashistack/.github/version-bump/tag-for-release.bash    .github/tag-for-release.bash
+        cp ../hashistack/.github/version-bump/upversion.py            .github/upversion.py
         git config --global user.name '${{ inputs.user }}'
         git config --global user.email '${{ inputs.email }}'
         .github/tag-for-release.bash

@@ -38,7 +38,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/aws.svg').default,
     description: (
       <>
-        hashicorp-aws has first-class support for AWS as a cloud provider and frees up dev teams to allow them to focus on adding business value by writing code.
+        hashistack has first-class support for AWS as a cloud provider and frees up dev teams to allow them to focus on adding business value by writing code.
       </>
     ),
   },

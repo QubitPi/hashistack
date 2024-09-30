@@ -3,6 +3,6 @@
   "position": 3,
   "link": {
     "type": "generated-index",
-    "description": "Deploying React App to AWS via hashicorp-aws"
+    "description": "Deploying React App to AWS via hashistack"
   }
 }

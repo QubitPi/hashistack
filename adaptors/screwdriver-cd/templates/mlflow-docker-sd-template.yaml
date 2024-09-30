@@ -27,16 +27,16 @@ config:
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
 
     - setup-hashicorp-deployment-tool: |
-        git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+        git clone --depth 1 https://github.com/QubitPi/hashistack.git ../hashistack
 
-        cp ../hashicorp-aws/hashicorp/machine-learning/images/aws-ml.packer.pkr.hcl ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
-        cp ../hashicorp-aws/hashicorp/machine-learning/images/aws-ml.source.pkr.hcl ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
+        cp ../hashistack/hashicorp/machine-learning/images/aws-ml.packer.pkr.hcl ../hashistack/hashicorp/machine-learning/images/mlflow-docker
+        cp ../hashistack/hashicorp/machine-learning/images/aws-ml.source.pkr.hcl ../hashistack/hashicorp/machine-learning/images/mlflow-docker
 
-        cp ../hashicorp-aws/hashicorp/machine-learning/instances/aws-ml.base.tf ../hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker
-    - load-packer-variable-file: echo "$AWS_ML_PKRVARS_HCL" > ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker/aws-ml.auto.pkrvars.hcl
-    - load-terraform-variable-file: echo "$AWS_ML_TFVARS" > ../hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker/aws-ml.auto.tfvars
+        cp ../hashistack/hashicorp/machine-learning/instances/aws-ml.base.tf ../hashistack/hashicorp/machine-learning/instances/mlflow-docker
+    - load-packer-variable-file: echo "$AWS_ML_PKRVARS_HCL" > ../hashistack/hashicorp/machine-learning/images/mlflow-docker/aws-ml.auto.pkrvars.hcl
+    - load-terraform-variable-file: echo "$AWS_ML_TFVARS" > ../hashistack/hashicorp/machine-learning/instances/mlflow-docker/aws-ml.auto.tfvars
 
-    - packer-init: cd ../hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker && packer init .
+    - packer-init: cd ../hashistack/hashicorp/machine-learning/images/mlflow-docker && packer init .
     - packer-validate: packer validate -var "skip_create_ami=true" .
     - packer-build: packer build -var "skip_create_ami=false" .
 

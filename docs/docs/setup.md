@@ -17,7 +17,7 @@ in the links below:
 ### Getting HashiCorp Deployment Tool
 
 ```console
-git clone https://github.com/QubitPi/hashicorp-aws.git
+git clone https://github.com/QubitPi/hashistack.git
 ```
 
 ### AWS
@@ -40,13 +40,13 @@ The _IAM user_ associated with the credentials above must have the following [AW
 (Optional Setup) SSL
 --------------------
 
-:::info hashicorp-aws assumes the following for all of its managed deployments:
+:::info hashistack assumes the following for all of its managed deployments:
 
 Business logic and SSL/HTTP are separate concerns and must be decoupled from each other
 
 :::
 
-That being said, hashicorp-aws deploys application completely without SSL and spins up a Nginx reverse proxy to handle
+That being said, hashistack deploys application completely without SSL and spins up a Nginx reverse proxy to handle
 the HTTPS redirections to aplication's HTTP ports. Therefore, if the deployed application is publicly-facing and
 requires HTTPS support, then the following files need to be ready:
 
@@ -58,7 +58,7 @@ The contents of both SSL certificate file and SSL certificate key file need to b
 
 :::tip
 
-One can use the following commands quick commands to convert the certificates to base64 forms:<img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="50px" />
+One can use the following commands quick commands to convert the certificates to base64 forms:
 
 ```console
 openssl enc -base64 -in cert.pem | awk '{printf "%s", $0}' > cert.base64
@@ -74,11 +74,11 @@ _Why do we need the credentials listed above for SSL?_ Let's image the following
 
 1. I purchased a domain from [Google Domain][Google Domain] called **my-domain.com**
 2. I developed a web app that will be exposed at **my-app.my-domain.com**
-3. I will deploy my app to [AWS EC2][AWS EC2] using hashicorp-aws
+3. I will deploy my app to [AWS EC2][AWS EC2] using hashistack
 4. When my app is up and running, I need to automatically enable secure SSL communication so that my app can be visited
    at `https://my-app.my-domain.com`
 
-By default, hashicorp-aws exposes all EC2 instances under a domain using
+By default, hashistack exposes all EC2 instances under a domain using
 [aws_route53_record][HashiCorp Terraform aws_route53_record], because it allows us to dynamically bind EC2 IP to its
 hosted domain so that each time when a new EC2 instance is instantiated, that instance will register its IP to
 `my-domain.com` on Route 53.
@@ -104,11 +104,11 @@ In this case, we can simply connect Google Domain to AWS Route 53 in the followi
 :::
 
 _The Route 53, in order to promote the best security practices, requires all EC2 instances behind its domain to be
-accessible at HTTPS_. This requires us or hashicorp-aws to install SSL certificates on each deployed EC2 instance, which
+accessible at HTTPS_. This requires us or hashistack to install SSL certificates on each deployed EC2 instance, which
 is why SSL certificate file and SSL certificate key file come into play.
 
 In order to simply, or better saying promoting best single-responsibility of any cloud application, deployment,
-_hashicorp-aws assumes application should handle business logics only and not SSL themselves_. It therefore let
+_hashistack assumes application should handle business logics only and not SSL themselves_. It therefore let
 application run under regular and simple HTTP protocol and uses
 [Nginx reverse proxy](https://www.nginx.com/resources/glossary/reverse-proxy-server/) to re-route all HTTPS to HTTP on
 that application. This is the reason Nginx config file above will be needed.

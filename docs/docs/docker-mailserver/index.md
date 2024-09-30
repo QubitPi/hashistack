@@ -18,9 +18,9 @@ Please complete the following two prerequisite setups before preceding
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-docker-mailserver.pkrvars.hcl** under
-**[hashicorp-aws/hashicorp/docker-mailserver/images]** with the following contents:
+**[hashistack/hashicorp/docker-mailserver/images]** with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/docker-mailserver/images/aws-docker-mailserver.auto.pkrvars.hcl"
+```hcl title="hashistack/hashicorp/docker-mailserver/images/aws-docker-mailserver.auto.pkrvars.hcl"
 ami_region          = "us-east-1"
 ami_name            = "my-docker-mailserver-ami"
 base_domain         = "mycompany.com"
@@ -41,20 +41,20 @@ ssl_cert_key_base64 = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
 
   :::info
 
-  hashicorp-aws [supports SSL][docker-mailserver SSL setup] with the
+  hashistack [supports SSL][docker-mailserver SSL setup] with the
   [Bring Your Own Certificates][docker-mailserver SSL setup - Let's Encrypt] (certbot) option
 
   :::
 
-- (Optional) `instance_type`: is the [AWS EC2 instance type] building this image. hashicorp-aws uses "t2.micro" as
+- (Optional) `instance_type`: is the [AWS EC2 instance type] building this image. hashistack uses "t2.micro" as
   default value if this value is unspecified
 
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-docker-mailserver.tfvars** under
-**[hashicorp-aws/hashicorp/docker-mailserver/instances]** with the following contents:
+**[hashistack/hashicorp/docker-mailserver/instances]** with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/docker-mailserver/instances/aws-docker-mailserver.auto.tfvars"
+```hcl title="hashistack/hashicorp/docker-mailserver/instances/aws-docker-mailserver.auto.tfvars"
 aws_ec2_region       = "us-east-1"
 ami_name             = "my-docker-mailserver-ami"
 instance_name        = "My docker-mailserver instance"
@@ -87,7 +87,7 @@ first_email_password = "sdfeo9uig&^&rf8u"
 
   :::note
 
-  hashicorp-aws will bind a _private_ IP address to this domain because
+  hashistack will bind a _private_ IP address to this domain because
   [AWS security groups works for private IP only for DNS resolving](https://serverfault.com/a/967483).
 
   :::
@@ -115,13 +115,13 @@ first_email_password = "sdfeo9uig&^&rf8u"
 
   :::
 
-- (Optional) `instance_type`: is the [AWS EC2 instance type] running the EC2 instance. hashicorp-aws uses "t2.micro" as
+- (Optional) `instance_type`: is the [AWS EC2 instance type] running the EC2 instance. hashistack uses "t2.micro" as
   default value if this value is unspecified
 
 ### Building AMI Image
 
 ```console
-cd hashicorp-aws/hashicorp/docker-mailserver/images
+cd hashistack/hashicorp/docker-mailserver/images
 packer init .
 packer validate -var "skip_create_ami=true" .
 packer build -var "skip_create_ami=false" .
@@ -146,7 +146,7 @@ terraform apply -auto-approve
 Deployment via Screwdriver CD
 -----------------------------
 
-hashicorp-aws supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out. <img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
+hashistack supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out.
 
 Deployment via HACP
 -------------------
@@ -230,7 +230,7 @@ In the case of AWS, we will need to sign in to our AWS account, and then open th
 [docker-mailserver SSL setup]: https://qubitpi.github.io/docker-mailserver/edge/config/security/ssl/
 [docker-mailserver SSL setup - Let's Encrypt]: https://docker-mailserver.github.io/docker-mailserver/latest/config/security/ssl/#lets-encrypt-recommended
 
-[hashicorp-aws/hashicorp/docker-mailserver/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/docker-mailserver/images
-[hashicorp-aws/hashicorp/docker-mailserver/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/docker-mailserver/instances
+[hashistack/hashicorp/docker-mailserver/images]: https://github.com/QubitPi/hashistack/tree/master/hashicorp/docker-mailserver/images
+[hashistack/hashicorp/docker-mailserver/instances]: https://github.com/QubitPi/hashistack/tree/master/hashicorp/docker-mailserver/instances
 [HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files

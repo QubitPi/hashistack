@@ -13,7 +13,7 @@ MLflow
 
 ### Generating Machine Learning Models
 
-hashicorp-aws deploys an instance
+hashistack deploys an instance
 [running Machine Learning Model NOT Managed by MLflow as REST API in Docker Container][MLflow - Running Machine Learning Model NOT Managed by MLflow as REST API in Docker Container]
 and [exposes that API to public][MLflow - Serving the Model in Docker Container via REST API].
 
@@ -34,7 +34,7 @@ class MyModel(mlflow.pyfunc.PythonModel):
 ```
 
 How do we make `my_module` available at runtime? It's very easy. Simply put the custom module under
-`/abs/path/to/mlflow_models/` and import that module as is. hashicorp-aws will bind `/abs/path/to/mlflow_models/`
+`/abs/path/to/mlflow_models/` and import that module as is. hashistack will bind `/abs/path/to/mlflow_models/`
 to [`PYTHONPATH`] at runtime so that `my_module` will be available as long as both `MyModel` and `my_module` are under
 `/abs/path/to/mlflow_models/` directory.
 
@@ -73,15 +73,15 @@ instructions below:
 ### Getting HashiCorp Deployment Tool
 
 ```console
-git clone https://github.com/QubitPi/hashicorp-aws.git
+git clone https://github.com/QubitPi/hashistack.git
 ```
 
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-mlflow-docker.pkrvars.hcl** under
-**[hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker]** directory with the following contents
+**[hashistack/hashicorp/machine-learning/images/mlflow-docker]** directory with the following contents
 
-```hcl title=hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
+```hcl title=hashistack/hashicorp/machine-learning/images/mlflow-docker
 ami_region     = "my-aws-region"
 ami_name       = "my-mlflow-models"
 instance_type  = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
@@ -91,7 +91,7 @@ ml_models_path = "/abs/path/to/mlflow_models/"
 - `ami_region` is the [image region][AWS regions] where ML models [AMI][AWS AMI] will be published to. The published
   image will be _private_
 - `ami_name` is the name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs. This
-  can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
+  can be the same across builds, because hashistack will deregister the old AMI with the same name and replace it
   with the current built one
 - `instance_type` is the recommended [AWS EC2 instance type] running this image
 - `ml_models_path` is the directory we made ready [previously](#generating-machine-learning-models)
@@ -106,9 +106,9 @@ ml_models_path = "/abs/path/to/mlflow_models/"
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-mlflow-docker.tfvars** under
-**[hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker]** directory with the following contents:
+**[hashistack/hashicorp/machine-learning/instances/mlflow-docker]** directory with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker/aws-mlflow-docker.tfvars"
+```hcl title="hashistack/hashicorp/machine-learning/instances/mlflow-docker/aws-mlflow-docker.tfvars"
 aws_ec2_region    = "my-aws-region"
 ami_name          = "my-mlflow-models"
 instance_type     = "<one of t2.micro/t2.small/t2.medium/t2.large/t2.xlarge/t2.2xlarge>"
@@ -126,7 +126,7 @@ security_groups   = ["myKeyPairName"]
 ### Building AMI Image
 
 ```bash
-cd hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker
+cd hashistack/hashicorp/machine-learning/images/mlflow-docker
 packer init .
 packer validate -var "skip_create_ami=true" .
 packer build -var "skip_create_ami=false" .
@@ -182,7 +182,7 @@ __The container requires at least 4 GB of memory. Please make sure the EC2 insta
 Deployment via Screwdriver CD
 -----------------------------
 
-hashicorp-aws supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out. <img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
+hashistack supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out.
 
 Deployment via HACP
 -------------------
@@ -199,8 +199,8 @@ stand up the API in a minute.
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
-[hashicorp-aws/hashicorp/machine-learning/images/mlflow-docker]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/machine-learning/images/mlflow-docker
-[hashicorp-aws/hashicorp/machine-learning/instances/mlflow-docker]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/machine-learning/instances/mlflow-docker
+[hashistack/hashicorp/machine-learning/images/mlflow-docker]: https://github.com/QubitPi/hashistack/tree/master/hashicorp/machine-learning/images/mlflow-docker
+[hashistack/hashicorp/machine-learning/instances/mlflow-docker]: https://github.com/QubitPi/hashistack/tree/master/hashicorp/machine-learning/instances/mlflow-docker
 [HashiCorp Packer - Install]: https://packer.qubitpi.org/packer/install
 [HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform - Install]: https://terraform.qubitpi.org/terraform/install

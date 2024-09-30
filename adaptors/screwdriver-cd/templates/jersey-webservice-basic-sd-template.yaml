@@ -20,7 +20,7 @@ description: |
   This template deploys the webservices without SSL/HTTPS or any other addons
 maintainer: jack20220723@gmail.com
 config:
-  template: QubitPi/hashicorp-aws-base-release-definition-template
+  template: QubitPi/hashistack-base-release-definition-template
   order: [
     install-packer,
     install-terraform,
@@ -50,12 +50,12 @@ config:
     - install-jdk: sd-cmd exec QubitPi/install-jdk-17-ubuntu@latest
     - install-maven: sd-cmd exec QubitPi/install-maven-ubuntu@latest
 
-    - load-war-file-path: echo war_source = \"ROOT.war\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+    - load-war-file-path: echo war_source = \"ROOT.war\" >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
 
     - load-filebeat-file: |
-        echo filebeat_path = \"filebeat.yml\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo filebeat_path = \"filebeat.yml\" >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
 
-        cat  << EOF >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/filebeat.yml
+        cat  << EOF >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/filebeat.yml
         filebeat.config.modules:
           path: ${path.config}/modules.d/*.yml
           reload.enabled: false
@@ -81,7 +81,7 @@ config:
         fi
 
     - relocate-war-for-hashicorp: |
-        mv target/*.war ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/ROOT.war
+        mv target/*.war ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/ROOT.war
   environment:
     INFRASTRUCTURE: webservice
   secrets:
