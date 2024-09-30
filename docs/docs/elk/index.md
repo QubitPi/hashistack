@@ -3,7 +3,7 @@ sidebar_position: 1
 title: General Deployment
 ---
 
-Operations and SRE teams can use [hashicorp-aws] to safely manage ELK deployment using infrastructure as code
+Operations and SRE teams can use [hashistack] to safely manage ELK deployment using infrastructure as code
 methodology, which allows us to peer-reviewed infrastructure changes in an automated and controlled fashion.
 
 :::info What is the ELK Stack?
@@ -15,18 +15,18 @@ monitoring, faster troubleshooting, security analytics, and more.
 
 :::
 
-**Assuming ELK is a _non-frequently deployed_ tech asset, [hashicorp-aws] makes it a semi-automated deployment**.
+**Assuming ELK is a _non-frequently deployed_ tech asset, [hashistack] makes it a semi-automated deployment**.
 
 :::caution
 
-[hashicorp-aws] deploys ELK as a [t2.large](https://aws.amazon.com/ec2/instance-types/t2/) instance. This is because all
+[hashistack] deploys ELK as a [t2.large](https://aws.amazon.com/ec2/instance-types/t2/) instance. This is because all
 Elasticsearch, Kibana, and Logstash are contained in it, which can cause
 [performance issue](https://stackoverflow.com/a/50022217) in small instance. _t2.large_, by experiment, is the smallest
 size that supports smooth runtime. For that, **please be aware AWS credit charges shall incur afterward**
 
 :::
 
-hashicorp-aws deploys ELK in the following way:
+hashistack deploys ELK in the following way:
 
 - Deploys all components of ELK in **HTTP** mode
 - Deploys a reverse proxy Nginx in front of the ELK in the same EC2 to redirect all HTTPS request to ELK's
@@ -48,17 +48,17 @@ Please complete the [general setup](../setup#setup) before proceeding.
 :::tip[Supporting HTTPS Protocol]
 
 We offer a [Nginx config file](../setup#optional-setup-ssl) template.
-[This template](https://github.com/QubitPi/hashicorp-aws/blob/master/hashicorp/elk/images/nginx-ssl.conf) will be used
-by hashicorp-aws by default
+[This template](https://github.com/QubitPi/hashistack/blob/master/hashicorp/elk/images/nginx-ssl.conf) will be used
+by hashistack by default
 
 :::
 
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-elk.pkrvars.hcl** under
-**[hashicorp-aws/hashicorp/elk/images]** with the following contents:
+**[hashistack/hashicorp/elk/images]** with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/elk/images/aws-elk.auto.pkrvars.hcl"
+```hcl title="hashistack/hashicorp/elk/images/aws-elk.auto.pkrvars.hcl"
 ami_region             = "us-east-2"
 ami_name               = "my-elk-ami"
 ssl_cert_file_path     = "/path/to/ssl.crt"
@@ -68,16 +68,16 @@ ssl_cert_key_file_path = "/path/to/ssl.key"
 - `ami_region` is the [region][AWS regions] where ELK [AMI][AWS AMI] will be published to. The published image will be
   _private_
 - `ami_name` is the published [AMI][AWS AMI] name; it can be arbitrary
-- `ssl_cert_file_path` is the absolute path or the path relative to [hashicorp-aws/hashicorp/elk/images] of
+- `ssl_cert_file_path` is the absolute path or the path relative to [hashistack/hashicorp/elk/images] of
   the [SSL certificate file](../setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
-- `ssl_cert_key_file_path`  is the absolute path or the path relative to [hashicorp-aws/hashicorp/elk/images] of the [SSL certificate key file](../setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
+- `ssl_cert_key_file_path`  is the absolute path or the path relative to [hashistack/hashicorp/elk/images] of the [SSL certificate key file](../setup#optional-setup-ssl) for the domain serving the ELK EC2 instance
 
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-elk.tfvars** under
-**[hashicorp-aws/hashicorp/elk/instances]**with the following contents:
+**[hashistack/hashicorp/elk/instances]**with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/elk/instances/aws-elk.auto.tfvars"
+```hcl title="hashistack/hashicorp/elk/instances/aws-elk.auto.tfvars"
 aws_ec2_region = "us-east-2"
 ami_name          = "my-elk-ami"
 instance_name     = "My ELK instance"
@@ -99,7 +99,7 @@ route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
 
   :::warning
 
-  hashicorp-aws will bind a _private_ IP address to this domain for the following reasons:
+  hashistack will bind a _private_ IP address to this domain for the following reasons:
 
   - [AWS security groups works for private IP only for DNS resolving](https://serverfault.com/a/967483). Services
     sending logs to ELK can use this domain.
@@ -124,7 +124,7 @@ route_53_zone_id  = "9DQXLTNSN7ZX9P8V2KZII"
 ### Building AMI Image
 
 ```console
-cd hashicorp-aws/hashicorp/elk/images
+cd hashistack/hashicorp/elk/images
 packer init .
 packer validate -var "skip_create_ami=true" .
 packer build -var "skip_create_ami=false" .
@@ -229,7 +229,7 @@ nohup sudo /usr/share/logstash/bin/logstash -f logstash-filebeat.conf --config.r
 Deployment via Screwdriver CD
 -----------------------------
 
-hashicorp-aws also support deployment using [Screwdriver CD]
+hashistack also support deployment using [Screwdriver CD]
 
 Deployment via GitHub Actions
 -----------------------------
@@ -252,9 +252,9 @@ a minute.
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
-[hashicorp-aws]: https://hashistack.org/
-[hashicorp-aws/hashicorp/elk/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/elk/images
-[hashicorp-aws/hashicorp/elk/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/elk/instances
+[hashistack]: https://hashistack.org/
+[hashistack/hashicorp/elk/images]: https://github.com/QubitPi/hashistack/tree/master/hashicorp/elk/images
+[hashistack/hashicorp/elk/instances]: https://github.com/QubitPi/hashistack/tree/master/hashicorp/elk/instances
 [HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files
 

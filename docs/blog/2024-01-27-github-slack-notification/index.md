@@ -37,7 +37,7 @@ allow all Slack member to touch a private app of an individual
        name: Send Slack Notification
        if: ${{ always() }}
        needs: the-last-job
-       uses: QubitPi/hashicorp-aws/.github/workflows/slack-notification.yml@master
+       uses: QubitPi/hashistack/.github/workflows/slack-notification.yml@master
        with:
          job-status: ${{ needs.the-last-job.outputs.outcome }}
        secrets:
@@ -92,7 +92,7 @@ jobs:
     name: Send Slack Notification
     if: ${{ always() }}
     needs: [terminal-job-a, terminal-job-b]
-    uses: QubitPi/hashicorp-aws/.github/workflows/slack-notification.yml@master
+    uses: QubitPi/hashistack/.github/workflows/slack-notification.yml@master
     with:
       job-status: ${{ (needs.terminal-job-a.outputs.outcome == 'success' && needs.terminal-job-b.outputs.outcome == 'success') && 'success' || 'failure' }}
     secrets:

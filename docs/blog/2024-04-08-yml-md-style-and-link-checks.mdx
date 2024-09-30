@@ -5,7 +5,7 @@ authors: [jiaqi]
 tags: [CI/CD, GitHub, Code Style]
 ---
 
-Inspired by [Sous Chefs](https://github.com/sous-chefs/.github/blob/main/.github/workflows/lint-unit.yml), hashicorp-aws
+Inspired by [Sous Chefs](https://github.com/sous-chefs/.github/blob/main/.github/workflows/lint-unit.yml), hashistack
 offers a [reusable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) that performs the
 following code style checks:
 
@@ -26,7 +26,7 @@ name: CI/CD
 
 jobs:
   yml-md-style-and-link-checks:
-    uses: QubitPi/hashicorp-aws/.github/workflows/yml-md-style-and-link-checks.yml@master
+    uses: QubitPi/hashistack/.github/workflows/yml-md-style-and-link-checks.yml@master
 ```
 
 :::tip
@@ -76,7 +76,7 @@ name: CI/CD
 
 jobs:
   yml-md-style-and-link-checks:
-    uses: QubitPi/hashicorp-aws/.github/workflows/yml-md-style-and-link-checks.yml@master
+    uses: QubitPi/hashistack/.github/workflows/yml-md-style-and-link-checks.yml@master
     with:
       use-custom-yamllint-config-file: true
 ```
@@ -149,7 +149,7 @@ name: CI/CD
 
 jobs:
   yml-md-style-and-link-checks:
-    uses: QubitPi/hashicorp-aws/.github/workflows/yml-md-style-and-link-checks.yml@master
+    uses: QubitPi/hashistack/.github/workflows/yml-md-style-and-link-checks.yml@master
     with:
       use-custom-mdlrc-config-file: true
       use-custom-markdownlint-config-file: true
@@ -160,7 +160,7 @@ jobs:
 The [Broken link check] pretty much configures everything for us, so we don't need to configure anything unless we
 need to exclude
 [links](https://github.com/lycheeverse/lychee-action#excluding-links-from-getting-checked) or
-[file](https://github.com/lycheeverse/lychee-action) by regular expression. hashicorp-aws defaults to exclude all
+[file](https://github.com/lycheeverse/lychee-action) by regular expression. hashistack defaults to exclude all
 relative file links with the following default:
 
 ```ignore title=".lycheeignore"
@@ -188,7 +188,7 @@ name: CI/CD
 
 jobs:
   yml-md-style-and-link-checks:
-    uses: QubitPi/hashicorp-aws/.github/workflows/yml-md-style-and-link-checks.yml@master
+    uses: QubitPi/hashistack/.github/workflows/yml-md-style-and-link-checks.yml@master
     with:
       use-custom-lycheeignore-file: true
 ```

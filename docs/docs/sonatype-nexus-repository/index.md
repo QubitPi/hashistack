@@ -6,7 +6,7 @@ title: General Deployment
 Deploying Sonatype Nexus Repository
 ===================================
 
-hashicorp-aws deploys [Sonatype Nexus Repository] in the following way:
+hashistack deploys [Sonatype Nexus Repository] in the following way:
 
 - Deploys [Sonatype Nexus Repository] in **HTTP** mode
 - Deploys a reverse proxy Nginx in front of the [Sonatype Nexus Repository] in the same EC2 to redirect all HTTPS
@@ -24,9 +24,9 @@ Please complete the [general setup](../setup#setup) before proceeding.
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named "aws-kong.auto.pkrvars.hcl" under
-__hashicorp-aws/hashicorp/sonatype-nexus-repository/images/aws__ directory with the following contents:
+__hashistack/hashicorp/sonatype-nexus-repository/images/aws__ directory with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/sonatype-nexus-repository/images/aws/aws.auto.pkrvars.hcl"
+```hcl title="hashistack/hashicorp/sonatype-nexus-repository/images/aws/aws.auto.pkrvars.hcl"
 ami_region                       = "us-west-2"
 ami_name                         = "my-nexus-ami"
 instance_type                    = "t2.small"
@@ -38,7 +38,7 @@ ssl_cert_key_base64              = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0c
 - `ami_region` is the [image region][AWS regions] where Nexus [AMI][AWS AMI] will be published to. The
   published image will be _private_
 - `ami_name` is the name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs. This
-  can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
+  can be the same across builds, because hashistack will deregister the old AMI with the same name and replace it
   with the current built one
 - `instance_type` The [AWS EC2 instance type] to use while _building_ the AMI
 - `sonatype_nexus_repository_domain` is the SSL-enabled domain that will serve the deployed HTTP Nexus instance
@@ -52,7 +52,7 @@ ssl_cert_key_base64              = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0c
 ### Building AMI Image
 
 ```bash
-cd hashicorp-aws
+cd hashistack
 
 cp hashicorp/common/images/aws/aws-builder.pkr.hcl hashicorp/sonatype-nexus-repository/images/aws
 cp hashicorp/common/images/aws/aws-packer.pkr.hcl hashicorp/sonatype-nexus-repository/images/aws
@@ -74,9 +74,9 @@ This will take a while and to save time, we can leave it here and proceed immedi
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named "aws.auto.tfvars" under
-__hashicorp-aws/hashicorp/sonatype-nexus-repository/instances/aws__ directory with the following contents:
+__hashistack/hashicorp/sonatype-nexus-repository/instances/aws__ directory with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/sonatype-nexus-repository/instances/aws/aws.auto.tfvars"
+```hcl title="hashistack/hashicorp/sonatype-nexus-repository/instances/aws/aws.auto.tfvars"
 aws_ec2_region   = "us-west-2"
 ami_name         = "my-nexus-ami"
 instance_type    = "t2.medium"
@@ -139,7 +139,7 @@ terraform apply -auto-approve
 Deployment via Screwdriver CD
 -----------------------------
 
-hashicorp-aws supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out. <img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
+hashistack supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out.
 
 Deployment via HACP
 -------------------
@@ -160,6 +160,6 @@ software artifactory in a minute.
 [HashiCorp Terraform variable values file]: https://terraform.qubitpi.org/terraform/language/values/variables#variable-definitions-tfvars-files
 
 [Sonatype Nexus Repository]: https://github.com/QubitPi/docker-nexus3
-[Sonatype Nexus Repository default HTTP port]: https://help.sonatype.com/en/network-configuration.html#network-configuration-in-nexus-repository-2
+[Sonatype Nexus Repository default HTTP port]: https://help.sonatype.com/en/accessing-the-user-interface.html
 
 [Screwdriver CD]: https://qubitpi.github.io/screwdriver-cd-homepage/

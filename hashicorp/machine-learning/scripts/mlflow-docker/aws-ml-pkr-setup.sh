@@ -50,5 +50,5 @@ sudo chmod o+rw /var/run/docker.sock # https://stackoverflow.com/a/76329637
 pip install mlflow
 pip install mlflow-skinny
 pip install mlflow[extras]
-# Curious about why we do "--install-mlflow"? You'd better not - https://github.com/QubitPi/hashicorp-aws/pull/218 :)
+# Curious about why we do "--install-mlflow"? You'd better not - https://github.com/QubitPi/hashistack/pull/218 :)
 mlflow models build-docker --name "mlflow-model-container" --install-mlflow

@@ -13,7 +13,7 @@
 # limitations under the License.
 ---
 namespace: QubitPi
-name: hashicorp-aws-ssl-release-definition-template
+name: hashistack-ssl-release-definition-template
 version: '1.0.0'
 description: |
   Screwdriver CD template for deploying an immutable SSL-protected service to AWS through HashiCorp.
@@ -21,7 +21,7 @@ description: |
   EC2 instance accessible by a SSL domain
 maintainer: jack20220723@gmail.com
 config:
-  template: QubitPi/hashicorp-aws-base-release-definition-template
+  template: QubitPi/hashistack-base-release-definition-template
   order: [
     install-packer,
     install-terraform,
@@ -46,10 +46,10 @@ config:
       description: 'The AWS Route 53 hosted Zone ID that hosts the domain of, for example, "app.mycompany.com"'
   steps:
     - setup-hashicorp-ssl-configs: |
-        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-ssl.tf ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws
+        cp ../hashistack/hashicorp/common/instances/aws/aws-ssl.tf ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws
     - load-terraform-ssl-variables: |
-        echo domain           = \"$(meta get parameters.domain.value)\"           >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo route_53_zone_id = \"$(meta get parameters.route-53-zone-id.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo domain           = \"$(meta get parameters.domain.value)\"           >> ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo route_53_zone_id = \"$(meta get parameters.route-53-zone-id.value)\" >> ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
   secrets:
     - SSL_CERT_BASE_64
     - SSL_CERT_KEY_BASE_64

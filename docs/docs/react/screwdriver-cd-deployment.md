@@ -17,7 +17,7 @@ description: Deploying React App via Screwdriver CD Template
 React App Release Definition Template
 =====================================
 
-hashicorp-aws offers a [Screwdriver template][Screwdriver CD template] that deploys an
+hashistack offers a [Screwdriver template][Screwdriver CD template] that deploys an
 [immutable][Immutable Infrastructure] instance of React-based frontend App to AWS. It uses the
 [screwdriver-template-main npm package] to assist with template validation, publishing, and tagging. This template tags
 the latest versions with the `latest` tag.
@@ -25,7 +25,7 @@ the latest versions with the `latest` tag.
 How to Use This Template
 ------------------------
 
-Please follow the sections below to get started using this template <img src="https://github.com/QubitPi/QubitPi/blob/master/img/%E5%BF%83%E6%B5%B7/%E5%BF%83%E6%B5%B7-17.png?raw=true" height="50px"/>
+Please follow the sections below to get started using this template
 
 ### Installing the Template
 

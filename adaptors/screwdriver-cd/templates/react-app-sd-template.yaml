@@ -18,7 +18,7 @@ version: '1.0.0'
 description: Screwdriver CD template for deploying React APP to AWS through HashiCorp.
 maintainer: jack20220723@gmail.com
 config:
-  template: QubitPi/hashicorp-aws-ssl-release-definition-template
+  template: QubitPi/hashistack-ssl-release-definition-template
   order: [
     install-packer,
     install-terraform,
@@ -47,11 +47,11 @@ config:
       value: "18"
       description: "Node.js version for compiling and running React app"
   steps:
-    - load-packer-ami-variables-dist-source: echo dist_source = \"dist\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+    - load-packer-ami-variables-dist-source: echo dist_source = \"dist\" >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
     - load-packer-ami-variables-ssl: |
-        echo react_app_domain    = \"$(meta get parameters.domain.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
-        echo ssl_cert_base64     = \"$SSL_CERT_BASE_64\"                   >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_base64 = \"$SSL_CERT_KEY_BASE_64\"               >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo react_app_domain    = \"$(meta get parameters.domain.value)\" >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ssl_cert_base64     = \"$SSL_CERT_BASE_64\"                   >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_base64 = \"$SSL_CERT_KEY_BASE_64\"               >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
     - install-node: sd-cmd exec QubitPi/install-node@latest $(meta get parameters.node-version.value)
     - install-yarn: npm install -g yarn
     - generate-dist: |
@@ -59,6 +59,6 @@ config:
         echo "The end result of this step must be a 'dist' file at the check-out root"
         echo "An example implementation should be 'yarn && yarn build'"
         exit 1
-    - relocate-dist-for-hashicorp: mv dist ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/
+    - relocate-dist-for-hashicorp: mv dist ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/
   environment:
     INFRASTRUCTURE: react

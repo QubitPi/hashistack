@@ -6,7 +6,7 @@ title: General Deployment
 Deploying Kong API Gateway
 ==========================
 
-hashicorp-aws deploys [Kong API Gateway] in the following way:
+hashistack deploys [Kong API Gateway] in the following way:
 
 - Deploys [Kong API Gateway] in **HTTP** mode
 - Deploys a reverse proxy Nginx in front of the [Kong API Gateway] in the same EC2 to redirect all HTTPS request to
@@ -27,7 +27,7 @@ Please complete the [general setup](../setup#setup) before proceeding.
 
 ::::tip[Supporting HTTPS Protocol]
 
-hashicorp-aws uses a [customized fork of docker-kong](https://github.com/QubitPi/docker-kong) to
+hashistack uses a [customized fork of docker-kong](https://github.com/QubitPi/docker-kong) to
 [fully separate the app and SSL](https://github.com/QubitPi/docker-kong/pull/1), and, therefore, the Nginx config needs
 multiple [servers](https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/)
 to ensure all HTTPS ports are mapped to their corresponding HTTP ports as shown in the config snippet below:
@@ -38,7 +38,7 @@ All relevant HTTP and HTTPS ports are listed in [Kong's documentation here][Kong
 our Nginx should **listen on an HTTPS port and `proxy_pass` to an HTTP port. For example, ports 8443 and 8444 are
 `proxy_pass`ed to 8000 and 8001, respectively, both of which are listed in the doc.
 
-One special case is HTTP port 8000, which is the redirect port. hashicorp-aws maps the standard SSL 443 port to 8000 so
+One special case is HTTP port 8000, which is the redirect port. hashistack maps the standard SSL 443 port to 8000 so
 that any downstream (such as UI web app) simply needs to hit the domain without specifying port number and have its
 request be reidrected to upstream services (such as database webservice)
 
@@ -51,9 +51,9 @@ request be reidrected to upstream services (such as database webservice)
 ### Defining Packer Variables
 
 Create a [HashiCorp Packer variable values file] named **aws-kong.auto.pkrvars.hcl** under
-**[hashicorp-aws/hashicorp/kong-api-gateway/images]** directory with the following contents:
+**[hashistack/hashicorp/kong-api-gateway/images]** directory with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/kong-api-gateway/images/aws-kong.auto.pkrvars.hcl"
+```hcl title="hashistack/hashicorp/kong-api-gateway/images/aws-kong.auto.pkrvars.hcl"
 ami_region              = "us-east-1"
 ami_name                = "my-kong-ami"
 instance_type           = "t2.small"
@@ -65,7 +65,7 @@ ssl_cert_key_base64     = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
 - `ami_region` is the [image region][AWS regions] where Kong API Gateway [AMI][AWS AMI] will be published to. The
   published image will be _private_
 - `ami_name` is the name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs. This
-  can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and replace it
+  can be the same across builds, because hashistack will deregister the old AMI with the same name and replace it
   with the current built one
 - `instance_type` The [AWS EC2 instance type] to use while _building_ the AMI
 - `kong_api_gateway_domain` is the SSL-enabled domain that will serve the
@@ -80,9 +80,9 @@ ssl_cert_key_base64     = "MzI0NXRnZjk4dmJoIGNsO2VbNDM1MHRdzszNDM1b2l0cmo="
 ### Defining Terraform Variables
 
 Create a [HashiCorp Terraform variable values file] named **aws-kong.auto.tfvars** under
-**[hashicorp-aws/hashicorp/kong-api-gateway/instances]** directory with the following contents:
+**[hashistack/hashicorp/kong-api-gateway/instances]** directory with the following contents:
 
-```hcl title="hashicorp-aws/hashicorp/kong-api-gateway/instances/aws-kong.auto.tfvars"
+```hcl title="hashistack/hashicorp/kong-api-gateway/instances/aws-kong.auto.tfvars"
 aws_ec2_region       = "us-east-1"
 ami_name                = "my-kong-ami"
 instance_type           = "t2.small"
@@ -115,7 +115,7 @@ route_53_zone_id        = "MBS8YLKZML18VV2E8M8OK"
 
   :::warning
 
-  hashicorp-aws will bind a _private_ IP address to this domain for the following reasons:
+  hashistack will bind a _private_ IP address to this domain for the following reasons:
 
   - [AWS security groups works for private IP only for DNS resolving](https://serverfault.com/a/967483). Services
     interacting with Kong gateway can use this domain.
@@ -140,7 +140,7 @@ route_53_zone_id        = "MBS8YLKZML18VV2E8M8OK"
 ### Building AMI Image
 
 ```bash
-cd hashicorp-aws
+cd hashistack
 
 cp hashicorp/common/images/aws/aws-builder.pkr.hcl hashicorp/kong-api-gateway/images/aws
 cp hashicorp/common/images/aws/aws-packer.pkr.hcl hashicorp/kong-api-gateway/images/aws
@@ -183,7 +183,7 @@ terraform apply -auto-approve
 Deployment via Screwdriver CD
 -----------------------------
 
-hashicorp-aws supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out. <img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
+hashistack supports deployment using [Screwdriver CD](screwdriver-cd-deployment). Please check it out.
 
 Deployment via HACP
 -------------------
@@ -200,8 +200,8 @@ gateway in a minute.
 [AWS regions]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html#Concepts.RegionsAndAvailabilityZones.Availability
 [AWS Security Group]: https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html
 
-[hashicorp-aws/hashicorp/kong-api-gateway/images]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong-api-gateway/images
-[hashicorp-aws/hashicorp/kong-api-gateway/instances]: https://github.com/QubitPi/hashicorp-aws/tree/master/hashicorp/kong-api-gateway/instances
+[hashistack/hashicorp/kong-api-gateway/images]: https://github.com/QubitPi/hashistack/tree/master/hashicorp/kong-api-gateway/images
+[hashistack/hashicorp/kong-api-gateway/instances]: https://github.com/QubitPi/hashistack/tree/master/hashicorp/kong-api-gateway/instances
 [HashiCorp Packer - Install]: https://packer.qubitpi.org/packer/install
 [HashiCorp Packer variable values file]: https://packer.qubitpi.org/packer/guides/hcl/variables#from-a-file
 [HashiCorp Terraform - Install]: https://terraform.qubitpi.org/terraform/install

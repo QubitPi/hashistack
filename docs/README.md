@@ -1,4 +1,4 @@
-hashicorp-aws Documentation
+hashistack Documentation
 ---------------------------
 
 This website is built using [Docusaurus 3](https://docusaurus.io/), a modern static website generator.
@@ -35,4 +35,4 @@ Using SSH:
 USE_SSH=true yarn deploy
 ```
 
-hashicorp-aws is using GitHub pages for hosting, this command builds the website and push to the `gh-pages` branch.
+hashistack is using GitHub pages for hosting, this command builds the website and push to the `gh-pages` branch.

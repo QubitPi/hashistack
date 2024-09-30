@@ -36,9 +36,9 @@ jobs:
           fetch-depth: 0
       - name: Download auto-version bump scripts
         run: |
-          git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-          cp ../hashicorp-aws/.github/version-bump/tag-for-release.bash .github/
-          cp ../hashicorp-aws/.github/version-bump/upversion.py .github/
+          git clone https://github.com/QubitPi/hashistack.git ../hashistack
+          cp ../hashistack/.github/version-bump/tag-for-release.bash .github/
+          cp ../hashistack/.github/version-bump/upversion.py .github/
       - name: Tag for release
         run: |
           git config --global user.name ${{ inputs.user }}

@@ -46,7 +46,7 @@ build {
     "source.${var.build_source}"
   ]
 
-  provisioner "hashicorp-aws-docker-mailserver-provisioner" {
+  provisioner "hashistack-docker-mailserver-provisioner" {
     homeDir          = "${var.image_home_dir}"
     baseDomain       = "${var.base_domain}"
     sslCertBase64    = "${var.ssl_cert_base64}"

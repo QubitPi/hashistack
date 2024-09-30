@@ -6164,9 +6164,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hashicorp-aws@workspace:.":
+"hashistack@workspace:.":
   version: 0.0.0-use.local
-  resolution: "hashicorp-aws@workspace:."
+  resolution: "hashistack@workspace:."
   dependencies:
     "@docusaurus/core": "npm:3.0.0"
     "@docusaurus/module-type-aliases": "npm:3.0.0"

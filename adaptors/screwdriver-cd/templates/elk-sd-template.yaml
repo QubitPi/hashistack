@@ -36,7 +36,7 @@ config:
       value: "My AWS SSH key pair name"
       description: |
         The name of AWS EC2 key pair bound to this ELK instance. We will use this key pair to later ssh into the ELK EC2
-        to for post setup discussed in hashicorp-aws documentation
+        to for post setup discussed in hashistack documentation
     security-groups:
       value: '["My ELK API Security Group", "My ELK Admin Security Group"]'
       description: "The list of AWS Security Group names (yes, not ID, but name...) bound to the ELK EC2 instance."
@@ -49,28 +49,28 @@ config:
   steps:
     - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
-    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+    - checkout-hashicorp-deployment-tool: git clone --depth 1 https://github.com/QubitPi/hashistack.git ../hashistack
 
-    - load-ssl-certificate-file: echo "$SSL_CERTIFICATE" > ../hashicorp-aws/hashicorp/elk/images/ssl.crt
-    - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../hashicorp-aws/hashicorp/elk/images/ssl.key
-    - configure-nginx-ssl: sed -i -e "s/elk.domain.com/$(meta get parameters.elk-domain.value)/g" ../hashicorp-aws/hashicorp/elk/images/nginx-ssl.conf
+    - load-ssl-certificate-file: echo "$SSL_CERTIFICATE" > ../hashistack/hashicorp/elk/images/ssl.crt
+    - load-ssl-certificate-key-file: echo "$SSL_CERTIFICATE_KEY" > ../hashistack/hashicorp/elk/images/ssl.key
+    - configure-nginx-ssl: sed -i -e "s/elk.domain.com/$(meta get parameters.elk-domain.value)/g" ../hashistack/hashicorp/elk/images/nginx-ssl.conf
 
     - load-packer-variable-file: |
-        echo ami_region             = \"$(meta get parameters.ami-region.value)\" >> ../hashicorp-aws/hashicorp/elk/images/aws.auto.pkrvars.hcl
-        echo ami_name               = \"$(meta get parameters.ami-name.value)\"   >> ../hashicorp-aws/hashicorp/elk/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_file_path     = \"ssl.crt\"                                 >> ../hashicorp-aws/hashicorp/elk/images/aws.auto.pkrvars.hcl
-        echo ssl_cert_key_file_path = \"ssl.key\"                                 >> ../hashicorp-aws/hashicorp/elk/images/aws.auto.pkrvars.hcl
+        echo ami_region             = \"$(meta get parameters.ami-region.value)\" >> ../hashistack/hashicorp/elk/images/aws.auto.pkrvars.hcl
+        echo ami_name               = \"$(meta get parameters.ami-name.value)\"   >> ../hashistack/hashicorp/elk/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_file_path     = \"ssl.crt\"                                 >> ../hashistack/hashicorp/elk/images/aws.auto.pkrvars.hcl
+        echo ssl_cert_key_file_path = \"ssl.key\"                                 >> ../hashistack/hashicorp/elk/images/aws.auto.pkrvars.hcl
 
     - load-terraform-variable-file: |
-        echo aws_ec2_region = \"$(meta get parameters.aws-deploy-region.value)\" >> ../hashicorp-aws/hashicorp/elk/instances/aws.auto.tfvars
-        echo ami_name          = \"$(meta get parameters.ami-name.value)\"          >> ../hashicorp-aws/hashicorp/elk/instances/aws.auto.tfvars
-        echo instance_name     = \"$(meta get parameters.instance-name.value)\"     >> ../hashicorp-aws/hashicorp/elk/instances/aws.auto.tfvars
-        echo key_pair_name     = \"$(meta get parameters.key-pair-name.value)\"     >> ../hashicorp-aws/hashicorp/elk/instances/aws.auto.tfvars
-        echo security_groups   = $(meta get parameters.security-groups.value)       >> ../hashicorp-aws/hashicorp/elk/instances/aws.auto.tfvars
-        echo elk_domain        = \"$(meta get parameters.elk-domain.value)\"        >> ../hashicorp-aws/hashicorp/elk/instances/aws.auto.tfvars
-        echo route_53_zone_id  = \"$(meta get parameters.route-53-zone-id.value)\"  >> ../hashicorp-aws/hashicorp/elk/instances/aws.auto.tfvars
+        echo aws_ec2_region = \"$(meta get parameters.aws-deploy-region.value)\" >> ../hashistack/hashicorp/elk/instances/aws.auto.tfvars
+        echo ami_name          = \"$(meta get parameters.ami-name.value)\"          >> ../hashistack/hashicorp/elk/instances/aws.auto.tfvars
+        echo instance_name     = \"$(meta get parameters.instance-name.value)\"     >> ../hashistack/hashicorp/elk/instances/aws.auto.tfvars
+        echo key_pair_name     = \"$(meta get parameters.key-pair-name.value)\"     >> ../hashistack/hashicorp/elk/instances/aws.auto.tfvars
+        echo security_groups   = $(meta get parameters.security-groups.value)       >> ../hashistack/hashicorp/elk/instances/aws.auto.tfvars
+        echo elk_domain        = \"$(meta get parameters.elk-domain.value)\"        >> ../hashistack/hashicorp/elk/instances/aws.auto.tfvars
+        echo route_53_zone_id  = \"$(meta get parameters.route-53-zone-id.value)\"  >> ../hashistack/hashicorp/elk/instances/aws.auto.tfvars
 
-    - packer-init: cd ../hashicorp-aws/hashicorp/elk/images && packer init .
+    - packer-init: cd ../hashistack/hashicorp/elk/images && packer init .
     - packer-validate: packer validate -var "skip_create_ami=true" .
     - packer-build: packer build -var "skip_create_ami=false" .
 

@@ -37,7 +37,7 @@ The GitHub repository must grant *write* access to this workflow permission, i.e
   jobs:
     push-release-tag:
       if: github.ref == 'refs/heads/master'
-      uses: QubitPi/hashicorp-aws/.github/workflows/version-bump.yml@master
+      uses: QubitPi/hashistack/.github/workflows/version-bump.yml@master
       with:
         user: QubitPi
         email: jack20220723@gmail.com

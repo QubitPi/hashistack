@@ -7,7 +7,7 @@ description: Deploying ELK via Screwdriver CD Template
 ELK Release Definition Template
 ===============================
 
-hashicorp-aws offer a [Screwdriver template][Screwdriver CD template] that deploys
+hashistack offer a [Screwdriver template][Screwdriver CD template] that deploys
 [immutable][Immutable Infrastructure] instances of ELK to AWS. It uses the [screwdriver-template-main npm package] to
 assist with template validation, publishing, and tagging. The template tags the latest versions with the `latest` tag.
 
@@ -35,10 +35,10 @@ The following [Screwdriver Secrets][Screwdriver CD Secrets] needs to be defined 
 - [`AWS_SECRET_ACCESS_KEY`](../setup#aws)
 - `SSL_CERTIFICATE` - the content of SSL certificate file serving HTTPS-enabled DNS name of the EC2 hosting our ELK
   instance. This is the same as the `SSL_CERTIFICATE` from the
-  [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
+  [general SSL setup of hashistack](../setup#optional-setup-ssl)
 - `SSL_CERTIFICATE_KEY` - the content of SSL certificate key file serving HTTPS-enabled DNS name of the EC2 hosting our
   ELK instance. This is the same as the `SSL_CERTIFICATE_KEY` from the
-  [general SSL setup of hashicorp-aws](../setup#optional-setup-ssl)
+  [general SSL setup of hashistack](../setup#optional-setup-ssl)
 
 To run the pipeline, fill in the AWS-related **parameters** first
 
@@ -61,7 +61,7 @@ The password for user 'elastic' can be found _packer-build_ step logs. Here is a
 
 [publishing a template in Screwdriver]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#publishing-a-template
 
-[screwdriver.yaml]: https://github.com/QubitPi/hashicorp-aws/tree/master/screwdriver.yaml
+[screwdriver.yaml]: https://github.com/QubitPi/hashistack/tree/master/screwdriver.yaml
 [Screwdriver CD - creating a pipeline]: https://qubitpi.github.io/screwdriver-cd-guide/user-guide/quickstart#create-a-new-pipeline
 [Screwdriver CD - creating pipeline from template]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#using-a-template
 [Screwdriver CD - finding templates]: https://screwdriver-docs.qubitpi.org/user-guide/templates/job-templates#finding-templates

@@ -8,7 +8,7 @@ tags: [CI/CD, GitHub]
 Overview
 --------
 
-Being a strong proponent of Immutable Infrastructure, [hashicorp-aws] is constantly pushing the limits of its ability
+Being a strong proponent of Immutable Infrastructure, [hashistack] is constantly pushing the limits of its ability
 in various use cases, one of which is the _Configuration Management_
 
 Traditional configuration management includes Chef, Puppet, and Ansible. They all assume mutable infrastructure being
@@ -24,7 +24,7 @@ this approache, CI/CD server will pull down the entire runbook and simply pick u
 exposed a great security risk because illegal usage could simply leak any credentials to public by `cat`ing that
 credential file out
 
-So the problem, or what [hashicorp-aws] is trying to solve here, is
+So the problem, or what [hashistack] is trying to solve here, is
 
 - being able to keep credentials, whether it's string values or values stored in files, **secure**, and
 - allowing team member to easily **manage** those credentials
@@ -33,7 +33,7 @@ So the problem, or what [hashicorp-aws] is trying to solve here, is
 
 We tried HashiCorp Vault but
 [it doesn't support storing file credential](https://discuss.hashicorp.com/t/how-to-store-a-file-content-in-hashicorp-kv-secret-engine-as-value-through-cmd-line-or-script/46895/2),
-[hashicorp-aws] addressed exactly how file can be managed in this case
+[hashistack] addressed exactly how file can be managed in this case
 
 :::
 
@@ -55,6 +55,6 @@ be an effective way to manage and share a software configurations within a team.
 
 :::
 
-[hashicorp-aws]'s github-secret now comes into play to bridge the gap between two componet.
+[hashistack]'s github-secret now comes into play to bridge the gap between two componet.
 
-[hashicorp-aws]: https://hashistack.org/
+[hashistack]: https://hashistack.org/

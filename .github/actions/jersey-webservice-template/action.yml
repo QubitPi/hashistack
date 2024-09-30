@@ -75,30 +75,30 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Set up JDK
-      uses: QubitPi/hashicorp-aws/.github/actions/jdk-setup@master
+      uses: QubitPi/hashistack/.github/actions/jdk-setup@master
 
     - name: Checkout HashiCorp deployment tool and setup directory structure
       shell: bash
       run: |
-        git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
+        git clone --depth 1 https://github.com/QubitPi/hashistack.git ../hashistack
         if [ ${{ inputs.ssl }} ]; then
-          cd ../hashicorp-aws/hashicorp/webservice/images
+          cd ../hashistack/hashicorp/webservice/images
           mv ssl/* .
           rm -rf basic
         else
-          cd ../hashicorp-aws/hashicorp/webservice/images
+          cd ../hashistack/hashicorp/webservice/images
           mv basic/* .
           rm -rf ssl
         fi
     - name: Load Packer variable file
-      run: echo '${{ inputs.aws-ws-pkrvars-hcl }}' > ../hashicorp-aws/hashicorp/webservice/images/aws-ws.auto.pkrvars.hcl
+      run: echo '${{ inputs.aws-ws-pkrvars-hcl }}' > ../hashistack/hashicorp/webservice/images/aws-ws.auto.pkrvars.hcl
       shell: bash
     - name: Load Terraform variable file
-      run: echo '${{ inputs.aws-ws-tfvars }}' > ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars
+      run: echo '${{ inputs.aws-ws-tfvars }}' > ../hashistack/hashicorp/webservice/instances/aws-ws.auto.tfvars
       shell: bash
     - name: Configure SSL
       if: ${{ inputs.ssl }}
-      uses: QubitPi/hashicorp-aws/.github/actions/ssl-setup@master
+      uses: QubitPi/hashistack/.github/actions/ssl-setup@master
       with:
         aws-ws-pkrvars-hcl: ${{ secrets.AWS_WS_PKRVARS_HCL }}
         ssl-certificate: ${{ secrets.SSL_CERTIFICATE }}
@@ -108,12 +108,12 @@ runs:
 
     - name: Load Filebeat config file
       if: "${{ inputs.filebeat-config-file != '' }}"
-      run: echo '${{ inputs.filebeat-config-file }}' > ../hashicorp-aws/hashicorp/webservice/images/filebeat.yml
+      run: echo '${{ inputs.filebeat-config-file }}' > ../hashistack/hashicorp/webservice/images/filebeat.yml
       shell: bash
 
     - name: Install data-models
       if: ${{ input.template == 'jps' }}
-      uses: QubitPi/hashicorp-aws/jpa-elide/install-data-models@master
+      uses: QubitPi/hashistack/jpa-elide/install-data-models@master
       with:
         model-package-jar-group-id: com.qubitpi
         model-package-jar-artifact-id: jersey-webservice-template-jpa-data-models
@@ -124,13 +124,13 @@ runs:
       run: mvn -B clean package
       shell: bash
     - name: Move WAR file to a location for HashiCorp deployment to pickup
-      run: mv ${{ inputs.war-path }} ../hashicorp-aws/hashicorp/webservice/images/
+      run: mv ${{ inputs.war-path }} ../hashistack/hashicorp/webservice/images/
       shell: bash
 
     - name: Run deployment
-      uses: QubitPi/hashicorp-aws@master
+      uses: QubitPi/hashistack@master
       with:
-        hashicorp-dir: ../hashicorp-aws/hashicorp/webservice
+        hashicorp-dir: ../hashistack/hashicorp/webservice
         aws-access-key-id: ${{ inputs.aws-access-key-id }}
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
         aws-region: ${{ inputs.aws-region }}

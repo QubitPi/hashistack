@@ -13,7 +13,7 @@
 # limitations under the License.
 ---
 namespace: QubitPi
-name: hashicorp-aws-base-release-definition-template
+name: hashistack-base-release-definition-template
 version: '1.0.0'
 description: |
   Screwdriver CD base template for deploying an immutable infrastructure to AWS through HashiCorp.
@@ -30,7 +30,7 @@ config:
       value: "my-infrastructure-ami"
       description: |
         The name of the resulting AMI that will appear when managing AMIs in the AWS console or via APIs.
-        This can be the same across builds, because hashicorp-aws will deregister the old AMI with the same name and
+        This can be the same across builds, because hashistack will deregister the old AMI with the same name and
         replace it with the current built one
     ami-build-instance-type:
       value: ["t2.micro", "t2.small", "t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge"]
@@ -51,24 +51,24 @@ config:
     - install-packer: sd-cmd exec QubitPi/install-hashicorp-packer-ubuntu@latest
     - install-terraform: sd-cmd exec QubitPi/install-hashicorp-terraform-ubuntu@latest
     - setup-hashicorp-deployment-tool: |
-        git clone --depth 1 https://github.com/QubitPi/hashicorp-aws.git    ../hashicorp-aws
-        cp ../hashicorp-aws/hashicorp/common/images/aws/*                   ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws
-        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-ec2.tf       ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws
-        cp ../hashicorp-aws/hashicorp/common/instances/aws/aws-terraform.tf ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws
+        git clone --depth 1 https://github.com/QubitPi/hashistack.git    ../hashistack
+        cp ../hashistack/hashicorp/common/images/aws/*                   ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws
+        cp ../hashistack/hashicorp/common/instances/aws/aws-ec2.tf       ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws
+        cp ../hashistack/hashicorp/common/instances/aws/aws-terraform.tf ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws
 
     - load-packer-ami-variables: |
-        echo ami_region    = \"$(meta get parameters.ami-region.value)\"              >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
-        echo ami_name      = \"$(meta get parameters.ami-name.value)\"                >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
-        echo instance_type = \"$(meta get parameters.ami-build-instance-type.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ami_region    = \"$(meta get parameters.ami-region.value)\"              >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo ami_name      = \"$(meta get parameters.ami-name.value)\"                >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
+        echo instance_type = \"$(meta get parameters.ami-build-instance-type.value)\" >> ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws/aws.auto.pkrvars.hcl
 
     - load-terraform-ec2-variables: |
-        echo aws_ec2_region  = \"$(meta get parameters.aws-deploy-region.value)\"     >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo ami_name        = \"$(meta get parameters.ami-name.value)\"              >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo instance_type   = \"$(meta get parameters.aws-ec2-instance-type.value)\" >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo instance_name   = \"$(meta get parameters.instance-name.value)\"         >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
-        echo security_groups = $(meta get parameters.security-groups.value)           >> ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo aws_ec2_region  = \"$(meta get parameters.aws-deploy-region.value)\"     >> ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo ami_name        = \"$(meta get parameters.ami-name.value)\"              >> ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo instance_type   = \"$(meta get parameters.aws-ec2-instance-type.value)\" >> ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo instance_name   = \"$(meta get parameters.instance-name.value)\"         >> ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
+        echo security_groups = $(meta get parameters.security-groups.value)           >> ../hashistack/hashicorp/$INFRASTRUCTURE/instances/aws/aws.auto.tfvars
 
-    - packer-init: cd ../hashicorp-aws/hashicorp/$INFRASTRUCTURE/images/aws && packer init .
+    - packer-init: cd ../hashistack/hashicorp/$INFRASTRUCTURE/images/aws && packer init .
     - packer-validate: packer validate .
     - packer-build: packer build .
 

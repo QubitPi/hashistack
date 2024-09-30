@@ -29,10 +29,10 @@ variable "sonatype_nexus_repository_domain" {
 
 build {
   sources = [
-    "source.amazon-ebs.hashicorp-aws"
+    "source.amazon-ebs.hashistack"
   ]
 
-  provisioner "hashicorp-aws-sonatype-nexus-repository-provisioner" {
+  provisioner "hashistack-sonatype-nexus-repository-provisioner" {
     homeDir                       = "/home/ubuntu"
     sslCertBase64                 = "${var.ssl_cert_base64}"
     sslCertKeyBase64              = "${var.ssl_cert_key_base64}"

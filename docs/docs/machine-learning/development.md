@@ -6,7 +6,7 @@ title: Development
 Development
 ===========
 
-The following guide is intended to help developers who maintain or want to make changes to the hashicorp-aws's Machine
+The following guide is intended to help developers who maintain or want to make changes to the hashistack's Machine
 Learning deployment module
 
 MLflow Docker

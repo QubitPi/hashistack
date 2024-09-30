@@ -7,14 +7,14 @@ description: Deploying Docker Mailserver via Screwdriver CD Template
 Docker Mailserver Release Definition Template
 =============================================
 
-hashicorp-aws offer a [Screwdriver template][Screwdriver CD template] that deploys an
+hashistack offer a [Screwdriver template][Screwdriver CD template] that deploys an
 [immutable][Immutable Infrastructure] instance of [Docker Mailserver] to AWS. It uses the
 [screwdriver-template-main npm package] to assist with template validation, publishing, and tagging. This template tags
 the latest versions with the `latest` tag.
 
 :::caution
 
-hashicorp-aws deploys Docker Mailserver as a [t2.micro](https://aws.amazon.com/ec2/instance-types/t2/) instance by
+hashistack deploys Docker Mailserver as a [t2.micro](https://aws.amazon.com/ec2/instance-types/t2/) instance by
 default
 
 :::

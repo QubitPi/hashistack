@@ -8,8 +8,7 @@ HashiStack
 [![HashiCorp Packer Badge][HashiCorp Packer Badge]][HashiCorp Packer URL]
 [![HashiCorp Terraform Badge][HashiCorp Terraform Badge]][HashiCorp Terraform URL]
 [![Screwdriver pipeline badge][Screwdriver pipeline badge]][Screwdriver pipeline URL]
-[![Discord]](https://discord.com/widget?id=1060753787125514332)
-[![Apache License][Apache License Badge]][Apache License URL]
+[![Apache License][Apache License Badge]][Apache License, Version 2.0]
 
 </div>
 
@@ -22,7 +21,7 @@ infrastructure__. Specifically, it
 > [!NOTE]
 >
 > If one is interested in non-OpenStack cloud provider as an alternative, please check out
-> [immutable-infrastructure.com] which is a fork of this project that targets Amazon AWS <img src="https://github.com/QubitPi/QubitPi/blob/master/img/8%E5%A5%BD.gif?raw=true" height="40px"/>
+> [immutable-infrastructure.com] which is a fork of this project that targets Amazon AWS
 
 A Story behind HashiStack
 ------------------------
@@ -49,17 +48,8 @@ License
 
 The use and distribution terms for [HashiStack]() are covered by the [Apache License, Version 2.0].
 
-<div align="center">
-    <a href="https://opensource.org/licenses">
-        <img align="center" width="50%" alt="License Illustration" src="https://github.com/QubitPi/QubitPi/blob/master/img/apache-2.png?raw=true">
-    </a>
-</div>
-
-[Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
+[Apache License, Version 2.0]: https://www.apache.org/licenses/LICENSE-2.0
 [Apache License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
-[Apache License URL]: https://www.apache.org/licenses/LICENSE-2.0
-
-[Discord]: https://img.shields.io/discord/1060753787125514332?color=5865F2&logo=discord&logoColor=ffffff&style=for-the-badge
 
 [GitHub Last Commit]: https://img.shields.io/github/last-commit/QubitPi/hashistack/master?logo=github&style=for-the-badge
 [GitHub Workflow Status Badge]: https://img.shields.io/github/actions/workflow/status/QubitPi/hashistack/ci-cd.yml?branch=master&logo=github&style=for-the-badge

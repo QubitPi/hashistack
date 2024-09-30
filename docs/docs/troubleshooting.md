@@ -15,7 +15,7 @@ HashiCorp
 
 Fully adapting
 [immutable infrastructure](https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure),
-hashicorp-aws "seals" EC2 instances once it's created; that means not even admin or anyone else can jump into that
+hashistack "seals" EC2 instances once it's created; that means not even admin or anyone else can jump into that
 server vis SSH. _It's completely immutable_
 
 :::tip
@@ -41,7 +41,7 @@ aws_instance.***: Creating...
 │ ...
 ```
 
-This could happen when hashicorp-aws is using Terraform to launch EC2 instance. One possibility is the security group of
+This could happen when hashistack is using Terraform to launch EC2 instance. One possibility is the security group of
 the instance is not found or hasn't been created yet.
 
 AWS
@@ -57,9 +57,9 @@ We take [Kong API Gateway](kong-api-gateway/index) as an example in the discussi
 
 This could happen when we are accessing the deployed gateway from a public IP address, such as our personal computer.
 
-Complying with the best security practice, hashicorp-aws binds _private_ EC2 IP to a Route 53 domain. Since it is a
+Complying with the best security practice, hashistack binds _private_ EC2 IP to a Route 53 domain. Since it is a
 common practice to limit the API gateway access by assigning gateway instance with
-[inbound rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html). hashicorp-aws also manages
+[inbound rules](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html). hashistack also manages
 to disable all HTTP request to the gateway. Therefore, any public visit to our deployed gateway instance has to go
 through the gateway domain.
 
